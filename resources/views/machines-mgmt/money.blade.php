@@ -75,7 +75,7 @@
                                     @foreach ($moneylogs as $moneylog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $moneylog->id }} </td>
-                                        <td class="hidden-xs">{{date('F d, Y H:i:s', strtotime($moneylog->dateAdded))}}</td>
+                                        <td class="hidden-xs">{{date('F d, Y H:i:s', strtotime($moneylog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $moneylog->coinIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->ttlCoinIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->billIn }}</td>
@@ -114,11 +114,11 @@
 
                     <div class="row">
                         <div class="col-sm-5">
-                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to {{count($errorlogs)}} of {{count($errorlogs)}} entries</div>
+                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">{{ $moneylogs->links() }}</div>
                         </div>
                         <div class="col-sm-7">
                             <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                {{ $errorlogs->links() }}
+                             
                             </div>
                         </div>
                     </div>

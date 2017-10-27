@@ -267,10 +267,10 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
         //$machine = Machine::find($id);
-        $errorlogs = Machine::find($id)->errorlogs()->orderBy('dateAdded', 'desc')->paginate(20);
-        $moneylogs = Machine::find($id)->moneylogs()->orderBy('dateAdded', 'desc')->paginate(20);
-        $winlogs = Machine::find($id)->winlogs()->orderBy('dateAdded', 'desc')->paginate(20);
-        $goalslogs = Machine::find($id)->goalslogs()->orderBy('dateAdded', 'desc')->paginate(20);
+        $errorlogs = Machine::find($id)->errorlogs()->orderBy('created_at', 'desc')->paginate(20);
+        $moneylogs = Machine::find($id)->moneylogs()->orderBy('created_at', 'desc')->paginate(20);
+        $winlogs = Machine::find($id)->winlogs()->orderBy('created_at', 'desc')->paginate(20);
+        $goalslogs = Machine::find($id)->goalslogs()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('machines-mgmt/goals', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }

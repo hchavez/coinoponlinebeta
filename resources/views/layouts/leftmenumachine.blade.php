@@ -17,7 +17,7 @@
                         <a class="list-group-item {{ Route::current()->getName() == 'machine-management.error' ? 'list-group-item-action active' : '' }}" href="{{ url('machine-management/error', [$machine->id]) }}"> <i class="icon wb-folder" aria-hidden="true"></i>Error Logs</a>
                         <a class="list-group-item {{ Route::current()->getName() == 'machine-management.money' ? 'list-group-item-action active' : '' }}" href="{{ url('machine-management/money', [$machine->id]) }}"> <i class="icon wb-folder" aria-hidden="true"></i>Money Logs</a>
                         <a class="list-group-item {{ Route::current()->getName() == 'machine-management.win' ? 'list-group-item-action active' : '' }}" href="{{ url('machine-management/win', [$machine->id]) }}"><i class="icon wb-folder" aria-hidden="true"></i>Win Logs</a>
-                        <a class="list-group-item {{ Route::current()->getName() == 'machine-management.gaols' ? 'list-group-item-action active' : '' }}" href="{{ url('machine-management/goals', [$machine->id])}}"><i class="icon wb-folder" aria-hidden="true"></i>Goals Logs</a>
+                        <a class="list-group-item {{ Route::current()->getName() == 'machine-management.goals' ? 'list-group-item-action active' : '' }}" href="{{ url('machine-management/goals', [$machine->id])}}"><i class="icon wb-folder" aria-hidden="true"></i>Goals Logs</a>
                     </div>
 
                     <h5 class="page-aside-title">Machine Settings </h5>

@@ -260,7 +260,7 @@
                 <ul class="site-menu" data-plugin="menu">
                     <li class="site-menu-category">General</li>
                     <li class="dropdown site-menu-item has-sub {{ Route::current()->getName() == '' ? 'active' : '' }}">
-                        <a data-toggle="dropdown" href="/coinopmachineonline/public" data-dropdown-toggle="false">
+                        <a data-toggle="dropdown" href="/coinoponlinebeta/public" data-dropdown-toggle="false">
                             <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
                             <span class="site-menu-title">Dashboard</span>      
                         </a>

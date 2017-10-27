@@ -79,7 +79,7 @@
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
                                         <td >{{ $goalslog->id }} </td>
-                                        <td >{{date('F d, Y H:i:s', strtotime($goalslog->dateAdded))}}</td>
+                                        <td >{{date('F d, Y H:i:s', strtotime($goalslog->created_at))}}</td>
                                         <td >{{ $goalslog->testPlay }}</td>
                                         <td >{{ $goalslog->pkPWM }}</td>
                                         <td >{{ $goalslog->pkVolt }}</td>
@@ -123,11 +123,11 @@
 
                     <div class="row">
                         <div class="col-sm-5">
-                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to {{count($errorlogs)}} of {{count($errorlogs)}} entries</div>
+                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"> {{ $goalslogs->links() }}</div>
                         </div>
                         <div class="col-sm-7">
                             <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                {{ $errorlogs->links() }}
+                               
                             </div>
                         </div>
                     </div>
