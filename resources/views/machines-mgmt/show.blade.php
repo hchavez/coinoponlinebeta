@@ -7,36 +7,33 @@
         <div class="row" data-plugin="matchHeight" data-by-row="true">
             <div class="col-xl-3 col-md-6">
                 <!-- Widget Linearea One-->
-                <div class="card card-shadow" id="widgetLineareaOne">
+             
+                   <div class="card card-shadow" id="widgetLineareaTwo">
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
                             <div class="grey-800 float-left py-10">
-                                <i class="icon md-account grey-600 font-size-24 vertical-align-bottom mr-5"></i>                  Total Win
+                                <i class="icon md-flash grey-600 font-size-24 vertical-align-bottom mr-5"></i>  Total Money
                             </div>
-                            <span class="float-right grey-700 font-size-30">1,253</span>
+                            @unless ( empty($totalMoneyquery->ttlMoneyIn) )
+                            <span class="float-right grey-700 font-size-30">${{ $totalMoneyquery->ttlMoneyIn }}</span>
+                            @endunless                            
                         </div>
-                        <div class="mb-20 grey-500">
-                            <i class="icon md-long-arrow-up green-500 font-size-16"></i> 15%
-                            From this yesterday
-                        </div>
-
+  
                     </div>
                 </div>
                 <!-- End Widget Linearea One -->
             </div>
             <div class="col-xl-3 col-md-6">
                 <!-- Widget Linearea Two -->
-                <div class="card card-shadow" id="widgetLineareaTwo">
+                <div class="card card-shadow" id="widgetLineareaOne">
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
                             <div class="grey-800 float-left py-10">
-                                <i class="icon md-flash grey-600 font-size-24 vertical-align-bottom mr-5"></i>                  Total Money
+                                <i class="icon md-account grey-600 font-size-24 vertical-align-bottom mr-5"></i>  Total Win
                             </div>
-                            <span class="float-right grey-700 font-size-30">2,425</span>
-                        </div>
-                        <div class="mb-20 grey-500">
-                            <i class="icon md-long-arrow-up green-500 font-size-16"></i> 34.2%
-                            From this week
+                            @unless ( empty($machinerecords->totalWon) )
+                            <span class="float-right grey-700 font-size-30">{{ $machinerecords->totalWon }}</span>
+                            @endunless 
                         </div>
 
                     </div>
@@ -49,14 +46,11 @@
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
                             <div class="grey-800 float-left py-10">
-                                <i class="icon md-chart grey-600 font-size-24 vertical-align-bottom mr-5"></i>                  Total Play
+                                <i class="icon md-chart grey-600 font-size-24 vertical-align-bottom mr-5"></i>  Total Play
                             </div>
-                            <span class="float-right grey-700 font-size-30">1,864</span>
+                            <span class="float-right grey-700 font-size-30">{{ $machinerecords->playIndex}}</span>
                         </div>
-                        <div class="mb-20 grey-500">
-                            <i class="icon md-long-arrow-down red-500 font-size-16"></i> 15%
-                            From this yesterday
-                        </div>
+                        
 
                     </div>
                 </div>
@@ -68,15 +62,13 @@
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
                             <div class="grey-800 float-left py-10">
-                                <i class="icon md-view-list grey-600 font-size-24 vertical-align-bottom mr-5"></i>                  Stocks
+                                <i class="icon md-view-list grey-600 font-size-24 vertical-align-bottom mr-5"></i> Total Stocks
                             </div>
-                            <span class="float-right grey-700 font-size-30">845</span>
-                        </div>
-                        <div class="mb-20 grey-500">
-                            <i class="icon md-long-arrow-up green-500 font-size-16"></i> 18.4%
-                            From this yesterday
-                        </div>
+                            @unless ( empty($machinerecords->stockLeft) )
+                            <span class="float-right grey-700 font-size-30">{{ $machinerecords->stockLeft }}</span>
+                            @endunless
 
+                        </div>
                     </div>
                 </div>
                 <!-- End Widget Linearea Four -->
@@ -147,11 +139,69 @@
                         <div class="example-wrap">
                             <div class="row row-lg">
                                 <div class="col-xl-12">
-                                    <div class="example">
-                                        <div class="ct-chart ct-golden-section" id="exampleLineAnimation"></div>
-                                    </div>
+                                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
                                 </div>
-                               
+
+                                <script type="text/javascript">
+                                    var chart = null;
+
+                                    $(document).ready(function () {
+
+                                        chart = new Highcharts.chart('container', {
+                                            chart: {
+                                                type: 'line'
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                              
+                                            },
+                                            yAxis: {
+                                                 min: 0,
+                                                    max: 50,
+                                                      tickInterval: 10,
+                                                title: {
+                                                    text: 'Voltage ',
+                                                    
+                                                }
+                                            },
+                                            plotOptions: {
+                                                line: {
+                                                    dataLabels: {
+                                                        enabled: true
+                                                    },
+                                                    enableMouseTracking: false
+                                                }
+                                            },
+                                            series: [{
+                                                    name: 'PickupVoltage',
+                                                    data: [  ]
+                                                }, {
+                                                    name: 'RetVoltage',
+                                                    data: [  ]
+                                                }, {
+                                                    name: 'OwedWin',
+                                                    data: [ {{ $graphdataOwnedWinResult }} ]
+                                                }, {
+                                                    name: 'ExcessWin',
+                                                    data: [ {{ $graphdataExcessWinResult }} ]
+                                                }, {
+                                                    name: 'WinResult',
+                                                    data: [ {{ $graphdataWinResult }} ]
+                                                }]
+                                        });
+                                    });
+
+
+
+                                </script>
+
                             </div>
                         </div>
                         <!-- End Example css animation Chart -->
@@ -165,7 +215,7 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Claw <a href="{{ route('claw-settings.edit', ['id' => $claw_settings->machine_id]) }}"> <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        <h3 class="panel-title"> <a href="{{ route('claw-settings.edit', ['id' => $claw_settings->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Claw</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -207,7 +257,7 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Machine <a href="{{ route('machine-settings.edit', ['id' => $machine_settings->machine_id]) }}"> <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        <h3 class="panel-title"> <a href="{{ route('machine-settings.edit', ['id' => $machine_settings->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Machine</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -234,7 +284,7 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Game <a href="{{ route('game-settings.edit', ['id' => $game_settings->machine_id]) }}" > <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        <h3 class="panel-title"> <a href="{{ route('game-settings.edit', ['id' => $game_settings->machine_id]) }}" > <i class="icon wb-edit" ></i>  </a> Game</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -268,7 +318,7 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Accounts <a href="{{ route('machine-accounts.edit', ['id' => $machine_accounts->machine_id]) }}"> <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        <h3 class="panel-title"> <a href="{{ route('machine-accounts.edit', ['id' => $machine_accounts->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Accounts</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -292,7 +342,9 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Cash Boxes <a href="{{ route('machine-settings.edit', ['id' => $cash_boxes->machine_id]) }}"> <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        <h3 class="panel-title"> <a href="{{ route('machine-settings.edit', ['id' => $cash_boxes->machine_id]) }}"> 
+                              <i class="icon wb-edit" aria-hidden="true"></i>  </a>Cash Boxes
+                        </h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -323,7 +375,8 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Product Definations <a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon fa-edit" aria-hidden="true"></i>  </a></h3> 
+                        
+                        <h3 class="panel-title"> <a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon wb-edit" aria-hidden="true"></i> </a>Product Definations</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -354,6 +407,9 @@
         </div>
     </div>  
 </div>
+
+
+
 
 
 @endsection

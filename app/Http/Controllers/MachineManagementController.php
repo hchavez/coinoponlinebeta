@@ -22,6 +22,7 @@ use App\MachineAccounts;
 use App\CashBoxes;
 use App\ProductDefinitions;
 use Session;
+use Carbon\Carbon;
 
 class MachineManagementController extends Controller {
 
@@ -182,21 +183,74 @@ class MachineManagementController extends Controller {
      */
     public function show($id) {
 
+        //Get machine information
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->where('machines.id', $id)->first();
-
+        
+        //Get all the machine settings
         $machine_settings = DB::table('machine_settings')->where('machine_id', $id)->first();
         $claw_settings = DB::table('claw_settings')->where('machine_id', $id)->first();
         $game_settings = DB::table('game_settings')->where('machine_id', $id)->first();
         $machine_accounts = DB::table('machine_accounts')->where('machine_id', $id)->first();
         $product_def = DB::table('product_definitions')->where('machine_id', $id)->first();
         $cash_boxes = DB::table('cash_boxes')->where('machine_id', $id)->first();
-
+        
+        //Get Machine records
+        $machinerecords = DB::table('winlogs')
+                        ->select('winlogs.stockLeft as stockLeft', 'winlogs.totalWon as totalWon','winlogs.playIndex as playIndex')
+                        ->where('winlogs.machine_id', $id)
+                        ->whereDate('winlogs.created_at', '=', Carbon::today()->toDateString())
+                        ->orderBy('winlogs.created_at', 'desc')->first();
+        
+        $totalMoneyquery = DB::table('moneylogs')
+                        ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
+                        ->where('moneylogs.machine_id', $id)
+                        ->whereDate('moneylogs.created_at', '=', Carbon::today()->toDateString())
+                        ->orderBy('moneylogs.created_at', 'desc')->first();
+           
+        //Get Win Result Data for graphview
+        $graphdatawinquery =  DB::table('winlogs')->select('winResult')->where('machine_id', $id)->get();
+        $totalPlay = $graphdatawinquery->count();
+       
+        if($graphdatawinquery->count()){
+            foreach ($graphdatawinquery as $value) {
+                  if($value->winResult == 'won'){$tempval='1';}else{$tempval='0';}
+                  $graphdataresult[] = $tempval;
+            }
+            $graphdataWinResult = join($graphdataresult, ',');
+        }else{$graphdataWinResult=null;}
+        
+        //Get Excess Win Data for graphview
+        $graphdataExcessWinQuery =  DB::table('winlogs')->select('excessWin')->where('machine_id', $id)->get();
+         if($graphdataExcessWinQuery->count()){
+            foreach ($graphdataExcessWinQuery as $value) {
+                  $graphdataExcessWinresult[] = $value->excessWin;
+            }
+            $graphdataExcessWinResult = join($graphdataExcessWinresult, ',');
+         }else{$graphdataExcessWinResult=null;}
+        
+         //Get Owned Win Data for graphview
+        $graphdataOwnedWinQuery =  DB::table('winlogs')->select('owedWin')->where('machine_id', $id)->get();
+        if($graphdataOwnedWinQuery->count()){
+            foreach ($graphdataOwnedWinQuery as $value) {
+                  $graphdataOwnedWinresult[] = $value->owedWin;
+            }
+            $graphdataOwnedWinResult = join($graphdataOwnedWinresult, ',');
+        }else{$graphdataOwnedWinResult=null;}
+        
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
-            'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes]);
+            'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
+            'graphdataWinResult' => $graphdataWinResult,
+            'graphdataExcessWinResult' => $graphdataExcessWinResult,
+            'graphdataOwnedWinResult' => $graphdataOwnedWinResult,
+            'machinerecords' => $machinerecords,
+            'totalPlay' => $totalPlay,
+            'totalMoneyquery' => $totalMoneyquery
+            ]);
+        
     }
     
     public function error($id) {
@@ -206,7 +260,7 @@ class MachineManagementController extends Controller {
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->orderBy('type', 'asc')->paginate(20);
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
