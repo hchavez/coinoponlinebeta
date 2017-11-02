@@ -48,7 +48,9 @@
                             <div class="grey-800 float-left py-10">
                                 <i class="icon md-chart grey-600 font-size-24 vertical-align-bottom mr-5"></i>  Total Play
                             </div>
-                            <span class="float-right grey-700 font-size-30">{{ $machinerecords->playIndex}}</span>
+                            @unless ( empty($machinerecords->playIndex) )
+                            <span class="float-right grey-700 font-size-30">{{ $machinerecords->playIndex }}</span>
+                            @endunless
                         </div>
                         
 

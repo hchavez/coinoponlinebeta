@@ -263,7 +263,7 @@ class MachineManagementController extends Controller {
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
 
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
@@ -278,7 +278,7 @@ class MachineManagementController extends Controller {
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
 
         return view('machines-mgmt/win', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
@@ -293,7 +293,7 @@ class MachineManagementController extends Controller {
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
         return view('machines-mgmt/money', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 
