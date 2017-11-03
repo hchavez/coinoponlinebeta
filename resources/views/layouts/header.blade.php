@@ -9,7 +9,7 @@
                 data-toggle="collapse">
             <i class="icon wb-more-horizontal" aria-hidden="true"></i>
         </button>
-        <a class="navbar-brand navbar-brand-center" href="/coinopmachineonline/public">
+        <a class="navbar-brand navbar-brand-center" href="<?php echo url('/'); ?>">
             <img class="navbar-brand-logo navbar-brand-logo-normal" src="{{ asset("/assets/images/logo.png") }}"
                  title="Remark">
             <img class="navbar-brand-logo navbar-brand-logo-special" src="{{ asset("/assets/images/logo-blue.png") }}"

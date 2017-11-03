@@ -103,7 +103,8 @@
                                                {{ $machinelog->machine_model}} @endif </td>
                                             <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->machine_type}}</span> @else
                                                {{ $machinelog->machine_type}} @endif</td>
-                                            <td><strong><a href="#" >
+                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->id}}" style="text-decoration: none;">
+
                                             @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->error}}</span> @else
                                                {{ $machinelog->error}} @endif
                                            @if ($machinelog->errortype == '2') <span class="badge badge-warning">Warning!</span> @endif @if ($machinelog->errortype == '3')<span class="badge badge-info">Notice!</span> @endif </a></strong></td>
@@ -129,11 +130,31 @@
     </div>
     <!-- End Second Row -->
 
-
 </div>
 
-<!-- End Page -->
+ @foreach ($machinelogs as $machinelog)
+<!-- Modal -->
+<div id="myModal{{$machinelog->id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Type Type: {{ $machinelog->errortype }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{ $machinelog->error }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- End Page -->
+ @endforeach
 
 
 @endsection

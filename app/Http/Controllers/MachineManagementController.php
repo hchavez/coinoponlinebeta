@@ -204,7 +204,7 @@ class MachineManagementController extends Controller {
                         ->where('winlogs.machine_id', $id)
                         ->whereDate('winlogs.created_at', '=', Carbon::today()->toDateString())
                         ->orderBy('winlogs.created_at', 'desc')->first();
-        
+    
         $totalMoneyquery = DB::table('moneylogs')
                         ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
                         ->where('moneylogs.machine_id', $id)

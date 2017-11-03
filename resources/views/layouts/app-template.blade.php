@@ -8,7 +8,7 @@
         <meta name="author" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
-        <link rel="apple-touch-icon" href="{{ asset("/assets/images/apple-touch-icon.png") }}") }}">
+        <link rel="apple-touch-icon" href="{{ asset("/assets/images/apple-touch-icon.png") }}">
         <link rel="shortcut icon" href="{{ asset("/assets/images/favicon.ico") }}">
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{ asset("/global/css/bootstrap.min.css") }}">
