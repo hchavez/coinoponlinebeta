@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\CashBoxes;
+use Session;
+use URL;
 
 class CashBoxesController extends Controller {
 
@@ -73,14 +75,15 @@ class CashBoxesController extends Controller {
      */
     public function edit($id) {
         $machine_cash_boxes = DB::table('cash_boxes')
-                        ->select('cash_boxes.*','machine_id as id')
+                        ->select('cash_boxes.*', 'machine_id as id')
                         ->where('machine_id', $id)->first();
 
         if ($machine_cash_boxes == null || count($machine_cash_boxes) == 0) {
             return redirect()->intended('/cash-boxes');
         }
 
-        return view('cash-boxes/edit', ['machine' => $machine_cash_boxes]);
+        return view('cash-boxes/edit', ['machine' => $machine_cash_boxes])
+                        ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
     /**
@@ -92,10 +95,7 @@ class CashBoxesController extends Controller {
      */
     public function update(Request $request, $id) {
 
-        $this->validateInput($request);
-
         $input = [
-            'machine_id' => $id,
             'coin1_total_in' => $request['coin1_total_in'],
             'coin2_total_in' => $request['coin2_total_in'],
             'coin3_total_in' => $request['coin3_total_in'],
@@ -108,19 +108,9 @@ class CashBoxesController extends Controller {
         ];
 
 
-
         if (CashBoxes::where('machine_id', $id)->update($input)) {
-            $request->session()->flash('message.level', 'success');
-            $request->session()->flash('message.content', 'Machine Settings successfully updated!');
-        } else {
-            $request->session()->flash('message.level', 'danger');
-            $request->session()->flash('message.content', 'Error!');
+            return back()->with('success', 'Machine Cash Boxes successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
-
-
-        $machine = DB::table('machine_settings')
-                        ->where('machine_id', $id)->first();
-        return view('cash-boxes/' . $id . '/edit', ['machine' => $machine]);
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ProductDefinitions;
+use Session;
+use URL;
 
 class ProductDefinitionsController extends Controller
 {
@@ -90,7 +92,9 @@ class ProductDefinitionsController extends Controller
             return redirect()->intended('/product-definitions');
         }
 
-        return view('product-definitions/edit', ['machine' => $machine_prod_def]);
+        return view('product-definitions/edit', ['machine' => $machine_prod_def])
+               ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+                                
     }
 
     /**
@@ -102,16 +106,21 @@ class ProductDefinitionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $site = ProductDefinitions::findOrFail($id);
-     
+
         $input = [
-            'max_voltage' => $request['max_voltage'],
-            'min_voltage' => $request['min_voltage']
+            'coinPerPlay' => $request['coinPerPlay'],
+            'winPercentage' => $request['winPercentage'],
+            'winPercentage' => $request['ttlPurCost'],
+            'numberOfPlays' => $request['numberOfPlays'],
+            'stockLeft' => $request['stockLeft'],
+            'stockAdded' => $request['stockAdded'],
+            'stockRemoved' => $request['stockRemoved'],
         ];
-        ProductDefinitions::where('machine_id', $id)
-            ->update($input);
+
+        if (ProductDefinitions::where('machine_id', $id)->update($input)) {
+            return back()->with('success', 'Machine Product Definitions successfully updated!')->with('myreferrer', $request->get('myreferrer'));
+        }
         
-        return redirect()->intended('/product-definitions');
     }
 
     /**

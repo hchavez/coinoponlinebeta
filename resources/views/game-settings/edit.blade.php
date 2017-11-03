@@ -11,11 +11,19 @@
             <div class="panel-body">
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
+                    <?php if (Session::has('success')): ?>
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <?php echo Session::get('success', ''); ?>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('game-settings.update', ['id' => $machine->id]) }}">
                                 <input type="hidden" name="_method" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
                                 <div class="form-group{{ $errors->has('playIndex') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">playIndex</label>
@@ -30,8 +38,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                 
- 
+
+
                                 <div class="form-group{{ $errors->has('owedWin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">owedWin</label>
 
@@ -45,7 +53,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('excessWin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">excessWin</label>
 
@@ -59,7 +67,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('prevEwin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">prevEwin</label>
 
@@ -73,7 +81,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">luckyToWin</label>
 
@@ -87,7 +95,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('gameLeft') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">gameLeft</label>
 
@@ -101,7 +109,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('randomedTime') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">randomedTime</label>
 
@@ -115,7 +123,7 @@
                                         @endif
                                     </div>
                                 </div>
- 
+
                                 <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">gameTime</label>
 
@@ -129,7 +137,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">

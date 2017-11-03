@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ClawSettings;
+use Session;    
+use URL;
 
 class ClawSettingsController extends Controller {
 
@@ -72,16 +74,17 @@ class ClawSettingsController extends Controller {
      */
     public function edit($id) {
         //$machine = DB::table('claw_settings')->where('machine_id', $id)->first();
-        
+
         $machine = DB::table('claw_settings')
-                        ->select('claw_settings.*','machine_id as id')
+                        ->select('claw_settings.*', 'machine_id as id')
                         ->where('machine_id', $id)->first();
-                                
+
         if ($machine == null || count($machine) == 0) {
             return redirect()->intended('/claw-settings');
         }
 
-        return view('claw-settings/edit', ['machine' => $machine]);
+        return view('claw-settings/edit', ['machine' => $machine])
+                        ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
     /**
@@ -92,7 +95,6 @@ class ClawSettingsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $site = ClawSettings::findOrFail($id);
 
         $input = [
             'max_voltage' => $request['max_voltage'],
@@ -104,26 +106,23 @@ class ClawSettingsController extends Controller {
             'latest_PWM' => $request['latest_PWM'],
             'plusPick' => $request['plusPick'],
             'plusPickUpPWM' => $request['plusPickUpPWM'],
-            'startPWM' => $request['startPWM '],
+            'startPWM' => $request['startPWM'],
             'startVolt' => $request['startVolt'],
-            'retPWM' => $request['retPWM '],
+            'retPWM' => $request['retPWM'],
             'retVolt' => $request['retVolt'],
-            'pickPWM' => $request['pickPWM '],
-            'pickVolt' => $request['pickVolt '],
-            'incVolt' => $request['incVolt '],
+            'pickPWM' => $request['pickPWM'],
+            'pickVolt' => $request['pickVolt'],
+            'incVolt' => $request['incVolt'],
             'decVolt' => $request['decVolt'],
             'diffPickRet' => $request['diffPickRet'],
-            'incVolt' => $request['incVolt '],
-            'insuffVoltIn' => $request['insuffVoltIn']
+            'voltSupply' => $request['voltSupply'],
+            'insuffVoltInc' => $request['insuffVoltInc']
         ];
         
-
-
-
-        ClawSettings::where('machine_id', $id)
-                ->update($input);
-
-        return redirect()->intended('machine-management/claw');
+        
+        if (ClawSettings::where('machine_id', $id)->update($input)) {
+            return back()->with('success', 'Machine Claw Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
+        }
     }
 
     /**

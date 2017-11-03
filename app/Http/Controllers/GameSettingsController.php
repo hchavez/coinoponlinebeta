@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\GameSettings;
-use App\User;
+use Session;    
+use URL;
 
 class GameSettingsController extends Controller {
 
@@ -89,8 +90,9 @@ class GameSettingsController extends Controller {
         if ($game_settings == null || count($game_settings) == 0) {
             return redirect()->intended('/game-settings');
         }
-
-        return view('game-settings/edit', ['machine' => $game_settings]);
+         return view('game-settings/edit', ['machine' => $game_settings])
+                        ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+         
     }
 
     /**
@@ -102,10 +104,7 @@ class GameSettingsController extends Controller {
      */
     public function update(Request $request, $id) {
 
-        $this->validateInput($request);
-
         $input = [
-            'machine_id' => $id,
             'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
@@ -116,20 +115,9 @@ class GameSettingsController extends Controller {
             'gameTime' => $request['gameTime']
         ];
 
-
-
         if (GameSettings::where('machine_id', $id)->update($input)) {
-            $request->session()->flash('message.level', 'success');
-            $request->session()->flash('message.content', 'Machine Settings successfully updated!');
-        } else {
-            $request->session()->flash('message.level', 'danger');
-            $request->session()->flash('message.content', 'Error!');
+            return back()->with('success', 'Machine Game Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
-
-
-        $machine = DB::table('game_settings')
-                        ->where('machine_id', $id)->first();
-        return view('machine-settings/' . $id . '/show', ['machine' => $machine]);
     }
 
     /**

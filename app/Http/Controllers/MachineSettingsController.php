@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\MachineSettings;
-use App\User;
+use Session;    
+use URL;
 
 class MachineSettingsController extends Controller {
 
@@ -84,7 +85,9 @@ class MachineSettingsController extends Controller {
             return redirect()->intended('/machine-settings');
         }
 
-        return view('machine-settings/edit', ['machine' => $machine]);
+        return view('machine-settings/edit', ['machine' => $machine])
+        ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+        
     }
 
     /**
@@ -109,17 +112,10 @@ class MachineSettingsController extends Controller {
         
         
         if (MachineSettings::where('machine_id', $id)->update($input)) {
-            $request->session()->flash('message.level', 'success');
-            $request->session()->flash('message.content', 'Machine Settings successfully updated!');
-        } else {
-            $request->session()->flash('message.level', 'danger');
-            $request->session()->flash('message.content', 'Error!');
+           return back()->with('success', 'Machine Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
 
 
-        $machine = DB::table('machine_settings')
-                        ->where('machine_id', $id)->first();
-        return view('machine-settings/'.$id.'/edit', ['machine' => $machine]);
     }
 
     /**

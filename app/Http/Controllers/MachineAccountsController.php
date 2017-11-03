@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\MachineAccounts;
-use App\User;
+use Session;    
+use URL;
 
 class MachineAccountsController extends Controller {
 
@@ -81,7 +82,8 @@ class MachineAccountsController extends Controller {
             return redirect()->intended('/machine-accounts');
         }
 
-        return view('machine-accounts/edit', ['machine' => $machine_accounts]);
+         return view('machine-accounts/edit', ['machine' => $machine_accounts])
+                        ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
     /**
@@ -93,28 +95,15 @@ class MachineAccountsController extends Controller {
      */
     public function update(Request $request, $id) {
 
-        $this->validateInput($request);
-
         $input = [
-               'machine_id' => $request['machine_id'],
             'total_dollar_in' => $request['total_dollar_in'],
             'total_won' => $request['total_won']
         ];
 
-        
-        
-        if (MachineAccounts::where('machine_id', $id)->update($input)) {
-            $request->session()->flash('message.level', 'success');
-            $request->session()->flash('message.content', 'Machine Settings successfully updated!');
-        } else {
-            $request->session()->flash('message.level', 'danger');
-            $request->session()->flash('message.content', 'Error!');
+         if (MachineAccounts::where('machine_id', $id)->update($input)) {
+            return back()->with('success', 'Machine Accounts successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
-
-
-        $machine = DB::table('machine_settings')
-                        ->where('machine_id', $id)->first();
-        return view('machine-accounts/'.$id.'/edit', ['machine' => $machine]);
+        
     }
 
     /**

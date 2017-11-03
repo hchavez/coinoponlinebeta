@@ -18,9 +18,8 @@
                     </div>
                 </div>
             </div>
-                    @if(Session::has('message'))
-                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
-                    @endif
+               
+                    
             <div class="row"><div class="col-sm-12">
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>

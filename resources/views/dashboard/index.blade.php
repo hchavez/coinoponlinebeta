@@ -99,22 +99,31 @@
 
                                         @foreach ($machinelogs as $machinelog)
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->machine_model}}</span> @else
-                                               {{ $machinelog->machine_model}} @endif </td>
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->machine_type}}</span> @else
-                                               {{ $machinelog->machine_type}} @endif</td>
-                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->id}}" style="text-decoration: none;">
+                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> machine_model}}</span> @else
+                                                {{ $machinelog -> machine_model}} @endif </td>
+                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> machine_type}}</span> @else
+                                                {{ $machinelog -> machine_type}} @endif</td>
+                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog -> error_id}}" style="text-decoration: none;">
 
-                                            @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->error}}</span> @else
-                                               {{ $machinelog->error}} @endif
-                                           @if ($machinelog->errortype == '2') <span class="badge badge-warning">Warning!</span> @endif @if ($machinelog->errortype == '3')<span class="badge badge-info">Notice!</span> @endif </a></strong></td>
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog->site_name}} {{ $machinelog->street}} {{ $machinelog->suburb}} {{ $machinelog->statecode}}</span> @else
-                                               {{ $machinelog->site_name}} {{ $machinelog->street}} {{ $machinelog->suburb}} {{ $machinelog->statecode}} @endif 
-                                               </td>   
+                                                        @if ($machinelog->errortype == '2') 
+                                                        <span class="badge badge-warning">Warning!</span> 
+                                                        @endif @if ($machinelog->errortype == '3')
+                                                        <span class="badge badge-info">Notice!</span> 
+                                                        @endif
+                                                        
+                                                        @if ($machinelog->errortype == '1') 
+                                                        <span class="blink_me"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                                        @else
+                                                        <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
+                                                        @endif
+                                                         </a></strong></td>
+                                                        
+                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}}</span> @else
+                                                {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
+                                            </td>   
 
                                         </tr>
                                         @endforeach
-
 
                                     </tbody>
                                 </table>
@@ -132,29 +141,51 @@
 
 </div>
 
- @foreach ($machinelogs as $machinelog)
+@foreach ($machinelogs as $machinelog)
 <!-- Modal -->
-<div id="myModal{{$machinelog->id}}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Type Type: {{ $machinelog->errortype }}</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{ $machinelog->error }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+                <h4 class="modal-title">Error Type: 
+
+                
+                @if ($machinelog->errortype == "1")
+                   <span class="badge badge-danger">Needs Immediate Attention!</span> 
+                @endif
+                
+                @if ($machinelog->errortype == "2")
+                    <span class="badge badge-warning">Warning!</span
+                @endif
+                
+                @if ($machinelog->errortype == "3")
+                   <span class="badge badge-info">Notice!</span> 
+                @endif
+
+                                                        
+                
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Error Message: <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
+                 <p>Machine Type: </p>
+                 <p>Machine Model: </p>
+                 <p>Site Address: </p>
+                {{$machinelog->errortype}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
-
-  </div>
 </div>
 <!-- End Page -->
- @endforeach
+@endforeach
 
 
 @endsection

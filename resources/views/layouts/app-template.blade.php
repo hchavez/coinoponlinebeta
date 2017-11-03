@@ -21,8 +21,6 @@
         <link rel="stylesheet" href="{{ asset("/global/vendor/intro-js/introjs.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/slidepanel/slidePanel.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/flag-icon-css/flag-icon.css") }}">
-        <link rel="stylesheet" href="{{ asset("/global/vendor/chartist/chartist.css") }}">
-        <link rel="stylesheet" href="{{ asset("/global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/aspieprogress/asPieProgress.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/jquery-selective/jquery-selective.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css") }}">
@@ -91,8 +89,6 @@
         <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
         <script src="{{ asset("/global/vendor/screenfull/screenfull.js") }}"></script>
         <script src="{{ asset("/global/vendor/slidepanel/jquery-slidePanel.js") }}"></script>
-        <script src="{{ asset("/global/vendor/chartist/chartist.js") }}"></script>
-        <script src="{{ asset("/global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/aspieprogress/jquery-asPieProgress.js") }}"></script>
         <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
@@ -127,7 +123,7 @@
         <!--AngularJS-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
         <script src="{{ asset("/assets/js/app.js") }}"></script>
-         <script src="{{ asset("/assets/js/chart.js") }}"></script>
+ 
     </body>
 </html>
 

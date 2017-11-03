@@ -11,17 +11,25 @@
             <div class="panel-body">
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
+                      <?php if(Session::has('success')): ?>
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <?php echo Session::get('success', ''); ?>
+                        </div>
+                        <?php endif; ?>
+                    
                     <div class="row">
                         <div class="col-sm-12">
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('machine-settings.update', ['id' => $machine->id]) }}">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('claw-settings.update', ['id' => $machine->id]) }}">
                                 <input type="hidden" name="_method" value="PATCH">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
                                 <div class="form-group{{ $errors->has('max_voltage') ? ' has-error' : '' }}">
                                     <label for="max_voltage" class="col-md-4 control-label">max_voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="max_voltage" type="text" class="form-control" name="max_voltage" value="{{ $machine->max_voltage }}" required autofocus>
+                                        <input id="max_voltage" type="text" class="form-control" name="max_voltage" value="{{ $machine->max_voltage }}"   autofocus>
 
                                         @if ($errors->has('max_voltage'))
                                         <span class="help-block">
@@ -36,7 +44,7 @@
                                     <label for="min_voltage" class="col-md-4 control-label">min_voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="min_voltage" type="text" class="form-control" name="min_voltage" value="{{ $machine->min_voltage }}" required autofocus>
+                                        <input id="min_voltage" type="text" class="form-control" name="min_voltage" value="{{ $machine->min_voltage }}"   autofocus>
 
                                         @if ($errors->has('max_voltage'))
                                         <span class="help-block">
@@ -50,7 +58,7 @@
                                     <label for="max_PWM" class="col-md-4 control-label">max_PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="max_PWM" type="text" class="form-control" name="max_PWM" value="{{ $machine->max_PWM }}" required autofocus>
+                                        <input id="max_PWM" type="text" class="form-control" name="max_PWM" value="{{ $machine->max_PWM }}"   autofocus>
 
                                         @if ($errors->has('max_PWM'))
                                         <span class="help-block">
@@ -64,7 +72,7 @@
                                     <label for="min_PWM" class="col-md-4 control-label">min_PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="min_PWM" type="text" class="form-control" name="min_PWM" value="{{ $machine->min_PWM }}" required autofocus>
+                                        <input id="min_PWM" type="text" class="form-control" name="min_PWM" value="{{ $machine->min_PWM }}"   autofocus>
 
                                         @if ($errors->has('min_PWM'))
                                         <span class="help-block">
@@ -77,7 +85,7 @@
                                     <label for="voltDecRetPercentage" class="col-md-4 control-label">voltDecRetPercentage</label>
 
                                     <div class="col-md-6">
-                                        <input id="voltDecRetPercentage" type="text" class="form-control" name="voltDecRetPercentage" value="{{ $machine->voltDecRetPercentage }}" required autofocus>
+                                        <input id="voltDecRetPercentage" type="text" class="form-control" name="voltDecRetPercentage" value="{{ $machine->voltDecRetPercentage }}"   autofocus>
 
                                         @if ($errors->has('voltDecRetPercentage'))
                                         <span class="help-block">
@@ -90,7 +98,7 @@
                                     <label for="latest_voltage" class="col-md-4 control-label">latest_voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="latest_voltage" type="text" class="form-control" name="latest_voltage" value="{{ $machine->latest_voltage }}" required autofocus>
+                                        <input id="latest_voltage" type="text" class="form-control" name="latest_voltage" value="{{ $machine->latest_voltage }}"   autofocus>
 
                                         @if ($errors->has('latest_voltage'))
                                         <span class="help-block">
@@ -103,7 +111,7 @@
                                     <label for="latest_PWM" class="col-md-4 control-label">latest_PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="latest_PWM" type="text" class="form-control" name="latest_PWM" value="{{ $machine->latest_PWM }}" required autofocus>
+                                        <input id="latest_PWM" type="text" class="form-control" name="latest_PWM" value="{{ $machine->latest_PWM }}"   autofocus>
 
                                         @if ($errors->has('latest_PWM'))
                                         <span class="help-block">
@@ -116,7 +124,7 @@
                                     <label for="plusPick" class="col-md-4 control-label">plusPick</label>
 
                                     <div class="col-md-6">
-                                        <input id="plusPick" type="text" class="form-control" name="plusPick" value="{{ $machine->plusPick }}" required autofocus>
+                                        <input id="plusPick" type="text" class="form-control" name="plusPick" value="{{ $machine->plusPick }}"   autofocus>
 
                                         @if ($errors->has('plusPick'))
                                         <span class="help-block">
@@ -129,7 +137,7 @@
                                     <label for="plusPickUpPWM" class="col-md-4 control-label">plusPickUpPWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="plusPickUpPWM" type="text" class="form-control" name="plusPickUpPWM" value="{{ $machine->plusPickUpPWM }}" required autofocus>
+                                        <input id="plusPickUpPWM" type="text" class="form-control" name="plusPickUpPWM" value="{{ $machine->plusPickUpPWM }}"   autofocus>
 
                                         @if ($errors->has('plusPickUpPWM'))
                                         <span class="help-block">
@@ -142,7 +150,7 @@
                                     <label for="startPWM" class="col-md-4 control-label">startPWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="startPWM" type="text" class="form-control" name="startPWM" value="{{ $machine->startPWM }}" required autofocus>
+                                        <input id="startPWM" type="text" class="form-control" name="startPWM" value="{{ $machine->startPWM }}"   autofocus>
 
                                         @if ($errors->has('startPWM'))
                                         <span class="help-block">
@@ -155,7 +163,7 @@
                                     <label for="startVolt" class="col-md-4 control-label">startVolt</label>
 
                                     <div class="col-md-6">
-                                        <input id="startVolt" type="text" class="form-control" name="startVolt" value="{{ $machine->startVolt }}" required autofocus>
+                                        <input id="startVolt" type="text" class="form-control" name="startVolt" value="{{ $machine->startVolt }}"   autofocus>
 
                                         @if ($errors->has('startVolt'))
                                         <span class="help-block">
@@ -168,7 +176,7 @@
                                     <label for="retPWM" class="col-md-4 control-label">retPWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="retPWM" type="text" class="form-control" name="retPWM" value="{{ $machine->retPWM }}" required autofocus>
+                                        <input id="retPWM" type="text" class="form-control" name="retPWM" value="{{ $machine->retPWM }}"   autofocus>
 
                                         @if ($errors->has('retPWM'))
                                         <span class="help-block">
@@ -181,7 +189,7 @@
                                     <label for="retVolt" class="col-md-4 control-label">retVolt</label>
 
                                     <div class="col-md-6">
-                                        <input id="retVolt" type="text" class="form-control" name="retVolt" value="{{ $machine->retVolt }}" required autofocus>
+                                        <input id="retVolt" type="text" class="form-control" name="retVolt" value="{{ $machine->retVolt }}"   autofocus>
 
                                         @if ($errors->has('retVolt'))
                                         <span class="help-block">
@@ -194,7 +202,7 @@
                                     <label for="pickPWM" class="col-md-4 control-label">pickPWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="pickPWM" type="text" class="form-control" name="pickPWM" value="{{ $machine->pickPWM }}" required autofocus>
+                                        <input id="pickPWM" type="text" class="form-control" name="pickPWM" value="{{ $machine->pickPWM }}"   autofocus>
 
                                         @if ($errors->has('pickPWM'))
                                         <span class="help-block">
@@ -207,7 +215,7 @@
                                     <label for="pickVolt" class="col-md-4 control-label">pickVolt</label>
 
                                     <div class="col-md-6">
-                                        <input id="pickVolt" type="text" class="form-control" name="pickVolt" value="{{ $machine->pickVolt }}" required autofocus>
+                                        <input id="pickVolt" type="text" class="form-control" name="pickVolt" value="{{ $machine->pickVolt }}"   autofocus>
 
                                         @if ($errors->has('pickVolt'))
                                         <span class="help-block">
@@ -220,7 +228,7 @@
                                     <label for="incVolt" class="col-md-4 control-label">incVolt</label>
 
                                     <div class="col-md-6">
-                                        <input id="incVolt" type="text" class="form-control" name="incVolt" value="{{ $machine->incVolt }}" required autofocus>
+                                        <input id="incVolt" type="text" class="form-control" name="incVolt" value="{{ $machine->incVolt }}"   autofocus>
 
                                         @if ($errors->has('incVolt'))
                                         <span class="help-block">
@@ -233,7 +241,7 @@
                                     <label for="decVolt" class="col-md-4 control-label">decVolt</label>
 
                                     <div class="col-md-6">
-                                        <input id="decVolt" type="text" class="form-control" name="decVolt" value="{{ $machine->decVolt }}" required autofocus>
+                                        <input id="decVolt" type="text" class="form-control" name="decVolt" value="{{ $machine->decVolt }}"   autofocus>
 
                                         @if ($errors->has('decVolt'))
                                         <span class="help-block">
@@ -247,7 +255,7 @@
                                     <label for="diffPickRet" class="col-md-4 control-label">diffPickRet</label>
 
                                     <div class="col-md-6">
-                                        <input id="diffPickRet" type="text" class="form-control" name="diffPickRet " value="{{ $machine->diffPickRet }}" required autofocus>
+                                        <input id="diffPickRet" type="text" class="form-control" name="diffPickRet" value="{{ $machine->diffPickRet }}"   autofocus>
 
                                         @if ($errors->has('diffPickRet'))
                                         <span class="help-block">
@@ -261,7 +269,7 @@
                                     <label for="incVolt" class="col-md-4 control-label">voltSupply </label>
 
                                     <div class="col-md-6">
-                                        <input id="voltSupply " type="text" class="form-control" name="voltSupply " value="{{ $machine->voltSupply  }}" required autofocus>
+                                        <input id="voltSupply" type="text" class="form-control" name="voltSupply" value="{{ $machine->voltSupply  }}"  autofocus>
 
                                         @if ($errors->has('voltSupply '))
                                         <span class="help-block">
@@ -274,7 +282,7 @@
                                     <label for="insuffVoltInc" class="col-md-4 control-label">insuffVoltInc </label>
 
                                     <div class="col-md-6">
-                                        <input id="insuffVoltInc" type="text" class="form-control" name="insuffVoltInc" value="{{ $machine->insuffVoltInc }}" required autofocus>
+                                        <input id="insuffVoltInc" type="text" class="form-control" name="insuffVoltInc" value="{{ $machine->insuffVoltInc }}"   autofocus>
 
                                         @if ($errors->has('insuffVoltInc'))
                                         <span class="help-block">
