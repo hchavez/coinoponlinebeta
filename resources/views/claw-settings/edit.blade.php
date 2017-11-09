@@ -134,45 +134,8 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('plusPickUpPWM') ? ' has-error' : '' }}">
-                                    <label for="plusPickUpPWM" class="col-md-4 control-label">plusPickUpPWM</label>
-
-                                    <div class="col-md-6">
-                                        <input id="plusPickUpPWM" type="text" class="form-control" name="plusPickUpPWM" value="{{ $machine->plusPickUpPWM }}"   autofocus>
-
-                                        @if ($errors->has('plusPickUpPWM'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('plusPickUpPWM') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="form-group{{ $errors->has('startPWM') ? ' has-error' : '' }}">
-                                    <label for="startPWM" class="col-md-4 control-label">startPWM</label>
-
-                                    <div class="col-md-6">
-                                        <input id="startPWM" type="text" class="form-control" name="startPWM" value="{{ $machine->startPWM }}"   autofocus>
-
-                                        @if ($errors->has('startPWM'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('startPWM') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="form-group{{ $errors->has('startVolt') ? ' has-error' : '' }}">
-                                    <label for="startVolt" class="col-md-4 control-label">startVolt</label>
-
-                                    <div class="col-md-6">
-                                        <input id="startVolt" type="text" class="form-control" name="startVolt" value="{{ $machine->startVolt }}"   autofocus>
-
-                                        @if ($errors->has('startVolt'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('startVolt') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                            
+                           
                                 <div class="form-group{{ $errors->has('retPWM') ? ' has-error' : '' }}">
                                     <label for="retPWM" class="col-md-4 control-label">retPWM</label>
 
@@ -225,6 +188,20 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="form-group{{ $errors->has('pickUpLoLimitPWM') ? ' has-error' : '' }}">
+                                    <label for="pickUpLoLimitPWM" class="col-md-4 control-label">pickUpLoLimitPWM</label>
+
+                                    <div class="col-md-6">
+                                        <input id="pickUpLoLimitPWM" type="text" class="form-control" name="pickUpLoLimitPWM" value="{{ $machine->pickUpLoLimitPWM }}"   autofocus>
+
+                                        @if ($errors->has('pickUpLoLimitPWM'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('pickUpLoLimitPWM') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group{{ $errors->has('incVolt') ? ' has-error' : '' }}">
                                     <label for="incVolt" class="col-md-4 control-label">incVolt</label>
 
@@ -292,7 +269,19 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="form-group{{ $errors->has('voltReso') ? ' has-error' : '' }}">
+                                    <label for="voltReso" class="col-md-4 control-label">voltReso </label>
 
+                                    <div class="col-md-6">
+                                        <input id="voltReso" type="text" class="form-control" name="voltReso" value="{{ $machine->voltReso }}"   autofocus>
+
+                                        @if ($errors->has('voltReso'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('voltReso') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
 
 
