@@ -60,6 +60,7 @@ class ProductDefinitionsController extends Controller
             'stockLeft' => $request['stockLeft'],
             'stockAdded' => $request['stockAdded'],
             'stockRemoved' => $request['stockRemoved'],
+            'status' => '0'
         ]);
 
         return redirect()->intended('system-management/site');

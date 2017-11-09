@@ -104,7 +104,8 @@ class CashBoxesController extends Controller {
             'total_test' => $request['total_test'],
             'insuffMonPlay' => $request['insuffMonPlay'],
             'rejectionCounter' => $request['rejectionCounter'],
-            'insuffMonClick' => $request['insuffMonClick']
+            'insuffMonClick' => $request['insuffMonClick'],
+            'status' => '0'
         ];
 
 

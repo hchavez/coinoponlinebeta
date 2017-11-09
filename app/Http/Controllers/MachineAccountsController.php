@@ -50,7 +50,8 @@ class MachineAccountsController extends Controller {
         MachineAccounts::create([
              'machine_id' => $request['machine_id'],
             'total_dollar_in' => $request['total_dollar_in'],
-            'total_won' => $request['total_won']
+            'total_won' => $request['total_won'],
+            'status' => '0'
         ]);
 
 

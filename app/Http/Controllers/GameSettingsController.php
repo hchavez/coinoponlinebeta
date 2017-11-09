@@ -56,7 +56,8 @@ class GameSettingsController extends Controller {
             'luckyToWin' => $request['luckyToWin'],
             'gameLeft' => $request['gameLeft'],
             'randomedTime' => $request['randomedTime'],
-            'gameTime' => $request['gameTime']
+            'gameTime' => $request['gameTime'],
+            'status' => '0'
         ]);
 
 

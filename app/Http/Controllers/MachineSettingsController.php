@@ -107,7 +107,8 @@ class MachineSettingsController extends Controller {
             'yTime' => $request['yTime'],
             'xSpeed' => $request['xSpeed'],
             'ySpeed' => $request['ySpeed'],
-            'zSpeed' => $request['zSpeed']
+            'zSpeed' => $request['zSpeed'],
+            'status' => '0'
         ];
         
         

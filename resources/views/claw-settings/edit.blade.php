@@ -25,6 +25,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
+
                                 <div class="form-group{{ $errors->has('max_voltage') ? ' has-error' : '' }}">
                                     <label for="max_voltage" class="col-md-4 control-label">max_voltage</label>
 
