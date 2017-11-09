@@ -109,11 +109,13 @@ class ClawSettingsController extends Controller {
             'retVolt' => $request['retVolt'],
             'pickPWM' => $request['pickPWM'],
             'pickVolt' => $request['pickVolt'],
+            'pickUpLoLimitPWM' => $request['pickUpLoLimitPWM'],
             'incVolt' => $request['incVolt'],
             'decVolt' => $request['decVolt'],
             'diffPickRet' => $request['diffPickRet'],
             'voltSupply' => $request['voltSupply'],
             'insuffVoltInc' => $request['insuffVoltInc'],
+            'voltReso' => $request['voltReso'],
             'status' => '0',
         ];
         
