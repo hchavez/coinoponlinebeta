@@ -25,6 +25,20 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
+                                 <div class="form-group{{ $errors->has('ipaddress') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">ipaddress</label>
+
+                                    <div class="col-md-6">
+                                        <input id="ipaddress" type="text" class="form-control" name="ipaddress" value="{{ $machine->ipaddress }}" required autofocus>
+
+                                        @if ($errors->has('ipaddress'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('ipaddress') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group{{ $errors->has('total_won') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">total dollar in</label>
 

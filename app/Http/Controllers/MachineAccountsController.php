@@ -97,8 +97,10 @@ class MachineAccountsController extends Controller {
     public function update(Request $request, $id) {
 
         $input = [
+            'ipaddress' => $request['ipaddress'],
             'total_dollar_in' => $request['total_dollar_in'],
-            'total_won' => $request['total_won']
+            'total_won' => $request['total_won'],
+            'status' => '0'
         ];
 
          if (MachineAccounts::where('machine_id', $id)->update($input)) {

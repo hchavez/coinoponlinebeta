@@ -64,10 +64,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                   
                                     @foreach ($errorlogs as $errorlog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $errorlog->id }} </td>
-                                         <td class="hidden-xs">{{ $errorlog->type }}</td>
+                                        <td class="hidden-xs">{{ $errorlog->type }}</td>
                                         <td class="hidden-xs">{{ $errorlog->error }}</td>
                                         <td class="hidden-xs">{{date('F d, Y H:i:s', strtotime($errorlog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $errorlog->status }}</td>

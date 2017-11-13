@@ -25,32 +25,20 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
                                  
-                                <div class="form-group{{ $errors->has('xTime') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">xTime</label>
+                             <div class="form-group{{ $errors->has('xSpeed') ? ' has-error' : '' }}">
+                                    <label for="xSpeed" class="col-md-4 control-label">xSpeed</label>
 
                                     <div class="col-md-6">
-                                        <input id="xTime" type="text" class="form-control" name="xTime" value="{{ $machine->xTime }}" required autofocus>
+                                        <input id="xSpeed" type="text" class="form-control" name="xSpeed" value="{{ $machine->xSpeed }}" required>
 
-                                        @if ($errors->has('xTime'))
+                                        @if ($errors->has('xSpeed'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('xTime') }}</strong>
+                                            <strong>{{ $errors->first('xSpeed') }}</strong>
                                         </span>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('yTime') ? ' has-error' : '' }}">
-                                    <label for="yTime" class="col-md-4 control-label">yTime</label>
-
-                                    <div class="col-md-6">
-                                        <input id="yTime" type="text" class="form-control" name="yTime" value="{{ $machine->yTime }}" required>
-
-                                        @if ($errors->has('yTime'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('yTime') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                            
                                 <div class="form-group{{ $errors->has('ySpeed') ? ' has-error' : '' }}">
                                     <label for="lastname" class="col-md-4 control-label">ySpeed</label>
 
@@ -65,19 +53,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('xSpeed') ? ' has-error' : '' }}">
-                                    <label for="xSpeed" class="col-md-4 control-label">xSpeed</label>
-
-                                    <div class="col-md-6">
-                                        <input id="xSpeed" type="text" class="form-control" name="xSpeed" value="{{ $machine->xSpeed }}" required>
-
-                                        @if ($errors->has('xSpeed'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('xSpeed') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                                
 
                                 <div class="form-group{{ $errors->has('zSpeed') ? ' has-error' : '' }}">
                                     <label for="zSpeed" class="col-md-4 control-label">zSpeed</label>

@@ -48,7 +48,6 @@ class GameSettingsController extends Controller {
     public function store(Request $request) {
         $this->validateInput($request);
         GameSettings::create([
-            'machine_id' => 2,
             'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
@@ -111,9 +110,13 @@ class GameSettingsController extends Controller {
             'excessWin' => $request['excessWin'],
             'prevEwin' => $request['prevEwin'],
             'luckyToWin' => $request['luckyToWin'],
+            'winGap' => $request['winGap'],
+            'prevWinIndex' => $request['prevWinIndex'],
+            'numberOfPlaysStayVoltage' => $request['numberOfPlaysStayVoltage'],
             'gameLeft' => $request['gameLeft'],
             'randomedTime' => $request['randomedTime'],
-            'gameTime' => $request['gameTime']
+            'gameTime' => $request['gameTime'],
+            'status' => '0'
         ];
 
         if (GameSettings::where('machine_id', $id)->update($input)) {

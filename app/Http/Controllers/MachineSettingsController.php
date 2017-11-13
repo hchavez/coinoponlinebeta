@@ -103,8 +103,6 @@ class MachineSettingsController extends Controller {
 
         $input = [
             'machine_id' => $id,
-            'xTime' => $request['xTime'],
-            'yTime' => $request['yTime'],
             'xSpeed' => $request['xSpeed'],
             'ySpeed' => $request['ySpeed'],
             'zSpeed' => $request['zSpeed'],

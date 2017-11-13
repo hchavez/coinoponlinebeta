@@ -116,6 +116,7 @@ class ProductDefinitionsController extends Controller
             'stockLeft' => $request['stockLeft'],
             'stockAdded' => $request['stockAdded'],
             'stockRemoved' => $request['stockRemoved'],
+            'status' => '0'
         ];
 
         if (ProductDefinitions::where('machine_id', $id)->update($input)) {
