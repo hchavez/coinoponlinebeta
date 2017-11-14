@@ -54,21 +54,6 @@
                                 </div>
 
 
-
-                                <div class="form-group{{ $errors->has('ttlPurCost') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">ttlPurCost</label>
-
-                                    <div class="col-md-6">
-                                        <input id="ttlPurCost" type="text" class="form-control" name="ttlPurCost" value="{{ $machine->ttlPurCost }}" required autofocus>
-
-                                        @if ($errors->has('ttlPurCost'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ttlPurCost') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
                                 <div class="form-group{{ $errors->has('numberOfPlays') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">numberOfPlays</label>
 

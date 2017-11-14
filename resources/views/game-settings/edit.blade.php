@@ -82,6 +82,46 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group{{ $errors->has('winGap') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">winGap</label>
+
+                                    <div class="col-md-6">
+                                        <input id="winGap" type="text" class="form-control" name="winGap" value="{{ $machine->winGap }}" required autofocus>
+
+                                        @if ($errors->has('winGap'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('winGap') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group{{ $errors->has('prevEwin') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">prevWinIndex</label>
+
+                                    <div class="col-md-6">
+                                        <input id="prevWinIndex" type="text" class="form-control" name="prevWinIndex" value="{{ $machine->prevWinIndex }}" required autofocus>
+
+                                        @if ($errors->has('prevWinIndex'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('prevWinIndex') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('numberOfPlaysStayVoltage') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">numberOfPlaysStayVoltage</label>
+
+                                    <div class="col-md-6">
+                                        <input id="numberOfPlaysStayVoltage" type="text" class="form-control" name="numberOfPlaysStayVoltage" value="{{ $machine->numberOfPlaysStayVoltage }}" required autofocus>
+
+                                        @if ($errors->has('numberOfPlaysStayVoltage'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('numberOfPlaysStayVoltage') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">luckyToWin</label>
 

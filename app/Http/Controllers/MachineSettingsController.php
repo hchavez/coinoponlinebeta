@@ -99,14 +99,13 @@ class MachineSettingsController extends Controller {
      */
     public function update(Request $request, $id) {
 
-        $this->validateInput($request);
 
         $input = [
             'machine_id' => $id,
             'xSpeed' => $request['xSpeed'],
             'ySpeed' => $request['ySpeed'],
             'zSpeed' => $request['zSpeed'],
-            'status' => '0'
+            'status' => '0',
         ];
         
         

@@ -25,15 +25,15 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
-                                 <div class="form-group{{ $errors->has('ipaddress') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">ipaddress</label>
+                                 <div class="form-group{{ $errors->has('ipAdd') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">ipAdd</label>
 
                                     <div class="col-md-6">
-                                        <input id="ipaddress" type="text" class="form-control" name="ipaddress" value="{{ $machine->ipaddress }}" required autofocus>
+                                        <input id="ipAdd" type="text" class="form-control" name="ipAdd" value="{{ $machine->ipAdd }}" required autofocus>
 
-                                        @if ($errors->has('ipaddress'))
+                                        @if ($errors->has('ipAdd'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('ipaddress') }}</strong>
+                                            <strong>{{ $errors->first('ipAdd') }}</strong>
                                         </span>
                                         @endif
                                     </div>
