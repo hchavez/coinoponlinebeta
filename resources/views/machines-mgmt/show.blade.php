@@ -182,11 +182,11 @@
                                                 }
                                             },
                                             series: [{
-                                                    name: 'PickupVoltage',
-                                                    data: [  ]
+                                                    name: 'PickupVoltage', 
+                                                    data: [ {{ $graphdataPkVoltResult }} ], 
                                                 }, {
                                                     name: 'RetVoltage',
-                                                    data: [  ]
+                                                    data: [ {{ $graphdataDropVoltResult }} ], 
                                                 }, {
                                                     name: 'OwedWin',
                                                     data: [ {{ $graphdataOwnedWinResult }} ]

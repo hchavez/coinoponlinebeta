@@ -241,11 +241,38 @@ class MachineManagementController extends Controller {
             $graphdataOwnedWinResult = join($graphdataOwnedWinresult, ',');
         }else{$graphdataOwnedWinResult=null;}
         
+         //Get RetVolt Data for graphview
+        $graphdataDropVoltQuery =  DB::table('goalslogs')->select('dropVolt')
+                                 ->leftJoin('winlogs', 'goalslogs.log_id', '=', 'winlogs.log_id')
+                                ->where('goalslogs.machine_id', $id)->where('startEndFlag', '2')->get();
+        
+        if($graphdataDropVoltQuery->count()){
+            foreach ($graphdataDropVoltQuery as $value) {
+                  $graphdataDropVoltresult[] = $value->dropVolt;
+            }
+            $graphdataDropVoltResult = join($graphdataDropVoltresult, ',');
+        }else{$graphdataDropVoltResult=null;}
+                
+        //Get pickupvolt Data for graphview
+        $graphdataPkVoltQuery =  DB::table('goalslogs')->select('pkVolt')
+                                 ->leftJoin('winlogs', 'goalslogs.log_id', '=', 'winlogs.log_id')
+                                ->where('goalslogs.machine_id', $id)->where('startEndFlag', '1')->get();
+        
+        if($graphdataPkVoltQuery->count()){
+            foreach ($graphdataPkVoltQuery as $value) {
+                  $graphdataPkVoltresult[] = $value->pkVolt;
+            }
+            $graphdataPkVoltResult = join($graphdataPkVoltresult, ',');
+        }else{$graphdataPkVoltResult=null;}
+        
+        
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
             'graphdataWinResult' => $graphdataWinResult,
             'graphdataExcessWinResult' => $graphdataExcessWinResult,
             'graphdataOwnedWinResult' => $graphdataOwnedWinResult,
+            'graphdataDropVoltResult' => $graphdataDropVoltResult,
+            'graphdataPkVoltResult' => $graphdataPkVoltResult,
             'machinerecords' => $machinerecords,
             'totalPlay' => $totalPlay,
             'totalMoneyquery' => $totalMoneyquery
