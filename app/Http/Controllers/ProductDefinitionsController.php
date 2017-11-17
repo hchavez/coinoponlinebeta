@@ -111,7 +111,7 @@ class ProductDefinitionsController extends Controller
         $input = [
             'coinPerPlay' => $request['coinPerPlay'],
             'winPercentage' => $request['winPercentage'],
-            'winPercentage' => $request['ttlPurCost'],
+            'ttlPurCost' => $request['ttlPurCost'],
             'numberOfPlays' => $request['numberOfPlays'],
             'stockLeft' => $request['stockLeft'],
             'stockAdded' => $request['stockAdded'],
