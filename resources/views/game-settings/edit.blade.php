@@ -5,6 +5,16 @@
 
     <div class="page-content">
         <div class="panel">
+             <?php if($machine->status == '0'): ?>
+             <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <i class="icon wb-info" aria-hidden="true"></i> 
+                  <strong> <?php echo "&nbsp;There is an ongoing update! Please wait while the machine is still applying for the new machine game settings." ?> </strong>
+             </div>
+             <?php endif; ?>
+            
             <div class="panel-heading">
                 <h3 class="panel-title">Game Settings Details</h3>
             </div>

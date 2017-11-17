@@ -242,9 +242,7 @@ class MachineManagementController extends Controller {
         }else{$graphdataOwnedWinResult=null;}
         
          //Get RetVolt Data for graphview
-        $graphdataDropVoltQuery =  DB::table('goalslogs')->select('dropVolt')
-                                 ->leftJoin('winlogs', 'goalslogs.log_id', '=', 'winlogs.log_id')
-                                ->where('goalslogs.machine_id', $id)->where('startEndFlag', '2')->get();
+        $graphdataDropVoltQuery =  DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)->where('startEndFlag', '2')->get();
         
         if($graphdataDropVoltQuery->count()){
             foreach ($graphdataDropVoltQuery as $value) {
@@ -254,9 +252,7 @@ class MachineManagementController extends Controller {
         }else{$graphdataDropVoltResult=null;}
                 
         //Get pickupvolt Data for graphview
-        $graphdataPkVoltQuery =  DB::table('goalslogs')->select('pkVolt')
-                                 ->leftJoin('winlogs', 'goalslogs.log_id', '=', 'winlogs.log_id')
-                                ->where('goalslogs.machine_id', $id)->where('startEndFlag', '1')->get();
+        $graphdataPkVoltQuery =  DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)->where('startEndFlag', '1')->get();
         
         if($graphdataPkVoltQuery->count()){
             foreach ($graphdataPkVoltQuery as $value) {
