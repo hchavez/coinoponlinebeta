@@ -100,7 +100,8 @@ class MachineManagementController extends Controller {
             'yTime' => '0',
             'xSpeed' => '0',
             'ySpeed' => '0',
-            'zSpeed' => '0'
+            'zSpeed' => '0',
+            'status' => '0'
         ]);
 
         ClawSettings::create([
@@ -120,11 +121,14 @@ class MachineManagementController extends Controller {
             'retVolt' => '0',
             'pickPWM' => '0',
             'pickVolt' => '0',
+            'pickUpLoLimitPWM' => '0',
             'incVolt' => '0',
             'decVolt' => '0',
             'diffPickRet' => '0',
-            'incVolt' => '0',
-            'insuffVoltInc' => '0'
+            'voltSupply' => '0',
+            'insuffVoltInc' => '0',
+            'voltReso' => '0',
+            'status' => '0'
         ]);
 
         GameSettings::create([
@@ -134,13 +138,19 @@ class MachineManagementController extends Controller {
             'excessWin' => '0',
             'prevEwin' => '0',
             'luckyToWin' => '0',
+            'winGap' => '0',
+            'prevWinIndex' => '0',
+            'numberOfPlaysStayVoltage' => '0',
             'gameLeft' => '0',
             'randomedTime' => '0',
-            'gameTime' => '0'
+            'gameTime' => '0',
+            'status' => '0'
+            
         ]);
         
         MachineAccounts::create([
             'machine_id' => $getmachine->id,
+            'ipAdd' => $request['ipaddress'],
             'total_dollar_in' => '0',
             'total_won' => '0'
         ]);
@@ -155,18 +165,20 @@ class MachineManagementController extends Controller {
             'total_test' => '0',  
             'insuffMonPlay' => '0', 
             'rejectionCounter' => '0', 
-            'insuffMonClick' => '0' 
+            'insuffMonClick' => '0',
+            'status' => '0'
         ]);
         
         ProductDefinitions::create([
             'machine_id' => $getmachine->id,
-             'coinPerPlay' => '0',
+            'coinPerPlay' => '0',
             'winPercentage' => '0',
             'ttlPurCost' => '0',
             'numberOfPlays' => '0',
             'stockLeft' => '0',
             'stockAdded' => '0',
-            'stockRemoved' => '0'
+            'stockRemoved' => '0',
+            'status' => '0'
         ]);
 
         Session::flash('message', 'New Machine successfully added!');
@@ -193,6 +205,7 @@ class MachineManagementController extends Controller {
         //Get all the machine settings
         $machine_settings = DB::table('machine_settings')->where('machine_id', $id)->first();
         $claw_settings = DB::table('claw_settings')->where('machine_id', $id)->first();
+        if(!$claw_settings){ $claw_settings = null; }
         $game_settings = DB::table('game_settings')->where('machine_id', $id)->first();
         $machine_accounts = DB::table('machine_accounts')->where('machine_id', $id)->first();
         $product_def = DB::table('product_definitions')->where('machine_id', $id)->first();
