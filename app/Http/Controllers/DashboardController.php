@@ -38,9 +38,10 @@ class DashboardController extends Controller
 //        ->leftJoin('state', 'sites.state', '=', 'state.id')
 //        ->orderBy('errorlogs.type', 'asc')
 //         ->get();
-
          
-        return view('dashboard/index');
+          $machinelogs = array();
+         
+        return view('dashboard/index', ['machinelogs' => $machinelogs]);
     }
     /**
      * Show the form for creating a new resource.
