@@ -38,16 +38,7 @@ class DashboardController extends Controller
 //        ->leftJoin('state', 'sites.state', '=', 'state.id')
 //        ->orderBy('errorlogs.type', 'asc')
 //         ->get();
-         
-          $machinelogs = DB::table('machines')
-        ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name','sites.street as street','sites.suburb as suburb','state.state_code as statecode', 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type','errorlogs.error as error','errorlogs.type as errortype')
-        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-        ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-        ->leftJoin('state', 'sites.state', '=', 'state.id')
-        ->orderBy('errorlogs.type', 'asc')
-         ->get();
+
          
         return view('dashboard/index');
     }
