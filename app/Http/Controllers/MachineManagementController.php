@@ -45,7 +45,7 @@ class MachineManagementController extends Controller {
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->latest('machines.created_at')->paginate(5);
+                        ->latest('machines.created_at')->paginate(20);
 
         return view('machines-mgmt/index', ['machines' => $machines]);
     }

@@ -271,62 +271,7 @@
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Sites</span>            
                         </a>     
-                        <div class="dropdown-menu">
-                            <div class="site-menu-scroll-wrap is-list scrollable is-enabled scrollable-vertical" style="position: relative;">
-                                <div class="scrollable-container">
-                                    <div class="scrollable-content">
-                                        <ul class="site-menu-sub site-menu-normal-list">
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('area') }}">
-                                                    <span class="site-menu-title">Area</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/machine-model') }}">
-                                                    <span class="site-menu-title">Routes</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/site') }}">
-                                                    <span class="site-menu-title">Site Type</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/site-type') }}">
-                                                    <span class="site-menu-title">Site Group</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/site-group') }}">
-                                                    <span class="site-menu-title">Managing Agents</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/area') }}">
-                                                    <span class="site-menu-title">Sites</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/route') }}">
-                                                    <span class="site-menu-title">Site Commission</span>
-                                                </a>
-                                            </li>
-                                
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('user-management') }}">
-                                                    <span class="site-menu-title">Site Commission Tier</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/user-access') }}">
-                                                    <span class="site-menu-title">Site Commission Processing</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="scrollable-bar scrollable-bar-vertical is-disabled scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
-                        </div>
+                      
                     </li>
                     
                      
@@ -350,74 +295,8 @@
                                                     <span class="site-menu-title">New Machine</span>
                                                 </a>
                                             </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('key') }}">
-                                                    <span class="site-menu-title">Key</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('key-location') }}">
-                                                    <span class="site-menu-title">Key Location</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machine-type') }}">
-                                                    <span class="site-menu-title">Machine Type</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machine-model') }}">
-                                                    <span class="site-menu-title">Machine Model</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machine-sizes') }}">
-                                                    <span class="site-menu-title">Machine Sizes</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('checklist') }}">
-                                                    <span class="site-menu-title">CheckList</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machinemodel-checklist') }}">
-                                                    <span class="site-menu-title">MachineModel Checklist</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('meters') }}">
-                                                    <span class="site-menu-title">Meters</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('repair-type') }}">
-                                                    <span class="site-menu-title">Repair Type</span>
-                                                </a>
-                                            </li>
-                                            
-                                
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('user-management') }}">
-                                                    <span class="site-menu-title">Users</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/user-access') }}">
-                                                    <span class="site-menu-title">User Access</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/state') }}">
-                                                    <span class="site-menu-title">State</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/city') }}">
-                                                    <span class="site-menu-title">City</span>
-                                                </a>
-                                            </li>
+                                           
+                                          
 
                                         </ul>
                                     </div>

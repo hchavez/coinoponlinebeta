@@ -96,7 +96,7 @@
                                         </tr>  
                                     </thead>
                                     <tbody>
-
+<!--
                                         @foreach ($machinelogs as $machinelog)
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
                                             <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> machine_model}}</span> @else
@@ -112,9 +112,9 @@
                                                         @endif
                                                         
                                                         @if ($machinelog->errortype == '1') 
-                                                        <span class="blink_me"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                                        <span class="blink_me"> <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                                         @else
-                                                        <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
+                                                        <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                                         @endif
                                                          </a></strong></td>
                                                         
@@ -123,7 +123,7 @@
                                             </td>   
 
                                         </tr>
-                                        @endforeach
+                                        @endforeach-->
 
                                     </tbody>
                                 </table>
@@ -140,13 +140,13 @@
     <!-- End Second Row -->
 
 </div>
-
+<!--
 @foreach ($machinelogs as $machinelog)
-<!-- Modal -->
+ Modal 
 <div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
-        <!-- Modal content-->
+         Modal content
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -171,7 +171,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <p><strong>Error Message: <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
+                <p><strong>Error Message: <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
                  <p>Machine Type: </p>
                  <p>Machine Model: </p>
                  <p>Site Address: </p>
@@ -184,8 +184,8 @@
 
     </div>
 </div>
-<!-- End Page -->
-@endforeach
+ End Page 
+@endforeach-->
 
 
 @endsection

@@ -17,6 +17,8 @@ use App\WinLogs;
 use App\MoneyLogs;
 use App\MachineType;
 use App\MachineModel;
+use Carbon\Carbon;
+
 
 class DashboardController extends Controller
 {
@@ -27,19 +29,27 @@ class DashboardController extends Controller
      */
     public function index()
     {
-         $machinelogs = DB::table('machines')
+//         $machinelogs = DB::table('machines')
+//        ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name','sites.street as street','sites.suburb as suburb','state.state_code as statecode', 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type','errorlogs.error as error','errorlogs.type as errortype')
+//        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+//        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+//        ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+//        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+//        ->leftJoin('state', 'sites.state', '=', 'state.id')
+//        ->orderBy('errorlogs.type', 'asc')
+//         ->get();
+         
+          $machinelogs = DB::table('machines')
         ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name','sites.street as street','sites.suburb as suburb','state.state_code as statecode', 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type','errorlogs.error as error','errorlogs.type as errortype')
         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
         ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
         ->leftJoin('state', 'sites.state', '=', 'state.id')
-        ->where('errorlogs.error', '!=', null)
         ->orderBy('errorlogs.type', 'asc')
          ->get();
-        
-
-        return view('dashboard/index', ['machinelogs' => $machinelogs]);
+         
+        return view('dashboard/index');
     }
     /**
      * Show the form for creating a new resource.
