@@ -94,7 +94,9 @@
                                  <td> {{ $machine->state }}</td>
                                 <td> {{ $machine->site }} </td>   
                                 <!--<td>{{date('d F, Y H:i:s', strtotime($machine->purchase_date))}} </td>-->
-                                <td>{{ $machine->status }}</td>
+                                
+                                <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
+                                <td> <?php echo $active; ?> </td>
                                 <td>{{ $machine->comments }}</td>
                             </tr>
                             @endforeach
