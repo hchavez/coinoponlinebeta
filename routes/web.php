@@ -60,6 +60,12 @@ Route::post('cash-boxes/search', 'CashBoxesController@search')->name('cash-boxes
 Route::resource('area', 'AreaController');
 Route::post('area/search', 'AreaController@search')->name('area.search');
 
+Route::resource('prizes', 'PrizeController');
+Route::post('prize/search', 'PrizeController@search')->name('prize.search');
+
+Route::resource('themes', 'ThemeController');
+Route::post('theme/search', 'ThemeController@search')->name('themes.search');
+
 Route::resource('route', 'RouteController');
 Route::post('route/search', 'RouteController@search')->name('route.search');
 

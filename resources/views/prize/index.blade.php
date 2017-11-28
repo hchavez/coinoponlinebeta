@@ -3,86 +3,62 @@
 
 <div class="panel">
     <header class="panel-heading">
-        <h3 class="panel-title">List of Sites</h3>
+        <h3 class="panel-title">List of Prizes</h3>
     </header>
-    <div class="panel-body">
-        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+    <div class="panel-body"> 
+      <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
 
             <div class="row"><div class="col-sm-12">
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>
-                            <tr><th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""> </option>
-                                    </select>
-                                </th>
+                            <tr>
                                 <th rowspan="1" colspan="1">
                                     <select class="form-control w-full">
                                         <option value="">All</option>
                                         <option value=""></option>
                                     </select>
                                 </th>
-                                <th rowspan="1" colspan="1">
+                                 <th rowspan="1" colspan="1">
                                     <select class="form-control w-full">
                                         <option value="">All</option>
                                         <option value=""></option>
                                     </select>
                                 </th>
-                                <th rowspan="1" colspan="1">
+                                 <th rowspan="1" colspan="1">
                                     <select class="form-control w-full">
                                         <option value="">All</option>
                                         <option value=""></option>
                                     </select>
                                 </th>
-                                <th rowspan="1" colspan="1">
+                                 <th rowspan="1" colspan="1">
                                     <select class="form-control w-full">
                                         <option value="">All</option>
                                         <option value=""></option>
                                     </select>
                                 </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
+                              
                         
-                            
+                             
+                              
                             </tr>
                         </thead>
                         <thead>
                             <tr role="row">
-                                <th>Route</th>	
-                                <th>Area</th>	
-                                <th>SiteType</th>	
-                                <th>SiteGroup</th>	
-                                <th>State</th>	
-                                <th>Site</th>
-                                <th>Street</th>
-                                <th>Suburb</th>
-                                <th>City</th>
+                                <th>Prize Code</th>	
+                                <th>Prize Name</th>	
+                                <th>Cost</th>	
+                                <th>Active</th>	
                         </thead>
                         <tbody>
-                          
-                            @foreach ($sites as $site)
+                            @foreach ($prizes as $prize)
                             <tr role="row">
-                                <td> {{ $site->route_name  }} </td>
-                                <td> {{ $site->area  }} </td>
-                                <td> {{ $site->site_type  }}</td>
-                                <td> {{ $site->site_group  }} </td>
-                                <td> {{ $site->state }} </td>
-                                <td> {{ $site->site_name }} </td>
-                                <td> {{ $site->street }} </td>
-                                <td> {{ $site->suburb }} </td>   
-                                <td> {{ $site->city }} </td>
+                                <td> {{ $prize->prize_code  }} </td>
+                                <td> {{ $prize->prize_name  }} </td>
+                                <td> {{ $prize->cost  }}</td>
+                                <?php if($prize->active == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
+                                <td> <?php echo $active; ?> </td>
+                              
                           
                             </tr>
                             @endforeach
@@ -97,7 +73,7 @@
                 </div>
                 <div class="col-sm-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                        {{ $sites->links() }}
+                        {{ $prizes->links() }}
                     </div>
                 </div>
             </div>

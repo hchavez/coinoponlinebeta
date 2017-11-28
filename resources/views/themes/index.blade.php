@@ -3,10 +3,10 @@
 
 <div class="panel">
     <header class="panel-heading">
-        <h3 class="panel-title">List of Sites</h3>
+        <h3 class="panel-title">List of Themes</h3>
     </header>
-    <div class="panel-body">
-        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+    <div class="panel-body"> 
+       <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
 
             <div class="row"><div class="col-sm-12">
@@ -48,58 +48,43 @@
                                         <option value=""></option>
                                     </select>
                                 </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-                        
-                            
+                       
                             </tr>
                         </thead>
                         <thead>
                             <tr role="row">
-                                <th>Route</th>	
-                                <th>Area</th>	
-                                <th>SiteType</th>	
-                                <th>SiteGroup</th>	
-                                <th>State</th>	
-                                <th>Site</th>
-                                <th>Street</th>
-                                <th>Suburb</th>
-                                <th>City</th>
+                                <th>Prize Code</th>	
+                                <th>Theme</th>	
+                                <th>Cost</th>	
+                                <th>PrizeSetting</th>	
+                                <th>Min Exp $perwin</th>	
+                                <th>Max Exp $perwin</th>
+                                <th>Active</th>
+                                
                         </thead>
-                        <tbody>
-                          
-                            @foreach ($sites as $site)
+                           <tbody>
+                            @foreach ($themes as $theme)
                             <tr role="row">
-                                <td> {{ $site->route_name  }} </td>
-                                <td> {{ $site->area  }} </td>
-                                <td> {{ $site->site_type  }}</td>
-                                <td> {{ $site->site_group  }} </td>
-                                <td> {{ $site->state }} </td>
-                                <td> {{ $site->site_name }} </td>
-                                <td> {{ $site->street }} </td>
-                                <td> {{ $site->suburb }} </td>   
-                                <td> {{ $site->city }} </td>
-                          
+                                <td> {{ $theme->product_code  }} </td>
+                                <td> {{ $theme->theme  }} </td>
+                                <td> {{ $theme->cost  }}</td>
+                                <td> {{ $theme->prize_setting  }}</td>
+                                <td> {{ $theme->min_expected_doll_per_win  }}</td>
+                                <td> {{ $theme->max_expected_doll_per_win  }}</td>
+                                <?php if($theme->active == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
+                                <td> <?php echo $active; ?> </td>
+
                             </tr>
                             @endforeach
                         </tbody>
+                    
                     </table>
                 </div></div>
             
             
               <div class="row">
-                <div class="col-sm-5">
-                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
-                </div>
-                <div class="col-sm-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                        {{ $sites->links() }}
-                    </div>
-                </div>
+               
+               
             </div>
             
             

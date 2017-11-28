@@ -41,10 +41,15 @@ class MachineManagementController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        
         $machines = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type'
+                         ,'route.route as route','area.area as area','sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->latest('machines.created_at')->paginate(20);
 
         return view('machines-mgmt/index', ['machines' => $machines]);

@@ -267,7 +267,7 @@
                     </li> 
                     
                     <li class="dropdown site-menu-item has-sub">
-                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
+                        <a class="animsition-link" href="{{ url('site') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Sites</span>            
                         </a>     
@@ -306,44 +306,21 @@
                     </li>
                     
                     <li class="dropdown site-menu-item has-sub">
-                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
+                        <a  class="animsition-link" href="{{ url('prizes') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Prizes</span>            
                         </a>     
-                        <div class="dropdown-menu">
-                            <div class="site-menu-scroll-wrap is-list scrollable is-enabled scrollable-vertical" style="position: relative;">
-                                <div class="scrollable-container">
-                                    <div class="scrollable-content">
-                                        <ul class="site-menu-sub site-menu-normal-list">
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/machine-type') }}">
-                                                    <span class="site-menu-title">Prizes</span>
-                                                </a>
-                                            </li>
-                                           
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/area') }}">
-                                                    <span class="site-menu-title">Machine Model Prize</span>
-                                                </a>
-                                            </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('system-management/route') }}">
-                                                    <span class="site-menu-title">Prize Machine Model</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="scrollable-bar scrollable-bar-vertical is-disabled scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
-                        </div>
+                  
                     </li>
                     
                     <li class="dropdown site-menu-item has-sub">
-                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
+<!--                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">-->
+                        <a class="animsition-link" href="{{ url('themes') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Themes</span>            
-                        </a>     
-                        <div class="dropdown-menu">
+                        </a> 
+                        
+<!--                        <div class="dropdown-menu">
                             <div class="site-menu-scroll-wrap is-list scrollable is-enabled scrollable-vertical" style="position: relative;">
                                 <div class="scrollable-container">
                                     <div class="scrollable-content">
@@ -368,7 +345,8 @@
                                     </div>
                                 </div>
                                 <div class="scrollable-bar scrollable-bar-vertical is-disabled scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
-                        </div>
+                        </div>-->
+                        
                     </li>
                     
                     

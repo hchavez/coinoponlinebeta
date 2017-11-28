@@ -19,16 +19,14 @@
                         <!-- Example Horizontal Form -->
                         <div class="example-wrap">
 
-
-
                             <div class="form-group">
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Machine Type: </label>
                                     <div class="col-md-9">
                                         <select class="form-control" name="machine_type" required>
                                             <option value="">-- Select Machine Type --</option>
-                                            @foreach ($machine_types as $machine_type)
-                                            <option value="{{$machine_type->id}}">{{$machine_type->machine_type}}</option>
+                                            @foreach ($machine_types as $mtype)
+                                            <option value="{{$mtype->id}}"> {{$mtype->machine_type}} </option>
                                             @endforeach
                                         </select>
                                     </div>

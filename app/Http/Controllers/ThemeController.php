@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\City;
-use App\State;
-use App\Site;
+use App\Theme;
 
-class SiteController extends Controller
+class ThemeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,18 +25,8 @@ class SiteController extends Controller
      */
     public function index()
     {
-        //$sites = Site::paginate(20);
-        
-            $sites = DB::table('sites')
-//                ->select('sites.*')
-                ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
-                ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
-                ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
-                ->orderBy('sites.site_name', 'asc')->paginate(20);
-                    
-        return view('site/index', ['sites' => $sites]);
+       $themes = Theme::orderBy('theme', 'asc')->paginate(20);
+       return view('themes/index', ['themes' => $themes]);
     }
 
     /**
@@ -48,8 +36,8 @@ class SiteController extends Controller
      */
     public function create()
     {
-        $states = State::all();
-        return view('site/create', ['states' => $states]);
+        $states = Theme::all();
+        return view('themes/create', ['states' => $states]);
     }
 
     /**
@@ -60,14 +48,14 @@ class SiteController extends Controller
      */
     public function store(Request $request)
     {
-        State::findOrFail($request['state_id']);
+        Theme::findOrFail($request['state_id']);
         $this->validateInput($request);
-         site::create([
+         theme::create([
             'name' => $request['name'],
             'state_id' => $request['state_id']
         ]);
 
-        return redirect()->intended('system-management/site');
+        return redirect()->intended('themes');
     }
 
     /**
@@ -89,14 +77,14 @@ class SiteController extends Controller
      */
     public function edit($id)
     {
-        $site = site::find($id);
-        // Redirect to site list if updating site wasn't existed
-        if ($site == null || count($site) == 0) {
-            return redirect()->intended('/system-management/site');
+        $theme = Theme::find($id);
+        // Redirect to theme list if updating theme wasn't existed
+        if ($theme == null || count($theme) == 0) {
+            return redirect()->intended('themes');
         }
 
-        $states = State::all();
-        return view('site/edit', ['site' => $site, 'states' => $states]);
+        $states = Theme::all();
+        return view('themes/edit', ['theme' => $theme, 'states' => $states]);
     }
 
     /**
@@ -108,7 +96,7 @@ class SiteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $site = City::findOrFail($id);
+        $theme = Theme::findOrFail($id);
          $this->validate($request, [
         'name' => 'required|max:60'
         ]);
@@ -116,10 +104,10 @@ class SiteController extends Controller
             'name' => $request['name'],
             'state_id' => $request['state_id']
         ];
-        City::where('id', $id)
+        Theme::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('system-management/site');
+        return redirect()->intended('themes');
     }
 
     /**
@@ -130,12 +118,12 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
-        City::where('id', $id)->delete();
-         return redirect()->intended('system-management/site');
+        Theme::where('id', $id)->delete();
+         return redirect()->intended('themes');
     }
 
     /**
-     * Search site from database base on some specific constraints
+     * Search theme from database base on some specific constraints
      *
      * @param  \Illuminate\Http\Request  $request
      *  @return \Illuminate\Http\Response
@@ -146,11 +134,11 @@ class SiteController extends Controller
             ];
 
        $cities = $this->doSearchingQuery($constraints);
-       return view('site/index', ['cities' => $cities, 'searchingVals' => $constraints]);
+       return view('themes/index', ['cities' => $cities, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = City::query();
+        $query = Theme::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {
@@ -164,7 +152,7 @@ class SiteController extends Controller
     }
     private function validateInput($request) {
         $this->validate($request, [
-        'name' => 'required|max:60|unique:site'
+        'name' => 'required|max:60|unique:theme'
     ]);
     }
 }

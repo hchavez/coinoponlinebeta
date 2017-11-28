@@ -29,6 +29,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
+      
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <!--[if lt IE 9]>
           <script src="{{ asset("/global/vendor/html5shiv/html5shiv.min.js") }}"></script>
@@ -123,6 +124,9 @@
         <!--AngularJS-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
         <script src="{{ asset("/assets/js/app.js") }}"></script>
+        
+        <!--CustomStyle-->
+          <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
  
     </body>
 </html>

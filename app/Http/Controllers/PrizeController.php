@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\City;
+use App\Prize;
 use App\State;
-use App\Site;
 
-class SiteController extends Controller
+class PrizeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,18 +26,8 @@ class SiteController extends Controller
      */
     public function index()
     {
-        //$sites = Site::paginate(20);
-        
-            $sites = DB::table('sites')
-//                ->select('sites.*')
-                ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
-                ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
-                ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
-                ->orderBy('sites.site_name', 'asc')->paginate(20);
-                    
-        return view('site/index', ['sites' => $sites]);
+        $prizes = Prize::orderBy('prize_name', 'asc')->paginate(20);
+        return view('prize/index', ['prizes' => $prizes]);
     }
 
     /**
@@ -49,7 +38,7 @@ class SiteController extends Controller
     public function create()
     {
         $states = State::all();
-        return view('site/create', ['states' => $states]);
+        return view('prize/create', ['states' => $states]);
     }
 
     /**
@@ -62,12 +51,12 @@ class SiteController extends Controller
     {
         State::findOrFail($request['state_id']);
         $this->validateInput($request);
-         site::create([
+         prize::create([
             'name' => $request['name'],
             'state_id' => $request['state_id']
         ]);
 
-        return redirect()->intended('system-management/site');
+        return redirect()->intended('system-management/prize');
     }
 
     /**
@@ -89,14 +78,14 @@ class SiteController extends Controller
      */
     public function edit($id)
     {
-        $site = site::find($id);
-        // Redirect to site list if updating site wasn't existed
-        if ($site == null || count($site) == 0) {
-            return redirect()->intended('/system-management/site');
+        $prize = prize::find($id);
+        // Redirect to prize list if updating prize wasn't existed
+        if ($prize == null || count($prize) == 0) {
+            return redirect()->intended('/system-management/prize');
         }
 
         $states = State::all();
-        return view('site/edit', ['site' => $site, 'states' => $states]);
+        return view('prize/edit', ['prize' => $prize, 'states' => $states]);
     }
 
     /**
@@ -108,7 +97,7 @@ class SiteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $site = City::findOrFail($id);
+        $prize = City::findOrFail($id);
          $this->validate($request, [
         'name' => 'required|max:60'
         ]);
@@ -119,7 +108,7 @@ class SiteController extends Controller
         City::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('system-management/site');
+        return redirect()->intended('system-management/prize');
     }
 
     /**
@@ -131,11 +120,11 @@ class SiteController extends Controller
     public function destroy($id)
     {
         City::where('id', $id)->delete();
-         return redirect()->intended('system-management/site');
+         return redirect()->intended('system-management/prize');
     }
 
     /**
-     * Search site from database base on some specific constraints
+     * Search prize from database base on some specific constraints
      *
      * @param  \Illuminate\Http\Request  $request
      *  @return \Illuminate\Http\Response
@@ -146,7 +135,7 @@ class SiteController extends Controller
             ];
 
        $cities = $this->doSearchingQuery($constraints);
-       return view('site/index', ['cities' => $cities, 'searchingVals' => $constraints]);
+       return view('prize/index', ['cities' => $cities, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
@@ -164,7 +153,7 @@ class SiteController extends Controller
     }
     private function validateInput($request) {
         $this->validate($request, [
-        'name' => 'required|max:60|unique:site'
+        'name' => 'required|max:60|unique:prize'
     ]);
     }
 }

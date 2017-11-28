@@ -91,6 +91,7 @@
                                         <tr role="row">
                                             <th>Machine Model</th>
                                             <th>Machine Type</th>
+                                            <th>Serial No</th>
                                             <th>Error Messages</th>
                                             <th>Site</th>
                                         </tr>  
