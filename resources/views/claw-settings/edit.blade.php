@@ -2,10 +2,8 @@
 @section('content')
 
 <div class="page-main">
-
     <div class="page-content">
         <div class="panel">
-            
              <?php if($machine->status == '0'): ?>
              <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -228,10 +226,8 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('decVolt') ? ' has-error' : '' }}">
                                     <label for="decVolt" class="col-md-4 control-label">decVolt</label>
-
                                     <div class="col-md-6">
                                         <input id="decVolt" type="text" class="form-control" name="decVolt" value="{{ $machine->decVolt }}"   autofocus>
-
                                         @if ($errors->has('decVolt'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('decVolt') }}</strong>
@@ -242,10 +238,8 @@
                                 
                                 <div class="form-group{{ $errors->has('diffPickRet') ? ' has-error' : '' }}">
                                     <label for="diffPickRet" class="col-md-4 control-label">diffPickRet</label>
-
                                     <div class="col-md-6">
                                         <input id="diffPickRet" type="text" class="form-control" name="diffPickRet" value="{{ $machine->diffPickRet }}"   autofocus>
-
                                         @if ($errors->has('diffPickRet'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('diffPickRet') }}</strong>
@@ -256,10 +250,8 @@
                               
                                 <div class="form-group{{ $errors->has('voltSupply ') ? ' has-error' : '' }}">
                                     <label for="incVolt" class="col-md-4 control-label">voltSupply </label>
-
                                     <div class="col-md-6">
                                         <input id="voltSupply" type="text" class="form-control" name="voltSupply" value="{{ $machine->voltSupply  }}"  autofocus>
-
                                         @if ($errors->has('voltSupply '))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('voltSupply ') }}</strong>
@@ -269,10 +261,8 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('insuffVoltInc') ? ' has-error' : '' }}">
                                     <label for="insuffVoltInc" class="col-md-4 control-label">insuffVoltInc </label>
-
                                     <div class="col-md-6">
                                         <input id="insuffVoltInc" type="text" class="form-control" name="insuffVoltInc" value="{{ $machine->insuffVoltInc }}"   autofocus>
-
                                         @if ($errors->has('insuffVoltInc'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('insuffVoltInc') }}</strong>
@@ -294,9 +284,6 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
                                         <button type="submit" class="btn btn-primary">
@@ -307,10 +294,7 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>

@@ -1,139 +1,155 @@
 
-@section('action-content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                
-                <div class="panel-heading">Update Machine</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('machine-management.update', ['id' => $machine->machine_id]) }}" enctype="multipart/form-data">
-                        <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                   
-                        <div class="form-group{{ $errors->has('machine_name') ? ' has-error' : '' }}">
-                            <label for="machine_name" class="col-md-4 control-label">Machine Name</label>
 
-                            <div class="col-md-6">
-                                <input id="machinename" type="text" class="form-control" name="machine_name" value="{{ $machine->machine_name }}" required autofocus>
 
-                                @if ($errors->has('machinename'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('machine_name') }}</strong>
-                                    </span>
-                                @endif
+@extends('layouts.appmachine-left-template')
+@section('content')
+
+<div class="page-main">
+    <div class="page-content">
+
+
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Update Machine Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row row-lg">
+
+                    <div class="col-lg-6">
+                        <!-- Example Basic Constraints -->
+                        <?php if (Session::has('success')): ?>
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <?php echo Session::get('success', ''); ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="example-wrap m-md-0">
+                            <h4 class="example-title"></h4>
+                            <div class="example">
+                                <form class="form-horizontal fv-form fv-form-bootstrap4" role="form" method="POST" action="{{ route('machine-management.update', ['id' => $machine->machine_id]) }}">
+
+                                    <input type="hidden" name="_method" value="PATCH">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Machine Type</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" name="machine_type">
+                                                @foreach ($machine_types as $machine_type)
+                                                <option {{ $machine->machine_type_id == $machine_type->id ? 'selected' : ''}} value="{{$machine_type->id}}">{{$machine_type->machine_type}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Machine Model</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" name="machine_model">
+                                                @foreach ($machine_models as $machine_model)
+                                                <option {{ $machine->machine_model_id == $machine_model->id ? 'selected' : ''}} value="{{$machine_model->id}}">{{$machine_model->machine_model}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Sites</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" name="site">
+                                                @foreach ($sites as $site)
+                                                <option {{ $machine->site_id == $site->id ? 'selected' : ''}} value="{{$site->id}}">{{$site->site_name}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row{{ $errors->has('serial_no') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Serial</label>
+                                        <div class="col-md-9">
+                                            <input id="serial_no" type="text" class="form-control" name="serial_no" value="{{ $machine->serial_no }}" required>
+
+                                            @if ($errors->has('serial_no'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('serial_no') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row{{ $errors->has('ip_address') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">IP Address</label>
+                                        <div class="col-md-9">
+                                            <input id="ip_address" type="text" class="form-control" name="ip_address" value="{{ $machine->ip_address }}" required>
+
+                                            @if ($errors->has('ip_address'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('ip_address') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>  
+
+
+
+
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Comments</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="comments" rows="4" cols="20" placeholder="Comments">{{ $machine->comments }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Descriptions</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="description" rows="4" cols="20" placeholder="description"> {{ $machine->machine_description }} </textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <center> <button type="submit" class="btn btn-primary">
+                                                    Update Machine Info
+                                                </button>
+                                            </center>
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
                         </div>
-                        
-                        <div class="form-group{{ $errors->has('serial_no') ? ' has-error' : '' }}">
-                            <label for="serial_no" class="col-md-4 control-label">Serial No</label>
+                        <!-- End Example Basic Constraints -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Example Type -->
+                        <div class="example-wrap">
+                            <h4 class="example-title"></h4>
+                            <div class="example">
 
-                            <div class="col-md-6">
-                                <input id="serial_no" type="text" class="form-control" name="serial_no" value="{{ $machine->serial_no }}" required>
-
-                                @if ($errors->has('serial_no'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('serial_no') }}</strong>
-                                    </span>
-                                @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">Description</label>
-
-                            <div class="col-md-6">
-                                <input id="description" type="text" class="form-control" name="description" value="{{ $machine->description }}" required>
-
-                                @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('comments') ? ' has-error' : '' }}">
-                            <label for="comments" class="col-md-4 control-label">Comments</label>
-
-                            <div class="col-md-6">
-                                <input id="comments" type="text" class="form-control" name="comments" value="{{ $machine->comments }}" required>
-
-                                @if ($errors->has('comments'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('comments') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Machine Type</label>
-                            <div class="col-md-6">
-                                <select class="form-control" name="machine_type">
-                                    @foreach ($machine_types as $machine_type)
-                                        <option {{ $machine->machine_type == $machine_type->id ? 'selected' : ''}} value="{{$machine_type->id}}">{{$machine_type->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                         <div class="form-group">
-                            <label class="col-md-4 control-label">Machine Model</label>
-                            <div class="col-md-6">
-                                <select class="form-control" name="machine_model">
-                                    @foreach ($machine_models as $machine_model)
-                                        <option {{ $machine->machine_model == $machine_model->type_id ? 'selected' : ''}} value="{{$machine_model->id}}">{{$machine_model->title}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-                            <label for="location" class="col-md-4 control-label">Location</label>
-
-                            <div class="col-md-6">
-                                <input id="location" type="text" class="form-control" name="location" value="{{ $machine->location }}" required>
-
-                                @if ($errors->has('location'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('location') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">City</label>
-                            <div class="col-md-6">
-                                <select class="form-control" name="city_id">
-                                    @foreach ($cities as $city)
-                                        <option {{$machine->city == $city->id ? 'selected' : ''}} value="{{$city->id}}">{{$city->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-            
-              
-             
-                        <div class="form-group">
-                            <label for="avatar" class="col-md-4 control-label" >Picture</label>
-                            <div class="col-md-6">
-                                <img src="../../{{$machine->picture }}" width="50px" height="50px"/>
-                                <input type="file" id="picture" name="picture" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Update
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        <!-- End Example Type -->
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
+
+
 @endsection

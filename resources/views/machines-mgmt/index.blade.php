@@ -70,7 +70,7 @@
                         </thead>
                         <thead>
                             <tr role="row">
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">Database</th>
+                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">IP Address</th>
                                 <th class="sorting_asc" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">Type</th>
                                 <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1"  aria-label="Position: activate to sort column ascending">Model</th>
                                 <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1"  aria-label="Office: activate to sort column ascending">Serial No</th>
@@ -85,7 +85,7 @@
                         <tbody>
                             @foreach ($machines as $machine)
                             <tr role="row">
-                                <td> {{ $machine->database_id }} </td>
+                                <td> {{ $machine->ip_address }} </td>
                                 <td>{{ $machine->machine_type }}</td>
                                 <td>{{ $machine->machine_model }}</td>
                                 <td>  <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>

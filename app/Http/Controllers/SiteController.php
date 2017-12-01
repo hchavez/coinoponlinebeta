@@ -95,8 +95,8 @@ class SiteController extends Controller
             return redirect()->intended('/system-management/site');
         }
 
-        $states = State::all();
-        return view('site/edit', ['site' => $site, 'states' => $states]);
+    
+        return view('site/edit', ['site' => $site]);
     }
 
     /**

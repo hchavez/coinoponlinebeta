@@ -122,11 +122,11 @@
         <div class="col-xxl-4 col-xl-6 col-lg-6">
           <div id="personalCompletedWidget" class="card card-shadow pb-20">
             <div class="card-header card-header-transparent cover overlay">
-              <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}") }}">
+              <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}">
               <div class="overlay-panel overlay-background vertical-align">
                 <div class="vertical-align-middle">
                   <a class="avatar" href="javascript:void(0)">
-                    <img alt="" src="{{ asset("/global/portraits/4.jpg") }}") }}">
+                    <img alt="" src="{{ asset("/global/portraits/4.jpg") }}">
                   </a>
                   <div class="font-size-20 mt-10">MACHI</div>
                   <div class="font-size-14">machidesign@163.com</div>
@@ -228,7 +228,7 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/3.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/3.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -254,29 +254,13 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/1.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/1.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/5.jpg") }}") }}">
-                        <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
-                          <i class="icon wb-pencil" aria-hidden="true"></i>
-                        </button>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="checkbox-custom checkbox-success checkbox-lg">
-                      <input type="checkbox" name="checkbox">
-                      <label class="item-title">Edit the blog system</label>
-                    </div>
-                    <div class="item-due-date">
-                      <span>No due date</span>
-                    </div>
-                    <ul class="item-members">
-                      <li>
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/5.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -293,19 +277,35 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/4.jpg") }}") }}">
+                        <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
+                          <i class="icon wb-pencil" aria-hidden="true"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="checkbox-custom checkbox-success checkbox-lg">
+                      <input type="checkbox" name="checkbox">
+                      <label class="item-title">Edit the blog system</label>
+                    </div>
+                    <div class="item-due-date">
+                      <span>No due date</span>
+                    </div>
+                    <ul class="item-members">
+                      <li>
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/4.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -322,7 +322,7 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/3.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/3.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -348,29 +348,13 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/1.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/1.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/5.jpg") }}") }}">
-                        <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
-                          <i class="icon wb-pencil" aria-hidden="true"></i>
-                        </button>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="checkbox-custom checkbox-success checkbox-lg">
-                      <input type="checkbox" name="checkbox">
-                      <label class="item-title">Edit the blog system</label>
-                    </div>
-                    <div class="item-due-date">
-                      <span>No due date</span>
-                    </div>
-                    <ul class="item-members">
-                      <li>
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/5.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -387,19 +371,35 @@
                     </div>
                     <ul class="item-members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/4.jpg") }}") }}">
+                        <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
+                          <i class="icon wb-pencil" aria-hidden="true"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="checkbox-custom checkbox-success checkbox-lg">
+                      <input type="checkbox" name="checkbox">
+                      <label class="item-title">Edit the blog system</label>
+                    </div>
+                    <div class="item-due-date">
+                      <span>No due date</span>
+                    </div>
+                    <ul class="item-members">
+                      <li>
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/4.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}">
                         <button class="btn btn-sm btn-icon btn-default btn-outline btn-round">
                           <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
@@ -438,13 +438,13 @@
                     </div>
                     <ul class="members">
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/7.jpg") }}">
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/6.jpg") }}">
                       </li>
                       <li>
-                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/8.jpg") }}") }}">
+                        <img class="avatar avatar-sm" src="{{ asset("/global/portraits/8.jpg") }}">
                       </li>
                     </ul>
                   </div>
@@ -464,13 +464,13 @@
                     </div>
                     <ul class="photos">
                       <li class="cover">
-                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}") }}">
+                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}">
                       </li>
                       <li class="cover">
-                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}") }}">
+                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}">
                       </li>
                       <li class="cover">
-                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}") }}">
+                        <img class="cover-image" src="{{ asset("/global/photos/placeholder.png") }}">
                       </li>
                     </ul>
                   </div>

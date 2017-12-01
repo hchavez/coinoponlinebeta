@@ -81,16 +81,11 @@
                 <!-- Panel Projects -->
                 <div class="panel" id="projects">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Machine Information</h3>
+                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Information</h3>
                     </div>
 
                     <div class="table-responsive">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 control-label">Machine Name: {{ $machine->machine_model }} </label>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label">Machine Type: {{ $machine->machine_type }} </label>
@@ -98,12 +93,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">Location: {{ $machine->machine_description }}</label>
+                                    <label class="col-sm-12 control-label">Machine Model: {{ $machine->machine_model }} </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">Date Added: {{ $machine->created_at }}</label>
+                                    <label class="col-sm-12 control-label">Serial No: {{ $machine->serial_no }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Site: {{ $machine->site }}</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -111,21 +111,17 @@
                                     <label class="col-sm-12 control-label"> Description: {{ $machine->machine_description }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">Machine Model: </label>
+                                    <label class="col-sm-12 control-label"> IP Address: {{ $machine->ip_address }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">City: {{ $machine->machine_description }}</label>
+                                    <label class="col-sm-12 control-label">Comments: {{ $machine->machine_comments }}  </label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 control-label">Status: {{ $machine->status }}</label>
-                                </div>
-                            </div>
+                        
                         </div> 
                     </div>
                 </div>
