@@ -64,7 +64,7 @@
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
                             <div class="grey-800 float-left py-10">
-                                <i class="icon md-view-list grey-600 font-size-24 vertical-align-bottom mr-5"></i> Total Stocks
+                                <i class="icon md-view-list grey-600 font-size-24 vertical-align-bottom mr-5"></i> Total Stock Left
                             </div>
                             @unless ( empty($machinerecords->stockLeft) )
                             <span class="float-right grey-700 font-size-30">{{ $machinerecords->stockLeft }}</span>

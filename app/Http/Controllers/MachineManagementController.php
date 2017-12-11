@@ -46,13 +46,17 @@ class MachineManagementController extends Controller {
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                //, 'moneylogs.ttlMoneyIn as totalWon'
                                 , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        //->leftJoin('moneylogs', 'machines.id', '=', 'moneylogs.machine_id')
+                        //->leftJoin('winlogs', 'machines.id', '=', 'winlogs.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->latest('machines.created_at')->paginate(20);
+       
 
         return view('machines-mgmt/index', ['machines' => $machines]);
     }
@@ -317,11 +321,23 @@ class MachineManagementController extends Controller {
     }
 
     public function error($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+        //        $machine = DB::table('machines')
+        //                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+        //                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+        //                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+        //                        ->where('machines.id', $id)->first();
+        
+           $machine = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
+           
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
@@ -332,10 +348,15 @@ class MachineManagementController extends Controller {
     }
 
     public function win($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+       $machine = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
@@ -348,9 +369,14 @@ class MachineManagementController extends Controller {
 
     public function money($id) {
         $machine = DB::table('machines')
-                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
@@ -361,10 +387,15 @@ class MachineManagementController extends Controller {
     }
 
     public function goals($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
+       $machine = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);

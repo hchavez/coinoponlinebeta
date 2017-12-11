@@ -70,34 +70,53 @@
                         </thead>
                         <thead>
                             <tr role="row">
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">IP Address</th>
-                                <th class="sorting_asc" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">Type</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1"  aria-label="Position: activate to sort column ascending">Model</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1"  aria-label="Office: activate to sort column ascending">Serial No</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending">Route</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Area</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">State</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">Site</th>
-                                <!--<th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">Purchase Date</th>-->
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">Active</th>
-                                <th class="sorting" tabindex="0" aria-controls="exampleTableSearch" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending">Comments</th></tr>
+                                <th>State</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Serial No</th>
+                                <th>Site</th>
+                                <th>Route</th>
+                                <th>Area</th>
+                                <th>Comments</th>
+                                <th>Total money</th>	
+                                <th>Total Toys won</th>	
+                                <th>Stock left</th>
+                                <th>Slip Voltage</th>
+                                <th>PK Volt</th>	
+                                <th>RET Volt</th>	
+                                <th>Owed Win </th>	
+                                <th>Excess win</th>	
+                                <th>Error</th>
+                                <th>Days since last visit</th>	
+                                <th>Sync Status</th>
+                                <th>Active</th>
+                       
+                            
                         </thead>
                         <tbody>
                             @foreach ($machines as $machine)
                             <tr role="row">
-                                <td> {{ $machine->ip_address }} </td>
+                                <td> {{ $machine->state }} </td>
                                 <td>{{ $machine->machine_type }}</td>
                                 <td>{{ $machine->machine_model }}</td>
                                 <td>  <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>
+                                <td> {{ $machine->site }} </td>  
                                 <td>{{ $machine->route }} </td>
                                 <td> {{ $machine->area }}</td>
-                                 <td> {{ $machine->state }}</td>
-                                <td> {{ $machine->site }} </td>   
-                                <!--<td>{{date('d F, Y H:i:s', strtotime($machine->purchase_date))}} </td>-->
-                                
-                                <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
-                                <td> <?php echo $active; ?> </td>
                                 <td>{{ $machine->comments }}</td>
+                                 <td> total won </td>
+                                <td> total toys won </td>                                   
+                                <td> stock left </td>
+                                <td> slip voltage</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                 <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
+                                <td> <?php echo $active; ?> </td>
                             </tr>
                             @endforeach
                         </tbody>
