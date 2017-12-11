@@ -605,7 +605,7 @@ class MachineManagementController extends Controller {
         $machinesettings->ySpeed = Input::get('ySpeed');
         $machinesettings->zSpeed = Input::get('zSpeed');
         $machinesettings->save();
-        dd($request);
+        //dd($request);
         // redirect
 //            Session::flash('message', 'Macine Settings Successfully Updated!');
         //return redirect('/info');

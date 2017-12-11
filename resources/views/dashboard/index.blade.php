@@ -98,13 +98,12 @@
                                     </thead>
                                     <tbody>
 <!--
-                                        @foreach ($machinelogs as $machinelog)
+-->                                        @foreach ($machinelogs as $machinelog)
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> machine_model}}</span> @else
-                                                {{ $machinelog -> machine_model}} @endif </td>
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> machine_type}}</span> @else
-                                                {{ $machinelog -> machine_type}} @endif</td>
-                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog -> error_id}}" style="text-decoration: none;">
+                                            <td>  {{ $machinelog->machine_model}} </td>
+                                            <td>  {{ $machinelog->machine_type}} </td>
+                                             <td> {{ $machinelog->serial_no}}</td>
+                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
 
                                                         @if ($machinelog->errortype == '2') 
                                                         <span class="badge badge-warning">Warning!</span> 
@@ -113,9 +112,9 @@
                                                         @endif
                                                         
                                                         @if ($machinelog->errortype == '1') 
-                                                        <span class="blink_me"> <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                                        <span class="blink_me"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                                         @else
-                                                        <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
+                                                        <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                                         @endif
                                                          </a></strong></td>
                                                         
@@ -124,7 +123,7 @@
                                             </td>   
 
                                         </tr>
-                                        @endforeach-->
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -141,9 +140,9 @@
     <!-- End Second Row -->
 
 </div>
-<!--
+
 @foreach ($machinelogs as $machinelog)
- Modal 
+
 <div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -172,11 +171,11 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <p><strong>Error Message: <?php //$errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
-                 <p>Machine Type: </p>
-                 <p>Machine Model: </p>
-                 <p>Site Address: </p>
-                {{$machinelog->errortype}}
+                <p><strong>Error Message: <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
+                 <p>Machine Type:  {{ $machinelog->machine_type}} </p>
+                 <p>Machine Model: {{ $machinelog->machine_model}} </p>
+                 <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -185,8 +184,8 @@
 
     </div>
 </div>
- End Page 
-@endforeach-->
+
+@endforeach
 
 
 @endsection
