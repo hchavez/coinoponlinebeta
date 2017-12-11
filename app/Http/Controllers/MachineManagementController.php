@@ -55,6 +55,7 @@ class MachineManagementController extends Controller {
                         //->leftJoin('winlogs', 'machines.id', '=', 'winlogs.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                        ->where('machines.status','1')
                         ->latest('machines.created_at')->paginate(20);
        
 
