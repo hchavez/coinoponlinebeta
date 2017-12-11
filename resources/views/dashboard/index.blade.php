@@ -91,7 +91,7 @@
                                         <tr role="row">
                                             <th>Machine Model</th>
                                             <th>Machine Type</th>
-                                            <th>Serial No</th>
+                                            <th>Name & Serial No</th>
                                             <th>Error Messages</th>
                                             <th>Site</th>
                                         </tr>  
@@ -102,7 +102,7 @@
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
                                             <td>  {{ $machinelog->machine_model}} </td>
                                             <td>  {{ $machinelog->machine_type}} </td>
-                                             <td> {{ $machinelog->serial_no}}</td>
+                                             <td> {{ $machinelog->comments}} - {{ $machinelog->serial_no}}</td>
                                             <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
 
                                                         @if ($machinelog->errortype == '2') 
@@ -172,7 +172,8 @@
             </div>
             <div class="modal-body">
                 <p><strong>Error Message: <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
-                 <p>Machine Type:  {{ $machinelog->machine_type}} </p>
+                <p>Name and Serial No:  {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </p> 
+                <p>Machine Type:  {{ $machinelog->machine_type}} </p>
                  <p>Machine Model: {{ $machinelog->machine_model}} </p>
                  <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
                
