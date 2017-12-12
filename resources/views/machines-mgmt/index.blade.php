@@ -104,17 +104,17 @@
                                 <td>{{ $machine->route }} </td>
                                 <td> {{ $machine->area }}</td>
                                 <td>{{ $machine->comments }}</td>
-                                 <td> total won </td>
-                                <td> total toys won </td>                                   
-                                <td> stock left </td>
-                                <td> slip voltage</td>
+                                 <td> {{ $machine->total_money }} </td>
+                                <td> {{ $machine->total_toys_win }} </td>                                   
+                                <td> {{ $machine->stock_left }} </td>
+                                <td> {{ $machine->slip_volt }} </td>
+                                <td>{{ $machine->pkup_volt }}</td>
+                                <td>{{ $machine->ret_volt }}</td>
+                                <td>{{ $machine->owed_win }}</td>
+                                <td>{{ $machine->excess_win }}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $machine->last_visit }}</td>
+                                <td>1</td>
                                  <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
                                 <td> <?php echo $active; ?> </td>
                             </tr>

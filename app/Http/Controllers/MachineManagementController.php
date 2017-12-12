@@ -46,13 +46,16 @@ class MachineManagementController extends Controller {
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                //, 'moneylogs.ttlMoneyIn as totalWon'
+                                , 'machine_reports.total_money as total_money','machine_reports.total_toys_win as total_toys_win','machine_reports.stock_left as stock_left'
+                                , 'machine_reports.slip_volt as slip_volt'
+                                , 'machine_reports.pkup_volt as pkup_volt'
+                                , 'machine_reports.ret_volt as ret_volt','machine_reports.owed_win as owed_win','machine_reports.excess_win as excess_win'
+                                ,'machine_reports.last_visit as last_visit'
                                 , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        //->leftJoin('moneylogs', 'machines.id', '=', 'moneylogs.machine_id')
-                        //->leftJoin('winlogs', 'machines.id', '=', 'winlogs.machine_id')
+                        ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.status','1')

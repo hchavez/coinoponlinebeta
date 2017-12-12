@@ -176,7 +176,7 @@
                 <p>Machine Type:  {{ $machinelog->machine_type}} </p>
                  <p>Machine Model: {{ $machinelog->machine_model}} </p>
                  <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
-               
+                 <p>  <input type="checkbox" id="resolve" name="resolve" > Resolve</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
