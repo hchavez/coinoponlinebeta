@@ -61,7 +61,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 form-control-label">Sites</label>
+                                        <label class="col-md-3 form-control-label">Site</label>
                                         <div class="col-md-9">
 
                                             <select class="form-control" name="site">
@@ -72,6 +72,20 @@
 
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Theme</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" name="theme">
+                                                @foreach ($themes as $theme)
+                                                <option {{ $machine->machine_theme_id == $theme->id ? 'selected' : ''}} value="{{$theme->id}}">{{$theme->theme}}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    
 
 
                                     <div class="form-group row{{ $errors->has('serial_no') ? ' has-error' : '' }}">

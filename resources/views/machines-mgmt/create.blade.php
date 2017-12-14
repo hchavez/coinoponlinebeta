@@ -60,6 +60,20 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                             <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Theme: </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="site" required>
+                                            <option value="">-- Select Theme --</option>
+                                            @foreach ($themes as $theme)
+                                            <option value="{{$theme->id}}">{{$theme->theme}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
                             
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">

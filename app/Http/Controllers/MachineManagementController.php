@@ -9,6 +9,7 @@ use App\Machine;
 use App\City;
 use App\State;
 use App\Site;
+use App\Theme;
 use App\Errorlogs;
 use App\GoalsLogs;
 use App\WinLogs;
@@ -76,8 +77,9 @@ class MachineManagementController extends Controller {
         $machine_types = MachineType::all();
         $machine_models = MachineModel::all();
         $sites = Site::all();
+        $themes = Theme::all();
 
-        return view('machines-mgmt/create', ['machine_types' => $machine_types, 'machine_models' => $machine_models, 'sites' => $sites, 'cities' => $cities, 'states' => $states]);
+        return view('machines-mgmt/create', ['machine_types' => $machine_types, 'themes' => $themes, 'machine_models' => $machine_models, 'sites' => $sites, 'cities' => $cities, 'states' => $states]);
     }
 
     /**
@@ -214,10 +216,12 @@ class MachineManagementController extends Controller {
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state'
+                                , 'sites.site_name as site' , 'themes.theme as theme')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('themes', 'machines.machine_theme_id', '=', 'themes.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
@@ -440,10 +444,12 @@ class MachineManagementController extends Controller {
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address', 'sites.id as site_id'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state'
+                                , 'sites.site_name as site' , 'themes.theme as theme')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('themes', 'machines.machine_theme_id', '=', 'themes.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
@@ -458,9 +464,10 @@ class MachineManagementController extends Controller {
         $machine_types = MachineType::all();
         $machine_models = MachineModel::all();
         $sites = Site::all();
+        $themes = Theme::all();
 
         return view('machines-mgmt/edit', ['machine' => $machine, 'machine_types' => $machine_types,
-                    'machine_models' => $machine_models,'sites' => $sites])
+                    'machine_models' => $machine_models,'sites' => $sites,'themes' => $themes])
                     ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
@@ -501,6 +508,7 @@ class MachineManagementController extends Controller {
             'machine_serial_no' => $request['serial_no'],
             'ip_address' => $request['ip_address'],
             'site_id' => $request['site'],
+            'machine_theme_id' => $request['theme'],
             'machine_description' => $request['description'],
             'comments' => $request['comments']
         ];

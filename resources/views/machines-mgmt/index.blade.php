@@ -63,7 +63,7 @@
                                 <th rowspan="1" colspan="1">
                                     <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                                        <span class="site-menu-title">Export</span>
+                                        <span class="site-menu-title"><!-- Export --></span>
                                     </a> 
                                 </th>
                             </tr>
