@@ -291,6 +291,11 @@
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">
+                                                <a class="animsition-link" href="{{ url('machine-management/reports') }}">
+                                                    <span class="site-menu-title">Machines Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('machine-management/create') }}">
                                                     <span class="site-menu-title">New Machine</span>
                                                 </a>

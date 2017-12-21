@@ -81,7 +81,7 @@
                                     <label for="description" class="col-md-3 form-control-label">Description: </label>
 
                                     <div class="col-md-9">
-                                        <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" required>
+                                        <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" >
 
                                         @if ($errors->has('description'))
                                         <span class="help-block">
@@ -148,6 +148,23 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group{{ $errors->has('version') ? ' has-error' : '' }}">
+                                <div class="form-group row">
+                                    <label for="version" class="col-md-3 form-control-label">Version: </label>
+
+                                    <div class="col-md-9">
+                                        <input id="version" type="text" class="form-control" name="version" value="{{ old('version') }}" required>
+
+                                        @if ($errors->has('version'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('version') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            
                             
                             <div class="form-group{{ $errors->has('purchase_amount') ? ' has-error' : '' }}">
                                 <div class="form-group row">

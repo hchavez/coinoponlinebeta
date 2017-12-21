@@ -100,6 +100,20 @@
                                             @endif
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-group row{{ $errors->has('version') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Version</label>
+                                        <div class="col-md-9">
+                                            <input id="version" type="text" class="form-control" name="version" value="{{ $machine->version }}" required>
+
+                                            @if ($errors->has('version'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('version') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    
 
                                     <div class="form-group row{{ $errors->has('ip_address') ? ' has-error' : '' }}">
                                         <label class="col-md-3 form-control-label">IP Address</label>

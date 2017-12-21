@@ -3,11 +3,26 @@
 
 <div class="panel">
     <header class="panel-heading">
-        <h3 class="panel-title">List of Machines</h3>
+        <h3 class="panel-title">Machines Report</h3>
     </header>
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-      
+             <form role="form" method="GET" action="{{ route('machine-management.index') }}">
+            <div class="example">
+                <div class="input-daterange" data-plugin="datepicker" style="width: 25% !important;">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="icon wb-calendar" aria-hidden="true"></i>
+                      </span>
+                        <input type="text" class="form-control" name="startdate" value="<?php if ($start) {echo $start;} ?>">
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon">to</span>
+                      <input type="text" class="form-control" name="enddate" value="<?php if ($start) {echo $end;} ?>">
+                    </div>
+                  </div> <button type="submit" class="btn btn-primary"> Go!</button>
+                </div> 
+            </form>
             
             <div class="row"><div class="col-sm-12">
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
@@ -87,8 +102,8 @@
                                 <th>Owed Win </th>	
                                 <th>Excess win</th>	
                                 <th>Error</th>
-                                <th>Activity</th>	
-                                <th>Sync Status</th>
+                                <th>Last visit</th>	
+                                <th>Activity</th>
                                 <th>Active</th>
                        
                             
@@ -103,7 +118,7 @@
                                 <td> {{ $machine->site }} </td>  
                                 <td>{{ $machine->route }} </td>
                                 <td> {{ $machine->area }}</td>
-                                <td>{{ $machine->comments }}</td>
+                                <td>{{ $machine->comments }} - {{ $machine->version }} </td>
                                  <td> {{ $machine->total_money }} </td>
                                 <td> {{ $machine->total_toys_win }} </td>                                   
                                 <td> {{ $machine->stock_left }} </td>
@@ -112,10 +127,9 @@
                                 <td>{{ $machine->ret_volt }}</td>
                                 <td>{{ $machine->owed_win }}</td>
                                 <td>{{ $machine->excess_win }}</td>
-                                
-                                <td>{{ $machine->last_visit }}</td>
-                                <td>{{date('d-m-Y H:i:s', strtotime($machine->date_created))}}</td>
                                 <td></td>
+                                <td>{{ $machine->last_visit }}</td>
+                                <td>{{date('d-m-Y', strtotime($machine->date_created))}} </td>
                                  <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
                                 <td> <?php echo $active; ?> </td>
                             </tr>

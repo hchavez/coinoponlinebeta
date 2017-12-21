@@ -40,7 +40,7 @@ class DashboardController extends Controller
         ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
         ->leftJoin('state', 'sites.state', '=', 'state.id')
-        ->where('errorlogs.type','1')
+        ->where('errorlogs.type','!=','3')
         ->whereDate('errorlogs.created_at', '=', Carbon::today())
          ->get();
 
