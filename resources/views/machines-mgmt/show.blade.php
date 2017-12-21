@@ -81,7 +81,7 @@
                 <!-- Panel Projects -->
                 <div class="panel" id="projects">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Information</h3>
+                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Version - {{ $machine->version }} </h3>
                     </div>
 
                     <div class="table-responsive">

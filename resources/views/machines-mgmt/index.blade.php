@@ -103,7 +103,7 @@
                                 <td> {{ $machine->site }} </td>  
                                 <td>{{ $machine->route }} </td>
                                 <td> {{ $machine->area }}</td>
-                                <td>{{ $machine->comments }}</td>
+                                <td>{{ $machine->comments }} - {{ $machine->version }}</td>
                                  <td> {{ $machine->total_money }} </td>
                                 <td> {{ $machine->total_toys_win }} </td>                                   
                                 <td> {{ $machine->stock_left }} </td>
