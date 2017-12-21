@@ -53,7 +53,7 @@ class MachineManagementController extends Controller {
                                     , 'machine_reports.slip_volt as slip_volt'
                                     , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
                                     , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
-                                    , 'machine_reports.last_visit as last_visit'
+                                    , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
                                     , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                             ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                             ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')

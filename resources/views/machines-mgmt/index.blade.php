@@ -113,8 +113,8 @@
                                 <td>{{ $machine->owed_win }}</td>
                                 <td>{{ $machine->excess_win }}</td>
                                 
-                                <td>{{ $machine->last_visit }}</td>
-                                <td>{{date('d-m-Y H:i:s', strtotime($machine->date_created))}}</td>
+                                <td></td>
+                                <td>{{date('d-m-Y H:i:s', strtotime($machine->last_played))}}</td>
                                 <td></td>
                                  <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
                                 <td> <?php echo $active; ?> </td>
