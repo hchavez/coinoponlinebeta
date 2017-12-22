@@ -71,7 +71,7 @@
                                     @foreach ($moneylogs as $moneylog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $moneylog->id }} </td>
-                                        <td class="hidden-xs">{{date('F d, Y H:i:s', strtotime($moneylog->created_at))}}</td>
+                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($moneylog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $moneylog->coinIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->ttlCoinIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->billIn }}</td>

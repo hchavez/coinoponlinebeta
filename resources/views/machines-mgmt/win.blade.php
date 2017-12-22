@@ -71,7 +71,7 @@
                                     @foreach ($winlogs as $winlog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $winlog->id }} </td>
-                                        <td class="hidden-xs">{{date('F d, Y H:i:s', strtotime($winlog->created_at))}}</td>
+                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($winlog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $winlog->testPlay }}</td>
                                         <td class="hidden-xs">{{ $winlog->winResult }}</td>
                                         <td class="hidden-xs">{{ $winlog->totalWon }}</td>

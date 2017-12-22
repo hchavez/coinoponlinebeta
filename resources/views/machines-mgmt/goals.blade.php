@@ -75,7 +75,7 @@
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
                                         <td >{{ $goalslog->id }} </td>
-                                        <td >{{date('F d, Y H:i:s', strtotime($goalslog->created_at))}}</td>
+                                        <td >{{date('d/m/Y h:i A', strtotime($goalslog->created_at))}}</td>
                                         <td >{{ $goalslog->testPlay }}</td>
                                         <td >{{ $goalslog->pkPWM }}</td>
                                         <td >{{ $goalslog->pkVolt }}</td>
