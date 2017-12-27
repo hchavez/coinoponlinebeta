@@ -34,13 +34,14 @@ class DashboardController extends Controller
                 'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
                 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
                  'machines.machine_serial_no as serial_no','machines.comments as comments',
-                'errorlogs.error as error','errorlogs.type as errortype')
+                'errorlogs.error as error','errorlogs.type as errortype','errorlogs.created_at as date_created')
         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
         ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
         ->leftJoin('state', 'sites.state', '=', 'state.id')
         ->where('errorlogs.type','!=','3')
+        ->where('errorlogs.status','!=','2')
         ->whereDate('errorlogs.created_at', '=', Carbon::today())
          ->get();
 

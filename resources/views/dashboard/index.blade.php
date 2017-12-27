@@ -89,6 +89,7 @@
 
                                     <thead>
                                         <tr role="row">
+                                            <th>Date Time</th>
                                             <th>Machine Model</th>
                                             <th>Machine Type</th>
                                             <th>Name & Serial No</th>
@@ -100,6 +101,7 @@
 <!--
 -->                                        @foreach ($machinelogs as $machinelog)
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
+                                             <td>{{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}}</td>
                                             <td>  {{ $machinelog->machine_model}} </td>
                                             <td>  {{ $machinelog->machine_type}} </td>
                                              <td> {{ $machinelog->comments}} - {{ $machinelog->serial_no}}</td>
