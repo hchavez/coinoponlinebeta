@@ -34,7 +34,8 @@ class DashboardController extends Controller
                 'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
                 'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
                  'machines.machine_serial_no as serial_no','machines.comments as comments',
-                'errorlogs.error as error','errorlogs.type as errortype','errorlogs.created_at as date_created')
+                'errorlogs.error as error','errorlogs.type as errortype',
+                'errorlogs.created_at as date_created','errorlogs.id as error_id')
         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
         ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
@@ -47,6 +48,33 @@ class DashboardController extends Controller
 
         return view('dashboard/index', ['machinelogs' => $machinelogs]);
     }
+    
+      /**
+     * This will update status once machine is fixed.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update_error_status(Request $request)
+    {
+       if($request->ajax()){           
+           
+            $error = Errorlogs::find($request->errorid);
+            $error->status = Input::get('statusval');
+            $error->update();
+
+            $response = array(
+                'status' => 'success',
+                'msg' => 'Option created successfully',
+            );
+
+        return Response::json( $response );
+
+
+    
+          
+       }
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

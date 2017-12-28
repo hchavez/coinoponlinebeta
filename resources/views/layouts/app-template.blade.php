@@ -30,6 +30,24 @@
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
       
+             <!-- Core  -->
+        <script src="{{ asset("/global/vendor/babel-external-helpers/babel-external-helpers.js") }}"></script>
+        <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
+        <script src="{{ asset("/global/vendor/tether/tether.js") }}"></script>
+        <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
+        <script src="{{ asset("/global/vendor/animsition/animsition.js") }}"></script>
+        <script src="{{ asset("/global/vendor/mousewheel/jquery.mousewheel.js") }}"></script>
+        <script src="{{ asset("/global/vendor/asscrollbar/jquery-asScrollbar.js") }}"></script>
+        <script src="{{ asset("/global/vendor/asscrollable/jquery-asScrollable.js") }}"></script>
+        <!-- Plugins -->
+        <script src="{{ asset("/global/vendor/switchery/switchery.min.js") }}"></script>
+        <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
+        <script src="{{ asset("/global/vendor/screenfull/screenfull.js") }}"></script>
+        <script src="{{ asset("/global/vendor/slidepanel/jquery-slidePanel.js") }}"></script>
+        <script src="{{ asset("/global/vendor/aspieprogress/jquery-asPieProgress.js") }}"></script>
+        <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
+        <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
+        <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <!--[if lt IE 9]>
           <script src="{{ asset("/global/vendor/html5shiv/html5shiv.min.js") }}"></script>
@@ -76,24 +94,7 @@
         </div>
         <!-- End Page -->
 
-        <!-- Core  -->
-        <script src="{{ asset("/global/vendor/babel-external-helpers/babel-external-helpers.js") }}"></script>
-        <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
-        <script src="{{ asset("/global/vendor/tether/tether.js") }}"></script>
-        <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
-        <script src="{{ asset("/global/vendor/animsition/animsition.js") }}"></script>
-        <script src="{{ asset("/global/vendor/mousewheel/jquery.mousewheel.js") }}"></script>
-        <script src="{{ asset("/global/vendor/asscrollbar/jquery-asScrollbar.js") }}"></script>
-        <script src="{{ asset("/global/vendor/asscrollable/jquery-asScrollable.js") }}"></script>
-        <!-- Plugins -->
-        <script src="{{ asset("/global/vendor/switchery/switchery.min.js") }}"></script>
-        <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
-        <script src="{{ asset("/global/vendor/screenfull/screenfull.js") }}"></script>
-        <script src="{{ asset("/global/vendor/slidepanel/jquery-slidePanel.js") }}"></script>
-        <script src="{{ asset("/global/vendor/aspieprogress/jquery-asPieProgress.js") }}"></script>
-        <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
-        <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
-        <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
+   
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
         <script src="{{ asset("/global/js/Component.js") }}"></script>

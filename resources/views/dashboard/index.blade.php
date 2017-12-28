@@ -6,7 +6,7 @@
 
 <!-- Page -->
 
-
+<meta http-equiv="refresh" content="300" >
 <h1 class="page-title font-size-26 font-weight-100">Machine Performance</h1>
 
 
@@ -149,6 +149,8 @@
     <div class="modal-dialog">
 
          Modal content
+         <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update">
+          <input type="text" name="errorid" value="{{ $machinelog->error_id }}">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -173,22 +175,69 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <p><strong>Error Message: <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
+                <p><strong>Error Message: <?php $errorstring = str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
                 <p>Name and Serial No:  {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </p> 
                 <p>Machine Type:  {{ $machinelog->machine_type}} </p>
                  <p>Machine Model: {{ $machinelog->machine_model}} </p>
                  <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
-                 <p>  <input type="checkbox" id="resolve" name="resolve" > Resolve</p>
+                 <p>  <input type="checkbox" id="error-resolve" name="resolve" value="2" > Resolve</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                 <input class="btn btn-primary" type="submit" value="Update" />
+                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
             </div>
+            
         </div>
-
+    </form>
     </div>
 </div>
 
 @endforeach
 
+<script>
+//    $('#status-update').on("click", function(e){
+//        $('input:checkbox').change(function(e) {
+//            e.preventDefault();
+//            var data = $(this).serialize();
+//            var url = $(this).attr('action');
+//            var isChecked = $("input:checkbox").is(":checked") ? 2:1;
+//            $.post(url,data, function(data){
+//                console.log(isChecked)
+//            })
+//    });
+    
+    
+    $(document).ready(function() {
+
+    $("#status-update").submit(function(e) {
+            e.preventDefault();
+             
+            var statusval = $("input#error-resolve").val();
+            var data = {status:statusval};
+            console.log(data);
+            
+            var request = $.ajax({
+              url: 'dashboard/update_error_status',
+              type: "POST",
+              data: data ,
+              dataType: "html"              
+            });
+  
+          request.done(function( msg ) {
+            var response = JSON.parse(msg);
+            console.log(response.msg);
+          });
+
+          request.fail(function( jqXHR, textStatus ) {
+            console.log( "Request failed: " + textStatus );
+          });
+
+    });
+
+});
+
+
+</script>
 
 @endsection
+

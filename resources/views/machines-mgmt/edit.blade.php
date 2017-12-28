@@ -46,30 +46,25 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group row">
                                         <label class="col-md-3 form-control-label">Machine Model</label>
                                         <div class="col-md-9">
-
                                             <select class="form-control" name="machine_model">
                                                 @foreach ($machine_models as $machine_model)
                                                 <option {{ $machine->machine_model_id == $machine_model->id ? 'selected' : ''}} value="{{$machine_model->id}}">{{$machine_model->machine_model}}</option>
                                                 @endforeach
                                             </select>
-
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="col-md-3 form-control-label">Site</label>
                                         <div class="col-md-9">
-
                                             <select class="form-control" name="site">
                                                 @foreach ($sites as $site)
                                                 <option {{ $machine->site_id == $site->id ? 'selected' : ''}} value="{{$site->id}}">{{$site->site_name}}</option>
                                                 @endforeach
                                             </select>
-
                                         </div>
                                     </div>
                                     

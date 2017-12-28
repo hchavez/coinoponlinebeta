@@ -40,6 +40,8 @@ Route::get('machine-management/show/{id}', 'MachineManagementController@show');
 Route::get('machine-management/error/{id}', 'MachineManagementController@error');
 Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_settings');
 
+/**********************************************************************************/
+Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
     
 Route::resource('machine-settings', 'MachineSettingsController');
 Route::post('machine-settings/search', 'MachineSettingsController@search')->name('machine-settings.search');
