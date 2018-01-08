@@ -136,7 +136,6 @@
                 <!-- End Panel Projects -->
             </div>
 
-
             <div class="col-xxl-12 col-lg-12">
                 <!-- Widget Jvmap -->
                 <div class="card card-shadow">
@@ -145,7 +144,7 @@
                         <div class="example-wrap">
                             <div class="row row-lg">
                                 <div class="col-xl-12">
-                                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                    <div id="containerwin" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
                                 </div>
@@ -155,7 +154,81 @@
 
                                     $(document).ready(function () {
 
-                                        chart = new Highcharts.chart('container', {
+                                        chart = new Highcharts.chart('containerwin', {
+                                            chart: {
+                                                type: 'line'
+                                            },
+                                            title: {
+                                                text: ''
+                                            },
+                                            subtitle: {
+                                                text: ''
+                                            },
+                                            xAxis: {
+                                              
+                                            },
+                                            yAxis: {
+                                                 min: 0,
+                                                    max: 10,
+                                                      tickInterval: 10,
+                                                title: {
+                                                    text: 'Win Graph ',
+                                                    
+                                                }
+                                            },
+                                            plotOptions: {
+                                                line: {
+                                                    dataLabels: {
+                                                        enabled: false
+                                                    },
+                                                    enableMouseTracking: true
+                                                }
+                                            },
+                                            series: [ {
+                                                    name: 'OwedWin',
+                                                    data: [ {{ $graphdataOwnedWinResult }} ]
+                                                }, {
+                                                    name: 'ExcessWin',
+                                                    data: [ {{ $graphdataExcessWinResult }} ]
+                                                }, {
+                                                    name: 'WinResult',
+                                                    data: [ {{ $graphdataWinResult }} ]
+                                                }]
+                                        });
+                                    });
+
+
+
+                                </script>
+
+                            </div>
+                        </div>
+                        <!-- End Example css animation Chart -->
+                    </div>
+
+                </div>
+                <!-- End Widget Jvmap -->
+            </div>
+            
+            <div class="col-xxl-12 col-lg-12">
+                <!-- Widget Jvmap -->
+                <div class="card card-shadow">
+                    <div class="card-block p-0">
+                        <!-- Example css animation Chart -->
+                        <div class="example-wrap">
+                            <div class="row row-lg">
+                                <div class="col-xl-12">
+                                    <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+                                </div>
+
+                                <script type="text/javascript">
+                                    var chart = null;
+
+                                    $(document).ready(function () {
+
+                                        chart = new Highcharts.chart('containervoltage', {
                                             chart: {
                                                 type: 'line'
                                             },
@@ -173,16 +246,16 @@
                                                     max: 50,
                                                       tickInterval: 10,
                                                 title: {
-                                                    text: 'Voltage ',
+                                                    text: 'Voltage Graph',
                                                     
                                                 }
                                             },
                                             plotOptions: {
                                                 line: {
                                                     dataLabels: {
-                                                        enabled: true
+                                                        enabled: false
                                                     },
-                                                    enableMouseTracking: false
+                                                    enableMouseTracking: true
                                                 }
                                             },
                                             series: [{
@@ -191,15 +264,6 @@
                                                 }, {
                                                     name: 'RetVoltage',
                                                     data: [ {{ $graphdataDropVoltResult }} ], 
-                                                }, {
-                                                    name: 'OwedWin',
-                                                    data: [ {{ $graphdataOwnedWinResult }} ]
-                                                }, {
-                                                    name: 'ExcessWin',
-                                                    data: [ {{ $graphdataExcessWinResult }} ]
-                                                }, {
-                                                    name: 'WinResult',
-                                                    data: [ {{ $graphdataWinResult }} ]
                                                 }]
                                         });
                                     });

@@ -98,14 +98,13 @@
                                         </tr>  
                                     </thead>
                                     <tbody>
-<!--
--->                                        @foreach ($machinelogs as $machinelog)
+                          @foreach ($machinelogs as $machinelog)
                                         <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
-                                             <td>{{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}}</td>
+                                            <td>  {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}}</td>
                                             <td>  {{ $machinelog->machine_model}} </td>
                                             <td>  {{ $machinelog->machine_type}} </td>
-                                             <td> {{ $machinelog->comments}} - {{ $machinelog->serial_no}}</td>
-                                            <td><strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
+                                            <td>  {{ $machinelog->comments}} - {{ $machinelog->serial_no}}</td>
+                                            <td> <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
 
                                                         @if ($machinelog->errortype == '2') 
                                                         <span class="badge badge-warning">Warning!</span> 
@@ -118,19 +117,128 @@
                                                         @else
                                                         <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                                         @endif
-                                                         </a></strong></td>
+                                                         </a></strong>
+                                            </td>
                                                         
-                                            <td>  @if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}}</span> @else
+                                            <td>@if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}}</span> @else
                                                 {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
                                             </td>   
 
                                         </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        
+                        
+                        <div class="example-wrap">
+                <h4 class="example-title">Table Section</h4>
+                <div class="example">
+                  <table class="table table-hover">
+                        <thead>
+                           <tr role="row">
+                               <th></th>
+                               <th>Date Time</th>
+                               <th>Machine Model</th>
+                               <th>Machine Type</th>
+                               <th>Name & Serial No</th>
+                               <th>Error Messages</th>
+                               <th>Site</th>
+                               <th>Instances</th>
+                           </tr>  
+                        </thead>
+              
+                             <tbody class="table-section" data-plugin="tableSection">
+                                  
+                            
+                          <tr>
+                            <td class="text-left"><i class="table-section-arrow"></i></td>
+                            <td class="text-left">date</td>
+                            <td class="font-weight-medium">
+                             
+                            </td>
+                            <td>
+                              <span class="badge badge-danger">Canceled</span>
+                            </td>
+                            <td class="hidden-sm-down">
+                              <span class="text-muted">July 10, 2017</span>
+                            </td>
+                             <td class="hidden-sm-down">
+                              <span class="text-muted">July 10, 2017</span>
+                            </td>
+                             <td class="hidden-sm-down">
+                              <span class="text-muted">July 10, 2017</span>
+                            </td>
+                            <td class="hidden-sm-down">
+                              <span class="text-muted">0</span>
+                            </td>
+                          </tr>
+                             
+                        </tbody>
+                 
+                        
+                         
+                   
+                        <tbody>
+                          <tr>
+                            <td></td>
+                            <td class="font-weight-medium text-success">
+                              ##MODULE-1111
+                            </td>
+                            <td>
+                              Done
+                            </td>
+                            <td class="hidden-sm-down">
+                              July 27, 2017
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td class="font-weight-medium text-success">
+                              ##MODULE-723
+                            </td>
+                            <td>
+                              Done
+                            </td>
+                            <td class="hidden-sm-down">
+                              July 7, 2017
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td class="font-weight-medium text-success">
+                              ##MODULE-4200c
+                            </td>
+                            <td>
+                              Done
+                            </td>
+                            <td class="hidden-sm-down">
+                              July 12, 2017
+                            </td>
+                          </tr>
+                        </tbody>
+                    
+                    <tbody class="table-section" data-plugin="tableSection">
+                      <tr>
+                        <td class="text-center"><i class="table-section-arrow"></i></td>
+                        <td class="font-weight-medium">
+                          Project #28686
+                        </td>
+                        <td>
+                          <span class="badge badge-info">Testing</span>
+                        </td>
+                        <td class="hidden-sm-down">
+                          <span class="text-muted">July 12, 2017</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  
+                 
+               
+                  </table>
+                </div>
+              </div>
                     </div>
                 </div>
                 <!-- End Team Total Completed -->
@@ -217,7 +325,7 @@
             console.log(data);
             
             var request = $.ajax({
-              url: 'dashboard/update_error_status',
+              url: 'http://localhost/coinoponlinebeta/public/dashboard/update_error_status',
               type: "POST",
               data: data ,
               dataType: "html"              

@@ -29,8 +29,8 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
-      
-             <!-- Core  -->
+
+        <!-- Core  -->
         <script src="{{ asset("/global/vendor/babel-external-helpers/babel-external-helpers.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
         <script src="{{ asset("/global/vendor/tether/tether.js") }}"></script>
@@ -48,6 +48,7 @@
         <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
+        <script src="{{ asset("/global/vendor/peity/jquery.peity.min.js") }}"></script>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <!--[if lt IE 9]>
           <script src="{{ asset("/global/vendor/html5shiv/html5shiv.min.js") }}"></script>
@@ -59,7 +60,7 @@
         <!-- Scripts -->
         <script src="{{ asset("/global/vendor/breakpoints/breakpoints.js") }}"></script>
         <script>
-      Breakpoints();
+Breakpoints();
         </script>
         <!-- Scripts -->
         <script>
@@ -94,7 +95,7 @@
         </div>
         <!-- End Page -->
 
-   
+
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
         <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -109,7 +110,7 @@
         <script src="{{ asset("/global/js/config/colors.js") }}"></script>
         <script src="{{ asset("/assets/js/config/tour.js") }}"></script>
         <script>
-              Config.set('assets', '../assets');
+            Config.set('assets', '../assets');
         </script>
         <!-- Page -->
         <script src="{{ asset("/assets/js/Site.js") }}"></script>
@@ -122,13 +123,23 @@
         <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>
         <script src="{{ asset("/assets/examples/js/dashboard/team.js") }}"></script>
 
+
+        <script src="{{ asset("/global/js/Plugin/asselectable.js") }}"></script>
+        <script src="{{ asset("/global/js/Plugin/selectable.js") }}"></script>
+        <script src="{{ asset("/global/js/Plugin/table.js") }}"></script>
+        <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>
+
+
+        <script src="{{ asset("/global/js/Plugin/peity.js") }}"></script>
+        <script src="{{ asset("/assets/examples/js/charts/peity.js") }}"></script>
+
         <!--AngularJS-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
         <script src="{{ asset("/assets/js/app.js") }}"></script>
-        
+
         <!--CustomStyle-->
-          <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
- 
+        <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
+
     </body>
 </html>
 

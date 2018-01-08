@@ -299,10 +299,13 @@ class MachineManagementController extends Controller {
                         ->orderBy('moneylogs.created_at', 'desc')->first();
 
         //Get Win Result Data for graphview
-        $graphdatawinquery = DB::table('winlogs')->select('winResult')->where('machine_id', $id)->get();
+        $graphdatawinquery = DB::table('winlogs')->select('winResult')->where('machine_id', $id)
+                            //->whereMonth('created_at', '=', date('m'))
+                            ->where('testPlay', 'play')->get();
+        
         $totalPlay = $graphdatawinquery->count();
 
-        if ($graphdatawinquery->count()) {
+        if ($graphdatawinquery->count() > 0) {
             foreach ($graphdatawinquery as $value) {
                 if ($value->winResult == 'won') {
                     $tempval = '1';
@@ -317,8 +320,11 @@ class MachineManagementController extends Controller {
         }
 
         //Get Excess Win Data for graphview
-        $graphdataExcessWinQuery = DB::table('winlogs')->select('excessWin')->where('machine_id', $id)->get();
-        if ($graphdataExcessWinQuery->count()) {
+        $graphdataExcessWinQuery = DB::table('winlogs')->select('excessWin')->where('machine_id', $id)
+                                    //->whereMonth('created_at', '=', date('m'))
+                                    ->where('testPlay', 'play')->get();
+        
+        if ($graphdataExcessWinQuery->count() > 0) {
             foreach ($graphdataExcessWinQuery as $value) {
                 $graphdataExcessWinresult[] = $value->excessWin;
             }
@@ -328,8 +334,11 @@ class MachineManagementController extends Controller {
         }
 
         //Get Owned Win Data for graphview
-        $graphdataOwnedWinQuery = DB::table('winlogs')->select('owedWin')->where('machine_id', $id)->get();
-        if ($graphdataOwnedWinQuery->count()) {
+        $graphdataOwnedWinQuery = DB::table('winlogs')->select('owedWin')->where('machine_id', $id)
+                                       // ->whereMonth('created_at', '=', date('m'))
+                                        ->where('testPlay', 'play')->get();
+        
+        if ($graphdataOwnedWinQuery->count() > 0) {
             foreach ($graphdataOwnedWinQuery as $value) {
                 $graphdataOwnedWinresult[] = $value->owedWin;
             }
@@ -339,9 +348,11 @@ class MachineManagementController extends Controller {
         }
 
         //Get RetVolt Data for graphview
-        $graphdataDropVoltQuery = DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)->where('startEndFlag', '2')->get();
+        $graphdataDropVoltQuery = DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)
+                               // ->whereMonth('created_at', '=', date('m'))    
+                                ->where('startEndFlag', '2')->where('testPlay', 'play')->get();
 
-        if ($graphdataDropVoltQuery->count()) {
+        if ($graphdataDropVoltQuery->count() > 0) {
             foreach ($graphdataDropVoltQuery as $value) {
                 $graphdataDropVoltresult[] = $value->dropVolt;
             }
@@ -351,9 +362,11 @@ class MachineManagementController extends Controller {
         }
 
         //Get pickupvolt Data for graphview
-        $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)->where('startEndFlag', '1')->get();
+        $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)
+                                //->whereMonth('created_at', '=', date('m'))
+                                ->where('startEndFlag', '1')->where('testPlay', 'play')->get();
 
-        if ($graphdataPkVoltQuery->count()) {
+        if ($graphdataPkVoltQuery->count() > 0) {
             foreach ($graphdataPkVoltQuery as $value) {
                 $graphdataPkVoltresult[] = $value->pkVolt;
             }
