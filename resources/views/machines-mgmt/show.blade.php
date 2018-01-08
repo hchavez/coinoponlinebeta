@@ -169,7 +169,7 @@
                                             },
                                             yAxis: {
                                                  min: 0,
-                                                    max: 10,
+                                                    max: 20,
                                                       tickInterval: 10,
                                                 title: {
                                                     text: 'Win Graph ',
