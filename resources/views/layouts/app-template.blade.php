@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/asscrollable/asScrollable.css") }}">
         <link rel="stylesheet" href="{{ asset("/assets/examples/css/dashboard/team.css") }}">
+        <link rel="stylesheet" href="{{ asset("/assets/css/select2.css") }}">
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
@@ -39,6 +40,7 @@
         <script src="{{ asset("/global/vendor/mousewheel/jquery.mousewheel.js") }}"></script>
         <script src="{{ asset("/global/vendor/asscrollbar/jquery-asScrollbar.js") }}"></script>
         <script src="{{ asset("/global/vendor/asscrollable/jquery-asScrollable.js") }}"></script>
+        <script src="{{ asset("/global/js/custom-script.js") }}"></script>
         <!-- Plugins -->
         <script src="{{ asset("/global/vendor/switchery/switchery.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
@@ -106,6 +108,9 @@ Breakpoints();
         <script src="{{ asset("/assets/js/Section/Sidebar.js") }}"></script>
         <script src="{{ asset("/assets/js/Section/PageAside.js") }}"></script>
         <script src="{{ asset("/assets/js/Plugin/menu.js") }}"></script>
+        <script src="{{ asset("/assets/js/Plugin/bootbox.js") }}"></script>
+        <script src="{{ asset("/assets/js/Plugin/bootstrap-sweetalert.js") }}"></script>
+        <script src="{{ asset("/assets/js/select2.js") }}"></script>
         <!-- Config -->
         <script src="{{ asset("/global/js/config/colors.js") }}"></script>
         <script src="{{ asset("/assets/js/config/tour.js") }}"></script>
@@ -122,6 +127,9 @@ Breakpoints();
         <script src="{{ asset("/global/js/Plugin/bootstrap-datepicker.js") }}"></script>
         <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>
         <script src="{{ asset("/assets/examples/js/dashboard/team.js") }}"></script>
+        <script src="{{ asset("/global/js/Plugin/bootbox.js") }}"></script>
+        <script src="{{ asset("/global/js/Plugin/sweetalert.js") }}"></script>
+                
 
 
         <script src="{{ asset("/global/js/Plugin/asselectable.js") }}"></script>
@@ -132,6 +140,7 @@ Breakpoints();
 
         <script src="{{ asset("/global/js/Plugin/peity.js") }}"></script>
         <script src="{{ asset("/assets/examples/js/charts/peity.js") }}"></script>
+        <script src="{{ asset("/assets/examples/js/advanced/bootbox-sweetalert.js") }}"></script>
 
         <!--AngularJS-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>

@@ -39,6 +39,7 @@ Route::get('machine-management/money/{id}', 'MachineManagementController@money')
 Route::get('machine-management/show/{id}', 'MachineManagementController@show');
 Route::get('machine-management/error/{id}', 'MachineManagementController@error');
 Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_settings');
+Route::post('machine-management/filter', 'MachineManagementController@filter')->name('machine-management.filter');
 
 /**********************************************************************************/
 Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
@@ -143,3 +144,7 @@ Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name(
 
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');
+
+Route::resource('profile', 'ProfileController');
+Route::post('profile/{id}', 'ProfileController@update');
+Route::get('profile/role/{id}', 'ProfileController@role');

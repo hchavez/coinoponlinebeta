@@ -44,28 +44,77 @@ class MachineManagementController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {      
 
-            $machines = DB::table('machines')
-                            ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
-                                     , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                    , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
-                                    , 'machine_reports.slip_volt as slip_volt'
-                                    , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
-                                    , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
-                                    , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
-                                    , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                            ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
-                            ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                            ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                            // ->whereBetween('machine_reports.date_created',['2017-12-18','2017-12-21'])
-                            ->where('machines.status', '1')
-                           ->latest('machines.created_at')->paginate(20);
+        $machines = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
+                                , 'machine_reports.slip_volt as slip_volt'
+                                , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
+                                , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
+                                , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
+                                , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
+                        ->leftJoin('state', 'sites.state', '=', 'state.name')                       
+                        ->where('machines.status', '1')
+                        ->latest('machines.created_at')->paginate(20);
+        
+        $machine_type = DB::Table('machine_types')->get();  
+        $machine_model = DB::Table('machine_models')->get();  
+        $machine_route = DB::Table('route')->get();
+        $machine_area = DB::Table('area')->get();
+        $machine_state = DB::Table('state')->get();
+        $machine_serial = DB::Table('machines')->get();
+       
+        return view('machines-mgmt/index', ['getData' => $request, 'machines' => $machines,'m_serial' => $machine_serial,'m_state' => $machine_state, 'm_type' => $machine_type, 'm_model' => $machine_model, 'm_route' => $machine_route, 'm_area' => $machine_area]);
+    }
 
-        return view('machines-mgmt/index', ['machines' => $machines]);
+    public function filter(Request $request)
+    {
+        //dd($request);                         
+       // $query_type = DB::table('machine_types')->where('id',$request['machine_type']);
+        $machines = DB::table('machines')
+                ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                            , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                        , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
+                        , 'machine_reports.slip_volt as slip_volt'
+                        , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
+                        , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
+                        , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
+                        , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
+                ->leftJoin('state', 'sites.state', '=', 'state.name')                
+                ->where('machines.status', '1')
+                ->where(function($query) use ($request){
+                    $query->where('machine_types.id','=', $request['machine_type'])
+                    ->orWhere('machine_models.id', '=', $request['machine_model'])
+                    ->orWhere('sites.state', '=', $request['machine_state'])
+                    ->orWhere('machines.machine_serial_no', '=', $request['machine_serial'])
+                    ->orWhere('route.id', '=', $request['route'])
+                    ->orWhere('area.id', '=', $request['area']);
+                })            
+                ->latest('machines.created_at')->paginate(20);
+
+        $machine_type = DB::Table('machine_types')->get();  
+        $machine_model = DB::Table('machine_models')->get();  
+        $machine_route = DB::Table('route')->get();
+        $machine_area = DB::Table('area')->get();
+        $machine_state = DB::Table('state')->get();
+        $machine_serial = DB::Table('machines')->get();
+
+        return view('machines-mgmt/index', ['getData' => $request, 'machines' => $machines,'m_serial' => $machine_serial,'m_state' => $machine_state, 'm_type' => $machine_type, 'm_model' => $machine_model, 'm_route' => $machine_route, 'm_area' => $machine_area]);
+
     }
     
     public function reports(){
@@ -790,4 +839,7 @@ class MachineManagementController extends Controller {
         return $queryInput;
     }
 
+    
+
+ 
 }

@@ -26,7 +26,7 @@
                         <?php endif; ?>
                         <div class="example-wrap m-md-0">
                             <h4 class="example-title"></h4>
-                            <div class="example">
+                            <div class="example">                                
                                 <form class="form-horizontal fv-form fv-form-bootstrap4" role="form" method="POST" action="{{ route('machine-management.update', ['id' => $machine->machine_id]) }}">
 
                                     <input type="hidden" name="_method" value="PATCH">
