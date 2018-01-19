@@ -30,7 +30,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
         <!-- Core  -->
         <script src="{{ asset("/global/vendor/babel-external-helpers/babel-external-helpers.js") }}"></script>

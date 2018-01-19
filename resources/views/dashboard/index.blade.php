@@ -92,7 +92,7 @@
                   <table class="table table-hover">
                                 <thead>
                                       <tr role="row">
-                                           <th></th>
+                                        <th></th>
                                            <th>Date Time</th>
                                            <th>Machine Model</th>
                                            <th>Machine Type</th>
@@ -117,7 +117,7 @@
                                 endforeach; ?>
                          
                         </td>
-                         <td class="text-right"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
+                         <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
                            <td class="font-weight-medium">
                                                         {{ $machinelog->machine_model}} 
                                                   </td>
@@ -178,9 +178,8 @@
                          @foreach ($machinelogsgroup as $machineloggroup)
                             @if ($machineloggroup->error == $machinelog->error)
                          <tr>
-                            
-                            <td></td>
-                            <td class="hidden-sm-down">
+                          <td> &nbsp;</td>
+                            <td class="text-left">
                                {{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}
                            </td> <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
                            <td>
@@ -275,17 +274,6 @@
 @endforeach
 
 <script>
-//    $('#status-update').on("click", function(e){
-//        $('input:checkbox').change(function(e) {
-//            e.preventDefault();
-//            var data = $(this).serialize();
-//            var url = $(this).attr('action');
-//            var isChecked = $("input:checkbox").is(":checked") ? 2:1;
-//            $.post(url,data, function(data){
-//                console.log(isChecked)
-//            })
-//    });
-    
     
     $(document).ready(function() {   
 
@@ -293,7 +281,7 @@
             e.preventDefault();
 
             $('.modal-dialog').css('text-align','center');
-            $('.modal-dialog').html('<img src="http://localhost/coinoponlinebeta/public/global/photos/loading.gif" width="60px">');            
+            $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
 
             var statusval = $("input#error-resolve").val();            
             $.ajaxSetup({
