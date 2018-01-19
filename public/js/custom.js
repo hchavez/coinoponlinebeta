@@ -13,7 +13,7 @@ $( document ).ready(function() {
             console.log(machinetype_id);
             if(machinetype_id) {
                 $.ajax({
-                    url: 'http://localhost/coinoponlinebeta/public/machine-management/ajax_getmachinemodel/'+machinetype_id,
+                    url: 'https://www.ascentri.com/machine-management/ajax_getmachinemodel/'+machinetype_id,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {                     

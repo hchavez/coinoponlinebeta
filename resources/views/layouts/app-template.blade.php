@@ -41,7 +41,7 @@
         <script src="{{ asset("/global/vendor/mousewheel/jquery.mousewheel.js") }}"></script>
         <script src="{{ asset("/global/vendor/asscrollbar/jquery-asScrollbar.js") }}"></script>
         <script src="{{ asset("/global/vendor/asscrollable/jquery-asScrollable.js") }}"></script>
-        <script src="{{ asset("/global/js/custom-script.js") }}"></script>
+     
         <!-- Plugins -->
         <script src="{{ asset("/global/vendor/switchery/switchery.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
@@ -100,6 +100,7 @@ Breakpoints();
         <!-- End Page -->
 
         <script src="{{asset('js/custom.js')}}"></script>
+        <script src="{{asset('js/custom-script.js')}}"></script>
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
         <script src="{{ asset("/global/js/Component.js") }}"></script>
