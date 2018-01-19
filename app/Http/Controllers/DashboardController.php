@@ -34,7 +34,7 @@ class DashboardController extends Controller
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
                     'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
                      'machines.machine_serial_no as serial_no','machines.id as machine_id',
-                    'machines.comments as comments',
+                    'machines.comments as comments','errorlogs.log_id as log_id',
                     'errorlogs.error as error','errorlogs.type as errortype',
                     'errorlogs.created_at as date_created','errorlogs.id as error_id')
             ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
@@ -42,21 +42,21 @@ class DashboardController extends Controller
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')
-            ->where('errorlogs.type','!=','3')
+            //->where('errorlogs.type','!=','3')
             ->where('errorlogs.status','!=','2')
             ->whereDate('errorlogs.created_at', '=', Carbon::today())
             ->orderBy('date_created','DESC')
             ->get();
-
-        $machinelogsgroup = DB::select('select distinct a.error,a.*, 
-                        a.error as error, 
-                        a.id, a.machine_id as machine_id, a.created_at as created_at
-                        from errorlogs a, errorlogs b 
-                        where a.error = b.error and a.id != b.id and DATE(a.created_at) = curdate()');
-        
-        
-                
+  
+         $machinelogsgroup =  DB::table('errorlogs_list')
+            ->select('errorlogs_list.*')
+            //->leftJoin('errorlogs', 'errorlogs_list.log_id', '=', 'errorlogs.log_id')
+            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
+            ->orderBy('errorlogs_list.created_at','DESC')
+            ->get();
+         
         return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup  ]);
+        
     }
     
       /**

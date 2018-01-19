@@ -23,7 +23,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Machine Type: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="machine_type" required>
+                                        <select class="form-control" name="machine_type" id="machine_type"  required>
                                             <option value="">-- Select Machine Type --</option>
                                             @foreach ($machine_types as $mtype)
                                             <option value="{{$mtype->id}}"> {{$mtype->machine_type}} </option>
@@ -37,11 +37,9 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Machine Model: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="machine_model" required>
-                                            <option value="">-- Select Machine Model --</option>
-                                            @foreach ($machine_models as $machine_model)
-                                            <option value="{{$machine_model->id}}">{{$machine_model->machine_model}}</option>
-                                            @endforeach
+                                        <select class="form-control" name="machine_model" id="machine_model"  required>
+                                            <option value="">-- Select Machine Type --</option>
+                                       
                                         </select>
                                     </div>
                                 </div>
@@ -271,3 +269,4 @@
     </div>
 </div>
 @endsection
+

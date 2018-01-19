@@ -81,30 +81,54 @@
                 <!-- Team Total Completed -->
                 <div class="col-xxl-12">
                     <div id="teamCompletedWidget" class="card card-shadow example-responsive">
-                        <div class="card-block p-20 pb-25">
-                            <div class="row pb-40" data-plugin="matchHeight">
-                                <h4 class="example-title">Machine LIVE Status</h4>
-                                <i ng-show="loading" class="fa fa-spinner fa-spin"></i>
-                                <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
-
-                                    <thead>
-                                        <tr role="row">
-                                            <th>Date Time</th>
-                                            <th>Machine Model</th>
-                                            <th>Machine Type</th>
-                                            <th>Name & Serial No</th>
-                                            <th>Error Messages</th>
-                                            <th>Site</th>
-                                        </tr>  
-                                    </thead>
-                                    <tbody>
-                          @foreach ($machinelogs as $machinelog)
-                                        <tr role="row"  @if ($machinelog->errortype == '1') class="table-danger" @endif >
-                                            <td>  {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}}</td>
-                                            <td>  {{ $machinelog->machine_model}} </td>
-                                            <td>  {{ $machinelog->machine_type}} </td>
-                                            <td>  {{ $machinelog->comments}} - {{ $machinelog->serial_no}}</td>
-                                            <td> <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
+               
+                        
+                        
+                 
+              <!-- Example Table section -->
+              <div class="example-wrap">
+                <h4 class="example-title">Machine LIVE Error Status</h4>
+                 <div class="example">
+                  <table class="table table-hover">
+                                <thead>
+                                      <tr role="row">
+                                           <th></th>
+                                           <th>Date Time</th>
+                                           <th>Machine Model</th>
+                                           <th>Machine Type</th>
+                                           <th>Name & Serial No</th>
+                                           <th>Error Messages</th>
+                                           <th>Site</th>
+                                           <th>Instances</th>
+                                       </tr> 
+                                </thead>
+                    
+                  @foreach ($machinelogs as $machinelog)
+                    <tbody class="table-section" data-plugin="tableSection" >
+                      <tr>
+                        <td class="text-center">
+                             <?php foreach ($machinelogsgroup as $machineloggroup):
+                                if ($machinelog->error == $machineloggroup->error){
+                                ?>
+                                     <i class="table-section-arrow"></i>
+                                     
+                                <?php break; }
+                                
+                                endforeach; ?>
+                         
+                        </td>
+                         <td class="text-right"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
+                           <td class="font-weight-medium">
+                                                        {{ $machinelog->machine_model}} 
+                                                  </td>
+                                                  <td>
+                                                  {{ $machinelog->machine_type}}
+                                                  </td>
+                                                  <td class="hidden-sm-down">
+                                                    <span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span>
+                                                  </td>
+                                                  <td class="hidden-sm-down">
+                                                    <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
 
                                                         @if ($machinelog->errortype == '2') 
                                                         <span class="badge badge-warning">Warning!</span> 
@@ -113,132 +137,77 @@
                                                         @endif
                                                         
                                                         @if ($machinelog->errortype == '1') 
-                                                        <span class="blink_me"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                                        <span class="badge badge-danger blink_me" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="blink_me" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                                         @else
                                                         <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                                         @endif
                                                          </a></strong>
-                                            </td>
+                                                    </td>
+                                                    
+                                                    <td class="hidden-sm-down">
+                                                   @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else
+                                                    {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
+                                                    </td>
+                                                    
+                                                    <td class="hidden-sm-down">
                                                         
-                                            <td>@if ($machinelog->errortype == '1') <span class="blink_me">{{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}}</span> @else
-                                                {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
-                                            </td>   
-
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="example-wrap">
-                <h4 class="example-title">Table Section</h4>
-                <div class="example">
-                  <table class="table table-hover">
-                        <thead>
-                           <tr role="row">
-                               <th></th>
-                               <th>Date Time</th>
-                               <th>Machine Model</th>
-                               <th>Machine Type</th>
-                               <th>Name & Serial No</th>
-                               <th>Error Messages</th>
-                               <th>Site</th>
-                               <th>Instances</th>
-                           </tr>  
-                        </thead>
-              
-                             <tbody class="table-section" data-plugin="tableSection">
-                                  
-                            
-                          <tr>
-                            <td class="text-left"><i class="table-section-arrow"></i></td>
-                            <td class="text-left">date</td>
-                            <td class="font-weight-medium">
-                             
-                            </td>
-                            <td>
-                              <span class="badge badge-danger">Canceled</span>
-                            </td>
-                            <td class="hidden-sm-down">
-                              <span class="text-muted">July 10, 2017</span>
-                            </td>
-                             <td class="hidden-sm-down">
-                              <span class="text-muted">July 10, 2017</span>
-                            </td>
-                             <td class="hidden-sm-down">
-                              <span class="text-muted">July 10, 2017</span>
-                            </td>
-                            <td class="hidden-sm-down">
-                              <span class="text-muted">0</span>
-                            </td>
-                          </tr>
-                             
-                        </tbody>
-                 
-                        
-                         
-                   
-                        <tbody>
-                          <tr>
-                            <td></td>
-                            <td class="font-weight-medium text-success">
-                              ##MODULE-1111
-                            </td>
-                            <td>
-                              Done
-                            </td>
-                            <td class="hidden-sm-down">
-                              July 27, 2017
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="font-weight-medium text-success">
-                              ##MODULE-723
-                            </td>
-                            <td>
-                              Done
-                            </td>
-                            <td class="hidden-sm-down">
-                              July 7, 2017
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td class="font-weight-medium text-success">
-                              ##MODULE-4200c
-                            </td>
-                            <td>
-                              Done
-                            </td>
-                            <td class="hidden-sm-down">
-                              July 12, 2017
-                            </td>
-                          </tr>
-                        </tbody>
-                    
-                    <tbody class="table-section" data-plugin="tableSection">
-                      <tr>
-                        <td class="text-center"><i class="table-section-arrow"></i></td>
-                        <td class="font-weight-medium">
-                          Project #28686
-                        </td>
-                        <td>
-                          <span class="badge badge-info">Testing</span>
-                        </td>
-                        <td class="hidden-sm-down">
-                          <span class="text-muted">July 12, 2017</span>
-                        </td>
+                                                       <?php
+                                                       $countarray = array();
+                                                       $temp=0;
+                                                       foreach ($machinelogsgroup as $machineloggroup):
+                                                             
+                                                              if ($machineloggroup->error == $machinelog->error){ ?>
+                                                        
+                                                            <?php 
+                                                            $count = 1;
+                                                            array_push($countarray, $count); 
+                                                           
+                                                            
+                                                            ?>
+                                                            
+                                                               
+                                                                
+                                                       <?php }
+                                                           endforeach;?>
+                                                            <span class="text-muted"><?php echo sizeof($countarray);?></span>
+                                                    </td>
                       </tr>
                     </tbody>
-                  
-                 
-               
+                    
+                    <tbody> 
+                         @foreach ($machinelogsgroup as $machineloggroup)
+                            @if ($machineloggroup->error == $machinelog->error)
+                         <tr>
+                            
+                            <td></td>
+                            <td class="hidden-sm-down">
+                               {{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}
+                           </td> <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
+                           <td>
+                              @if ($machineloggroup->type == '1') 
+                              <span class="badge badge-danger" > Needs Immediate Attention! </span>
+                              @endif
+                              <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
+                           </td>
+                           <td class="hidden-sm-down">
+                            
+                           </td>
+                           <td class="hidden-sm-down">
+                               &nbsp;
+                           </td>
+                         </tr>
+                            @endif
+                         @endforeach
+                    </tbody>
+                    @endforeach
+                
                   </table>
                 </div>
               </div>
+              <!-- End Example Table-section -->
+        
+                        
+                        
                     </div>
                 </div>
                 <!-- End Team Total Completed -->
@@ -250,6 +219,7 @@
     <!-- End Second Row -->
 
 </div>
+
 
 @foreach ($machinelogs as $machinelog)
 

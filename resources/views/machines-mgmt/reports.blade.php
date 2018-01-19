@@ -7,22 +7,7 @@
     </header>
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-             <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-            <div class="example">
-                <div class="input-daterange" data-plugin="datepicker" style="width: 25% !important;">
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="icon wb-calendar" aria-hidden="true"></i>
-                      </span>
-                        <input type="text" class="form-control" name="startdate" value="<?php if ($start) {echo $start;} ?>">
-                    </div>
-                    <div class="input-group">
-                      <span class="input-group-addon">to</span>
-                      <input type="text" class="form-control" name="enddate" value="<?php if ($start) {echo $end;} ?>">
-                    </div>
-                  </div> <button type="submit" class="btn btn-primary"> Go!</button>
-                </div> 
-            </form>
+       
             
             <div class="row"><div class="col-sm-12">
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >

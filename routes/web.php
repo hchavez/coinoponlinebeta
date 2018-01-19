@@ -10,12 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\MachineModel;
 
 Route::get('/', function () {
     return redirect('dashboard');
 })->middleware('auth');
 
+Route::get('machine-management/ajax_getmachinemodel/{id}',array('as'=>'machine-management.ajax','uses'=>'MachineManagementController@ajax_getmachinemodel'));
+
 Auth::routes();
+
+Route::get('api/dropdown', function(){
+    $id = Input::get('option');
+    $models = Maker::find($id)->models;
+    return $models->lists('name', 'id');
+});
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue
 
@@ -32,7 +41,7 @@ Route::post('employee-management/search', 'EmployeeManagementController@search')
 
 Route::resource('machine-management', 'MachineManagementController');
 Route::post('machine-management/search', 'MachineManagementController@search')->name('machine-management.search');
-Route::post('machine-management/reports', 'MachineManagementController@reports')->name('machine-mgmt.reports');
+Route::post('machine-management/reports', 'MachineManagementController@reports');
 Route::get('machine-management/win/{id}', 'MachineManagementController@win');
 Route::get('machine-management/goals/{id}', 'MachineManagementController@goals');
 Route::get('machine-management/money/{id}', 'MachineManagementController@money');
@@ -143,3 +152,4 @@ Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name(
 
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');
+
