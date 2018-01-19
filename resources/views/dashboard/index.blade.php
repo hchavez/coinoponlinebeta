@@ -257,14 +257,16 @@
     <div class="modal-dialog">
 
          Modal content
-         <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update">
-          <input type="text" name="errorid" value="{{ $machinelog->error_id }}">
+         <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
+         <meta id="token" name="token" content="{ { csrf_token() } }">     
+         {{ csrf_field() }}   
+          <input type="hidden" name="errorid" value="{{ $machinelog->error_id }}">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 
                 <h4 class="modal-title">Error Type: 
-
+                <div id="md-msg"></div>
                 
                 @if ($machinelog->errortype == "1")
                    <span class="badge badge-danger">Needs Immediate Attention!</span> 
@@ -315,30 +317,32 @@
 //    });
     
     
-    $(document).ready(function() {
+    $(document).ready(function() {   
 
     $("#status-update").submit(function(e) {
             e.preventDefault();
-             
-            var statusval = $("input#error-resolve").val();
-            var data = {status:statusval};
-            console.log(data);
-            
-            var request = $.ajax({
-              url: 'http://localhost/coinoponlinebeta/public/dashboard/update_error_status',
-              type: "POST",
-              data: data ,
-              dataType: "html"              
-            });
-  
-          request.done(function( msg ) {
-            var response = JSON.parse(msg);
-            console.log(response.msg);
-          });
 
-          request.fail(function( jqXHR, textStatus ) {
-            console.log( "Request failed: " + textStatus );
-          });
+            $('.modal-dialog').css('text-align','center');
+            $('.modal-dialog').html('<img src="http://localhost/coinoponlinebeta/public/global/photos/loading.gif" width="60px">');            
+
+            var statusval = $("input#error-resolve").val();            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                    url: $(this).attr('action'),
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function(response){                     
+                    $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
+                    setTimeout(function() { location.reload(); }, 2000);               
+                },
+                error: function(response){
+                    $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
+                }
+            }); 
 
     });
 

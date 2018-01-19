@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Response;
 use App\Profile;
 use Session;
@@ -31,9 +32,16 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $role = Auth::user()->role;
         $profile = DB::Table('users')->get();        
         
-        return view('profile/index', ['users' => $profile]);
+        $fname = Auth::user()->firstname;
+        $lname = Auth::user()->lastname;
+        $username = Auth::user()->username;
+        $email = Auth::user()->email;
+        $id = Auth::user()->id;
+
+        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
 
     public function edit($id)

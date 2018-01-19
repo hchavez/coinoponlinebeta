@@ -7,7 +7,7 @@
     </header>
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-             <form role="form" method="GET" action="{{ route('machine-management.index') }}">
+            <form role="form" method="GET" action="{{ route('machine-management.index') }}">
             <div class="example">
                 <div class="input-daterange" data-plugin="datepicker" style="width: 25% !important;">
                     <div class="input-group">

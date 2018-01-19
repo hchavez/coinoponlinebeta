@@ -291,7 +291,7 @@
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machine-management/reports') }}">
+                                                <a class="animsition-link" href="{{ url('machine-reports') }}">
                                                     <span class="site-menu-title">Machines Reports</span>
                                                 </a>
                                             </li>

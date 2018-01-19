@@ -32,7 +32,7 @@ Route::post('employee-management/search', 'EmployeeManagementController@search')
 
 Route::resource('machine-management', 'MachineManagementController');
 Route::post('machine-management/search', 'MachineManagementController@search')->name('machine-management.search');
-Route::post('machine-management/reports', 'MachineManagementController@reports')->name('machine-mgmt.reports');
+//Route::post('machine-management/reports', 'MachineManagementController@reports')->name('machine-mgmt.reports');
 Route::get('machine-management/win/{id}', 'MachineManagementController@win');
 Route::get('machine-management/goals/{id}', 'MachineManagementController@goals');
 Route::get('machine-management/money/{id}', 'MachineManagementController@money');
@@ -40,6 +40,8 @@ Route::get('machine-management/show/{id}', 'MachineManagementController@show');
 Route::get('machine-management/error/{id}', 'MachineManagementController@error');
 Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_settings');
 Route::post('machine-management/filter', 'MachineManagementController@filter')->name('machine-management.filter');
+
+Route::resource('machine-reports', 'MachineReportsController');
 
 /**********************************************************************************/
 Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
