@@ -96,8 +96,7 @@ class MachineManagementController extends Controller {
                 ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                 ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                 ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
-                ->leftJoin('state', 'sites.state', '=', 'state.name')                
+                ->leftJoin('area', 'sites.area_id', '=', 'area.id')   
                 ->where('machines.status', '1')
                 ->where(function($query) use ($request){
                     $query->where('machine_types.id','=', $request['machine_type'])
@@ -108,7 +107,7 @@ class MachineManagementController extends Controller {
                     ->orWhere('area.id', '=', $request['area'])
                     ->orWhere('sites.id', '=', $request['machine_site']);
                 })
-                ->whereBetween('machine_reports.date_created', [ $from, '2018-01-08' ])            
+                ->whereBetween('machine_reports.date_created', [ $from, $to ])            
                 ->latest('machines.created_at')->paginate(20);
 
         $machine_type = DB::Table('machine_types')->get();  
