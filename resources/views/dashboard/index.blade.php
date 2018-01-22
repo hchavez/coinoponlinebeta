@@ -88,6 +88,11 @@
               <!-- Example Table section -->
               <div class="example-wrap">
                 <h4 class="example-title">Machine LIVE Error Status</h4>
+                <div id="success_msg">
+                    @if(session()->has('message'))
+                        <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
+                    @endif
+                </div>
                  <div class="example">
                   <table class="table table-hover">
                                 <thead>
@@ -225,11 +230,12 @@
 <div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
-         Modal content
-         <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
-         <meta id="token" name="token" content="{ { csrf_token() } }">     
-         {{ csrf_field() }}   
-          <input type="hidden" name="errorid" value="{{ $machinelog->error_id }}">
+        Modal content
+        <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
+        <meta id="token" name="token" content="{ { csrf_token() } }">     
+        {{ csrf_field() }}   
+        <input type="text" name="errorid" value="{{ $machinelog->error_id }} ">
+                            
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -279,10 +285,10 @@
 
     $("#status-update").submit(function(e) {
             e.preventDefault();
-
+            
             $('.modal-dialog').css('text-align','center');
             $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
-
+            
             var statusval = $("input#error-resolve").val();            
             $.ajaxSetup({
                 headers: {
@@ -295,7 +301,7 @@
                     data: $(this).serialize(),
                     success: function(response){                     
                     $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
-                    setTimeout(function() { location.reload(); }, 2000);               
+                    setTimeout(function() { location.reload(); }, 1000);                      
                 },
                 error: function(response){
                     $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');

@@ -66,19 +66,15 @@ class DashboardController extends Controller
      */
     public function update_error_status(Request $request)
     {
-        $msg = '';
-        $req = $request['errorid']; 
-        $res = $request['resolve']; 
-
-        $resolve = DB::table('errorlogs')->where('id', $request['errorid'] )->update(['status' => $request['resolve']]);
         
-        if($resolve){
-            $msg = 'Success';
-        }else{
-            $msg = 'Error';
-        }
+        $resolve = DB::table('errorlogs')->where('id', $request['errorid'] )->update(['status' => $request['resolve']]);    
         
-        return response()->json($msg);          
+        if($resolve):
+            return back()->with('message','Resolve Successfully!');
+        else:
+            return back()->with('message','Error resolving!');
+        endif;       
+        
     }
     
     /**
