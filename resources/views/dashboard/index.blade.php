@@ -234,7 +234,7 @@
         <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
         <meta id="token" name="token" content="{ { csrf_token() } }">     
         {{ csrf_field() }}   
-        <input type="text" name="errorid" value="{{ $machinelog->error_id }} ">
+        <input type="hidden" name="errorid" value="{{ $machinelog->error_id }} ">
                             
         <div class="modal-content">
             <div class="modal-header">
