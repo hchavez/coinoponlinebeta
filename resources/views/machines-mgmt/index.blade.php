@@ -6,45 +6,45 @@
         <h3 class="panel-title">List of Machines</h3>
     </header>
     <div class="panel-body">
-        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-      
+        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             
             <div class="row"><div class="col-sm-12">         
             
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>                       
-                        <form class="" id="filter_table" role="form" autocomplete="off"  method="POST" action="{{ route('machine-management.filter') }}" enctype="multipart/form-data">  
-                        {{ csrf_field() }}   
+                        <!--form class="" id="filter_table" role="form" method="POST" action="{{ route('machine-management.filter') }}" enctype="multipart/form-data">  
+                        {{ csrf_field() }}  --> 
+                        <form role="form" method="GET" action="{{ route('machine-management.index') }}" id="filter_table">
                               
                             <tr><th rowspan="1" colspan="1">                                    
                                     <select class=" w-full" name="machine_state" id="machine_state" class="auto_select">                                       
-                                        <option value="all">All State</option>
+                                        <option value="">All State</option>
                                         @foreach ($m_state as $state)
-                                        <option value="{{ $state->name }}" {{ $state->name == $getData['machine_state'] ? "selected" : "" }} >{{ $state->name }}</option>
+                                        <option value="{{ $state->name }}"  {{ $state->name == $data['machine_state'] ? "selected" : "" }}>{{ $state->name }}</option>
                                         @endforeach                                        
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">                                   
                                     <select class=" w-full"  name="machine_type" id="machine_type" class="machine_select">                                       
-                                        <option value="all">All Machine Type</option>
+                                        <option value="">All Machine Type</option>
                                         @foreach ($m_type as $types)                                        
-                                        <option value="{{ $types->id }}" {{ $types->id == $getData['machine_type'] ? "selected" : "" }} > {{ $types->machine_type }} </option>
+                                        <option value="{{ $types->id }}"  {{ $types->id == $data['machine_type'] ? "selected" : "" }}> {{ $types->machine_type }} </option>
                                         @endforeach
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">                                   
                                     <select class="w-full" name="machine_model" id="machine_model" class="machine_select">                                        
-                                        <option value="all">All Machine Model</option>
+                                        <option value="">All Machine Model</option>
                                         @foreach ($m_model as $model)                                        
-                                        <option value="{{ $model->id }}" {{ $model->id == $getData['machine_model'] ? "selected" : "" }} > {{ $model->machine_model }} </option>
+                                        <option value="{{ $model->id }}"  {{ $model->id == $data['machine_model'] ? "selected" : "" }} > {{ $model->machine_model }} </option>
                                         @endforeach
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">                                   
                                     <select class="w-full" name="machine_serial" id="machine_serial">                                       
-                                        <option value="all">All Serial</option>
+                                        <option value="">All Serial</option>
                                         @foreach ($m_serial as $serial)
-                                            <option value="{{$serial->machine_serial_no}}" {{ $serial->machine_serial_no == $getData['machine_serial'] ? "selected" : "" }} >{{$serial->machine_serial_no}}</option>
+                                            <option value="{{$serial->machine_serial_no}}"  >{{$serial->machine_serial_no}}</option>
                                         @endforeach
                                     </select>
                                 </th>
@@ -52,38 +52,47 @@
                                     <select class="w-full" id="machine_site" name="machine_site">                                                                            
                                         <option value="">All Site</option>   
                                         @foreach ($m_sites as $site)      
-                                            <option value="{{ $site->id }}" {{ $site->id == $getData['machine_site'] ? "selected" : "" }} >{{ $site->site_name }}</option>    
+                                            <option value="{{ $site->id }}"  >{{ $site->site_name }}</option>    
                                         @endforeach                              
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">                                    
                                     <select class="w-full" name="machine_route" id="machine_route">                                        
-                                        <option value="all">All Route</option>
+                                        <option value="">All Route</option>
                                         @foreach ($m_route as $route)
-                                            <option value="{{ $route->id }}" {{ $route->id == $getData['machine_route'] ? "selected" : "" }} >{{ $route->route }}</option>
+                                            <option value="{{ $route->id }}"  >{{ $route->route }}</option>
                                         @endforeach
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">                                   
-                                    <select class="w-full" name="area" id="machine_area">                                        
-                                        <option value="all">All Area</option>
+                                    <select class="w-full" name="machine_area" id="machine_area">                                        
+                                        <option value="">All Area</option>
                                         @foreach ($m_area as $area)
-                                            <option value="{{ $area->id }}" {{ $area->id == $getData['area'] ? "selected" : "" }}  >{{ $area->area }}</option>
+                                            <option value="{{ $area->id }}"   >{{ $area->area }}</option>
                                         @endforeach
                                     </select>
                                 </th>                                
                                 <th rowspan="1" colspan="1" id="">                                                                 
                                     <input type="text" class="form-control" name="machine_comments" placeholder="Comments" autocomplete="on">                                    
                                 </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <input type="text" class="form-control" name="machine_date_from" id="txtFromDate" placeholder="From Date"/>                                        
-                                </th>
-                                <th rowspan="1" colspan="1">                                  
-                                    <input type="text" class="form-control" name="machine_date_to" id="txtToDate" placeholder="To Date"/>
+                                <th rowspan="1" colspan="3">
+                                    <div class="input-daterange" data-plugin="datepicker" >
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="icon wb-calendar" aria-hidden="true"></i>
+                                            </span>                                               
+                                                <input type="text" class="form-control" name="startdate" value='{{ $start }}'>
+                                            </div>
+                                            <div class="input-group">
+                                            <span class="input-group-addon">to</span>
+                                            <input type="text" class="form-control" name="enddate" value="<?php if ($start) {echo $end;} ?>">
+                                            </div>
+                                        </div> <!--button type="submit" class="btn btn-primary"> Go!</button-->
+                                    </div>                                      
                                 </th>
                                 <th rowspan="1" colspan="1" id="">                                    
                                 <button type="submit" class="btn btn-primary">Search</button> 
-                                <a href="{{ route('machine-management.index') }}"><button type="button" class="btn btn-primary">Refresh</button></a>                              
+                                <!--a href="{{ route('machine-management.index') }}"><button type="button" class="btn btn-primary">Refresh</button></a-->                              
                                 </th>
                                 <!--th rowspan="1" colspan="1">
                                     <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
