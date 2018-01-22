@@ -7,7 +7,7 @@
     </header>
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-            <form role="form" method="GET" action="{{ route('machine-reports.index') }}">
+            <form role="form" method="GET" action="{{ route('machine-reports.index') }}" id="filter_table">
             <div class="example">
                 <!--div class="input-daterange" data-plugin="datepicker" style="width: 25% !important;">
                     <div class="input-group">
@@ -28,7 +28,7 @@
                         <thead>                                        
                             <tr><th rowspan="1" colspan="1">
                                 <select class=" w-full" name="machine_state" id="machine_state" class="auto_select">                                       
-                                    <option value="all">All State</option>
+                                    <option value="">All State</option>
                                     @foreach ($m_state as $state)
                                     <option value="{{ $state->name }}" {{ $state->name == $data['machine_state'] ? "selected" : "" }} >{{ $state->name }}</option>
                                     @endforeach                                        
@@ -36,7 +36,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class=" w-full"  name="machine_type" id="machine_type" class="machine_select">                                       
-                                        <option value="all">All Machine Type</option>
+                                        <option value="">All Machine Type</option>
                                         @foreach ($m_type as $types)                                        
                                         <option value="{{ $types->id }}" {{ $types->id == $data['machine_type'] ? "selected" : "" }} > {{ $types->machine_type }} </option>
                                         @endforeach
@@ -44,7 +44,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_model" id="machine_model" class="machine_select">                                        
-                                        <option value="all">All Machine Model</option>
+                                        <option value="">All Machine Model</option>
                                         @foreach ($m_model as $model)                                        
                                         <option value="{{ $model->id }}" {{ $model->id == $data['machine_model'] ? "selected" : "" }} > {{ $model->machine_model }} </option>
                                         @endforeach
@@ -52,7 +52,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_serial" id="machine_serial">                                       
-                                        <option value="all">All Serial</option>
+                                        <option value="">All Serial</option>
                                         @foreach ($m_serial as $serial)
                                             <option value="{{$serial->machine_serial_no}}" {{ $serial->machine_serial_no == $data['machine_serial'] ? "selected" : "" }}>{{$serial->machine_serial_no}}</option>
                                         @endforeach
@@ -68,17 +68,17 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_route" id="machine_route">                                        
-                                        <option value="all">All Route</option>
+                                        <option value="">All Route</option>
                                         @foreach ($m_route as $route)
                                             <option value="{{ $route->id }}" {{ $route->id == $data['machine_route'] ? "selected" : "" }} >{{ $route->route }}</option>
                                         @endforeach
                                     </select>
                                 </th>
                                 <th rowspan="1" colspan="1">
-                                    <select class="w-full" name="area" id="machine_area">                                        
-                                        <option value="all">All Area</option>
+                                    <select class="w-full" name="machine_area" id="machine_area">                                        
+                                        <option value="">All Area</option>
                                         @foreach ($m_area as $area)
-                                            <option value="{{ $area->id }}"  {{ $area->id == $data['area'] ? "selected" : "" }} >{{ $area->area }}</option>
+                                            <option value="{{ $area->id }}"  {{ $area->id == $data['machine_area'] ? "selected" : "" }} >{{ $area->area }}</option>
                                         @endforeach
                                     </select>
                                 </th>
@@ -100,7 +100,7 @@
                                 <!--<th rowspan="1" colspan="1">
                                 </th>-->
                                 <th rowspan="1" colspan="1">
-                                    <button type="submit" class="btn btn-primary"> Filter</button>
+                                    <a href="{{ url('machine-reports') }}"><button type="button" class="btn btn-primary"> Reset Filter </button></a>
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">

@@ -47,10 +47,10 @@ class MachineReportsController extends Controller {
      */
     public function index() 
     {      
-        $data = Input::all();
+        $data = Input::all();         
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );     
-
+        
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -66,23 +66,67 @@ class MachineReportsController extends Controller {
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')                        
-                        ->where('machines.status', '1');    
+                        ->where('machines.status', '1');         
         
-        if ( $data ) :        
-            $machines = $machines->where(function($query) use ($data){                    
-                $query->whereBetween('machine_reports.date_created', [$data['startdate'], $data['enddate']])  
-                ->orWhere('machine_types.id','=', $data['machine_type'])
-                ->orWhere('machine_models.id', '=', $data['machine_model'])
-                ->orWhere('sites.state', '=', $data['machine_state'])
-                ->orWhere('machines.machine_serial_no', '=', $data['machine_serial'])
-                ->orWhere('route.id', '=', $data['machine_route'])
-                ->orWhere('area.id', '=', $data['area'])
-                ->orWhere('sites.id', '=', $data['machine_site']); 
-            });
-        else:
-            $data = ['machine_state'=>'','machine_type'=>'','machine_model'=>'','machine_serial'=>'','machine_route'=>'','area'=>'','machine_site'=>''];
-        endif;
+        if ( !$data ) :      
+            $data = ['machine_state'=>'','machine_type'=>'','machine_model'=>'','machine_serial'=>'','machine_route'=>'','machine_area'=>'','machine_site'=>'', 'startdate'=>'', 'enddate'=>''];
+        else:          
+            
+            if($data['machine_state']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('sites.state', '=', $data['machine_state']);                
+                });            
+            endif;
 
+            if($data['machine_type']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('machine_types.id', '=', $data['machine_type']);                
+                });            
+            endif;
+            
+            if($data['machine_model']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('machine_models.id','=', $data['machine_model']);               
+                });            
+            endif;
+            
+            if($data['machine_serial']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('machines.machine_serial_no', '=', $data['machine_serial']);               
+                });            
+            endif;
+            
+            if($data['machine_site']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('sites.id', '=', $data['machine_site']);               
+                });            
+            endif;
+            
+            if($data['machine_route']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('route.id', '=', $data['machine_route']);               
+                });            
+            endif;
+            
+            if($data['machine_route']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('route.id', '=', $data['machine_route']);               
+                });            
+            endif;
+            
+            if($data['machine_area']):
+                $machines = $machines->where(function($query) use ($data){                    
+                    $query->where('area.id', '=', $data['machine_area']);               
+                });            
+            endif;
+            
+            if($data['startdate'] || $data['enddate']):
+                $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
+                    $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
+                });            
+            endif;
+        endif;     
+        
         $machines = $machines->latest('machine_reports.date_created')->paginate(20);     
          
         $machine_type = DB::Table('machine_types')->get();  
