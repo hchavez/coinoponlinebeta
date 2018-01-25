@@ -17,16 +17,17 @@ $(document).ready(function(){
     var table = $('#fitlerThisMachine').DataTable( {  
         dom: 'Bfrtip',
         buttons: [
-            'excel',
-            'columnsToggle'
+            'excel'           
         ],
         scrollY: '450px',
-        'paging': true,
+        paging: true,
+        autoFill: true,
+        pageLength: 100,       
         initComplete: function () {
             this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select id="searchFilter"><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
+                var column = this;                
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( '#filterDiv' )
                     .on( 'change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
                             $(this).val()
@@ -42,21 +43,31 @@ $(document).ready(function(){
                 });
             } );
         }
-    });
-    
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-
-    //$('<b>Toggle Column:</b>').insertBefore('#fitlerThisMachine_wrapper .dt-buttons');
-    $('.dt-button.buttons-excel span').html('Export to excel');
-    
-    $('#toggleColumn button').click(function(){
-        $('.dt-buttons').toggle("slow");
-    });
-    
+    });  
+     
+    $('#filterDiv select').each(function(i) {
+        $(this).attr('id', 'filter'+(i+1));
+        $("#filter" + i).select2();     
+        
+        $('#fitlerThisMachine thead tr th div').each(function(i) {
+            var kim = $(this).html();
+            console.log(kim);
+            
+        });
+        
+        //$(this).attr('value',kim);
+        
+    });   
+     
     $('#dashboard_sort').DataTable({
-        "order": [[ 3, "desc" ]],
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'           
+        ],
+        scrollY: '450px',
+        paging: true,
+        autoFill: true,     
+        pageLength: 100,
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -79,5 +90,19 @@ $(document).ready(function(){
         }
     } );
     
+    
+    $('#dashboard_sort select').each(function(i) {
+        $(this).attr('id', 'filter'+(i+1));
+        $("#filter" + i).select2();             
+    });
+    
+    //Click whole row
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+    
+    //Change export button label
+    $('.dt-button.buttons-excel span').html('Export to excel');
+       
     
 });

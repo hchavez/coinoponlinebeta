@@ -27,13 +27,16 @@
     text-decoration: underline !important;
 }
 #searchFilter{
-    width:70px;
+    /*width:70px;*/
 }
 #fitlerThisMachine_filter{
     display:none;
 }
 .dt-button.buttons-excel{
-    float:right;
+    float:right;    
+    background: transparent;
+    border: 0;
+    cursor:pointer;
 }
 .dt-button.buttons-columnVisibility.active{
     background: transparent;
@@ -68,23 +71,22 @@
     margin: 2em 0 0.5em;
     cursor:pointer;
 }
-.dt-button.buttons-excel{
-    background: transparent;
-    border: 1px solid #3e8ef7;
-    border-radius: 3px;
-    color: #3e8ef7;
-    cursor:pointer;
-    width:100%;
-    border-radius:0;
+.dt-buttons span{
+    background:transparent;
 }
-.dt-buttons{
-    display: none;
-    background: #fff;
-    position: absolute;
-    z-index: 99;
-    width: 15%;
-    right: 1em;
-    top: 2.6em;
+.dt-buttons{    
+    color: #fff;
+    border-color: #62a8ea;
+    background-color: #62a8ea;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.571429;
+    display: inline-block;
+    padding: .429rem 1rem;
+    border-radius:3px;
+    float: right;
 }
 #toggleColumn{float:right;}
 .dt-buttons button,
@@ -104,4 +106,8 @@
 }
 .dt-buttons button.dt-button.buttons-excel:before{
     display: none;
+}
+.select2-container .select2-choice{
+    height: 35px;
+    min-width:70px;    
 }
