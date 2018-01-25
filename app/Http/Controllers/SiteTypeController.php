@@ -27,7 +27,7 @@ class SiteTypeController extends Controller
      */
     public function index()
     {
-        $sitetypes = SiteType::paginate(10);
+        $sitetypes = SiteType::paginate(100);
         return view('site-type/index', ['sitetypes' => $sitetypes]);
     }
 

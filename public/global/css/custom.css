@@ -26,3 +26,82 @@
     font-weight: bold !important;
     text-decoration: underline !important;
 }
+#searchFilter{
+    width:70px;
+}
+#fitlerThisMachine_filter{
+    display:none;
+}
+.dt-button.buttons-excel{
+    float:right;
+}
+.dt-button.buttons-columnVisibility.active{
+    background: transparent;
+    border-bottom: 1px solid #e3e3e3;
+    color: #11c26d;
+    width:100%;
+    text-align: left;
+    border-radius:0;
+    padding: 0.3em;
+}
+.dt-button.buttons-columnVisibility{
+    border-bottom: 1px solid #e3e3e3;    
+    color: #e3e3e3;
+    background: transparent;
+    cursor:pointer;
+    width:100%;
+    text-align: left;
+    border-radius:0;
+    padding: 0.3em;
+}
+.clickable-row,
+.table thead:first-child th{
+    cursor:pointer;
+}
+.paginate_button{
+    padding:0.5em 1em;
+}
+.paginate_button.current{
+    border: 1px solid;
+}
+.dataTables_paginate{
+    margin: 2em 0 0.5em;
+    cursor:pointer;
+}
+.dt-button.buttons-excel{
+    background: transparent;
+    border: 1px solid #3e8ef7;
+    border-radius: 3px;
+    color: #3e8ef7;
+    cursor:pointer;
+    width:100%;
+    border-radius:0;
+}
+.dt-buttons{
+    display: none;
+    background: #fff;
+    position: absolute;
+    z-index: 99;
+    width: 15%;
+    right: 1em;
+    top: 2.6em;
+}
+#toggleColumn{float:right;}
+.dt-buttons button,
+#dashboard_sort_length,
+#dashboard_sort_filter{
+  display: inline-block;
+}
+.dt-buttons button.dt-button.buttons-columnVisibility.active:before{  
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 8px;
+    border: solid #11c26d;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);   
+    margin: 0 9px;
+}
+.dt-buttons button.dt-button.buttons-excel:before{
+    display: none;
+}
