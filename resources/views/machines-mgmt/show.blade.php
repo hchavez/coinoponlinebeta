@@ -168,7 +168,7 @@
                                               
                                             },
                                             yAxis: {
-                                                 min: 0,
+                                                 min: -5,
                                                     max: 20,
                                                       tickInterval: 10,
                                                 title: {
@@ -185,14 +185,14 @@
                                                 }
                                             },
                                             series: [ {
-                                                    name: 'OwedWin',
-                                                    data: [ {{ $graphdataOwnedWinResult }} ]
+                                                    name: 'WinResult',
+                                                    data: [ {{  $graphdataWinResult }} ]
                                                 }, {
                                                     name: 'ExcessWin',
                                                     data: [ {{ $graphdataExcessWinResult }} ]
                                                 }, {
-                                                    name: 'WinResult',
-                                                    data: [ {{ $graphdataWinResult }} ]
+                                                    name: 'OwedWin',
+                                                    data: [ {{ $graphdataOwnedWinResult }} ]
                                                 }]
                                         });
                                     });

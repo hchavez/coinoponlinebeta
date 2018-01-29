@@ -7,12 +7,12 @@
 <!-- Page -->
 
 <meta http-equiv="refresh" content="300" >
-<h1 class="page-title font-size-26 font-weight-100">Machine Performance</h1>
+<h1 class="page-title font-size-26 font-weight-100">Machine Error Reports</h1>
 
 
 <div class="row">
     <!-- First Row -->
-    <div class="col-xl-3 col-md-6 info-panel">
+   <!-- <div class="col-xl-3 col-md-6 info-panel">
         <div class="card card-shadow">
             <div class="card-block bg-white p-20">
                 <button type="button" class="btn btn-floating btn-sm btn-warning">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- End First Row -->
     <!-- second Row -->
     <div class="col-12" id="ecommerceChartView">
@@ -87,7 +87,7 @@
                  
               <!-- Example Table section -->
               <div class="example-wrap">
-                <h4 class="example-title">Machine LIVE Error Status</h4>
+                <!-- <h4 class="example-title">Machine LIVE Error Status</h4> -->
                 <div id="success_msg">
                     @if(session()->has('message'))
                         <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>

@@ -314,7 +314,7 @@ class MachineManagementController extends Controller {
         if ($graphdatawinquery->count() > 0) {
             foreach ($graphdatawinquery as $value) {
                 if ($value->winResult == 'won') {
-                    $tempval = '1';
+                    $tempval = '20';
                 } else {
                     $tempval = '0';
                 }
