@@ -10,6 +10,7 @@
 
 
             <div class="row"><div class="col-sm-12">
+                    <div id="filterDiv">Filter by: <br/></div>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
                         <!--thead>
                             <tr><th rowspan="1" colspan="1">

@@ -86,13 +86,25 @@
     display: inline-block;
     padding: .429rem 1rem;
     border-radius:3px;
-    float: right;
+    position: absolute;
+    top: -3em;
+    right: 0;
 }
 #toggleColumn{float:right;}
 .dt-buttons button,
 #dashboard_sort_length,
 #dashboard_sort_filter{
   display: inline-block;
+}
+#dashboard_sort_filter{
+    position: absolute;
+    top: -2.8em;
+    right: 11em;
+}
+#dashboard_sort_filter input{
+    margin:0 1em;
+    display: inline-block;
+    width: 200px;
 }
 .dt-buttons button.dt-button.buttons-columnVisibility.active:before{  
     content: '';
@@ -108,6 +120,12 @@
     display: none;
 }
 .select2-container .select2-choice{
-    height: 35px;
-    min-width:70px;    
+    height: 35px;      
+}
+
+.select2-container{
+    width: 14%;
+}
+.machine-custom-width .select2-container{
+    width: 25%;
 }

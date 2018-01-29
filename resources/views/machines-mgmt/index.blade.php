@@ -8,103 +8,32 @@
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             
-            <div class="row"><div class="col-sm-12">         
-            
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
-                        <thead>                       
-                        <!--form class="" id="filter_table" role="form" method="POST" action="{{ route('machine-management.filter') }}" enctype="multipart/form-data">  
-                        {{ csrf_field() }}  --> 
-                        <form role="form" method="GET" action="{{ route('machine-management.index') }}" id="filter_table">
-                              
-                            <tr><th rowspan="1" colspan="1">                                    
-                                    <select class=" w-full" name="machine_state" id="machine_state" class="auto_select">                                       
-                                        <option value="">All State</option>
-                                        @foreach ($m_state as $state)
-                                        <option value="{{ $state->name }}"  {{ $state->name == $data['machine_state'] ? "selected" : "" }}>{{ $state->name }}</option>
-                                        @endforeach                                        
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <select class=" w-full"  name="machine_type" id="machine_type" class="machine_select">                                       
-                                        <option value="">All Machine Type</option>
-                                        @foreach ($m_type as $types)                                        
-                                        <option value="{{ $types->id }}"  {{ $types->id == $data['machine_type'] ? "selected" : "" }}> {{ $types->machine_type }} </option>
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <select class="w-full" name="machine_model" id="machine_model" class="machine_select">                                        
-                                        <option value="">All Machine Model</option>
-                                        @foreach ($m_model as $model)                                        
-                                        <option value="{{ $model->id }}"  {{ $model->id == $data['machine_model'] ? "selected" : "" }} > {{ $model->machine_model }} </option>
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <select class="w-full" name="machine_serial" id="machine_serial">                                       
-                                        <option value="">All Serial</option>
-                                        @foreach ($m_serial as $serial)
-                                            <option value="{{$serial->machine_serial_no}}"  >{{$serial->machine_serial_no}}</option>
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <select class="w-full" id="machine_site" name="machine_site">                                                                            
-                                        <option value="">All Site</option>   
-                                        @foreach ($m_sites as $site)      
-                                            <option value="{{ $site->id }}"  >{{ $site->site_name }}</option>    
-                                        @endforeach                              
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                    
-                                    <select class="w-full" name="machine_route" id="machine_route">                                        
-                                        <option value="">All Route</option>
-                                        @foreach ($m_route as $route)
-                                            <option value="{{ $route->id }}"  >{{ $route->route }}</option>
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">                                   
-                                    <select class="w-full" name="machine_area" id="machine_area">                                        
-                                        <option value="">All Area</option>
-                                        @foreach ($m_area as $area)
-                                            <option value="{{ $area->id }}"   >{{ $area->area }}</option>
-                                        @endforeach
-                                    </select>
-                                </th>                                
-                                <th rowspan="1" colspan="1" id="">                                                                 
-                                    <input type="text" class="form-control" name="machine_comments" placeholder="Comments" autocomplete="on">                                    
-                                </th>
-                                <th rowspan="1" colspan="3">
-                                    <div class="input-daterange" data-plugin="datepicker" >
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="icon wb-calendar" aria-hidden="true"></i>
-                                            </span>                                               
-                                                <input type="text" class="form-control" name="startdate" value='{{ $start }}'>
-                                            </div>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">to</span>
-                                            <input type="text" class="form-control" name="enddate" value="<?php if ($start) {echo $end;} ?>">
-                                            </div>
-                                        </div> <!--button type="submit" class="btn btn-primary"> Go!</button-->
-                                    </div>                                      
-                                </th>
-                                <th rowspan="1" colspan="1" id="">                                    
-                                <button type="submit" class="btn btn-primary">Search</button> 
-                                <!--a href="{{ route('machine-management.index') }}"><button type="button" class="btn btn-primary">Refresh</button></a-->                              
-                                </th>
-                                <!--th rowspan="1" colspan="1">
-                                    <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
-                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                                        <span class="site-menu-title">Export </span>
-                                    </a> 
-                                </th-->
-                            </tr>
-                            
-                        </thead>
+            <div class="row"><div class="col-sm-12">     
+                    <!--div id="toggleColumn">                          
+                        <a href="#" data-toggle="modal" data-target="#filterModal" style="text-decoration: none;"><button type="button" class="btn dark btn-primary">Filter</button></a>
+                        <button class="btn btn-primary dark" id="buttonSelectAll" type="button">Toggle Column/ Export CSV</button>
+                    </div>
+                    
+                    <div id="filterModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">                                 
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>                
+                                    Filter Machine List
+                                </div>
+                                <div class="modal-body">
+                                   
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" >Update</button>
+                                </div>            
+                            </div>
                         </form>
-                        <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
+                        </div>
+                    </div-->
+                    
+                    <div id="filterDiv">Filter by: <br/></div>
+                        <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
                             <thead>
                             <tr role="row">
                                 <th>State</th>
@@ -115,50 +44,48 @@
                                 <th>Route</th>
                                 <th>Area</th>
                                 <th>Comments</th>
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Total money </th>	
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Total Toys won </th>	
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Stock left </th>
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Slip Voltage </th>
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  PK Volt </th>	
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  RET Volt </th>	
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Owed Win </th>	
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Excess win  </th>	
+                                <th>ttlMoney </th>	
+                                <th>ttlToys won </th>	
+                                <th>Stock left </th>
+                                <th>Slip Voltage </th>
+                                <th>PK Volt </th>	
+                                <th>RET Volt </th>	
+                                <th>Owed Win </th>	
+                                <th>Excess win  </th>	
                                 <th>Error</th>
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Activity  </th>	
+                                <th>Activity  </th>	
                                 <th>Sync Status</th>
-                                <th class="sort_filter"><label><i class="icon wb-sort-vertical" aria-hidden="true"></i></label>  Active</th>
-                       
-                            
-                        </thead>
-                        <tbody>
-                            @foreach ($machines as $machine)
-                            <tr role="row">
-                                <td> {{ $machine->state }} </td>
-                                <td>{{ $machine->machine_type }}</td>
-                                <td>{{ $machine->machine_model }}</td>
-                                <td>  <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>
-                                <td> {{ $machine->site }} </td>  
-                                <td>{{ $machine->route }} </td>
-                                <td> {{ $machine->area }}</td>
-                                <td>{{ $machine->comments }} - {{ $machine->version }}</td>
-                                 <td> {{ $machine->total_money }} </td>
-                                <td> {{ $machine->total_toys_win }} </td>                                   
-                                <td> {{ $machine->stock_left }} </td>
-                                <td> {{ $machine->slip_volt }} </td>
-                                <td>{{ $machine->pkup_volt }}</td>
-                                <td>{{ $machine->ret_volt }}</td>
-                                <td>{{ $machine->owed_win }}</td>
-                                <td>{{ $machine->excess_win }}</td>
-                                
-                                <td></td>
-                                <td>{{date('d/m/Y h:i A', strtotime($machine->last_played))}}</td>
-                                <td></td>
-                                 <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
-                                <td> <?php echo $active; ?> </td>
-                            </tr>
+                                <th>Active</th>
+                            </tr>                            
+                            </thead>
+                            <tbody>
+                            @foreach ($machines as $machine)                            
+                                <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
+                                    <td> {{ $machine->state }} </td>
+                                    <td>{{ $machine->machine_type }}</td>
+                                    <td>{{ $machine->machine_model }}</td>
+                                    <td> {{ $machine->machine_serial_no }}</td>
+                                    <td> {{ $machine->site }} </td>  
+                                    <td>{{ $machine->route }} </td>
+                                    <td> {{ $machine->area }}</td>
+                                    <td>{{ $machine->comments }} - {{ $machine->version }}</td>
+                                    <td> {{ $machine->total_money }} </td>
+                                    <td> {{ $machine->total_toys_win }} </td>                                   
+                                    <td> {{ $machine->stock_left }} </td>
+                                    <td> {{ $machine->slip_volt }} </td>
+                                    <td>{{ $machine->pkup_volt }}</td>
+                                    <td>{{ $machine->ret_volt }}</td>
+                                    <td>{{ $machine->owed_win }}</td>
+                                    <td>{{ $machine->excess_win }}</td>                                
+                                    <td></td>
+                                    <td>{{date('d/m/Y h:i A', strtotime($machine->last_played))}}</td>
+                                    <td></td>                                         
+                                    <td> <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?><?php echo $active; ?> </td>
+                                </tr>                            
                             @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                            
+                        </table>
                 </div></div>
 
             <div class="row">
