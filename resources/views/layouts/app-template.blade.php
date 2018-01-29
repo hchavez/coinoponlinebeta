@@ -51,7 +51,16 @@
         <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
-        <script src="{{ asset("/global/vendor/peity/jquery.peity.min.js") }}"></script>
+        <script src="{{ asset("/global/vendor/peity/jquery.peity.min.js") }}"></script
+        <!--test dataables-->
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
+        
 
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <!--[if lt IE 9]>

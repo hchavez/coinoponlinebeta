@@ -10,8 +10,8 @@
 
 
             <div class="row"><div class="col-sm-12">
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
-                        <thead>
+                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
+                        <!--thead>
                             <tr><th rowspan="1" colspan="1">
                                     <select class="form-control w-full">
                                         <option value="">All</option>
@@ -50,7 +50,7 @@
                                 </th>
                        
                             </tr>
-                        </thead>
+                        </thead-->
                         <thead>
                             <tr role="row">
                                 <th>Prize Code</th>	
@@ -77,6 +77,18 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        
+                        <tfoot>
+                            <tr role="row">
+                                <th>Prize Code</th>	
+                                <th>Theme</th>	
+                                <th>Cost</th>	
+                                <th>PrizeSetting</th>	
+                                <th>Min Exp $perwin</th>	
+                                <th>Max Exp $perwin</th>
+                                <th>Active</th>
+                                
+                        </tfoot>
                     
                     </table>
                 </div></div>
