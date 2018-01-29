@@ -124,8 +124,14 @@
 }
 
 .select2-container{
-    width: 14%;
+    width: 10%;
 }
 .machine-custom-width .select2-container{
     width: 25%;
+}
+.longFilter #filterDiv{
+    display:none;
+}
+#filterBy{
+    cursor:pointer;
 }

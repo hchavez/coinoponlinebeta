@@ -8,7 +8,7 @@
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             
-            <div class="row"><div class="col-sm-12">     
+            <div class="row"><div class="col-sm-12 longFilter">     
                     <!--div id="toggleColumn">                          
                         <a href="#" data-toggle="modal" data-target="#filterModal" style="text-decoration: none;"><button type="button" class="btn dark btn-primary">Filter</button></a>
                         <button class="btn btn-primary dark" id="buttonSelectAll" type="button">Toggle Column/ Export CSV</button>
@@ -31,8 +31,13 @@
                         </form>
                         </div>
                     </div-->
-                    
-                    <div id="filterDiv">Filter by: <br/></div>
+                    <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
+                    <div id="filterDiv">
+                    <div class="input-group input-daterange" style="width:25%;">
+                        <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                        <div class="input-group-addon">to</div>
+                        <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
+                    </div></div>
                         <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
                             <thead>
                             <tr role="row">
@@ -44,8 +49,8 @@
                                 <th>Route</th>
                                 <th>Area</th>
                                 <th>Comments</th>
-                                <th>ttlMoney </th>	
-                                <th>ttlToys won </th>	
+                                <th>Total Money </th>	
+                                <th>Total Toys won </th>	
                                 <th>Stock left </th>
                                 <th>Slip Voltage </th>
                                 <th>PK Volt </th>	

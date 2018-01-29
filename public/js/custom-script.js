@@ -4,7 +4,6 @@
 $(document).ready(function(){
 
     var machine_details = ['state', 'type', 'model', 'serial', 'site', 'route', 'area'];
-
     $.each(machine_details, function(num, val){        
         $("#machine_" + val).select2(); //Dropdown autosuggest
         $("#machine_" + val).on('change', function(e){  $('form#filter_table').submit();  }); //Auto submit filter
@@ -12,10 +11,14 @@ $(document).ready(function(){
 
     //Date picker
     $("#txtToDate").datepicker();
-    $("#txtFromDate").datepicker();       
-    
+    $("#txtFromDate").datepicker(); 
+   
+    $('#filterBy').on('click', function(event) {        
+        $('#filterDiv').toggle('show'); //toggle filter 
+    });
+      
     //filter table
-    $('#dashboard_sort').DataTable({
+    var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
         buttons: [
             'excel'           
@@ -50,7 +53,7 @@ $(document).ready(function(){
     $(".clickable-row").click(function() {
         window.location = $(this).data("href");
     });    
-       
+    
     //Filter customization
     $('#filterDiv select').each(function(i) {
         $(this).attr('id', 'filter'+(i+1));
@@ -64,6 +67,35 @@ $(document).ready(function(){
     
     $('.dt-button.buttons-excel span').html('Export to excel'); //Change export button label
     $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables
+    
+    
+    
+    // Bootstrap datepicker ---start of testedit
+    $('.input-daterange input').each(function() {
+      $(this).datepicker('clearDates');
+    });
+    // Extend dataTables search
+    $.fn.dataTable.ext.search.push(
+      function(settings, data, dataIndex) {
+        var min = $('#min-date').val();
+        var max = $('#max-date').val();
+        var createdAt = data[2] || 0; // Our date column in the table
+
+        if (
+          (min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))
+        ) {
+          return true;
+        }
+        return false;
+      }
+    );
+
+    // Re-draw the table when the a date range filter changes
+    $('.date-range-filter').change(function() {
+      table.draw();
+    });
+
+    //$('#my-table_filter').hide();
     
     
 });
