@@ -46,17 +46,17 @@ class ProfileController extends Controller
 
     public function edit($id)
     {        
+        $role = Auth::user()->role;
         $get_user = DB::Table('users')->where('id', $id)->first();
         
-        return view('profile/edit', ['id' => $get_user->id ,'username' => $get_user->username, 'firstname' => $get_user->firstname,
+        return view('profile/edit', ['id' => $get_user->id ,'user_role' => $role,'username' => $get_user->username, 'firstname' => $get_user->firstname,
         'lastname' => $get_user->lastname, 'email' => $get_user->email])
         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
     public function update(Request $request, $id)
     {
-        //echo 'Test ok';
-        //$name = $request->input('name');
+        $role = Auth::user()->role;
         $input = [
             'username' => $request['username'],
             'email' => $request['email'],
@@ -71,8 +71,9 @@ class ProfileController extends Controller
     
     public function create()
     {
+        $role = Auth::user()->role;
         $generated_password = $this->generate_password();
-        return view('profile/create', ['pass' => $generated_password] );
+        return view('profile/create', ['pass' => $generated_password, 'user_role' => $role] );
     }
 
     public function store(Request $request)

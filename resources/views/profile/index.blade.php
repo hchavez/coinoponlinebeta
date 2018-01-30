@@ -36,7 +36,8 @@
                         <tr>
                           <th>Role</th><td>{{ $user_role }}</td>
                         </tr>          
-                      </table>                    
+                      </table>  
+                        <a href="{{ route('profile.edit', ['id' => $user_id]) }}"><button type="submit" class="btn btn-primary">Update</button></a>
                     </div>
                 </div>
                 <div class="col-sm-4"></div>
