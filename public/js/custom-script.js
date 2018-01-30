@@ -12,6 +12,8 @@ $(document).ready(function(){
     //Date picker
     $("#txtToDate").datepicker();
     $("#txtFromDate").datepicker(); 
+    $("#min-date").datepicker();
+    $("#max-date").datepicker();
    
     $('#filterBy').on('click', function(event) {        
         $('#filterDiv').toggle('show'); //toggle filter 
@@ -66,36 +68,7 @@ $(document).ready(function(){
     });
     
     $('.dt-button.buttons-excel span').html('Export to excel'); //Change export button label
-    $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables
-    
-    
-    
-    // Bootstrap datepicker ---start of testedit
-    $('.input-daterange input').each(function() {
-      $(this).datepicker('clearDates');
-    });
-    // Extend dataTables search
-    $.fn.dataTable.ext.search.push(
-      function(settings, data, dataIndex) {
-        var min = $('#min-date').val();
-        var max = $('#max-date').val();
-        var createdAt = data[2] || 0; // Our date column in the table
-
-        if (
-          (min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))
-        ) {
-          return true;
-        }
-        return false;
-      }
-    );
-
-    // Re-draw the table when the a date range filter changes
-    $('.date-range-filter').change(function() {
-      table.draw();
-    });
-
-    //$('#my-table_filter').hide();
-    
+    $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables      
+     
     
 });

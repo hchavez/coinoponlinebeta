@@ -7,7 +7,16 @@
     </header>
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
-            
+            <div id="byDate">
+                <form role="form" method="GET" action="{{ route('machine-management.index') }}">
+                    <div class="input-group input-daterange">
+                    <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                    <div class="input-group-addon">to</div>
+                    <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                    <button type="submit" class="btn btn-primary">Search</button> 
+                    </div>
+                </form>
+            </div>
             <div class="row"><div class="col-sm-12 longFilter">     
                     <!--div id="toggleColumn">                          
                         <a href="#" data-toggle="modal" data-target="#filterModal" style="text-decoration: none;"><button type="button" class="btn dark btn-primary">Filter</button></a>
@@ -30,14 +39,9 @@
                             </div>
                         </form>
                         </div>
-                    </div-->
+                    </div-->                    
                     <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
-                    <div id="filterDiv">
-                    <div class="input-group input-daterange" style="width:25%;">
-                        <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-                        <div class="input-group-addon">to</div>
-                        <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
-                    </div></div>
+                    <div id="filterDiv"></div>
                         <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
                             <thead>
                             <tr role="row">

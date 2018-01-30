@@ -46,7 +46,7 @@ class MachineManagementController extends Controller {
      */
     public function index() 
     {
-        
+        $data = Input::all();
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
 
@@ -65,8 +65,17 @@ class MachineManagementController extends Controller {
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')                                              
-                        ->where('machines.status', '1')
-                        ->latest('machines.created_at')->paginate(100);   
+                        ->where('machines.status', '1');
+                        //->latest('machines.created_at')->paginate(100);   
+        if ( !$data ) :
+        else:            
+            if($data['startdate'] || $data['enddate']):
+                $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
+                    $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
+                });            
+            endif;
+        endif;
+        $machines = $machines->latest('machines.created_at')->paginate(100); 
        
         return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
