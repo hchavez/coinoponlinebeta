@@ -69,7 +69,7 @@ $(document).ready(function(){
     
     var re = new RegExp(/^.*\//);
     var baseUrl = re.exec(window.location.href);    
-    $('.dt-button.buttons-excel span').html('<img src="'+baseUrl+'assets/images/excel.png" width="40px">'); //Change export button label
+    $('.dt-button.buttons-excel span').html('<img src="'+baseUrl+'assets/images/excel.png" width="32px">'); //Change export button label
     $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables      
      
     
