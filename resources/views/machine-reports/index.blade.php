@@ -22,7 +22,7 @@
                     </div>
                   </div> <!--button type="submit" class="btn btn-primary"> Go!</button-->
                 </div-->  
-            
+           
             <div class="row"><div class="col-sm-12">
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>                                        
@@ -120,44 +120,48 @@
                                 <th>Site</th>
                                 <th>Route</th>
                                 <th>Area</th>
-                                <th>Comments</th>
                                 <th>Total money</th>	
-                                <th>Total Toys won</th>	
+                                <th>Ave TO/Day</th>
+                                <th>Ave TO/Week</th>
+                                <th>Theme</th>
+                                <th>Total Toys won</th>		
+                                <th>Owed Win </th>	
+                                <th>Excess win</th>
                                 <th>Stock left</th>
                                 <th>Slip Voltage</th>
-                                <th>PK Volt</th>	
-                                <th>RET Volt</th>	
-                                <th>Owed Win </th>	
-                                <th>Excess win</th>	
+                                <th>PK Volt</th>
+                                <th>RET Volt</th>
                                 <th>Error</th>
                                 <th>Last visit</th>	
-                                <th>Activity</th>
-                                <th>Active</th>  
+                                <th>Status</th>
+                                <th>Comments</th>  
                         </thead>
                         <tbody>
                             @foreach ($machines as $machine)
                             <tr role="row">
                                 <td> {{ $machine->state }} </td>
-                                <td>{{ $machine->machine_type }}</td>
-                                <td>{{ $machine->machine_model }}</td>
-                                <td>  <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>
+                                <td> {{ $machine->machine_type }} </td>
+                                <td> {{ $machine->machine_model }} </td>
+                                <td> <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>
                                 <td> {{ $machine->site }} </td>  
-                                <td>{{ $machine->route }} </td>
-                                <td> {{ $machine->area }}</td>
-                                <td>{{ $machine->comments }} - {{ $machine->version }} </td>
-                                 <td> {{ $machine->total_money }} </td>
-                                <td> {{ $machine->total_toys_win }} </td>                                   
+                                <td> {{ $machine->route }} </td>
+                                <td> {{ $machine->area }} </td>
+                                <td> {{ $machine->total_money }} </td>
+                                <td> Ave Turnover per Day </td>
+                                <td> Ave Turnover per Week </td>
+                                <td> Theme </td>
+                                <td> {{ $machine->total_toys_win }} </td>   
+                               <td> {{ $machine->owed_win }} </td>
+                               <td> {{ $machine->excess_win }} </td>
                                 <td> {{ $machine->stock_left }} </td>
                                 <td> {{ $machine->slip_volt }} </td>
-                                <td>{{ $machine->pkup_volt }}</td>
-                                <td>{{ $machine->ret_volt }}</td>
-                                <td>{{ $machine->owed_win }}</td>
-                                <td>{{ $machine->excess_win }}</td>
-                                <td></td>
-                                <td>{{ $machine->last_visit }}</td>
-                                <td>{{date('d-m-Y', strtotime($machine->date_created))}} </td>
+                                <td> {{ $machine->pkup_volt }} </td>
+                                <td> {{ $machine->ret_volt }} </td>
+                                <td> error </td>
+                                <td> {{ $machine->last_visit }} </td>
                                  <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
                                 <td> <?php echo $active; ?> </td>
+                                 <td>{{ $machine->comments }} - {{ $machine->version }} </td>
                             </tr>
                             @endforeach
                         </tbody>
