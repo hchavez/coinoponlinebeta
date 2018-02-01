@@ -74,21 +74,10 @@
 .dt-buttons span{
     background:transparent;
 }
-.dt-buttons{    
-    color: #fff;
-    border-color: #62a8ea;
-    background-color: #62a8ea;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.571429;
-    display: inline-block;
-    padding: .429rem 1rem;
-    border-radius:3px;
+.dt-buttons{  
     position: absolute;
     top: -3em;
-    right: 0;
+    right: 1em;
 }
 #toggleColumn{float:right;}
 .dt-buttons button,
@@ -106,19 +95,7 @@
     display: inline-block;
     width: 200px;
 }
-.dt-buttons button.dt-button.buttons-columnVisibility.active:before{  
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 8px;
-    border: solid #11c26d;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);   
-    margin: 0 9px;
-}
-.dt-buttons button.dt-button.buttons-excel:before{
-    display: none;
-}
+
 .select2-container .select2-choice{
     height: 35px;      
 }
