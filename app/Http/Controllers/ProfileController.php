@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $lname = Auth::user()->lastname;
         $username = Auth::user()->username;
         $email = Auth::user()->email;
-        $id = Auth::user()->id;
+        $id = Auth::user()->id; 
 
         return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }

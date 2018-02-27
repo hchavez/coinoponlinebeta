@@ -13,7 +13,8 @@
             
             <div class="panel-body">               
               <div class="row">                
-                
+
+               
                 <div class="col-sm-6">  
                     <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
                       <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >

@@ -31,7 +31,8 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Jus
 Route::get('machineApp', 'DashboardController@index');
 Route::resource('dashboard', 'DashboardController');
 // Route::get('/system-management/{option}', 'SystemMgmtController@index');
-Route::get('/profile', 'ProfileController@index');
+Route::resource('profile', 'ProfileController');
+//Route::get('profile', 'ProfileController@index'); 
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::resource('user-mgmt', 'UserManagementController');
@@ -164,7 +165,13 @@ Route::resource('system-management/machine-model', 'MachineModelController');
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');
 
+
 Route::resource('profile', 'ProfileController');
 Route::post('profile/{id}', 'ProfileController@update');
 Route::get('profile/role/{id}', 'ProfileController@role');
+
+//Route::resource('profile', 'ProfileController');
+//Route::post('profile/{id}', 'ProfileController@update');
+//Route::get('profile/role/{id}', 'ProfileController@role');
+
 
