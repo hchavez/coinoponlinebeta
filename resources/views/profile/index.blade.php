@@ -13,14 +13,7 @@
             
             <div class="panel-body">               
               <div class="row">                
-                <div class="col-sm-2">
-                  <a class="" href="javascript:void(0)">
-                    <img src="http://localhost/coinoponlinebeta/public/global/portraits/5.jpg" alt="...">
-                  </a><br><br>
-                  <label>Upload Profile Picture</label><br>
-                  <input type="file" id="input-file-now" data-plugin="dropify" data-default-file=""><br><br>
-                  <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
+                
                 <div class="col-sm-6">  
                     <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">  
                       <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
@@ -37,7 +30,7 @@
                           <th>Role</th><td>{{ $user_role }}</td>
                         </tr>          
                       </table>  
-                        <a href="{{ route('profile.edit', ['id' => $user_id]) }}"><button type="submit" class="btn btn-primary">Update</button></a>
+                        <!--a href="{{ route('profile.edit', ['id' => $user_id]) }}"><button type="submit" class="btn btn-primary">Update</button></a-->
                     </div>
                 </div>
                 <div class="col-sm-4"></div>

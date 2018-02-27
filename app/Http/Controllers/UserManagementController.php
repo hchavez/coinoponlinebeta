@@ -33,7 +33,7 @@ class UserManagementController extends Controller
     public function index()
     {
         $users = User::paginate(5);
-
+        
         return view('users-mgmt/index', ['users' => $users]);
     }
 
@@ -75,7 +75,45 @@ class UserManagementController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $users = DB::table('users')->where('id', '=', $id)->get();
+        $role = DB::table('user_group')->get();
+        
+        foreach($users as $group_user):            
+            if($group_user->role == '6'):
+                $group = 'Super Admin';
+                $badge = 'danger';
+            elseif($group_user->role == '1'):
+                $group = 'Admin';
+                $badge = 'warning';
+            elseif($group_user->role == '2'):
+                $group = 'AMF Admin';
+                $badge = 'primary';
+            elseif($group_user->role == '3'):
+                $group = 'Manager';
+                $badge = 'info';
+            elseif($group_user->role == '4'):
+                $group = 'Operator';
+                $badge = 'success';
+            elseif($group_user->role == '5'):
+                $group = 'Service';
+                $badge = 'dark';
+            endif;  
+        endforeach;        
+        
+        return view('users-mgmt/show', ['users' => $users, 'role' => $role, 'groupSelected' => $group, 'userBadge' => $badge]);
+    }
+    
+    public function set_permission(Request $request)
+    {
+        $id = $request->input('id');        
+        
+        $input = [
+            'role' => $request['inputRole']            
+        ];
+        if (User::where('id', $id)->update($input)) {
+            return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));
+        }
     }
 
     /**

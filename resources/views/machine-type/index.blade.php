@@ -2,7 +2,19 @@
 @section('content')
 
 <div class="page-main">
-
+    <ol class="breadcrumb breadcrumb-arrow">
+        <li class="breadcrumb-item"><a href="{{ url('user-mgmt') }}"><i class="fa fa-dashboard"></i>Admin Panel</a></li>
+        <?php $segments = ''; ?>
+        @foreach(Request::segments() as $segment)            
+            <?php 
+            $label = ucwords(str_replace("-"," ", $segment));
+            $segments .= '/'.$segment;         
+            ?>            
+            <li class="breadcrumb-item">
+              <a href="{{ $segments }}">{{$label}}</a>
+            </li>
+        @endforeach
+    </ol> 
     <div class="page-content">
         <div class="panel">
             <div class="panel-heading">

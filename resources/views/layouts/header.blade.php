@@ -57,7 +57,7 @@
                         <a class="dropdown-item" href="{{ url('login') }}" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Login</a>
                         @else
                         <a class="dropdown-item" href="{{ url('profile') }}" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
-                        <a class="dropdown-item" href="{{ url('profile') }}" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+                        <a class="dropdown-item" href="#" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
                         <div class="dropdown-divider" role="presentation"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" role="menuitem"><i class="icon wb-power" aria-hidden="true" onclick="event.preventDefault();document.getElementById('logout-form').submit();"></i> Logout</a>
                         @endif 
@@ -363,7 +363,13 @@
 
                     </li>
                   
-
+                    <li class="dropdown site-menu-item has-sub">
+                        <a  class="animsition-link" href="{{ url('user-mgmt') }}">
+                            <i class="site-menu-icon wb-file" aria-hidden="true"></i>
+                            <span class="site-menu-title">Admin Panel</span>            
+                        </a>     
+                  
+                    </li>
 
                 </ul>
             </div>

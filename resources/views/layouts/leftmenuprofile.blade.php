@@ -9,24 +9,24 @@
 
                 <section class="page-aside-section">
                      
-                    <a class="list-group-item" href="" > <i class="icon wb-dashboard" aria-hidden="true"></i>Dashboard</a>
+                    <!--a class="list-group-item" href="" > <i class="icon wb-dashboard" aria-hidden="true"></i>Dashboard</a-->
 
                     <h5 class="page-aside-title">Manage User </h5>
-                    <?php if($user_role == 'Super Admin'){ ?>
-                    <div class="list-group">
+                    <?php //if($user_role == 'Super Admin'){ ?>
+                    <!--div class="list-group">
                         <a class="list-group-item" href="{{ route('profile.index') }}"> <i class="icon wb-folder" aria-hidden="true"></i>User Info</a>      
                         <a class="list-group-item" href=""> <i class="icon wb-folder" aria-hidden="true"></i>Permissions</a> 
                         <a class="list-group-item" href="{{ route('profile.create') }}"> <i class="icon wb-folder" aria-hidden="true"></i>Add User</a> 
                         <a class="list-group-item" href=""> <i class="icon wb-folder" aria-hidden="true"></i>User Log History</a> 
                         <a class="list-group-item" href=""><i class="icon wb-folder" aria-hidden="true"></i>Update Password</a>   
                         <a class="list-group-item" href=""><i class="icon wb-folder" aria-hidden="true"></i>Disable Account</a>                                       
-                    </div>                   
-                    <?php }else{ ?>
+                    </div-->                   
+                    <?php //}else{ ?>
                     <div class="list-group">
-                        <a class="list-group-item" href="{{ route('profile.edit') }}"> <i class="icon wb-folder" aria-hidden="true"></i>User Info</a>                        
-                        <a class="list-group-item" href="{{ route('profile.edit') }}"> <i class="icon wb-folder" aria-hidden="true"></i>Activities</a>                       
+                        <a class="list-group-item" href="{{ route('profile.index') }}"> <i class="icon wb-folder" aria-hidden="true"></i>User Info</a>                        
+                        <a class="list-group-item" href="#"> <i class="icon wb-folder" aria-hidden="true"></i>Activities</a>                       
                     </div>
-                    <?php } ?>
+                    <?php //} ?>
 
                 </section>
 

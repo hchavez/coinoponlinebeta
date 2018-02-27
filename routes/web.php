@@ -34,7 +34,9 @@ Route::resource('dashboard', 'DashboardController');
 Route::get('/profile', 'ProfileController@index');
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
-Route::resource('user-management', 'UserManagementController');
+Route::resource('user-mgmt', 'UserManagementController');
+Route::get('user-management/show/{id}', 'UserManagementController@show');
+Route::post('user-management/set_permission', 'UserManagementController@set_permission')->name('user-mgmt.set_permission');
 
 Route::resource('employee-management', 'EmployeeManagementController');
 Route::post('employee-management/search', 'EmployeeManagementController@search')->name('employee-management.search');
@@ -155,9 +157,12 @@ Route::post('system-management/report/search', 'ReportController@search')->name(
 Route::post('system-management/report/excel', 'ReportController@exportExcel')->name('report.excel');
 Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name('report.pdf');
 
+Route::resource('system-management/machine-type', 'MachineTypeController');
+Route::resource('system-management/site-type', 'SiteTypeController');
+Route::resource('system-management/machine-model', 'MachineModelController');
+
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');
-
 
 Route::resource('profile', 'ProfileController');
 Route::post('profile/{id}', 'ProfileController@update');

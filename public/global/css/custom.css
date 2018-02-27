@@ -117,3 +117,16 @@
     top: -2.8em;
     right: 40em;
 }
+table.dataTable,
+table.dataTable th,
+table.dataTable td {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+table.dataTable th:nth-child(5),
+table.dataTable td:nth-child(5),
+table.dataTable th:nth-child(8),
+table.dataTable td:nth-child(8){
+    width:7%;
+}

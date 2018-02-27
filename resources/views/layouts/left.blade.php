@@ -17,7 +17,7 @@
                 <a class="list-group-item {{ Route::current()->getName() == 'area.index' ? 'list-group-item-action active' : '' }}" href=" {{ url('system-management/area') }}"><i class="icon wb-heart" aria-hidden="true"></i>Area</a>
                 <a class="list-group-item {{ Route::current()->getName() == 'routes.index' ? 'list-group-item-action active' : '' }}" href=" {{ url('system-management/route') }}"><i class="icon wb-heart" aria-hidden="true"></i>Routes</a>
 
-                <a class="list-group-item {{ Route::current()->getName() == 'user-management.index' ? 'list-group-item-action active' : '' }}" href="{{ url('user-management') }}"><i class="icon wb-dashboard" aria-hidden="true"></i>Users</a>
+                <a class="list-group-item {{ Route::current()->getName() == 'user-management.index' ? 'list-group-item-action active' : '' }}" href="{{ url('user-mgmt') }}"><i class="icon wb-dashboard" aria-hidden="true"></i>Users</a>
                 <a class="list-group-item {{ Route::current()->getName() == 'user-access.index' ? 'list-group-item-action active' : '' }}" href=" {{ url('system-management/user-access') }}"><i class="icon wb-pluse" aria-hidden="true"></i>User Access</a>
                 <a class="list-group-item {{ Route::current()->getName() == 'city.index' ? 'list-group-item-action active' : '' }}" href=" {{ url('system-management/city') }}"><i class="icon wb-folder" aria-hidden="true"></i>City</a>
                 <a class="list-group-item {{ Route::current()->getName() == 'state.index' ? 'list-group-item-action active' : '' }}" href=" {{ url('system-management/state') }}"><i class="icon wb-folder" aria-hidden="true"></i>State</a>

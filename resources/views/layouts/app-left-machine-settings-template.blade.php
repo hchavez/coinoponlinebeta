@@ -21,10 +21,12 @@
   <link rel="stylesheet" href="{{ asset("/global/vendor/intro-js/introjs.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/vendor/slidepanel/slidePanel.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/vendor/flag-icon-css/flag-icon.css") }}">
+  <link rel="stylesheet" href="{{ asset("/assets/css/select2.css") }}">
   <!-- Fonts -->
   <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <!--[if lt IE 9]>
     <script src="{{ asset("/global/vendor/html5shiv/html5shiv.min.js") }}"></script>
     <![endif]-->
@@ -74,6 +76,16 @@
   <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
   <script src="{{ asset("/global/vendor/screenfull/screenfull.js") }}"></script>
   <script src="{{ asset("/global/vendor/slidepanel/jquery-slidePanel.js") }}"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
+  
+  <script src="{{asset('js/custom.js')}}"></script>
+  <script src="{{asset('js/custom-script.js')}}"></script>
   <!-- Scripts -->
   <script src="{{ asset("/global/js/State.js") }}"></script>
   <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -84,6 +96,8 @@
   <script src="{{ asset("/assets/js/Section/Sidebar.js") }}"></script>
   <script src="{{ asset("/assets/js/Section/PageAside.js") }}"></script>
   <script src="{{ asset("/assets/js/Plugin/menu.js") }}"></script>
+  <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
+  <script src="{{ asset("/assets/js/select2.js") }}"></script>
   <!-- Config -->
   <script src="{{ asset("/global/js/config/colors.js") }}"></script>
   <script src="{{ asset("/assets/js/config/tour.js") }}"></script>
@@ -94,6 +108,10 @@
   <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>
   <script src="{{ asset("/global/js/Plugin/slidepanel.js") }}"></script>
   <script src="{{ asset("/global/js/Plugin/switchery.js") }}"></script>
+  <script src="{{ asset("/global/js/Plugin/bootstrap-datepicker.js") }}"></script>
+  
+  <!--CustomStyle-->
+  <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
   <script>
   (function(document, window, $) {
     'use strict';
