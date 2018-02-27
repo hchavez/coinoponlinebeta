@@ -363,13 +363,13 @@
 
                     </li>
                   
-                    <li class="dropdown site-menu-item has-sub">
+                    <!--li class="dropdown site-menu-item has-sub">
                         <a  class="animsition-link" href="{{ url('user-mgmt') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Admin Panel</span>            
                         </a>     
                   
-                    </li>
+                    </li-->
 
                 </ul>
             </div>
