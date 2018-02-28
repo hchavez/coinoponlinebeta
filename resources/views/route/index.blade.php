@@ -1,4 +1,4 @@
-@extends('layouts.app-left-machine-settings-template')
+@extends('layouts.app-left-sites-template')
 @section('content')
 
 <div class="page-main">
@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="dataTables_length" id="exampleAddRow_length"><label>
-                                    <a class="btn btn-primary" href="{{ route('route.create') }}">Add new route</a></label></div>
+                                <a class="btn btn-primary" href="{{ route('route.create') }}">Add new route</a></label></div>
                         </div>
                         
                     </div>

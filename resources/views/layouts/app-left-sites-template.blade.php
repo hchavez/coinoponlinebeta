@@ -20,7 +20,8 @@
   <link rel="stylesheet" href="{{ asset("/global/vendor/switchery/switchery.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/vendor/intro-js/introjs.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/vendor/slidepanel/slidePanel.css") }}">
-  <link rel="stylesheet" href="{{ asset("/global/vendor/flag-icon-css/flag-icon.css") }}">
+  <link rel="stylesheet" href="{{ asset("/global/vendor/flag-icon-css/flag-icon.css") }}">    
+  <link rel="stylesheet" href="{{ asset("/assets/css/select2.css") }}">
   <!-- Fonts -->
   <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
   <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
@@ -36,7 +37,7 @@
   <script src="{{ asset("/global/vendor/breakpoints/breakpoints.js") }}"></script>
   <script>
   Breakpoints();
-  </script>
+  </script>  
   <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -74,6 +75,15 @@
   <script src="{{ asset("/global/vendor/intro-js/intro.js") }}"></script>
   <script src="{{ asset("/global/vendor/screenfull/screenfull.js") }}"></script>
   <script src="{{ asset("/global/vendor/slidepanel/jquery-slidePanel.js") }}"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
+  
+  <script src="{{asset('js/custom-script.js')}}"></script>
   <!-- Scripts -->
   <script src="{{ asset("/global/js/State.js") }}"></script>
   <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -84,11 +94,15 @@
   <script src="{{ asset("/assets/js/Section/Sidebar.js") }}"></script>
   <script src="{{ asset("/assets/js/Section/PageAside.js") }}"></script>
   <script src="{{ asset("/assets/js/Plugin/menu.js") }}"></script>
+  <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
+  <script src="{{ asset("/assets/js/select2.js") }}"></script>
   <!-- Config -->
   <script src="{{ asset("/global/js/config/colors.js") }}"></script>
   <script src="{{ asset("/assets/js/config/tour.js") }}"></script>
   <script>
  Config.set('assets', '../assets');  </script>
+  <!--CustomStyle-->
+  <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
   <!-- Page -->
   <script src="{{ asset("/assets/js/Site.js") }}"></script>
   <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>

@@ -1,4 +1,4 @@
-@extends('layouts.app-left-machine-settings-template')
+@extends('layouts.app-left-sites-template')
 @section('content')
 
 <div class="page-main">
