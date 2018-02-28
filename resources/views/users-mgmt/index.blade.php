@@ -1,5 +1,4 @@
 
-
 @extends('layouts.app-left-template')
 @section('content')
 
@@ -24,9 +23,9 @@
                     <h4 class="example-title">Manage Users</h4>                    
                     <div class="example">
                       <div class="table-responsive">
-                        <div id="filterDiv" class="machine-custom-width">Filter by: <br/></div>
-                        <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="" role="grid" >
-                          <thead>
+                        <div id="filterDiv" class="machine-custom-width">Filter by: <br/></div>                        
+                        <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
+                            <thead>
                             <tr role="row">
                               <th>Name</th>
                               <th>Username</th>

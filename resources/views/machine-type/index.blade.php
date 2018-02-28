@@ -27,21 +27,12 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="dataTables_length" id="exampleAddRow_length"><label>
                                     <a class="btn btn-primary" href="{{ route('machine-type.create') }}">Add new type</a></label></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <form method="POST" action="{{ route('machine-type.search') }}">
-                                {{ csrf_field() }}
-                                @component('layouts.search', ['title' => 'Search'])
-                                @component('layouts.two-cols-search-row', ['items' => ['Title'], 
-                                'oldVals' => [isset($searchingVals) ? $searchingVals['title'] : '']])
-                                @endcomponent
-                                @endcomponent
-                            </form>
-                        </div>
+                        </div>                        
                     </div>
 
                     <div class="row"><div class="col-sm-12">
-                            <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
+                            <div id="filterDiv" class="machine-custom-width">Filter by: <br/></div>
+                            <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
 
                                 <thead>
                                     <tr role="row">
@@ -50,7 +41,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     @foreach ($types as $type)
                                     <tr role="row" class="odd">
                                         <td>{{ $type->machine_type }}</td>
@@ -69,6 +59,14 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                
+                                <tfoot>
+                                    <tr role="row">
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                
                             </table>
                         </div></div>
 

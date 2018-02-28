@@ -28,7 +28,7 @@ class MachineTypeController extends Controller
      */
     public function index()
     {
-         $types = MachineType::paginate(5);
+         $types = MachineType::paginate(100);
         return view('machine-type/index', ['types' => $types]);
         
     }
