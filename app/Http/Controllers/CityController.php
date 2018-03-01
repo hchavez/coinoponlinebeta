@@ -29,7 +29,8 @@ class CityController extends Controller
          $cities = DB::table('city')
         ->leftJoin('state', 'city.state_id', '=', 'state.id')
         ->select('city.id', 'city.name', 'state.name as state_name', 'state.id as state_id')
-        ->paginate(5);
+        ->paginate(100);        
+        
         return view('system-mgmt/city/index', ['cities' => $cities]);
     }
 
@@ -41,7 +42,7 @@ class CityController extends Controller
     public function create()
     {
         $states = State::all();
-        return view('system-mgmt/city/create', ['states' => $states]);
+        return view('system-mgmt/city', ['states' => $states]);
     }
 
     /**
