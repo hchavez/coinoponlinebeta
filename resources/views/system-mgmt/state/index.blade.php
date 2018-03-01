@@ -6,7 +6,7 @@
     <div class="page-content">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">City Listing</h3>
+                <h3 class="panel-title">State Listings</h3>
             </div>
             <div class="panel-body">
 
@@ -18,24 +18,22 @@
                             <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
 
                                 <thead>
-                                    <tr role="row">
-                                        <th>Site Group Name</th>
+                                    <tr role="row">                                        
                                         <th>State</th>                                        
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($cities as $cities)
+                                    @foreach ($states as $states)
                                     <tr role="row" class="odd">
-                                        <td>{{ $cities->name }}</td>
-                                        <td>{{ $cities->state_name }}</td>                                        
+                                        <td>{{ $states->name }}</td>
+                                        <td>{{ $states->state_name }}</td>                                        
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr role="row">
-                                        <th>Site Group Name</th>
-                                        <th>State</th>                                       
+                                        <th>State</th>                                                                             
                                     </tr>
                                 </tfoot>
                             </table>
