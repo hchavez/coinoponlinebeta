@@ -28,7 +28,7 @@
                         <thead>                                        
                             <tr><th rowspan="1" colspan="1">
                                 <select class=" w-full" name="machine_state" id="machine_state" class="auto_select">                                       
-                                    <option value="">All State</option>
+                                    <option value="">State</option>
                                     @foreach ($m_state as $state)
                                     <option value="{{ $state->name }}" {{ $state->name == $data['machine_state'] ? "selected" : "" }} >{{ $state->name }}</option>
                                     @endforeach                                        
@@ -36,7 +36,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class=" w-full"  name="machine_type" id="machine_type" class="machine_select">                                       
-                                        <option value="">All Machine Type</option>
+                                        <option value="">Type</option>
                                         @foreach ($m_type as $types)                                        
                                         <option value="{{ $types->id }}" {{ $types->id == $data['machine_type'] ? "selected" : "" }} > {{ $types->machine_type }} </option>
                                         @endforeach
@@ -44,7 +44,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_model" id="machine_model" class="machine_select">                                        
-                                        <option value="">All Machine Model</option>
+                                        <option value="">Model</option>
                                         @foreach ($m_model as $model)                                        
                                         <option value="{{ $model->id }}" {{ $model->id == $data['machine_model'] ? "selected" : "" }} > {{ $model->machine_model }} </option>
                                         @endforeach
@@ -52,7 +52,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_serial" id="machine_serial">                                       
-                                        <option value="">All Serial</option>
+                                        <option value="">Serial</option>
                                         @foreach ($m_serial as $serial)
                                             <option value="{{$serial->machine_serial_no}}" {{ $serial->machine_serial_no == $data['machine_serial'] ? "selected" : "" }}>{{$serial->machine_serial_no}}</option>
                                         @endforeach
@@ -60,7 +60,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" id="machine_site" name="machine_site">                                                                            
-                                        <option value="">All Site</option>   
+                                        <option value="">Site</option>   
                                         @foreach ($m_sites as $site)      
                                             <option value="{{ $site->id }}" {{ $site->id == $data['machine_site'] ? "selected" : "" }}  >{{ $site->site_name }}</option>    
                                         @endforeach                              
@@ -68,7 +68,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_route" id="machine_route">                                        
-                                        <option value="">All Route</option>
+                                        <option value="">Route</option>
                                         @foreach ($m_route as $route)
                                             <option value="{{ $route->id }}" {{ $route->id == $data['machine_route'] ? "selected" : "" }} >{{ $route->route }}</option>
                                         @endforeach
@@ -76,7 +76,7 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <select class="w-full" name="machine_area" id="machine_area">                                        
-                                        <option value="">All Area</option>
+                                        <option value="">Area</option>
                                         @foreach ($m_area as $area)
                                             <option value="{{ $area->id }}"  {{ $area->id == $data['machine_area'] ? "selected" : "" }} >{{ $area->area }}</option>
                                         @endforeach
