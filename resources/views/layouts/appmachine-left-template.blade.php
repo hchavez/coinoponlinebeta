@@ -104,6 +104,14 @@ Breakpoints();
         <script src="{{ asset("/assets/js/Section/Sidebar.js") }}"></script>
         <script src="{{ asset("/assets/js/Section/PageAside.js") }}"></script>
         <script src="{{ asset("/assets/js/Plugin/menu.js") }}"></script>
+        
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
         <!-- Config -->
         <script src="{{ asset("/global/js/config/colors.js") }}"></script>
         <script src="{{ asset("/assets/js/config/tour.js") }}"></script>
@@ -116,7 +124,9 @@ Breakpoints();
         <script src="{{ asset("/global/js/Plugin/switchery.js") }}"></script>
 
 
-
+        <script src="{{asset('js/custom-script.js')}}"></script>
+        
+        <script src="{{ asset("/assets/js/select2.js") }}"></script>
 
         <script>
             (function (document, window, $) {
@@ -128,6 +138,8 @@ Breakpoints();
             })(document, window, jQuery);
         </script>
 
+        <!--CustomStyle-->
+        <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
 
     </body>
 </html> 

@@ -51,7 +51,7 @@
         <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
-        <script src="{{ asset("/global/vendor/peity/jquery.peity.min.js") }}"></script
+        <script src="{{ asset("/global/vendor/peity/jquery.peity.min.js") }}"></script>
         <!--test dataables-->
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>	
@@ -163,4 +163,3 @@ Breakpoints();
 
     </body>
 </html>
-

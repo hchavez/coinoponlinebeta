@@ -49,7 +49,8 @@
                         </div> 
 
                     <div class="row"><div class="col-sm-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
                                     <tr role="row">
                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
@@ -71,16 +72,14 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
-                                    <tr>
+                                <tfoot>                                    
                                     <tr role="row">
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
                                         <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
                                         <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
-                                    </tr>
-                                    </tr>
+                                    </tr>                                    
                                 </tfoot>
                             </table>
                         </div></div>
