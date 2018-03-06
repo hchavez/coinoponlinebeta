@@ -26,7 +26,7 @@ class PrizeController extends Controller
      */
     public function index()
     {
-        $prizes = Prize::orderBy('prize_name', 'asc')->paginate(100);
+        $prizes = Prize::orderBy('prize_name', 'asc')->get();
         return view('prize/index', ['prizes' => $prizes]);
     }
 

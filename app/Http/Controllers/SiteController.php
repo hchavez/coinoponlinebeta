@@ -36,7 +36,7 @@ class SiteController extends Controller
                 ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                 ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
                 ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
-                ->orderBy('sites.site_name', 'asc')->paginate(20);
+                ->orderBy('sites.site_name', 'asc')->get();
                     
         return view('site/index', ['sites' => $sites]);
     }

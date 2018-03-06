@@ -25,7 +25,7 @@ class ThemeController extends Controller
      */
     public function index()
     {
-       $themes = Theme::orderBy('theme', 'asc')->paginate(100);
+       $themes = Theme::orderBy('theme', 'asc')->get();
        return view('themes/index', ['themes' => $themes]);
     }
 
