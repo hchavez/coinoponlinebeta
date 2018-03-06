@@ -49,7 +49,7 @@
                         </div> 
 
                     <div class="row"><div class="col-sm-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
@@ -109,16 +109,7 @@
                             </table>
                         </div></div>
 
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">{{ $winlogs->links() }}</div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
 

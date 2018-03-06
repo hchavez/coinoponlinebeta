@@ -75,7 +75,7 @@ class MachineManagementController extends Controller {
                 });            
             endif;
         endif;
-        $machines = $machines->latest('machines.created_at')->paginate(100); 
+        $machines = $machines->latest('machines.created_at')->get(); 
        
         return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
@@ -380,10 +380,11 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(100);
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
+        // $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(100);
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
 
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
@@ -400,10 +401,10 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
 
         return view('machines-mgmt/win', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
@@ -420,10 +421,10 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
         return view('machines-mgmt/money', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 
@@ -439,10 +440,10 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->paginate(20);
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->paginate(20);
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
 
         return view('machines-mgmt/goals', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
