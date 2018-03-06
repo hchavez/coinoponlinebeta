@@ -31,7 +31,7 @@ class MachineModelController extends Controller
          $models = DB::table('machine_models')
         ->select('machine_models.*',  'machine_types.machine_type as machine_type')
         ->leftJoin('machine_types', 'machine_models.machine_type_id', '=', 'machine_types.id')
-        ->latest('machine_models.created_at')->paginate(100);    
+        ->latest('machine_models.created_at')->get();    
         return view('machine-model/index', ['models' => $models]);
         
            
