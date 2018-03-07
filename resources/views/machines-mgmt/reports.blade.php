@@ -6,85 +6,23 @@
         <h3 class="panel-title">Machines Report</h3>
     </header>
     <div class="panel-body">
-        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-
-            <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-            <div class="example">
-                <div class="input-daterange" data-plugin="datepicker" style="width: 25% !important;">
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="icon wb-calendar" aria-hidden="true"></i>
-                      </span>
-                        <input type="text" class="form-control" name="startdate" value="<?php if ($start) {echo $start;} ?>">
+        <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">   
+            <div id="byDate">
+                <form role="form" method="GET" action="{{ route('machine-reports.index') }}">
+                    <div class="input-group input-daterange">
+                    <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                    <div class="input-group-addon">to</div>
+                    <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                    <button type="submit" class="btn btn-primary">Search</button> 
                     </div>
-                    <div class="input-group">
-                      <span class="input-group-addon">to</span>
-                      <input type="text" class="form-control" name="enddate" value="<?php if ($start) {echo $end;} ?>">
-                    </div>
-                  </div> <button type="submit" class="btn btn-primary"> Go!</button>
-                </div> 
-            </form>
-
+                </form>
+            </div>
             
-            <div class="row"><div class="col-sm-12">
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="exampleTableSearch" role="grid" aria-describedby="exampleTableSearch_info" >
-                        <thead>
-                            <tr><th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""> </option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <select class="form-control w-full">
-                                        <option value="">All</option>
-                                        <option value=""></option>
-                                    </select>
-                                </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-<!--                                <th rowspan="1" colspan="1">
-
-                                </th>-->
-                                <th rowspan="1" colspan="1">
-
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
-                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-                                        <span class="site-menu-title"><!-- Export --></span>
-                                    </a> 
-                                </th>
-                            </tr>
-                        </thead>
+            <div class="row"><div class="col-sm-12 longFilter">
+                    <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
+                    <div id="filterDiv"></div>
+                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
+                       
                         <thead>
                             <tr role="row">
                                 <th>State</th>
@@ -107,8 +45,7 @@
                                 <th>Last visit</th>	
                                 <th>Activity</th>
                                 <th>Active</th>
-                       
-                            
+                            </tr>                            
                         </thead>
                         <tbody>
                             @foreach ($machines as $machine)
@@ -140,19 +77,7 @@
                     </table>
                 </div></div>
 
-            <div class="row">
-                <div class="col-sm-5">
-                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
-                </div>
-                <div class="col-sm-7">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                        <?php ?>
-                        {{ $machines->links() }}
-                        
-                        <?php ?>
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
 </div>

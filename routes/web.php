@@ -163,6 +163,9 @@ Route::resource('system-management/site-type', 'SiteTypeController');
 Route::resource('system-management/machine-model', 'MachineModelController');
 Route::resource('system-management/site-group', 'SiteGroupController');
 Route::resource('system-management/city', 'CityController');
+Route::resource('system-management/site', 'SiteController');
+
+Route::resource('machines-mgmt/reports', 'MachineReportsController');
 
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');

@@ -78,7 +78,7 @@ class MachineReportsController extends Controller {
         
         $machines = $machines->latest('machine_reports.date_created')->get();     
          
-        return view('machine-reports/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
+        return view('machines-mgmt/reports', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
     }
 
