@@ -28,7 +28,7 @@ class RouteController extends Controller
      */
     public function index()
     {
-         $routes = Route::paginate(100);
+         $routes = Route::get();
         return view('route/index', ['routes' => $routes]);
         
     }
