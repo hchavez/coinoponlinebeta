@@ -106,6 +106,14 @@
 .machine-custom-width .select2-container{
     width: 25%;
 }
+#create_machineInfo .select2-container{
+    width:auto;
+}
+#create_machineInfo .select2-container .select2-choice{
+    padding: 0;
+    border: none;
+    height: 20px;
+} 
 .longFilter #filterDiv{
     display:none;
 }

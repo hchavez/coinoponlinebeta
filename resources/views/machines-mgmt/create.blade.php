@@ -7,7 +7,7 @@
     </header>
 
 
-    <div class="panel-body">
+    <div class="panel-body" id="create_machineInfo">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
             <form class="form-horizontal" role="form" method="POST" action="{{ route('machine-management.store') }}" enctype="multipart/form-data">
