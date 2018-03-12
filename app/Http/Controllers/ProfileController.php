@@ -40,8 +40,22 @@ class ProfileController extends Controller
         $username = Auth::user()->username;
         $email = Auth::user()->email;
         $id = Auth::user()->id; 
-
-        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
+        
+        if($role == '6'):            
+            $group = 'Super Admin';
+        elseif($role == '1'):           
+            $group = 'Admin';
+        elseif($role == '2'):            
+            $group = 'AMF Admin';
+        elseif($role == '3'):            
+            $group = 'Manager';
+        elseif($role == '4'):            
+            $group = 'Operator';
+        elseif($role == '5'):            
+            $group = 'Service';
+        endif;
+        
+        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $group, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
 
     public function edit($id)

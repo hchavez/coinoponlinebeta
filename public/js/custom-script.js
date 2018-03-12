@@ -72,5 +72,17 @@ $(document).ready(function(){
     $('.dt-button.buttons-excel span').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); //Change export button label
     $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables      
      
+    //Show filter indicator on mouse hover
+    $(".table th").each(function() {
+
+        $(this).hover(
+          function() {
+            $(this).append('<i class="wb-sort-vertical"></i>');
+          }, function() {
+            $(".wb-sort-vertical").css('display','none');
+          }
+        );
+
+    });
     
 });
