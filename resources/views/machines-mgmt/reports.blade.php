@@ -49,16 +49,16 @@
                         </thead>
                         <tbody>
                             @foreach ($machines as $machine)
-                            <tr role="row">
+                            <tr role="row" class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
                                 <td> {{ $machine->state }} </td>
                                 <td>{{ $machine->machine_type }}</td>
                                 <td>{{ $machine->machine_model }}</td>
-                                <td>  <a href="{{ route('machine-management.show', ['id' => $machine->id]) }}" >{{ $machine->machine_serial_no }}</a></td>
+                                <td>{{ $machine->machine_serial_no }}</td>
                                 <td> {{ $machine->site }} </td>  
                                 <td>{{ $machine->route }} </td>
                                 <td> {{ $machine->area }}</td>
                                 <td>{{ $machine->comments }} - {{ $machine->version }} </td>
-                                 <td> {{ $machine->total_money }} </td>
+                                <td> {{ $machine->total_money }} </td>
                                 <td> {{ $machine->total_toys_win }} </td>                                   
                                 <td> {{ $machine->stock_left }} </td>
                                 <td> {{ $machine->slip_volt }} </td>
