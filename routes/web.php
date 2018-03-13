@@ -45,7 +45,7 @@ Route::post('employee-management/search', 'EmployeeManagementController@search')
 Route::resource('machine-management', 'MachineManagementController');
 Route::post('machine-management/search', 'MachineManagementController@search')->name('machine-management.search');
 
-//Route::post('machine-management/reports', 'MachineManagementController@reports')->name('machine-mgmt.reports');
+Route::resource('machine-advam', 'MachineAdvamController');
 
 Route::get('machine-management/win/{id}', 'MachineManagementController@win');
 Route::get('machine-management/goals/{id}', 'MachineManagementController@goals');

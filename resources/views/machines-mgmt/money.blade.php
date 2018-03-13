@@ -58,6 +58,10 @@
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlCoinIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >billIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlBillIn</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >swipeIn</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >type</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >paymentResult</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >declineReason</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlMoneyIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forPlay</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forClick</th>
@@ -68,7 +72,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                     <?php //var_dump($moneylogs); ?>
                                     @foreach ($moneylogs as $moneylog)
+                                   
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $moneylog->id }} </td>
                                         <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($moneylog->created_at))}}</td>
@@ -76,6 +82,10 @@
                                         <td class="hidden-xs">{{ $moneylog->ttlCoinIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->billIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->ttlBillIn }}</td>
+                                        <td class="hidden-xs">{{ $moneylog->swipeIn }}</td>
+                                        <td class="hidden-xs">{{ $moneylog->type }}</td>
+                                        <td class="hidden-xs">{{ $moneylog->payment_result }}</td>
+                                        <td class="hidden-xs">{{ $moneylog->decline_reason }}</td>
                                         <td class="hidden-xs">{{ $moneylog->ttlMoneyIn }}</td>
                                         <td class="hidden-xs">{{ $moneylog->forPlay }}</td>
                                         <td class="hidden-xs">{{ $moneylog->forClick }}</td>
@@ -95,6 +105,10 @@
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlCoinIn</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >billIn</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlBillIn</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >swipeIn</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >type</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >paymentResult</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >declineReason</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlMoneyIn</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forPlay</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forClick</th>

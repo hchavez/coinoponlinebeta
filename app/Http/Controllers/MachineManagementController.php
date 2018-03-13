@@ -425,6 +425,7 @@ class MachineManagementController extends Controller {
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
         $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
+        
         return view('machines-mgmt/money', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 
