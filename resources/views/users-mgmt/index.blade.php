@@ -31,8 +31,7 @@
                               <th>Username</th>
                               <th>Email</th>                              
                               <th>Date Created</th>
-                              <th>Last Login</th>
-                              <th>Role</th>
+                              <th>Last Login</th>                             
                               <th>Status</th>
                             </tr>
                           </thead>
@@ -43,30 +42,7 @@
                               <td>{{ $user->username }}</td>
                               <td>{{ $user->email }}</td>                              
                               <td>{{ $user->created_at }}</td>
-                              <td>{{ $user->updated_at }}</td>
-                              <td> <?php 
-                                if($user->role == '6'):
-                                    $badge = 'danger';
-                                    $group = 'Super Admin';
-                                elseif($user->role == '1'):
-                                    $badge = 'warning';
-                                    $group = 'Admin';
-                                elseif($user->role == '2'):
-                                    $badge = 'success';
-                                    $group = 'AMF Admin';
-                                elseif($user->role == '3'):
-                                    $badge = 'success';
-                                    $group = 'Manager';
-                                elseif($user->role == '4'):
-                                    $badge = 'success';
-                                    $group = 'Operator';
-                                elseif($user->role == '5'):
-                                    $badge = 'success';
-                                    $group = 'Service';
-                                endif;
-                                
-                                echo $group;
-                              ?> </td>
+                              <td>{{ $user->updated_at }}</td>                              
                               <td>{{ $user->status }}</td>
                               
                             </tr>
@@ -78,8 +54,7 @@
                                   <th>Username</th>
                                   <th>Email</th>                              
                                   <th>Date Created</th>
-                                  <th>Last Login</th>
-                                  <th>Role</th>
+                                  <th>Last Login</th>                                 
                                   <th>Status</th>
                                 </tr>
                             </tfoot>
