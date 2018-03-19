@@ -18,6 +18,18 @@ $(document).ready(function(){
     $('#filterBy').on('click', function(event) {        
         $('#filterDiv').toggle('show'); //toggle filter 
     });
+    
+    //orderBy date
+    var url = window.location.href;    
+    var sortColumn;
+    
+    if( url.indexOf('reports') >- 1 ){
+        sortColumn = [19, 'DESC'];
+    }else if( url.indexOf('error') >- 1 ){
+        sortColumn = [4, 'DESC'];
+    }else if( url.indexOf('win') >- 1 || url.indexOf('goals') >- 1){
+        sortColumn = [2, 'DESC'];
+    }else{}
       
     //filter table
     var table = $('#dashboard_sort').DataTable({
@@ -29,6 +41,7 @@ $(document).ready(function(){
         paging: true,
         autoFill: true,     
         pageLength: 100,
+        order: sortColumn,
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -82,7 +95,6 @@ $(document).ready(function(){
             $(".wb-sort-vertical").css('display','none');
           }
         );
-
     });
     
 });
