@@ -61,7 +61,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+                              
                                     @foreach ($errorlogs as $errorlog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $errorlog->id }} </td>
@@ -71,6 +71,7 @@
                                         <td class="hidden-xs">{{ $errorlog->status }}</td>
                                     </tr>
                                     @endforeach
+                              
                                 </tbody>
                                 <tfoot>                                    
                                     <tr role="row">

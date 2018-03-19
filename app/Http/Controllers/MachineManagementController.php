@@ -362,12 +362,7 @@ class MachineManagementController extends Controller {
     }
 
     public function error($id) {
-        //        $machine = DB::table('machines')
-        //                        ->select('machines.*', 'machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type')
-        //                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-        //                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-        //                        ->where('machines.id', $id)->first();
-
+     
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -380,7 +375,6 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
 
-        // $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(100);
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
