@@ -22,7 +22,7 @@
 
                     <h5 class="page-aside-title">Machine Settings </h5>
 
-                    <div class="list-group">{{Route::current()->getName()}} 
+                    <div class="list-group">
                        
                         <a class="list-group-item {{ Route::current()->getName() == 'machine-settings.edit' ? 'list-group-item-action active' : '' }}" href="{{ route('machine-settings.edit', ['id' => $machine->id]) }}"> <i class="icon wb-wrench" aria-hidden="true"></i>Info</a>
                         <a class="list-group-item {{ Route::current()->getName() == 'claw-settings.edit' ? 'list-group-item-action active' : '' }}" href="{{ route('claw-settings.edit', ['id' => $machine->id]) }}"> <i class="icon wb-wrench" aria-hidden="true"></i>Claw </a>
