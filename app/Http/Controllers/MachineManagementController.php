@@ -372,14 +372,14 @@ class MachineManagementController extends Controller {
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
+                        ->where('machines.id', $id)->first(); 
 
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
         $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
-
+        //$machine = null;
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 

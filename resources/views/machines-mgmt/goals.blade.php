@@ -72,6 +72,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if($machine->id != '28')
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
                                         <td >{{ $goalslog->id }} </td>
@@ -92,6 +93,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                                 <tfoot>
                                     <tr>

@@ -68,6 +68,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                     @if($machine->id != '28')
                                     @foreach ($winlogs as $winlog)
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $winlog->id }} </td>
@@ -86,6 +87,7 @@
                                         <td class="hidden-xs">{{ $winlog->status }}</td>
                                     </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                                 <tfoot>
                                     <tr>
