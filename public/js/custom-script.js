@@ -97,4 +97,38 @@ $(document).ready(function(){
         );
     });
     
+    
+    //test filter    
+    /*var check = setInterval(function(){ 
+        if( $('#filterDate').length > 0 ){
+            alert('olah');
+            clearInterval(check);
+        }
+    }, 500);	*/   
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').datepicker("getDate");
+            var max = $('#max').datepicker("getDate");
+            var startDate = new Date(data[4]);
+            if (min == null && max == null) { return true; }
+            if (min == null && startDate <= max) { return true;}
+            if(max == null && startDate >= min) {return true;}
+            if (startDate <= max && startDate >= min) { return true; }
+            return false;
+        }
+    );
+
+    $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+    $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+    var table = $('#dashboard_sort').DataTable();
+
+    // Event listener to the two range filtering inputs to redraw on input
+    $('#min, #max').change(function () {
+        table.draw();
+    });
+    
+    
+    
 });
+
+
