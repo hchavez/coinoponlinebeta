@@ -69,10 +69,10 @@
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>                                        
+                                        <th style="width:20% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>
+                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >totalWon</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >playIndex</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >owedWin</th>
