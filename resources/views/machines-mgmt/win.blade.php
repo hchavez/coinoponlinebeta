@@ -48,7 +48,24 @@
                         
                         </div> 
 
-                    <div class="row"><div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table border="0" cellspacing="5" cellpadding="5" id="filterDate">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Date Filter</b> </td>
+                                        <td>   
+                                            <input name="min" id="min" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="From">                                           
+                                        </td>
+                                        <td>    
+                                            <input name="max" id="max" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="To">                                            
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12">
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
@@ -71,10 +88,10 @@
                                      @if($machine->id != '28')
                                     @foreach ($winlogs as $winlog)
                                     <tr role="row" class="odd">
-                                        <td class="sorting_1">{{ $winlog->id }} </td>
-                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($winlog->created_at))}}</td>
+                                        <td class="sorting_1">{{ $winlog->id }} </td>                                        
                                         <td class="hidden-xs">{{ $winlog->testPlay }}</td>
                                         <td class="hidden-xs">{{ $winlog->winResult }}</td>
+                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($winlog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $winlog->totalWon }}</td>
                                         <td class="hidden-xs">{{ $winlog->playIndex }}</td>
                                         <td class="hidden-xs">{{ $winlog->owedWin }}</td>
@@ -92,10 +109,10 @@
                                 <tfoot>
                                     <tr>
                                     <tr role="row">
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>                                        
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>
+                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >totalWon</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >playIndex</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >owedWin</th>

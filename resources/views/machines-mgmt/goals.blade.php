@@ -50,14 +50,31 @@
                         
                         </div> 
 
-                    <div class="row"><div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table border="0" cellspacing="5" cellpadding="5" id="filterDate">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Date Filter</b> </td>
+                                        <td>   
+                                            <input name="min" id="min" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="From">                                           
+                                        </td>
+                                        <td>    
+                                            <input name="max" id="max" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="To">                                            
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-12">
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
-                                        <th width="25%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
+                                        <th width="25%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkVolt</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retPWM</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retVolt</th>
@@ -75,10 +92,10 @@
                                     @if($machine->id != '28')
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
-                                        <td >{{ $goalslog->id }} </td>
-                                        <td >{{date('d/m/Y h:i A', strtotime($goalslog->created_at))}}</td>
+                                        <td >{{ $goalslog->id }} </td>                                        
                                         <td >{{ $goalslog->testPlay }}</td>
                                         <td >{{ $goalslog->pkPWM }}</td>
+                                        <td >{{date('d/m/Y h:i A', strtotime($goalslog->created_at))}}</td>
                                         <td >{{ $goalslog->pkVolt }}</td>
                                         <td >{{ $goalslog->retPWM }}</td>
                                         <td >{{ $goalslog->retVolt }}</td>
@@ -99,9 +116,9 @@
                                     <tr>
                                     <tr role="row">
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
+                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkVolt</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retPWM</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retVolt</th>
