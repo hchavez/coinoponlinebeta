@@ -154,3 +154,14 @@ table.dataTable td:nth-child(8){
   background-color: darkgrey;
   outline: 1px solid slategrey;
 }
+
+.date_filter{
+    width:1px !important;
+    font-size:0.1px !important;
+    color: #fff;
+    padding:0 !important;
+    border: 0 !important;
+}
+.sorting_1{
+    border-left:0 !important;
+}

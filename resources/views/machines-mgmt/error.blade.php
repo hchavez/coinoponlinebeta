@@ -49,13 +49,13 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12">                              
                             <table border="0" cellspacing="5" cellpadding="5" id="filterDate">
                                 <tbody>
                                     <tr>
                                         <td><b>Date Filter</b> </td>
                                         <td>   
-                                            <input name="min" id="min" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="From">                                           
+                                            <input name="min" id="min" class="form-control form_datetime" type="text" data-date-format="yyyy/mm/dd" placeholder="From">                                           
                                         </td>
                                         <td>    
                                             <input name="max" id="max" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="To">                                            
@@ -70,21 +70,23 @@
                             <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
                                     <tr role="row">
-                                       <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     @if($machine->id != '28')
+                                    @if($machine->id != '28')
                                     @foreach ($errorlogs as $errorlog)
                                     <tr role="row" class="odd">
+                                        <td class="hidden-xs date_filter">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
                                         <td class="sorting_1">{{ $errorlog->id }} </td>
                                         <td class="hidden-xs">{{ $errorlog->type }}</td>
-                                        <td class="hidden-xs">{{ $errorlog->error }}</td>                                        
-                                        <td class="hidden-xs">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
+                                        <td class="hidden-xs">{{ $errorlog->error }}</td> 
+                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($errorlog->created_at))}}</td>
                                         <td class="hidden-xs">{{ $errorlog->status }}</td>
                                     </tr>
                                     @endforeach
@@ -92,11 +94,12 @@
                                 </tbody>
                                 <tfoot>                                    
                                     <tr role="row">
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                        <th class="date_filter"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>                                    
                                 </tfoot>
                             </table>

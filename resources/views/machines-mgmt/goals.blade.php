@@ -71,6 +71,7 @@
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
+                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
@@ -92,6 +93,7 @@
                                     @if($machine->id != '28')
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
+                                        <td class="date_filter" >{{date('Y/m/d', strtotime($goalslog->created_at))}}</td>
                                         <td >{{ $goalslog->id }} </td>                                        
                                         <td >{{ $goalslog->testPlay }}</td>
                                         <td >{{ $goalslog->pkPWM }}</td>
@@ -115,6 +117,7 @@
                                 <tfoot>
                                     <tr>
                                     <tr role="row">
+                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>

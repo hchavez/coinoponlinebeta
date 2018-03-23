@@ -26,7 +26,7 @@ $(document).ready(function(){
     if( url.indexOf('reports') >- 1 ){
         sortColumn = [19, 'DESC'];
     }else if( url.indexOf('error') >- 1 ){
-        sortColumn = [4, 'DESC'];
+        sortColumn = [1, 'DESC'];
     }else if( url.indexOf('win') >- 1 || url.indexOf('goals') >- 1){
         sortColumn = [2, 'DESC'];
     }else{}
@@ -41,7 +41,7 @@ $(document).ready(function(){
         paging: true,
         autoFill: true,     
         pageLength: 100,
-        order: sortColumn,
+        order: [[1, 'DESC']],
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -109,7 +109,7 @@ $(document).ready(function(){
         function (settings, data, dataIndex) {            
             var min = parseInt( $('#min').val(), 10 );
             var max = parseInt( $('#max').val(), 10 );
-            var age = parseFloat( data[3] ) || 0; // use data for the age column
+            var age = parseFloat( data[0] ) || 0; // use data for the age column
             //console.log('year:'+ age + ' = min:'+min+ ' = max:' + max);
             if ( ( isNaN( min ) && isNaN( max ) ) ||
                 ( isNaN( min ) && age <= max ) ||
