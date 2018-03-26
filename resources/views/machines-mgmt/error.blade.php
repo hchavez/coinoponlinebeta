@@ -66,7 +66,7 @@
                             </table>
                         </div>
                         <div class="col-sm-12">
-                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="dashboard_sort" class="table  table-hover dataTable" role="grid" aria-describedby="example2_info">
                             <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
                                     <tr role="row">

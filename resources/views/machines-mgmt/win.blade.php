@@ -66,7 +66,7 @@
                             </table>
                         </div>
                         <div class="col-sm-12">
-                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="dashboard_sort" class="table  table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
                                         <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
@@ -110,22 +110,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                    <tr role="row">
-                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>                                        
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>
-                                        <th width="28%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >totalWon</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >playIndex</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >owedWin</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >excessWin</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockLeft</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockRemoved</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockAdded</th>
-                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >nTimesOfPlay</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
-                                    </tr>
+                                    
                                     </tr>
                                 </tfoot>
                             </table>

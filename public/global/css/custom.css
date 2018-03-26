@@ -165,3 +165,6 @@ table.dataTable td:nth-child(8){
 .sorting_1{
     border-left:0 !important;
 }
+.table-hover{
+    margin-bottom:0 !important;
+}
