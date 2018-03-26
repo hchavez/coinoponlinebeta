@@ -41,21 +41,7 @@ class ProfileController extends Controller
         $email = Auth::user()->email;
         $id = Auth::user()->id; 
         
-        if($role == '6'):            
-            $group = 'Super Admin';
-        elseif($role == '1'):           
-            $group = 'Admin';
-        elseif($role == '2'):            
-            $group = 'AMF Admin';
-        elseif($role == '3'):            
-            $group = 'Manager';
-        elseif($role == '4'):            
-            $group = 'Operator';
-        elseif($role == '5'):            
-            $group = 'Service';
-        endif;
-        
-        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $group, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
+        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
 
     public function edit($id)
@@ -119,13 +105,15 @@ class ProfileController extends Controller
     }
 
     public function role($id)
-    {        
+    {               
         /*$get_user = DB::Table('users')->where('id', $id)->first();
         
         return view('profile/role', ['id' => $get_user->id ,'username' => $get_user->username, 'firstname' => $get_user->firstname,
         'lastname' => $get_user->lastname, 'email' => $get_user->email])
         ->with('myreferrer', Session::get('myreferrer', URL::previous()));*/
 
-        return view('profile/role');
+        return view('profile/activities');
     }
+    
+    
 }

@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="{{ asset("/global/vendor/aspieprogress/asPieProgress.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/jquery-selective/jquery-selective.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css") }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+
         <link rel="stylesheet" href="{{ asset("/global/vendor/asscrollable/asScrollable.css") }}">
         <link rel="stylesheet" href="{{ asset("/assets/examples/css/dashboard/team.css") }}">
         <!-- Fonts -->
@@ -79,7 +81,7 @@ Breakpoints();
         <script src="{{ asset("/global/vendor/babel-external-helpers/babel-external-helpers.js") }}"></script>
 
         <script src="{{ asset("/global/vendor/tether/tether.js") }}"></script>
-        <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
+        
         <script src="{{ asset("/global/vendor/animsition/animsition.js") }}"></script>
         <script src="{{ asset("/global/vendor/mousewheel/jquery.mousewheel.js") }}"></script>
         <script src="{{ asset("/global/vendor/asscrollbar/jquery-asScrollbar.js") }}"></script>
@@ -94,6 +96,12 @@ Breakpoints();
         <script src="{{ asset("/global/vendor/matchheight/jquery.matchHeight-min.js") }}"></script>
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
+        <script src="https://momentjs.com/downloads/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
+        <script src="{{asset('js/transition.js')}}"></script>
+        <script src="{{asset('js/collapse.js')}}"></script>
+        <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
+               
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
         <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -123,7 +131,7 @@ Breakpoints();
         <script src="{{ asset("/global/js/Plugin/slidepanel.js") }}"></script>
         <script src="{{ asset("/global/js/Plugin/switchery.js") }}"></script>
 
-
+        
         <script src="{{asset('js/custom-script.js')}}"></script>
         
         <script src="{{ asset("/assets/js/select2.js") }}"></script>

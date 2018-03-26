@@ -170,13 +170,9 @@ Route::resource('machines-mgmt/reports', 'MachineReportsController');
 Route::get('avatars/{name}', 'EmployeeManagementController@load');
 Route::get('avatars/{name}', 'MachineManagementController@load');
 
-
 Route::resource('profile', 'ProfileController');
 Route::post('profile/{id}', 'ProfileController@update');
 Route::get('profile/role/{id}', 'ProfileController@role');
 
-//Route::resource('profile', 'ProfileController');
-//Route::post('profile/{id}', 'ProfileController@update');
-//Route::get('profile/role/{id}', 'ProfileController@role');
-
-
+Route::resource('activity', 'ActivityController');
+Route::get('activity/show/{id}', 'ActivityController@userActivity');
