@@ -322,8 +322,8 @@ class MachineManagementController extends Controller {
         //Get RetVolt Data for graphview
         $graphdataDropVoltQuery = DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)
                                // ->whereMonth('created_at', '=', date('m'))    
-                                ->where('startEndFlag', '2')->where('testPlay', 'play')->get();
-
+                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')->get();
+        
         if ($graphdataDropVoltQuery->count() > 0) {
             foreach ($graphdataDropVoltQuery as $value) {
                 $graphdataDropVoltresult[] = $value->dropVolt;
@@ -336,8 +336,8 @@ class MachineManagementController extends Controller {
         //Get pickupvolt Data for graphview
         $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
-                                ->where('startEndFlag', '1')->where('testPlay', 'play')->get();
-
+                                ->where('startEndFlag','=', '1')->where('testPlay', 'play')->get();
+           
         if ($graphdataPkVoltQuery->count() > 0) {
             foreach ($graphdataPkVoltQuery as $value) {
                 $graphdataPkVoltresult[] = $value->pkVolt;
@@ -346,8 +346,8 @@ class MachineManagementController extends Controller {
         } else {
             $graphdataPkVoltResult = null;
         }
-
-
+        
+        
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
             'graphdataWinResult' => $graphdataWinResult,
@@ -379,7 +379,7 @@ class MachineManagementController extends Controller {
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
         $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
-        //$machine = null;
+      
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 
@@ -484,8 +484,7 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
 
-        //var_dump(count($machine));
-        // Redirect to state list if updating state wasn't existed
+    
         if ($machine == null || count($machine) == 0) {
             return redirect()->intended('/machine-management');
         }

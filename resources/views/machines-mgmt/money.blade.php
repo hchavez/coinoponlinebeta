@@ -72,7 +72,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     @if($machine->id != '28')
+                                    
                                     @foreach ($moneylogs as $moneylog)
                                    
                                     <tr role="row" class="odd">
@@ -95,7 +95,7 @@
 
                                     </tr>
                                     @endforeach
-                                    @endif
+                                  
                                 </tbody>
                                 <tfoot>
                                     <tr>

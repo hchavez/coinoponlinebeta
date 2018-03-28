@@ -90,7 +90,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($machine->id != '28')
+                                   
                                     @foreach ($goalslogs as $goalslog)
                                     <tr role="row" class="odd">
                                         <td class="date_filter" >{{date('Y/m/d', strtotime($goalslog->created_at))}}</td>
@@ -112,7 +112,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    @endif
+                                    
                                 </tbody>
                                 <tfoot>
                                     <tr>

@@ -86,7 +86,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     @if($machine->id != '28')
+                                   
                                     @foreach ($winlogs as $winlog)
                                     <tr role="row" class="odd">
                                         <td class="date_filter">{{date('Y/m/d', strtotime($winlog->created_at))}}</td>
@@ -106,7 +106,7 @@
                                         <td class="hidden-xs">{{ $winlog->status }}</td>
                                     </tr>
                                     @endforeach
-                                    @endif
+                                
                                 </tbody>
                                 <tfoot>
                                     <tr>

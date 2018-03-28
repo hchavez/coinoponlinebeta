@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($machine->id != '28')
+                                    
                                     @foreach ($errorlogs as $errorlog)
                                     <tr role="row" class="odd">
                                         <td class="hidden-xs date_filter">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
@@ -90,7 +90,7 @@
                                         <td class="hidden-xs">{{ $errorlog->status }}</td>
                                     </tr>
                                     @endforeach
-                                    @endif
+                                 
                                 </tbody>
                                 <tfoot>                                    
                                     <tr role="row">
