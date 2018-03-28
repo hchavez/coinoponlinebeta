@@ -13,29 +13,34 @@
             <div class="panel-body">               
                 <div class="row">                      
                     <div class="col-sm-12">  
-                        <table class="display table table-hover dataTable table-striped  dtr-inline table-responsive" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
-                            <thead>
-                                <tr role="row">
-                                    <th>Name</th>
-                                    <th>Date Created</th>
-                                    <th>Date Updated</th>                                
-                                </tr>                            
-                            </thead>
-                            <tbody>
-                            @foreach ($users as $users)                            
-                                <tr role="row">
-                                    <td> {{ $users->username }} </td>                                    
-                                    <td>{{date('d/m/Y h:i A', strtotime($users->created_at))}}</td>
-                                    <td>{{date('d/m/Y h:i A', strtotime($users->updated_at))}}</td>
-                                </tr>                            
-                            @endforeach
-                            </tbody>
-                            <tfoot>
-                            <tr role="row">
-                                                        
-                            </tr>                            
-                            </tfoot>
-                        </table>
+                        <table class="table table-bordered">
+                        <tr>
+                            <th>No</th>
+                            <th>User</th>
+                            <th>Subject</th>
+                            <th>URL</th>                            
+                            <th>Ip Address</th>
+                            <th width="500px">User Agent</th>
+                            <th>Date</th>                            
+                        </tr>
+                        @if($logs->count())
+                        @foreach($activity as $key => $log)
+                        <?php 
+                       // echo '<br>'.$user_id.' - '.$log->user_id;
+                        //if($user_id == $log->user_id){ ?>
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>{{ $log->username }}</td>
+                            <td>{{ $log->subject }}</td>
+                            <td class="text-success">{{ $log->url }}</td>                            
+                            <td class="text-warning">{{ $log->ip }}</td>
+                            <td class="text-danger">{{ $log->agent }}</td>
+                            <td>{{ $log->updated_at }}</td>                            
+                        </tr>
+                        <?php// } ?>
+                        @endforeach
+                        @endif
+                        </table> 
                     </div>
                     <div class="col-sm-4"></div>
                 </div>

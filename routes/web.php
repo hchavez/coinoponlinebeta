@@ -176,3 +176,6 @@ Route::get('profile/role/{id}', 'ProfileController@role');
 
 Route::resource('activity', 'ActivityController');
 Route::get('activity/show/{id}', 'ActivityController@userActivity');
+
+Route::get('add-to-log', 'ActivityController@myTestAddToLog');
+Route::get('logActivity', 'ActivityController@logActivity');
