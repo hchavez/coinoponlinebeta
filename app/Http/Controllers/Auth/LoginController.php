@@ -36,16 +36,18 @@ class LoginController extends Controller
      */
     protected function hasTooManyLoginAttempts ($request) {
         $maxLoginAttempts = 5;
-        $lockoutTime = 5; // 5 minutes
-        
-        if ($request)
-        {
-            \LogActivity::addToLog('Logged in');
-        }
+        $lockoutTime = 5; // 5 minutes      
                      
         return $this->limiter()->tooManyAttempts(
             $this->throttleKey($request), $maxLoginAttempts, $lockoutTime
         );
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        if($user)
+        {
+            \LogActivity::addToLog('Logged in');
+        }
     }
     /**
      * Create a new controller instance.

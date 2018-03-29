@@ -33,10 +33,10 @@
                                         <tr><td><b>Username</b></td><td>{{ $user->username }}</td></tr>
                                         <tr><td><b>Email</b></td><td>{{ $user->email }}</td></tr>
                                         <tr><td><b>Role</b></td><td>  
-                                                <span class="badge badge-<?php echo $userBadge; ?>"><?php echo $groupSelected; ?></span>
+                                                
                                             </td></tr>
                                         <tr><td><b>Date Created</b></td><td>{{ $user->created_at }} </td></tr>
-                                        <tr><td><b>Status</b></td><td>{{ $user->status }}</td></tr>
+                                        <tr><td><b>Status</b></td><td></td></tr>
                                     @endforeach                                      
                                 </tbody>
                               </table>
@@ -47,40 +47,8 @@
             </div>
         </div>
         
-        <!--div class="panel">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-12"> 
-                        <h4 class="example-title">User Permission</h4>  
-                        <?php if (Session::has('success')): ?>
-                            <div class="alert alert-success">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <?php echo Session::get('success', ''); ?>
-                            </div>
-                        <?php endif; ?>
-                        <div class="form-group">
-                            <form role="form" method="POST" action="{{ route('user-mgmt.set_permission', ['id' => $user->id]) }}">
-                                {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label class="form-control-label">Set Permission</label>                                
-                                    <div>
-                                        @foreach ($role as $user)                                      
-                                        <div class="radio-custom radio-default radio-inline">
-                                            <input type="radio" id="role_superAdmin" name="inputRole" {{ $user->user_group == $groupSelected ? "checked" : "" }} value="{{ $user->id }}"/>
-                                            <label for="inputBasicMale">{{ $user->user_group }}</label>
-                                        </div>
-                                        @endforeach                                          
-                                    </div>   
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Update Role</button>
-                                </div>
-                            </form>
-                      </div>
-                    </div>
-                </div>
-            </div>                
-        </div--> 
+        
+        
         
         <div class="panel">
             <div class="panel-body">
@@ -88,46 +56,30 @@
                     <div class="col-sm-12"> 
                         <h4 class="example-title">User Logs/History</h4>  
                         <div class="table-responsive">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <th>Last Signed in</th>
-                                  <th>Log out</th>                                  
-                                  <th>Hours Spent</th>                                  
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td><span class="text-muted"><i class="wb wb-time"></i> 2018-01-11 08:32:34</span></td>
-                                  <td>2018-02-02 01:15:22 </td>
-                                  <td>
-                                    <span class="badge badge-outline badge-success">Online</span>
-                                  </td>                                  
-                                </tr>
-                                <tr>
-                                  <td><span class="text-muted"><i class="wb wb-time"></i> 2018-01-10 07:57:35</span></td>
-                                  <td>2018-02-02 01:15:22 </td>
-                                  <td>
-                                    2hrs
-                                  </td>                                  
-                                </tr>
-                                <tr>
-                                  <td><span class="text-muted"><i class="wb wb-time"></i> 2018-01-10 07:37:29</span></td>
-                                  <td>2018-02-02 01:15:22 </td>
-                                  <td>
-                                    1hr
-                                  </td>                                  
-                                </tr>
-                                <tr>
-                                  <td><span class="text-muted"><i class="wb wb-time"></i> 2017-03-25 10:43:48</span></td>
-                                  <td>2018-02-02 01:15:22 </td>
-                                  <td>
-                                    2.5hrs
-                                  </td>
-                                  
-                                </tr>
-                              </tbody>
-                            </table>
+                            <table class="table table-bordered">
+                            <tr>
+                                <th>No</th>
+                                <th>User</th>
+                                <th>Subject</th>
+                                <th>URL</th>                            
+                                <th>Ip Address</th>
+                                <th width="500px">User Agent</th>
+                                <th>Date</th>                            
+                            </tr>
+                            @if($logs->count())
+                            @foreach($logs as $key => $log)                           
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{ $log->username }}</td>
+                                <td>{{ $log->subject }}</td>
+                                <td class="text-success">{{ $log->url }}</td>                            
+                                <td class="text-warning">{{ $log->ip }}</td>
+                                <td class="text-danger">{{ $log->agent }}</td>
+                                <td>{{ $log->updated_at }}</td>                            
+                            </tr>                           
+                            @endforeach
+                            @endif
+                            </table> 
                         </div>
                     </div>
                 </div>

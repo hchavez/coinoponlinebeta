@@ -20,6 +20,7 @@ class ProfileController extends Controller
      *
      * @return void
      */
+    private $id;
     public function __construct()
     {
         $this->middleware('auth');
@@ -49,8 +50,9 @@ class ProfileController extends Controller
         $role = Auth::user()->role;
         $get_user = DB::Table('users')->where('id', $id)->first();
         
+        
         return view('profile/edit', ['id' => $get_user->id ,'user_role' => $role,'username' => $get_user->username, 'firstname' => $get_user->firstname,
-        'lastname' => $get_user->lastname, 'email' => $get_user->email])
+        'lastname' => $get_user->lastname, 'email' => $get_user->email, 'user_id'=>$id])
         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 
@@ -71,24 +73,24 @@ class ProfileController extends Controller
     
     public function create()
     {
+        echo $this->id;
         $role = Auth::user()->role;
         $generated_password = $this->generate_password();
-        return view('profile/create', ['pass' => $generated_password, 'user_role' => $role] );
+        return view('profile/create', ['pass' => $generated_password, 'user_role' => $role, 'user_id' => $this->id] );
     }
 
     public function store(Request $request)
     {
        // $this->validateInput($request);
-       $crypt_pass = bcrypt($request['password']);
+        $crypt_pass = bcrypt($request['password']);
         
         Profile::create([
             'username' => $request['username'],
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
             'email' => $request['email'],
-            'password' => $crypt_pass,
-            'role' => $request['user_role'],
-            'status' => 'active'
+            'password' => $crypt_pass      
+            
         ]);
 
         Session::flash('message', 'New User successfully added!');

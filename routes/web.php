@@ -172,6 +172,7 @@ Route::get('avatars/{name}', 'MachineManagementController@load');
 
 Route::resource('profile', 'ProfileController');
 Route::post('profile/{id}', 'ProfileController@update');
+Route::post('profile/edit/{id}', 'ProfileController@edit');
 Route::get('profile/role/{id}', 'ProfileController@role');
 
 Route::resource('activity', 'ActivityController');

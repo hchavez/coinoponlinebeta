@@ -50,7 +50,7 @@ class ActivityController extends Controller
                     ->where('log_activities.user_id', $id);  
         $act = $get_user->latest('log_activities.updated_at')->get();     
         
-        return view('activity/show', ['logs' => $logs, 'activity' => $act]);
+        return view('activity/show', ['logs' => $logs, 'activity' => $act, 'user_id' => $id]);
     }
         
     

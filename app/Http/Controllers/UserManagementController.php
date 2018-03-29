@@ -76,31 +76,17 @@ class UserManagementController extends Controller
     {
         
         $users = DB::table('users')->where('id', '=', $id)->get();
-        $role = DB::table('user_group')->get();
+        $logs = \LogActivity::logActivityLists();  
+            
+        $get_user = DB::table('users')
+                    ->select('users.*', 'users.id as users_id','users.username as username'
+                            , 'log_activities.subject as subject', 'log_activities.url as url'
+                            , 'log_activities.ip as ip', 'log_activities.agent as agent', 'log_activities.updated_at as updated_at')
+                    ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id')                                        
+                    ->where('log_activities.user_id', $id);  
+        $act = $get_user->latest('log_activities.updated_at')->get();       
         
-        foreach($users as $group_user):            
-            if($group_user->role == '6'):
-                $group = 'Super Admin';
-                $badge = 'danger';
-            elseif($group_user->role == '1'):
-                $group = 'Admin';
-                $badge = 'warning';
-            elseif($group_user->role == '2'):
-                $group = 'AMF Admin';
-                $badge = 'primary';
-            elseif($group_user->role == '3'):
-                $group = 'Manager';
-                $badge = 'info';
-            elseif($group_user->role == '4'):
-                $group = 'Operator';
-                $badge = 'success';
-            elseif($group_user->role == '5'):
-                $group = 'Service';
-                $badge = 'dark';
-            endif;  
-        endforeach;        
-        
-        return view('users-mgmt/show', ['users' => $users, 'role' => $role, 'groupSelected' => $group, 'userBadge' => $badge]);
+        return view('users-mgmt/show', ['users' => $users, 'logs' => $act]);
     }
     
     public function set_permission(Request $request)

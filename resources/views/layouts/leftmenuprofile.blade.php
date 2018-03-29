@@ -23,7 +23,8 @@
                     </div-->                   
                     <?php //}else{ ?>
                     <div class="list-group">
-                        <a class="list-group-item" href="{{ route('profile.index') }}"> <i class="icon wb-folder" aria-hidden="true"></i>User Info</a>                        
+                        <a class="list-group-item" href="{{ route('profile.index') }}"> <i class="icon wb-folder" aria-hidden="true"></i>User Info</a>       
+                        <a class="list-group-item" href="{{ route('profile.edit', ['id' => $user_id]) }}"> <i class="icon wb-folder" aria-hidden="true"></i>Update Info</a>  
                         <a class="list-group-item" href="{{ url('logActivity') }}"> <i class="icon wb-folder" aria-hidden="true"></i>Activities</a>                       
                     </div>
                     <?php //} ?>
