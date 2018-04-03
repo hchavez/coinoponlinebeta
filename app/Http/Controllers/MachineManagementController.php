@@ -394,7 +394,7 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play')->latest('created_at')->get();
         return view('machines-mgmt/win', ['machine' => $machine, 'winlogs' => $winlogs]);
     }
 
@@ -428,7 +428,7 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $goalslogs = DB::table('goalslogs')->where('machine_id','=', $id)->latest('log_id')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')->get();
         return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
 
     }
