@@ -336,7 +336,7 @@ class MachineManagementController extends Controller {
         //Get pickupvolt Data for graphview
         $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
-                                ->where('startEndFlag','=', '1')->where('testPlay', 'play')->get();
+                                ->where('dropCount','=', '1')->where('testPlay', 'play')->get();
            
         if ($graphdataPkVoltQuery->count() > 0) {
             foreach ($graphdataPkVoltQuery as $value) {
@@ -359,6 +359,8 @@ class MachineManagementController extends Controller {
             'totalPlay' => $totalPlay,
             'totalMoneyquery' => $totalMoneyquery
         ]);
+        
+        
     }
 
     public function error($id) {
@@ -376,11 +378,8 @@ class MachineManagementController extends Controller {
 
 
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
-      
-        return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
+     
+        return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
     }
 
     public function win($id) {
@@ -395,12 +394,8 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
         $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
-
-        return view('machines-mgmt/win', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
+        return view('machines-mgmt/win', ['machine' => $machine, 'winlogs' => $winlogs]);
     }
 
     public function money($id) {
@@ -415,12 +410,10 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+
         $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
         
-        return view('machines-mgmt/money', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
+        return view('machines-mgmt/money', ['machine' => $machine, 'moneylogs' => $moneylogs]);
     }
 
     public function goals($id) {
@@ -435,12 +428,9 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->latest('log_id')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id','=', $id)->latest('log_id')->get();
+        return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
 
-        return view('machines-mgmt/goals', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
 
     public function accounts($id) {
@@ -451,7 +441,7 @@ class MachineManagementController extends Controller {
                         ->leftJoin('machine_type', 'machine_model.type_id', '=', 'machine_type.id')
                         ->where('machines.id', $id)->first();
 
-        //$machine = Machine::find($id);
+  
         $errorlogs = Machine::find($id)->errorlogs()->orderBy('created_at', 'desc')->paginate(20);
         $moneylogs = Machine::find($id)->moneylogs()->orderBy('created_at', 'desc')->paginate(20);
         $winlogs = Machine::find($id)->winlogs()->orderBy('created_at', 'desc')->paginate(20);
