@@ -1,6 +1,102 @@
 /*
 * Custom script
 */
+var url_string = window.location.href;
+var url = new URL(url_string);
+var param = url.searchParams.get('page');
+var pathArray = window.location.pathname.split( '/' );
+
+if(param!==null){ url_param = '?page='+param; }else{ url_param = ''; }
+if(window.location.hostname === 'localhost'){
+    var json_url='http://localhost/coinoponlinebeta/public/machine-management/get'+ucFirst(pathArray['4'])+'/'+pathArray['5']+url_param+'&pg='+pathArray['4'];    
+}else{
+    var json_url='https://www.ascentri.com/machine-management/getError/'+pathArray['3']+url_param+'&pg='+pathArray['4'];    
+}
+showProducts(json_url, pathArray['4']);
+function ucFirst(string) 
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function showProducts(json_url,logs){
+    
+    $.getJSON(json_url, function(data){
+        console.log('TEST',data);  
+        
+        if(logs == 'error'){
+            $.each(data.data,function(i) {   
+                $('#json_table tbody').append('<tr role="row"><td class="sorting_1">'+data.data[i].id+'</td><td>'+
+                    data.data[i].type+'</td><td>'+
+                    data.data[i].error+'</td><td>'+
+                    data.data[i].created_at+'</td><td>'+
+                    data.data[i].status+'</td></tr>'
+                );            
+            });
+        }
+        if(logs == 'money'){
+            $.each(data.data,function(i) {   
+                $('#json_table tbody').append('<tr role="row"><td class="sorting_1">'+data.data[i].id+'</td><td>'+
+                    data.data[i].created_at+'</td><td>'+
+                    data.data[i].coinIn+'</td><td>'+
+                    data.data[i].ttlCoinIn+'</td><td>'+
+                    data.data[i].billIn+'</td><td>' +
+                    data.data[i].ttlBillIn+'</td><td>' +
+                    data.data[i].swipeIn+'</td><td>' +
+                    data.data[i].type+'</td><td>' +
+                    data.data[i].payment_result+'</td><td>' +
+                    data.data[i].decline_reason+'</td><td>' +
+                    data.data[i].ttlMoneyIn+'</td><td>' +
+                    data.data[i].forPlay+'</td><td>' +
+                    data.data[i].forClick+'</td><td>' +
+                    data.data[i].pricePlay+'</td><td>' +
+                    data.data[i].credits+'</td><td>' +                   
+                    data.data[i].status+'</td></tr>'                     
+                );            
+            });
+        }
+                
+        
+        var loop;
+        var nextPage = new URL(data.next_page_url);
+        var nextParam = url.searchParams.get('page');
+        console.log(window.location.hostname);
+        for(loop = 1; loop <= data.last_page; loop++){
+            //console.log('Test'+loop);
+            $('.dataTables_paginate #pagination_links ul').append('<li><a href="?page='+loop+'">'+loop+'</a></li>');        
+            //$('.dataTables_paginate #pagination_links ul').append('<li id="'+loop+'">'+loop+'</a></li>');        
+        }
+        if(nextParam!=null){ url_param = '?page='+nextParam; }else{ url_param = ''; }
+        $('.dataTables_paginate #pagination_links').append('Showing '+data.from+'</a> to '+data.to+' of '+data.total);
+        
+        /*$('#pagination_links ul li').each(function(index){
+            $(this).on('click',function(){
+                console.log($(this).html());
+            });
+        });*/
+        var totalPages  = data.total;
+        var currentPage = 1;
+
+        if (totalPages <= 10) {
+            var start = 1;
+            var end   = totalPages;
+        } else {
+            var start = Math.max(1, (currentPage - 4));
+            var end   = Math.min(totalPages, (currentPage + 5));
+
+            if (start === 1) {
+                var end = 10;
+            } else if (end === totalPages) {
+                var start = (totalPages - 9);
+            }
+        }
+
+        for (page = start; page <= end; page++) {
+            console.log('Page:'+page); 
+        }
+               
+    });
+    
+}
+
 $(document).ready(function(){
 
     var machine_details = ['state', 'type', 'model', 'serial', 'site', 'route', 'area'];
@@ -132,7 +228,4 @@ $(document).ready(function(){
     });
     
     
-    
 });
-
-

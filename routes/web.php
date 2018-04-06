@@ -54,6 +54,8 @@ Route::get('machine-management/show/{id}', 'MachineManagementController@show');
 Route::get('machine-management/error/{id}', 'MachineManagementController@error');
 Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_settings');
 Route::post('machine-management/filter', 'MachineManagementController@filter')->name('machine-management.filter');
+Route::get('machine-management/getError/{id}', 'MachineManagementController@getError');
+Route::get('machine-management/getMoney/{id}', 'MachineManagementController@getMoney');
 
 Route::resource('machine-reports', 'MachineReportsController');
 

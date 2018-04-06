@@ -66,11 +66,9 @@
                             </table>
                         </div>
                         <div class="col-sm-12">
-                            <table id="dashboard_sort" class="table  table-hover dataTable" role="grid" aria-describedby="example2_info">
-                            <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
+                            <table id="json_table" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
-                                    <tr role="row">
-                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                    <tr role="row">                                        
                                         <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
                                         <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
                                         <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
@@ -78,33 +76,25 @@
                                         <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody></tbody>
+                                <tfoot>
                                     
-                                    @foreach ($errorlogs as $errorlog)
-                                    <tr role="row" class="odd">
-                                        <td class="hidden-xs date_filter">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
-                                        <td class="sorting_1">{{ $errorlog->id }} </td>
-                                        <td class="hidden-xs">{{ $errorlog->type }}</td>
-                                        <td class="hidden-xs">{{ $errorlog->error }}</td> 
-                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($errorlog->created_at))}}</td>
-                                        <td class="hidden-xs">{{ $errorlog->status }}</td>
-                                    </tr>
-                                    @endforeach
-                                 
-                                </tbody>
-                                <tfoot>                                    
-                                    <tr role="row">
-                                        <th class="date_filter"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
-                                    </tr>                                    
                                 </tfoot>
-                            </table>
-                        </div></div>
-
+                            </table>                            
+                        </div>
+                            
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                <div id="pagination_links"><ul></ul></div>
+                            </div>
+                        </div>
+                    </div>
                     
                 </div>
 

@@ -97,9 +97,7 @@ Breakpoints();
         <script src="{{ asset("/global/vendor/jquery-selective/jquery-selective.min.js") }}"></script>
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
         <script src="https://momentjs.com/downloads/moment.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
-        <script src="{{asset('js/transition.js')}}"></script>
-        <script src="{{asset('js/collapse.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>       
         <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
                
         <!-- Scripts -->

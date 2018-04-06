@@ -376,10 +376,22 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first(); 
 
-
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-     
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();        
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
+    }
+    
+    public function getError($id)
+    {              
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
+        $json = json_encode($errorlogs);        
+        echo $json;       
+    }
+    
+    public function getMoney($id)
+    {              
+        $errorlogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
+        $json = json_encode($errorlogs);        
+        echo $json;       
     }
 
     public function win($id) {
