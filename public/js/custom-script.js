@@ -10,7 +10,7 @@ if(param!==null){ url_param = '?page='+param; }else{ url_param = ''; }
 if(window.location.hostname === 'localhost'){
     var json_url='http://localhost/coinoponlinebeta/public/machine-management/get'+ucFirst(pathArray['4'])+'/'+pathArray['5']+url_param+'&pg='+pathArray['4'];    
 }else{
-    var json_url='https://www.ascentri.com/machine-management/getError/'+pathArray['3']+url_param+'&pg='+pathArray['4'];    
+    var json_url='https://www.ascentri.com/machine-management/getError/'+ucFirst(pathArray['3'])+'/'+pathArray['4']+url_param+'&pg='+pathArray['3'];       
 }
 showProducts(json_url, pathArray['4']);
 function ucFirst(string) 
