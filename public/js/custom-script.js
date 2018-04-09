@@ -21,9 +21,10 @@ function showProducts(json_url,logs){
     
     $.getJSON(json_url, function(data){
         console.log('TEST',data);  
+        var tableData;
         
         if(logs == 'error'){
-            $.each(data.data,function(i) {   
+            var bailey = $.each(data.data,function(i) {   
                 $('#json_table tbody').append('<tr role="row"><td class="sorting_1">'+data.data[i].id+'</td><td>'+
                     data.data[i].type+'</td><td>'+
                     data.data[i].error+'</td><td>'+
@@ -52,46 +53,30 @@ function showProducts(json_url,logs){
                     data.data[i].status+'</td></tr>'                     
                 );            
             });
-        }
-                
+        }             
         
         var loop;
-        var nextPage = new URL(data.next_page_url);
-        var nextParam = url.searchParams.get('page');
+        //var nextPage = new URL(data.next_page_url);
+        //var nextParam = url.searchParams.get('page');
         console.log(window.location.hostname);
-        for(loop = 1; loop <= data.last_page; loop++){
-            //console.log('Test'+loop);
-            $('.dataTables_paginate #pagination_links ul').append('<li><a href="?page='+loop+'">'+loop+'</a></li>');        
-            //$('.dataTables_paginate #pagination_links ul').append('<li id="'+loop+'">'+loop+'</a></li>');        
-        }
-        if(nextParam!=null){ url_param = '?page='+nextParam; }else{ url_param = ''; }
-        $('.dataTables_paginate #pagination_links').append('Showing '+data.from+'</a> to '+data.to+' of '+data.total);
+
+          
+       // var totalPages  = data.total;
+        var currentPage = 1;   
         
-        /*$('#pagination_links ul li').each(function(index){
-            $(this).on('click',function(){
-                console.log($(this).html());
+        $(".pagination").pagy({
+                totalPages: data.last_page,
+                currentPage: currentPage
+        });
+        
+        $('#pagination_links ul li').each(function(index){
+            var val = $(this).text();
+            //$(this).attr('href','?page='+index);
+            $(this).on('click',function(){  
+                window.location.href = url_string + '?page=' + index;
             });
-        });*/
-        var totalPages  = data.total;
-        var currentPage = 1;
-
-        if (totalPages <= 10) {
-            var start = 1;
-            var end   = totalPages;
-        } else {
-            var start = Math.max(1, (currentPage - 4));
-            var end   = Math.min(totalPages, (currentPage + 5));
-
-            if (start === 1) {
-                var end = 10;
-            } else if (end === totalPages) {
-                var start = (totalPages - 9);
-            }
-        }
-
-        for (page = start; page <= end; page++) {
-            console.log('Page:'+page); 
-        }
+        });
+       
                
     });
     
@@ -226,6 +211,25 @@ $(document).ready(function(){
     $('#min, #max').change(function () {
         table.draw();
     });
+    
+    
+    //test start
+    $('#dashboard_sort tbody tr td:eq(1)').each(function(index){
+        var val = $(this).text().split(' ');
+        
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+
+        var today = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month  + '/' + d.getFullYear();
+        
+        console.log(val[0] + '-' + today);
+        if(val[0] === today){
+            console.log('Hooray!');
+        }
+    });
+
+    
     
     
 });

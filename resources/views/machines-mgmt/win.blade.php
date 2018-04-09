@@ -86,8 +86,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+                                    
                                     @foreach ($winlogs as $winlog)
+                                    <?php                                     
+                                    $today = date("Y-m-d");
+                                    $date =  explode(' ',$winlog->created_at);
+                                    //echo $today.' - '.$date[0];
+                                    if($today === $date[0]){
+                                    ?>
                                     <tr role="row" class="odd">
                                         <td class="date_filter">{{date('Y/m/d', strtotime($winlog->created_at))}}</td>
                                         <td class="sorting_1">{{ $winlog->id }} </td>                                        
@@ -105,6 +111,7 @@
 
                                         <td class="hidden-xs">{{ $winlog->status }}</td>
                                     </tr>
+                                    <?php } ?>
                                     @endforeach
                                 
                                 </tbody>

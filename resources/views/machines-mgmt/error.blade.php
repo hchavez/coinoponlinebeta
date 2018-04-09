@@ -87,11 +87,12 @@
                     
                     <div class="row">
                         <div class="col-sm-12">
+                            <div id="currentPage"></div>
                             <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
                         </div>
                         <div class="col-sm-12">
                             <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                <div id="pagination_links"><ul></ul></div>
+                                <div id="pagination_links" class="pagination"><ul></ul></div>
                             </div>
                         </div>
                     </div>

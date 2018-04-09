@@ -49,8 +49,10 @@
                         </div> 
 
                     <div class="row"><div class="col-sm-12">
+                          
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
+                                    
                                     <tr role="row">
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" >ID</th>
                                         <th width="20%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
@@ -74,7 +76,12 @@
                                 <tbody>
                                     
                                     @foreach ($moneylogs as $moneylog)
-                                   
+                                    <?php                                     
+                                    $today = date("Y-m-d");
+                                    $date =  explode(' ',$moneylog->created_at);
+                                    //echo $today.' - '.$date[0];
+                                    if($today === $date[0]){
+                                    ?>
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $moneylog->id }} </td>
                                         <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($moneylog->created_at))}}</td>
@@ -94,6 +101,7 @@
                                         <td class="hidden-xs">{{ $moneylog->status }}</td>
 
                                     </tr>
+                                    <?php } ?>
                                     @endforeach
                                   
                                 </tbody>
