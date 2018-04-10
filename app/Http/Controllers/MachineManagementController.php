@@ -365,7 +365,9 @@ class MachineManagementController extends Controller {
     }
 
     public function error($id) {
-     
+        
+        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -377,11 +379,32 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first(); 
 
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();        
+        //$errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
+        $carbon = Carbon::today();             
+        $format = $carbon->format('Y-m-d');       
+        $lastMonth = date("Y-m-d",strtotime("-2 month"));
+        $result = DB::table('errorlogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->get();
+        $count = ($result->count())? '1' : '0';
+        
+        $errorlogs = DB::table('errorlogs')->where('machine_id', $id);                
+        if($startnewformat !='1970-01-01'){            
+            $errorlogs = $errorlogs->where(function($query) use ($startnewformat,$endnewformat){                    
+                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
+            });                          
+        }elseif($count==='0'){             
+            $errorlogs = $errorlogs->where(function($query) use ($lastMonth,$format){                    
+                $query->whereBetween('created_at', [$lastMonth, $format]);               
+            });  
+        }else{            
+            $errorlogs = $errorlogs->where(function($query) use ($format){                    
+                $query->whereDate('created_at','LIKE', $format);               
+            });
+        }
+        $errorlogs = $errorlogs->latest('created_at')->get(); 
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
     }
     
-    public function getError($id)
+    /*public function getError($id)
     {              
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
         $json = json_encode($errorlogs);        
@@ -393,9 +416,11 @@ class MachineManagementController extends Controller {
         $errorlogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
         $json = json_encode($errorlogs);        
         echo $json;       
-    }
+    }*/
 
     public function win($id) {
+        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -407,13 +432,36 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play')->latest('created_at')->get();
-            
+        //$winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play')->latest('created_at')->get();
+        $carbon = Carbon::today();             
+        $format = $carbon->format('Y-m-d');       
+        $lastMonth = date("Y-m-d",strtotime("-2 month"));
+        $result = DB::table('winlogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->where('testPlay', 'play')->get();
+        $count = ($result->count())? '1' : '0';
+        
+        $winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play');                
+        if($startnewformat !='1970-01-01'){            
+            $winlogs = $winlogs->where(function($query) use ($startnewformat,$endnewformat){                    
+                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
+            });                          
+        }elseif($count==='0'){             
+            $winlogs = $winlogs->where(function($query) use ($lastMonth,$format){                    
+                $query->whereBetween('created_at', [$lastMonth, $format]);               
+            });  
+        }else{            
+            $winlogs = $winlogs->where(function($query) use ($format){                    
+                $query->whereDate('created_at','LIKE', $format);               
+            });
+        }
+        $winlogs = $winlogs->latest('created_at')->get();  
+        
         return view('machines-mgmt/win', ['machine' => $machine, 'winlogs' => $winlogs]);
     }
 
     public function money($id) {        
         
+        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -426,16 +474,34 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
         //$moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
-        $carbon = Carbon::today();
-        $timestamp = $carbon->timestamp;
-        $format = $carbon->format('Y-m-d');
-        $moneylogs = DB::table('moneylogs')->whereDate('created_at','LIKE',$format)->where('machine_id', $id)->get();
+        $carbon = Carbon::today();             
+        $format = $carbon->format('Y-m-d');       
+        $lastMonth = date("Y-m-d",strtotime("-2 month"));
+        $result = DB::table('moneylogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->get();
+        $count = ($result->count())? '1' : '0';
         
-        
+        $moneylogs = DB::table('moneylogs')->where('machine_id', $id);                
+        if($startnewformat !='1970-01-01'){            
+            $moneylogs = $moneylogs->where(function($query) use ($startnewformat,$endnewformat){                    
+                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
+            });                          
+        }elseif($count==='0'){             
+            $moneylogs = $moneylogs->where(function($query) use ($lastMonth,$format){                    
+                $query->whereBetween('created_at', [$lastMonth, $format]);               
+            });  
+        }else{            
+            $moneylogs = $moneylogs->where(function($query) use ($format){                    
+                $query->whereDate('created_at','LIKE', $format);               
+            });
+        }
+        $moneylogs = $moneylogs->latest('created_at')->get();          
         return view('machines-mgmt/money', ['machine' => $machine, 'moneylogs' => $moneylogs]);
     }
 
     public function goals($id) {
+        
+        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -447,8 +513,29 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')->get();
-       
+        //$goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')->get();
+        $carbon = Carbon::today();             
+        $format = $carbon->format('Y-m-d');       
+        $lastMonth = date("Y-m-d",strtotime("-2 month"));
+        $result = DB::table('goalslogs')->where('machine_id', $id)->whereDate('created_at', $format)->where('testPlay', 'play')->get();
+        $count = ($result->count())? '1' : '0';
+        
+        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->where('testPlay', 'play');                
+        if($startnewformat !='1970-01-01'){            
+            $goalslogs = $goalslogs->where(function($query) use ($startnewformat,$endnewformat){                    
+                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
+            });                          
+        }elseif($count==='0'){             
+            $goalslogs = $goalslogs->where(function($query) use ($lastMonth,$format){                    
+                $query->whereBetween('created_at', [$lastMonth, $format]);               
+            });  
+        }else{            
+            $goalslogs = $goalslogs->where(function($query) use ($format){                    
+                $query->whereDate('created_at','LIKE', $format);               
+            });
+        }
+        $goalslogs = $goalslogs->latest('created_at')->get();  
+        
         return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
 
     }

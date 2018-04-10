@@ -49,53 +49,57 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-12">                              
-                            <table border="0" cellspacing="5" cellpadding="5" id="filterDate">
-                                <tbody>
-                                    <tr>
-                                        <td><b>Date Filter</b> </td>
-                                        <td>   
-                                            <input name="min" id="min" class="form-control form_datetime" type="text" data-date-format="yyyy/mm/dd" placeholder="From">                                           
-                                        </td>
-                                        <td>    
-                                            <input name="max" id="max" class="form-control" type="text" data-date-format="yyyy/mm/dd" placeholder="To">                                            
-                                        </td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
+                        <div class="col-md-6">
+                            <form role="form" method="GET" action="#">
+                                <div class="input-group input-daterange">
+                                <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                                <div class="input-group-addon">to</div>
+                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                                <button type="submit" class="btn btn-primary">Search</button> 
+                                </div>
+                            </form>
                         </div>
+                        <br><br>
                         <div class="col-sm-12">
-                            <table id="json_table" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
-                                    <tr role="row">                                        
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                    <tr role="row">
+                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
+                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
+                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
-                                <tfoot>
+                                <tbody>
                                     
+                                    @foreach ($errorlogs as $errorlog)
+                                    <tr role="row" class="odd">
+                                        <td class="hidden-xs date_filter">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
+                                        <td class="sorting_1">{{ $errorlog->id }} </td>
+                                        <td class="hidden-xs">{{ $errorlog->type }}</td>
+                                        <td class="hidden-xs">{{ $errorlog->error }}</td> 
+                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($errorlog->created_at))}}</td>
+                                        <td class="hidden-xs">{{ $errorlog->status }}</td>
+                                    </tr>
+                                    @endforeach
+                                 
+                                </tbody>
+                                <tfoot>                                    
+                                    <tr role="row">
+                                        <th class="date_filter"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
+                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
+                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                    </tr>                                    
                                 </tfoot>
-                            </table>                            
-                        </div>
-                            
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div id="currentPage"></div>
-                            <div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                                <div id="pagination_links" class="pagination"><ul></ul></div>
-                            </div>
-                        </div>
-                    </div>
+                            </table>
+                        </div></div>
+
                     
                 </div>
 

@@ -48,8 +48,20 @@
                         
                         </div> 
 
-                    <div class="row"><div class="col-sm-12">
-                          
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form role="form" method="GET" action="#">
+                                <div class="input-group input-daterange">
+                                <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                                <div class="input-group-addon">to</div>
+                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                                <button type="submit" class="btn btn-primary">Search</button> 
+                                </div>
+                            </form>
+                        </div>
+                        <br><br>
+                        <div class="col-sm-12">
+                            
                             <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     
@@ -74,14 +86,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php //if($count=='1'){ ?>
                                     
-                                    @foreach ($moneylogs as $moneylog)
-                                    <?php                                     
-                                    $today = date("Y-m-d");
-                                    $date =  explode(' ',$moneylog->created_at);
-                                    //echo $today.' - '.$date[0];
-                                    if($today === $date[0]){
-                                    ?>
+                                    @foreach ($moneylogs as $moneylog)   
                                     <tr role="row" class="odd">
                                         <td class="sorting_1">{{ $moneylog->id }} </td>
                                         <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($moneylog->created_at))}}</td>
@@ -99,11 +106,11 @@
                                         <td class="hidden-xs">{{ $moneylog->pricePlay }}</td>
                                         <td class="hidden-xs">{{ $moneylog->credits }}</td>
                                         <td class="hidden-xs">{{ $moneylog->status }}</td>
-
-                                    </tr>
-                                    <?php } ?>
+                                    </tr>                                    
                                     @endforeach
-                                  
+                                    <?php //}else{ ?>
+                                    
+                                    <?php //} ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
