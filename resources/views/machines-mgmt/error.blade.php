@@ -68,7 +68,7 @@
                                         <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
+                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
                                         <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
@@ -77,8 +77,8 @@
                                     
                                     @foreach ($errorlogs as $errorlog)
                                     <tr role="row" class="odd">
-                                        <td class="hidden-xs date_filter">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
-                                        <td class="sorting_1">{{ $errorlog->id }} </td>
+                                        <td class="sorting_1">{{date('Y/m/d', strtotime($errorlog->created_at))}}</td>
+                                        <td class="hidden-xs">{{ $errorlog->id }} </td>
                                         <td class="hidden-xs">{{ $errorlog->type }}</td>
                                         <td class="hidden-xs">{{ $errorlog->error }}</td> 
                                         <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($errorlog->created_at))}}</td>
@@ -92,7 +92,7 @@
                                         <th class="date_filter"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
+                                        <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
                                         <th width="30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>                                    

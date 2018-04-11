@@ -397,14 +397,14 @@ class MachineManagementController extends Controller {
             });  
         }else{            
             $errorlogs = $errorlogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at','LIKE', $format);               
+                $query->whereDate('created_at', 'LIKE', $format.'%');                 
             });
         }
         $errorlogs = $errorlogs->latest('created_at')->get(); 
         return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
     }
     
-    /*public function getError($id)
+    public function getError($id)
     {              
         $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
         $json = json_encode($errorlogs);        
@@ -416,7 +416,7 @@ class MachineManagementController extends Controller {
         $errorlogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
         $json = json_encode($errorlogs);        
         echo $json;       
-    }*/
+    }
 
     public function win($id) {
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
@@ -450,7 +450,7 @@ class MachineManagementController extends Controller {
             });  
         }else{            
             $winlogs = $winlogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at','LIKE', $format);               
+                $query->whereDate('created_at', 'LIKE', $format.'%');               
             });
         }
         $winlogs = $winlogs->latest('created_at')->get();  
@@ -491,7 +491,7 @@ class MachineManagementController extends Controller {
             });  
         }else{            
             $moneylogs = $moneylogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at','LIKE', $format);               
+                $query->whereDate('created_at', 'LIKE', $format.'%');               
             });
         }
         $moneylogs = $moneylogs->latest('created_at')->get();          
@@ -531,7 +531,7 @@ class MachineManagementController extends Controller {
             });  
         }else{            
             $goalslogs = $goalslogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at','LIKE', $format);               
+                $query->whereDate('created_at', 'LIKE', $format.'%');               
             });
         }
         $goalslogs = $goalslogs->latest('created_at')->get();  
