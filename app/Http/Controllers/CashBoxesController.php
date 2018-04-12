@@ -111,6 +111,7 @@ class CashBoxesController extends Controller {
 
 
         if (CashBoxes::where('machine_id', $id)->update($input)) {
+            \LogActivity::addToLog('Updated Machine Cash Boxes Settings');
             return back()->with('success', 'Machine Cash Boxes successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
     }

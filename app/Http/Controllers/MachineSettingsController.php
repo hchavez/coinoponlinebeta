@@ -110,6 +110,7 @@ class MachineSettingsController extends Controller {
         
         
         if (MachineSettings::where('machine_id', $id)->update($input)) {
+           \LogActivity::addToLog('Updated Machine Info Settings');
            return back()->with('success', 'Machine Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
 

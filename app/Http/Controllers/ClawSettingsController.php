@@ -121,6 +121,7 @@ class ClawSettingsController extends Controller {
         
         
         if (ClawSettings::where('machine_id', $id)->update($input)) {
+            \LogActivity::addToLog('Updated Machine Claw Settings');
             return back()->with('success', 'Machine Claw Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
     }
