@@ -11,6 +11,9 @@
 |
 */
 use App\MachineModel;
+use App\User;
+use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserCollection;
 
 Route::get('/', function () {
     return redirect('dashboard');
@@ -24,6 +27,16 @@ Route::get('api/dropdown', function(){
     $id = Input::get('option');
     $models = Maker::find($id)->models;
     return $models->lists('name', 'id');
+});
+
+Route::get('/users', function(){
+   $user = User::find(1);
+   return new UserResource($user);
+});
+
+Route::get('/jsonusers', function(){
+   $userall = User::paginate(2);
+   return new UserCollection($userall);
 });
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue
@@ -182,3 +195,6 @@ Route::get('activity/show/{id}', 'ActivityController@userActivity');
 
 Route::get('add-to-log', 'ActivityController@myTestAddToLog');
 Route::get('logActivity', 'ActivityController@logActivity');
+
+Route::resource('messages', 'MessagesController');
+Route::get('messages/log', 'MessagesController@log');
