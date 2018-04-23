@@ -12,8 +12,10 @@
 */
 use App\MachineModel;
 use App\User;
+use App\Errorlogs;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
+
 
 Route::get('/', function () {
     return redirect('dashboard');
@@ -29,7 +31,7 @@ Route::get('api/dropdown', function(){
     return $models->lists('name', 'id');
 });
 
-Route::get('/users', function(){
+Route::get('/user', function(){
    $user = User::find(1);
    return new UserResource($user);
 });
@@ -38,6 +40,12 @@ Route::get('/jsonusers', function(){
    $userall = User::paginate(2);
    return new UserCollection($userall);
 });
+
+Route::get('/errorlogs', function(){
+   $userall = Errorlogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue
 

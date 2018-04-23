@@ -401,7 +401,27 @@ class MachineManagementController extends Controller {
             });
         }
         $errorlogs = $errorlogs->latest('created_at')->get(); 
-        return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
+        
+        $pagelink = Input::get('page');
+        $actual_link = 'http://'.$_SERVER['HTTP_HOST'];
+        if($actual_link == 'http://localhost'){
+            $actual_link = $actual_link.'/coinoponlinebeta/public/errorlogs';
+        }else{
+            $actual_link = $actual_link.'/errorlogs';
+        }        
+        $jsonurl = $actual_link."?page=".$pagelink;
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        $data = array(
+            'machine' => $newarray['data'],            
+        );
+        $page = array(
+            'links' => $newarray['links'],
+            'meta' => $newarray['meta'],
+        );       
+       
+        return view('machines-mgmt/error', ['error' => $data, 'links' => $newarray['meta'], 'machine' => $machine, 'errorlogs' => $errorlogs]);
     }
     
     public function getError($id)
