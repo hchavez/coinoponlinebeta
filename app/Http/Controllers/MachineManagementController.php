@@ -379,17 +379,12 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();         
         
-        $pageid = Input::get('page');        
-        $actual_link = $this->apiurl('errorlogs');
-        $jsonurl = $actual_link."?page=".$pageid;
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
+        $jsonData = $this->jsondata('errorlogs');
         $data = array(
-            'machine' => $newarray['data'],            
-        );              
+            'machine' => $jsonData['data'],            
+        );            
    
-        return view('machines-mgmt/error', ['error' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
+        return view('machines-mgmt/error', ['error' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
     }     
 
     public function win($id) {
@@ -406,17 +401,12 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
        
-        $pageid = Input::get('page');        
-        $actual_link = $this->apiurl('winlogs');
-        $jsonurl = $actual_link."?page=".$pageid;
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
+        $jsonData = $this->jsondata('winlogs');
         $data = array(
-            'machine' => $newarray['data'],            
+            'machine' => $jsonData['data'],            
         );
         
-        return view('machines-mgmt/win', ['win' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
+        return view('machines-mgmt/win', ['win' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
     }
 
     public function money($id) {        
@@ -434,17 +424,12 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
        
-        $pageid = Input::get('page');        
-        $actual_link = $this->apiurl('moneylogs');
-        $jsonurl = $actual_link."?page=".$pageid;
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
+        $jsonData = $this->jsondata('moneylogs');
         $data = array(
-            'machine' => $newarray['data'],            
+            'machine' => $jsonData['data'],            
         );
         
-        return view('machines-mgmt/money', ['money' => $data, 'links' => $newarray['meta'],'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $data, 'links' => $jsonData['meta'],'machine' => $machine]);
     }
 
     public function goals($id) {
@@ -460,42 +445,14 @@ class MachineManagementController extends Controller {
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
-
-        //$goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')->get();
-        $carbon = Carbon::today();             
-        $format = $carbon->format('Y-m-d');       
-        $lastMonth = date("Y-m-d",strtotime("-2 month"));
-        $result = DB::table('goalslogs')->where('machine_id', $id)->whereDate('created_at', $format)->where('testPlay', 'play')->get();
-        $count = ($result->count())? '1' : '0';
+                        ->where('machines.id', $id)->first();        
         
-        $goalslogs = DB::table('goalslogs')->where('machine_id', $id)->where('testPlay', 'play');                
-        if($startnewformat !='1970-01-01'){            
-            $goalslogs = $goalslogs->where(function($query) use ($startnewformat,$endnewformat){                    
-                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
-            });                          
-        }elseif($count==='0'){             
-            $goalslogs = $goalslogs->where(function($query) use ($lastMonth,$format){                    
-                $query->whereBetween('created_at', [$lastMonth, $format]);               
-            });  
-        }else{            
-            $goalslogs = $goalslogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at', 'LIKE', $format.'%');               
-            });
-        }
-        $goalslogs = $goalslogs->latest('created_at')->get();  
-        
-        $pageid = Input::get('page');        
-        $actual_link = $this->apiurl('goalslogs');
-        $jsonurl = $actual_link."?page=".$pageid;
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
+        $jsonData = $this->jsondata('goalslogs');
         $data = array(
-            'machine' => $newarray['data'],            
+            'machine' => $jsonData['data'],            
         );
         
-        return view('machines-mgmt/goals', ['goals' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
+        return view('machines-mgmt/goals', ['goals' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
 
     }
 
@@ -509,6 +466,19 @@ class MachineManagementController extends Controller {
         }      
         
         return $actual_link;
+    }
+    
+    public function jsondata($logType){
+        
+        $pageid = Input::get('page');        
+        $actual_link = $this->apiurl($logType);
+        $jsonurl = $actual_link."?page=".$pageid;
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        
+        return $newarray;
+        
     }
     
     public function accounts($id) {
