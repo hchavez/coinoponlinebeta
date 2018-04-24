@@ -62,7 +62,7 @@
                         <br><br>
                         <div class="col-sm-12">
                             
-                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     
                                     <tr role="row">
@@ -85,32 +85,29 @@
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php //if($count=='1'){ ?>
-                                    
-                                    @foreach ($moneylogs as $moneylog)   
-                                    <tr role="row" class="odd">
-                                        <td class="sorting_1">{{ $moneylog->id }} </td>
-                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($moneylog->created_at))}}</td>
-                                        <td class="hidden-xs">{{ $moneylog->coinIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->ttlCoinIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->billIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->ttlBillIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->swipeIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->type }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->payment_result }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->decline_reason }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->ttlMoneyIn }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->forPlay }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->forClick }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->pricePlay }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->credits }}</td>
-                                        <td class="hidden-xs">{{ $moneylog->status }}</td>
-                                    </tr>                                    
+                                <tbody>                                
+                                    @foreach($money as $res)
+                                        @foreach($res as $data)   
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">{{ $data['id'] }} </td>
+                                            <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($data['created_at']))}}</td>
+                                            <td class="hidden-xs">{{ $data['coinIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['ttlCoinIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['billIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['ttlBillIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['swipeIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['type'] }}</td>
+                                            <td class="hidden-xs">{{ $data['payment_result'] }}</td>
+                                            <td class="hidden-xs">{{ $data['decline_reason'] }}</td>
+                                            <td class="hidden-xs">{{ $data['ttlMoneyIn'] }}</td>
+                                            <td class="hidden-xs">{{ $data['forPlay'] }}</td>
+                                            <td class="hidden-xs">{{ $data['forClick'] }}</td>
+                                            <td class="hidden-xs">{{ $data['pricePlay'] }}</td>
+                                            <td class="hidden-xs">{{ $data['credits'] }}</td>
+                                            <td class="hidden-xs">{{ $data['status'] }}</td>
+                                        </tr>                                    
+                                        @endforeach
                                     @endforeach
-                                    <?php //}else{ ?>
-                                    
-                                    <?php //} ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -137,7 +134,38 @@
                                 </tfoot>
                             </table>
                         </div></div>
-
+                        <div class="row">
+                            
+                            <div class="col-sm-12 text-center">
+                                <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                                <?php
+                                    $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
+                                    if (empty($_GET['page'])) {
+                                        $current = 1;
+                                    }else{
+                                        $current = $_GET['page'];
+                                    }                                   
+                                    $last = count($pages)+1;
+                                    $curr0 = $current-4;
+                                    $curr1 = $current+4;
+                                        if ($curr0<=1) {
+                                          $curr0 = 1;
+                                          $curr1 = $last>10? 10 : $last;
+                                        }
+                                        if ($curr1>=$last) {
+                                          $curr0 = $last-9 < 1 ? 1 : $last-9;
+                                          $curr1 = $last;
+                                        }
+                                    echo '<a href="?page=1">&#171;</a> ';
+                                    for ($i=$curr0; $i<=$curr1; $i++) {
+                                      $style = ($i==$current)? 'font-weight:bold':'';
+                                      echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                    }
+                                    echo '<a href="?page='.$last.'">&#187;</a> ';
+                                ?>
+                                </div>
+                            </div>
+                        </div>
                     
                 </div>
 

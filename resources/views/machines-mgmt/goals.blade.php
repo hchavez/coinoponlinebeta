@@ -63,56 +63,58 @@
                         </div>
                         <br><br>
                         <div class="col-sm-12">
-                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
+                                        
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
-                                        <th width="25%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkVolt</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retPWM</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retVolt</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">voltDecRetPercentage</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">plusPickUp</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropCount</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropPWM</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropVolt</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">incVoltage</th>
-                                        <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">decVoltage</th>
-                                        <th width="2%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Status</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
+                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkVolt</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retPWM</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retVolt</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">voltDecRetPercentage</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">plusPickUp</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropCount</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropPWM</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropVolt</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">incVoltage</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">decVoltage</th>
+                                        <th width="2%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                   
-                                    @foreach ($goalslogs as $goalslog)
-                                    <tr role="row" class="odd">
-                                        <td class="date_filter" >{{date('Y/m/d', strtotime($goalslog->created_at))}}</td>
-                                        <td >{{ $goalslog->id }} </td>                                        
-                                        <td >{{ $goalslog->testPlay }}</td>
-                                        <td >{{ $goalslog->pkPWM }}</td>
-                                        <td >{{date('d/m/Y h:i A', strtotime($goalslog->created_at))}}</td>
-                                        <td >{{ $goalslog->pkVolt }}</td>
-                                        <td >{{ $goalslog->retPWM }}</td>
-                                        <td >{{ $goalslog->retVolt }}</td>
-                                        <td >{{ $goalslog->voltDecRetPercentage }}</td>
-                                        <td >{{ $goalslog->plusPickUp }}</td>
-                                        <td >{{ $goalslog->dropCount }}</td>
-                                        <td >{{ $goalslog->dropPWM }}</td>
-                                        <td >{{ $goalslog->dropVolt }}</td>
-                                        <td >{{ $goalslog->incVoltage }}</td>
-                                        <td >{{ $goalslog->decVoltage }}</td>
-                                        <td>{{ $goalslog->status }}
-                                        </td>
-                                    </tr>
+                                <tbody>                                 
+                                    
+                                    @foreach($goals as $res)
+                                        @foreach($res as $data)
+                                            <tr role="row" class="odd">
+                                                
+                                                <td >{{ $data['id'] }} </td>                                        
+                                                <td >{{ $data['testPlay'] }}</td>
+                                                <td >{{ $data['pkPWM'] }}</td>
+                                                <td >{{date('d/m/Y h:i A', strtotime($data['created_at']))}}</td>
+                                                <td >{{ $data['pkVolt'] }}</td>
+                                                <td >{{ $data['retPWM'] }}</td>
+                                                <td >{{ $data['retVolt'] }}</td>
+                                                <td >{{ $data['voltDecRetPercentage'] }}</td>
+                                                <td >{{ $data['plusPickUp'] }}</td>
+                                                <td >{{ $data['dropCount'] }}</td>
+                                                <td >{{ $data['dropPWM'] }}</td>
+                                                <td >{{ $data['dropVolt'] }}</td>
+                                                <td >{{ $data['incVoltage'] }}</td>
+                                                <td >{{ $data['decVoltage'] }}</td>
+                                                <td>{{ $data['status'] }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                     
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                     <tr role="row">
-                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
+                                        
                                         <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="5%"    tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
@@ -133,7 +135,38 @@
                                 </tfoot>
                             </table>
                         </div></div>
-
+                        <div class="row">
+                            
+                            <div class="col-sm-12 text-center">
+                                <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                                <?php
+                                    $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
+                                    if (empty($_GET['page'])) {
+                                        $current = 1;
+                                    }else{
+                                        $current = $_GET['page'];
+                                    }                                   
+                                    $last = count($pages)+1;
+                                    $curr0 = $current-4;
+                                    $curr1 = $current+4;
+                                        if ($curr0<=1) {
+                                          $curr0 = 1;
+                                          $curr1 = $last>10? 10 : $last;
+                                        }
+                                        if ($curr1>=$last) {
+                                          $curr0 = $last-9 < 1 ? 1 : $last-9;
+                                          $curr1 = $last;
+                                        }
+                                    echo '<a href="?page=1">&#171;</a> ';
+                                    for ($i=$curr0; $i<=$curr1; $i++) {
+                                      $style = ($i==$current)? 'font-weight:bold':'';
+                                      echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                    }
+                                    echo '<a href="?page='.$last.'">&#187;</a> ';
+                                ?>
+                                </div>
+                            </div>
+                        </div>
                    
                 </div>
 

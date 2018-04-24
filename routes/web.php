@@ -13,6 +13,9 @@
 use App\MachineModel;
 use App\User;
 use App\Errorlogs;
+use App\WinLogs;
+use App\MoneyLogs;
+use App\GoalsLogs;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
@@ -46,6 +49,20 @@ Route::get('/errorlogs', function(){
    return new UserCollection($userall);
 });
 
+Route::get('/winlogs', function(){
+   $userall = WinLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
+Route::get('/moneylogs', function(){
+   $userall = MoneyLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
+Route::get('/goalslogs', function(){
+   $userall = GoalsLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue
 

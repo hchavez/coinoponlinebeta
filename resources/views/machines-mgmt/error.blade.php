@@ -110,7 +110,7 @@
                                 <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
                                 <?php
                                     $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
-                                    if (empty($_GET)) {
+                                    if (empty($_GET['page'])) {
                                         $current = 1;
                                     }else{
                                         $current = $_GET['page'];

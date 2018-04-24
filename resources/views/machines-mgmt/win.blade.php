@@ -61,10 +61,9 @@
                         </div>
                         <br><br>
                         <div class="col-sm-12">
-                            <table id="dashboard_sort" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <table id="" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
-                                    <tr role="row">
-                                        <th class="date_filter" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ></th>
+                                    <tr role="row">                                       
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>                                        
                                         <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
                                         <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>
@@ -82,24 +81,26 @@
                                 </thead>
                                 <tbody>
                                     
-                                    @foreach ($winlogs as $winlog)                                    
-                                    <tr role="row" class="odd">
-                                        <td class="date_filter">{{date('Y/m/d', strtotime($winlog->created_at))}}</td>
-                                        <td class="sorting_1">{{ $winlog->id }} </td>                                        
-                                        <td class="hidden-xs">{{ $winlog->testPlay }}</td>
-                                        <td class="hidden-xs">{{ $winlog->winResult }}</td>
-                                        <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($winlog->created_at))}}</td>
-                                        <td class="hidden-xs">{{ $winlog->totalWon }}</td>
-                                        <td class="hidden-xs">{{ $winlog->playIndex }}</td>
-                                        <td class="hidden-xs">{{ $winlog->owedWin }}</td>
-                                        <td class="hidden-xs">{{ $winlog->excessWin }}</td>
-                                        <td class="hidden-xs">{{ $winlog->stockLeft }}</td>
-                                        <td class="hidden-xs">{{ $winlog->stockRemoved }}</td>
-                                        <td class="hidden-xs">{{ $winlog->stockAdded }}</td>
-                                        <td class="hidden-xs">{{ $winlog->nTimesOfPlay }}</td>
+                                      
+                                    @foreach($win as $res)
+                                        @foreach($res as $data)
+                                        <tr role="row" class="odd">                                            
+                                            <td class="sorting_1">{{ $data['id'] }} </td>                                        
+                                            <td class="hidden-xs">{{ $data['testPlay'] }}</td>
+                                            <td class="hidden-xs">{{ $data['winResult'] }}</td>
+                                            <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($data['created_at']))}}</td>
+                                            <td class="hidden-xs">{{ $data['totalWon'] }}</td>
+                                            <td class="hidden-xs">{{ $data['playIndex'] }}</td>
+                                            <td class="hidden-xs">{{ $data['owedWin'] }}</td>
+                                            <td class="hidden-xs">{{ $data['excessWin'] }}</td>
+                                            <td class="hidden-xs">{{ $data['stockLeft'] }}</td>
+                                            <td class="hidden-xs">{{ $data['stockRemoved'] }}</td>
+                                            <td class="hidden-xs">{{ $data['stockAdded'] }}</td>
+                                            <td class="hidden-xs">{{ $data['nTimesOfPlay'] }}</td>
 
-                                        <td class="hidden-xs">{{ $winlog->status }}</td>
-                                    </tr>                                    
+                                            <td class="hidden-xs">{{ $data['status'] }}</td>
+                                        </tr>                                    
+                                        @endforeach
                                     @endforeach
                                 
                                 </tbody>
@@ -110,7 +111,38 @@
                                 </tfoot>
                             </table>
                         </div></div>
-
+                        <div class="row">
+                            
+                            <div class="col-sm-12 text-center">
+                                <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                                <?php
+                                    $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
+                                    if (empty($_GET['page'])) {
+                                        $current = 1;
+                                    }else{
+                                        $current = $_GET['page'];
+                                    }                                   
+                                    $last = count($pages)+1;
+                                    $curr0 = $current-4;
+                                    $curr1 = $current+4;
+                                        if ($curr0<=1) {
+                                          $curr0 = 1;
+                                          $curr1 = $last>10? 10 : $last;
+                                        }
+                                        if ($curr1>=$last) {
+                                          $curr0 = $last-9 < 1 ? 1 : $last-9;
+                                          $curr1 = $last;
+                                        }
+                                    echo '<a href="?page=1">&#171;</a> ';
+                                    for ($i=$curr0; $i<=$curr1; $i++) {
+                                      $style = ($i==$current)? 'font-weight:bold':'';
+                                      echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                    }
+                                    echo '<a href="?page='.$last.'">&#187;</a> ';
+                                ?>
+                                </div>
+                            </div>
+                        </div>
                     
                 </div>
 

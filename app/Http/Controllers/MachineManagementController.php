@@ -377,66 +377,20 @@ class MachineManagementController extends Controller {
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first(); 
-
-        //$errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-        $carbon = Carbon::today();             
-        $format = $carbon->format('Y-m-d');       
-        $lastMonth = date("Y-m-d",strtotime("-2 month"));
-        $result = DB::table('errorlogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->get();
-        $count = ($result->count())? '1' : '0';
+                        ->where('machines.id', $id)->first();         
         
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id);                
-        if($startnewformat !='1970-01-01'){            
-            $errorlogs = $errorlogs->where(function($query) use ($startnewformat,$endnewformat){                    
-                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
-            });                          
-        }elseif($count==='0'){             
-            $errorlogs = $errorlogs->where(function($query) use ($lastMonth,$format){                    
-                $query->whereBetween('created_at', [$lastMonth, $format]);               
-            });  
-        }else{            
-            $errorlogs = $errorlogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at', 'LIKE', $format.'%');                 
-            });
-        }
-        $errorlogs = $errorlogs->latest('created_at')->get(); 
-        
-        $pagelink = Input::get('page');
-        $actual_link = 'http://'.$_SERVER['HTTP_HOST'];
-        if($actual_link == 'http://localhost'){
-            $actual_link = $actual_link.'/coinoponlinebeta/public/errorlogs';
-        }else{
-            $actual_link = $actual_link.'/errorlogs';
-        }        
-        $jsonurl = $actual_link."?page=".$pagelink;
+        $pageid = Input::get('page');        
+        $actual_link = $this->apiurl('errorlogs');
+        $jsonurl = $actual_link."?page=".$pageid;
         $json = file_get_contents($jsonurl,0,null,null);
         $json_output = json_decode($json);
         $newarray = json_decode(json_encode($json_output), True);
         $data = array(
             'machine' => $newarray['data'],            
-        );
-        $page = array(
-            'links' => $newarray['links'],
-            'meta' => $newarray['meta'],
-        );       
-       
-        return view('machines-mgmt/error', ['error' => $data, 'links' => $newarray['meta'], 'machine' => $machine, 'errorlogs' => $errorlogs]);
-    }
-    
-    public function getError($id)
-    {              
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
-        $json = json_encode($errorlogs);        
-        echo $json;       
-    }
-    
-    public function getMoney($id)
-    {              
-        $errorlogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->paginate(10);        
-        $json = json_encode($errorlogs);        
-        echo $json;       
-    }
+        );              
+   
+        return view('machines-mgmt/error', ['error' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
+    }     
 
     public function win($id) {
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
@@ -451,31 +405,18 @@ class MachineManagementController extends Controller {
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
-
-        //$winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play')->latest('created_at')->get();
-        $carbon = Carbon::today();             
-        $format = $carbon->format('Y-m-d');       
-        $lastMonth = date("Y-m-d",strtotime("-2 month"));
-        $result = DB::table('winlogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->where('testPlay', 'play')->get();
-        $count = ($result->count())? '1' : '0';
+       
+        $pageid = Input::get('page');        
+        $actual_link = $this->apiurl('winlogs');
+        $jsonurl = $actual_link."?page=".$pageid;
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        $data = array(
+            'machine' => $newarray['data'],            
+        );
         
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play');                
-        if($startnewformat !='1970-01-01'){            
-            $winlogs = $winlogs->where(function($query) use ($startnewformat,$endnewformat){                    
-                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
-            });                          
-        }elseif($count==='0'){             
-            $winlogs = $winlogs->where(function($query) use ($lastMonth,$format){                    
-                $query->whereBetween('created_at', [$lastMonth, $format]);               
-            });  
-        }else{            
-            $winlogs = $winlogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at', 'LIKE', $format.'%');               
-            });
-        }
-        $winlogs = $winlogs->latest('created_at')->get();  
-        
-        return view('machines-mgmt/win', ['machine' => $machine, 'winlogs' => $winlogs]);
+        return view('machines-mgmt/win', ['win' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
     }
 
     public function money($id) {        
@@ -492,30 +433,18 @@ class MachineManagementController extends Controller {
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
-
-        //$moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
-        $carbon = Carbon::today();             
-        $format = $carbon->format('Y-m-d');       
-        $lastMonth = date("Y-m-d",strtotime("-2 month"));
-        $result = DB::table('moneylogs')->where('machine_id', $id)->whereDate('created_at','LIKE', $format)->get();
-        $count = ($result->count())? '1' : '0';
+       
+        $pageid = Input::get('page');        
+        $actual_link = $this->apiurl('moneylogs');
+        $jsonurl = $actual_link."?page=".$pageid;
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        $data = array(
+            'machine' => $newarray['data'],            
+        );
         
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id);                
-        if($startnewformat !='1970-01-01'){            
-            $moneylogs = $moneylogs->where(function($query) use ($startnewformat,$endnewformat){                    
-                $query->whereBetween('created_at', [$startnewformat, $endnewformat]);               
-            });                          
-        }elseif($count==='0'){             
-            $moneylogs = $moneylogs->where(function($query) use ($lastMonth,$format){                    
-                $query->whereBetween('created_at', [$lastMonth, $format]);               
-            });  
-        }else{            
-            $moneylogs = $moneylogs->where(function($query) use ($format){                    
-                $query->whereDate('created_at', 'LIKE', $format.'%');               
-            });
-        }
-        $moneylogs = $moneylogs->latest('created_at')->get();          
-        return view('machines-mgmt/money', ['machine' => $machine, 'moneylogs' => $moneylogs]);
+        return view('machines-mgmt/money', ['money' => $data, 'links' => $newarray['meta'],'machine' => $machine]);
     }
 
     public function goals($id) {
@@ -556,10 +485,32 @@ class MachineManagementController extends Controller {
         }
         $goalslogs = $goalslogs->latest('created_at')->get();  
         
-        return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
+        $pageid = Input::get('page');        
+        $actual_link = $this->apiurl('goalslogs');
+        $jsonurl = $actual_link."?page=".$pageid;
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        $data = array(
+            'machine' => $newarray['data'],            
+        );
+        
+        return view('machines-mgmt/goals', ['goals' => $data, 'links' => $newarray['meta'], 'machine' => $machine]);
 
     }
 
+    public function apiurl($log){
+        
+        $actual_link = 'http://'.$_SERVER['HTTP_HOST'];
+        if($actual_link == 'http://localhost'){
+            $actual_link = $actual_link.'/coinoponlinebeta/public/'.$log;
+        }else{
+            $actual_link = $actual_link.'/'.$log;
+        }      
+        
+        return $actual_link;
+    }
+    
     public function accounts($id) {
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'city.name as city_name', 'machine_model.title as machine_model', 'machine_type.title as machine_type')
