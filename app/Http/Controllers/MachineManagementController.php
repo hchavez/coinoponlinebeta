@@ -27,6 +27,8 @@ use Carbon\Carbon;
 use URL;
 use Input;
 use DateTime;
+use App\User;
+use App\Http\Resources\UserCollection;
 
 
 class MachineManagementController extends Controller {
@@ -363,22 +365,28 @@ class MachineManagementController extends Controller {
         
         
     }
-
+    
+    public function mlogs($filterParam){       
+       // echo $filterParam['logType'];
+        $result = DB::table($filterParam['logType'])->where('machine_id', $filterParam['id'])->whereDate('created_at','LIKE', $filterParam['startdate'])->paginate(4)->toArray();   
+        return  $result;
+    }
+       
     public function error($id) {
+                           
+        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );
+        if($startnewformat != '1970-01-01'){
+            $filterParam = array(
+                'id' => $id,
+                'logType' => 'errorlogs',
+                'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+                'enddate' => date("Y-m-d", strtotime(Input::get('startdate')))
+            );   
+            $filter = $this->mlogs($filterParam);
+            //print_r($filter);
+        }
         
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();         
-        
+        $machine = $this->machinelogs($id);  
         $jsonData = $this->jsondata('errorlogs');
         $data = array(
             'machine' => $jsonData['data'],            
@@ -388,19 +396,11 @@ class MachineManagementController extends Controller {
     }     
 
     public function win($id) {
+        
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
-       
+        
+        $machine = $this->machinelogs($id);       
         $jsonData = $this->jsondata('winlogs');
         $data = array(
             'machine' => $jsonData['data'],            
@@ -413,17 +413,8 @@ class MachineManagementController extends Controller {
         
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
-       
+        
+        $machine = $this->machinelogs($id);        
         $jsonData = $this->jsondata('moneylogs');
         $data = array(
             'machine' => $jsonData['data'],            
@@ -436,17 +427,8 @@ class MachineManagementController extends Controller {
         
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();        
         
+        $machine = $this->machinelogs($id);     
         $jsonData = $this->jsondata('goalslogs');
         $data = array(
             'machine' => $jsonData['data'],            
@@ -456,6 +438,22 @@ class MachineManagementController extends Controller {
 
     }
 
+    public function machinelogs($id){
+        
+        $machine = DB::table('machines')
+                    ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                            , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                            , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                    ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                    ->where('machines.id', $id)->first();   
+        
+        return $machine;
+    }
+    
     public function apiurl($log){
         
         $actual_link = 'http://'.$_SERVER['HTTP_HOST'];

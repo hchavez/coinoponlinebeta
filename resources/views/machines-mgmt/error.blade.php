@@ -52,6 +52,8 @@
                         <div class="col-md-6">
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
+                                <input type="hidden" name="logtype" value="errorlogs">
+                                <input type="hidden" name="id" value="36">
                                 <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                                 <div class="input-group-addon">to</div>
                                 <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
