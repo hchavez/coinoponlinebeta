@@ -364,77 +364,62 @@ class MachineManagementController extends Controller {
         ]);
         
         
-    }
-    
-    public function mlogs($filterParam){       
-       // echo $filterParam['logType'];
-        $result = DB::table($filterParam['logType'])->where('machine_id', $filterParam['id'])->whereDate('created_at','LIKE', $filterParam['startdate'])->paginate(4)->toArray();   
-        return  $result;
-    }
+    }  
        
     public function error($id) {
-                           
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );
-        if($startnewformat != '1970-01-01'){
-            $filterParam = array(
-                'id' => $id,
-                'logType' => 'errorlogs',
-                'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-                'enddate' => date("Y-m-d", strtotime(Input::get('startdate')))
-            );   
-            $filter = $this->mlogs($filterParam);
-            //print_r($filter);
-        }
-        
+                                         
         $machine = $this->machinelogs($id);  
-        $jsonData = $this->jsondata('errorlogs');
-        $data = array(
-            'machine' => $jsonData['data'],            
-        );            
-   
-        return view('machines-mgmt/error', ['error' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
+        $val = array(
+            'id' =>  $id,
+            'type' => 'errorlogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+        );        
+        $errorLogs = $this->kLogs($val);    
+       
+        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'], 'machine' => $machine]);
     }     
 
     public function win($id) {
         
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'winlogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+        );        
+        $winLogs = $this->kLogs($val);
         
-        $machine = $this->machinelogs($id);       
-        $jsonData = $this->jsondata('winlogs');
-        $data = array(
-            'machine' => $jsonData['data'],            
-        );
-        
-        return view('machines-mgmt/win', ['win' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
+        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'machine' => $machine]);
     }
 
     public function money($id) {        
         
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'moneylogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+        );        
+        $moneylogs = $this->kLogs($val);
         
-        $machine = $this->machinelogs($id);        
-        $jsonData = $this->jsondata('moneylogs');
-        $data = array(
-            'machine' => $jsonData['data'],            
-        );
-        
-        return view('machines-mgmt/money', ['money' => $data, 'links' => $jsonData['meta'],'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['data'],'machine' => $machine]);
     }
 
     public function goals($id) {
         
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'goalslogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+        );        
+        $moneylogs = $this->kLogs($val);
         
-        $machine = $this->machinelogs($id);     
-        $jsonData = $this->jsondata('goalslogs');
-        $data = array(
-            'machine' => $jsonData['data'],            
-        );
-        
-        return view('machines-mgmt/goals', ['goals' => $data, 'links' => $jsonData['meta'], 'machine' => $machine]);
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['data'], 'machine' => $machine]);
 
     }
 
@@ -476,6 +461,48 @@ class MachineManagementController extends Controller {
         $newarray = json_decode(json_encode($json_output), True);
         
         return $newarray;
+        
+    }
+    
+    public function mlogs($filterParam){           
+        
+        $result = DB::table( $filterParam['logType'])
+                ->where('machine_id', $filterParam['id'])
+                ->whereBetween('created_at', array($filterParam['startdate'], $filterParam['enddate']))
+                ->paginate(10);         
+        $newarray = json_decode(json_encode($result), True);
+        
+        return  $newarray;
+    }
+    
+    public function kLogs($val){
+        
+        if($val['startdate'] != '1970-01-01'){            
+            $filterParam = array(
+                'id' => $val['id'],
+                'logType' => $val['type'],
+                'startdate' => $val['startdate'],
+                'enddate' => $val['enddate']
+            );   
+            $result = $this->mlogs($filterParam);                   
+            $data = $result['data'];    
+            $totalPage = $result['total'];              
+            $logs = array(
+                'data' =>$data,
+                'total' => $totalPage
+            );
+            
+        }else{            
+            $jsonData = $this->jsondata($val['type']);
+            $totalPage = $jsonData['meta']['total'];
+            $data = $jsonData['data'];     
+            $logs = array(
+                'data' =>$data,
+                'total' => $totalPage
+            );            
+        } 
+        
+        return $logs;
         
     }
     

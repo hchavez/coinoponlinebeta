@@ -53,7 +53,7 @@
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
                                 <input type="hidden" name="logtype" value="errorlogs">
-                                <input type="hidden" name="id" value="36">
+                                <input type="hidden" name="id" value="{{ $machine->id }}">
                                 <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                                 <div class="input-group-addon">to</div>
                                 <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
@@ -78,17 +78,14 @@
                                 <tbody>
                                     
                                     <?php //print_r($error); ?>
-                                    @foreach($error as $res)
-                                        @foreach($res as $data)
-                                            <tr role="row" class="odd">
-                                                
+                                    @foreach($error as $data)                                        
+                                            <tr role="row" class="odd">                                                
                                                 <td class="hidden-xs">{{ $data['id'] }} </td>
                                                 <td class="hidden-xs">{{ $data['type'] }}</td>
                                                 <td class="hidden-xs">{{ $data['error'] }}</td> 
                                                 <td class="hidden-xs">{{ date('d/m/Y h:i A', strtotime($data['created_at'])) }}</td>
                                                 <td class="hidden-xs">{{ $data['status'] }}</td>
-                                            </tr>
-                                        @endforeach
+                                            </tr>                                        
                                     @endforeach
                                  
                                 </tbody>
@@ -110,8 +107,8 @@
                             
                             <div class="col-sm-12 text-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                                <?php
-                                    $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
+                                <?php                                    
+                                    $pages = array($total); for ($i=1;$i<=$total;$i++) $pages[$i-1]='<p>page'.$i.'</p>';
                                     if (empty($_GET['page'])) {
                                         $current = 1;
                                     }else{

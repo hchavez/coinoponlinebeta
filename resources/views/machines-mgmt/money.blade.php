@@ -52,6 +52,8 @@
                         <div class="col-md-6">
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
+                                <input type="hidden" name="logtype" value="winlogs">
+                                <input type="hidden" name="id" value="{{ $machine->id }}">
                                 <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                                 <div class="input-group-addon">to</div>
                                 <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
@@ -86,8 +88,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>                                
-                                    @foreach($money as $res)
-                                        @foreach($res as $data)   
+                                    @foreach($money as $data)                                        
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">{{ $data['id'] }} </td>
                                             <td class="hidden-xs">{{date('d/m/Y h:i A', strtotime($data['created_at']))}}</td>
@@ -105,8 +106,7 @@
                                             <td class="hidden-xs">{{ $data['pricePlay'] }}</td>
                                             <td class="hidden-xs">{{ $data['credits'] }}</td>
                                             <td class="hidden-xs">{{ $data['status'] }}</td>
-                                        </tr>                                    
-                                        @endforeach
+                                        </tr>      
                                     @endforeach
                                 </tbody>
                                 <tfoot>
@@ -138,31 +138,7 @@
                             
                             <div class="col-sm-12 text-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                                <?php
-                                    $pages = array($links['total']); for ($i=1;$i<=$links['total'];$i++) $pages[$i-1]='<p>page'.$i.'</p>';
-                                    if (empty($_GET['page'])) {
-                                        $current = 1;
-                                    }else{
-                                        $current = $_GET['page'];
-                                    }                                   
-                                    $last = count($pages)+1;
-                                    $curr0 = $current-4;
-                                    $curr1 = $current+4;
-                                        if ($curr0<=1) {
-                                          $curr0 = 1;
-                                          $curr1 = $last>10? 10 : $last;
-                                        }
-                                        if ($curr1>=$last) {
-                                          $curr0 = $last-9 < 1 ? 1 : $last-9;
-                                          $curr1 = $last;
-                                        }
-                                    echo '<a href="?page=1">&#171;</a> ';
-                                    for ($i=$curr0; $i<=$curr1; $i++) {
-                                      $style = ($i==$current)? 'font-weight:bold':'';
-                                      echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
-                                    }
-                                    echo '<a href="?page='.$last.'">&#187;</a> ';
-                                ?>
+                               
                                 </div>
                             </div>
                         </div>
