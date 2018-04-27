@@ -158,12 +158,21 @@
                                               $curr0 = $last-9 < 1 ? 1 : $last-9;
                                               $curr1 = $last;
                                             }
-                                        echo '<a href="?page=1">&#171;</a> ';
-                                        for ($i=$curr0; $i<=$curr1; $i++) {
-                                          $style = ($i==$current)? 'font-weight:bold':'';
-                                          echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
-                                        }
-                                        echo '<a href="?page='.$last.'">&#187;</a> ';
+                                        if(empty($_GET['startdate'])){
+                                            echo '<a href="?page=1">&#171;</a> ';
+                                            for ($i=$curr0; $i<=$curr1; $i++) {
+                                              $style = ($i==$current)? 'font-weight:bold':'';
+                                              echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                            }
+                                            echo '<a href="?page='.$last.'">&#187;</a> ';
+                                        }else{
+                                            echo '<a href="'.$url.'&page=1">&#171;</a> ';
+                                            for ($i=$curr0; $i<=$curr1; $i++) {
+                                              $style = ($i==$current)? 'font-weight:bold':'';
+                                              echo ' <a href="'.$url.'&page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                            }
+                                            echo '<a href="'.$url.'&page='.$last.'">&#187;</a> ';
+                                        } 
                                     }
                                     ?>
                                 </div>

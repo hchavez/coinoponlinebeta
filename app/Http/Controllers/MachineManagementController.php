@@ -375,9 +375,10 @@ class MachineManagementController extends Controller {
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
         );        
-        $errorLogs = $this->kLogs($val);    
+        $errorLogs = $this->kLogs($val);   
+        $url = $this->apiurl('machine-management/error/') .$machine->id.'?logtype=errorlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
        
-        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'], 'machine' => $machine]);
+        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'],'url' => $url, 'machine' => $machine]);
     }     
 
     public function win($id) {
@@ -390,8 +391,9 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
         );        
         $winLogs = $this->kLogs($val);
+        $url = $this->apiurl('machine-management/win/') .$machine->id.'?logtype=winlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'machine' => $machine]);
+        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'url' => $url, 'machine' => $machine]);
     }
 
     public function money($id) {        
@@ -404,8 +406,9 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
         );        
         $moneylogs = $this->kLogs($val);
+        $url = $this->apiurl('machine-management/money/') .$machine->id.'?logtype=moneylogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'],'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url, 'machine' => $machine]);
     }
 
     public function goals($id) {
@@ -418,8 +421,9 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
         );        
         $moneylogs = $this->kLogs($val);
+        $url = $this->apiurl('machine-management/goals/') .$machine->id.'?logtype=goalslogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'machine' => $machine]);
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url, 'machine' => $machine]);
 
     }
 
