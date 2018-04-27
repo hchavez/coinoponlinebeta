@@ -460,8 +460,7 @@ class MachineManagementController extends Controller {
         $json_output = json_decode($json);
         $newarray = json_decode(json_encode($json_output), True);
         
-        return $newarray;
-        
+        return $newarray;        
     }
     
     public function mlogs($filterParam){           
@@ -486,20 +485,20 @@ class MachineManagementController extends Controller {
             );   
             $result = $this->mlogs($filterParam);                   
             $data = $result['data'];    
-            $totalPage = $result['total'];              
-            $logs = array(
-                'data' =>$data,
-                'total' => $totalPage
-            );
-            
-        }else{            
-            $jsonData = $this->jsondata($val['type']);
-            $totalPage = $jsonData['meta']['total'];
-            $data = $jsonData['data'];     
+            $totalPage = $result['last_page'];              
             $logs = array(
                 'data' =>$data,
                 'total' => $totalPage
             );            
+            
+        }else{            
+            $jsonData = $this->jsondata($val['type']);
+            $totalPage = $jsonData['meta']['last_page'];
+            $data = $jsonData['data'];     
+            $logs = array(
+                'data' =>$data,
+                'total' => $totalPage
+            );               
         } 
         
         return $logs;

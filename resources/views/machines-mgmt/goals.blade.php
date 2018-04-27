@@ -139,7 +139,8 @@
                             
                             <div class="col-sm-12 text-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                                    <?php                                        
+                                    <?php         
+                                    if($total < 10){}else{
                                         $pages = array($total); for ($i=1;$i<=$total;$i++) $pages[$i-1]='<p>page'.$i.'</p>';
                                         if (empty($_GET['page'])) {
                                             $current = 1;
@@ -163,6 +164,7 @@
                                           echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
                                         }
                                         echo '<a href="?page='.$last.'">&#187;</a> ';
+                                    }
                                     ?>
                                 </div>
                             </div>
