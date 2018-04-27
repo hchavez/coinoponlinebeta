@@ -52,7 +52,14 @@
                         
                         </table> 
                     </div>
-                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                            {{ $activity->links() }}
+                        </div>                            
+                    </div>
                 </div>
             </div>            
         </div>

@@ -127,6 +127,8 @@ Breakpoints();
                 });
             })(document, window, jQuery);
         </script>
+        <!--CustomStyle-->
+        <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
 
 
     </body>

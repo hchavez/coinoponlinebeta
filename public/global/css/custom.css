@@ -177,7 +177,11 @@ table.dataTable td:nth-child(8){
 }
 
 /*Pagination*/
-#custom_paging a{
+#custom_paging a,
+#custom_paging ul.pagination li a{
     border: 1px solid;
     padding: 5px 10px;
+}
+#custom_paging ul.pagination li{
+    padding:5px;
 }
