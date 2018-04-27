@@ -139,7 +139,31 @@
                             
                             <div class="col-sm-12 text-center">
                                 <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                                
+                                    <?php                                        
+                                        $pages = array($total); for ($i=1;$i<=$total;$i++) $pages[$i-1]='<p>page'.$i.'</p>';
+                                        if (empty($_GET['page'])) {
+                                            $current = 1;
+                                        }else{
+                                            $current = $_GET['page'];
+                                        }                                   
+                                        $last = count($pages)+1;
+                                        $curr0 = $current-4;
+                                        $curr1 = $current+4;
+                                            if ($curr0<=1) {
+                                              $curr0 = 1;
+                                              $curr1 = $last>10? 10 : $last;
+                                            }
+                                            if ($curr1>=$last) {
+                                              $curr0 = $last-9 < 1 ? 1 : $last-9;
+                                              $curr1 = $last;
+                                            }
+                                        echo '<a href="?page=1">&#171;</a> ';
+                                        for ($i=$curr0; $i<=$curr1; $i++) {
+                                          $style = ($i==$current)? 'font-weight:bold':'';
+                                          echo ' <a href="?page='.$i.'" style="'.$style.'">'.$i.'</a> ';
+                                        }
+                                        echo '<a href="?page='.$last.'">&#187;</a> ';
+                                    ?>
                                 </div>
                             </div>
                         </div>

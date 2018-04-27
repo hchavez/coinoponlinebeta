@@ -405,7 +405,7 @@ class MachineManagementController extends Controller {
         );        
         $moneylogs = $this->kLogs($val);
         
-        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['data'],'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'],'machine' => $machine]);
     }
 
     public function goals($id) {
@@ -419,7 +419,7 @@ class MachineManagementController extends Controller {
         );        
         $moneylogs = $this->kLogs($val);
         
-        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['data'], 'machine' => $machine]);
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'machine' => $machine]);
 
     }
 
