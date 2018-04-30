@@ -86,7 +86,7 @@
                         
                  
               <!-- Example Table section -->
-              <div class="example-wrap">
+              <div class="example-wrap" style="margin-bottom:0;">
                 <!-- <h4 class="example-title">Machine LIVE Error Status</h4> -->
                 <div id="success_msg">
                     @if(session()->has('message'))
@@ -208,10 +208,13 @@
                   </table>
                 </div>
               </div>
+              
               <!-- End Example Table-section -->
-        
-                        
-                        
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                            {{ $machinelogs->links() }}
+                        </div>                            
                     </div>
                 </div>
                 <!-- End Team Total Completed -->
