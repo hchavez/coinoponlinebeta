@@ -2,22 +2,7 @@
 @section('content')
 
 <div class="page-main">
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li class="breadcrumb-item"><a href="{{ url('user-mgmt') }}"><i class="fa fa-dashboard"></i>Admin Panel</a></li>
-        <?php $segments = ''; ?>
-        @foreach(Request::segments() as $segment)
-            @foreach ($users as $user) 
-            <?php 
-            $user = ($segment == $user->id)? $user->firstname.' '.$user->lastname : '';
-            $segmentLabel = ($segment == 'user-mgmt')? 'User Management' : $user;
-            $segments .= '/'.$segmentLabel;         
-            ?>
-            @endforeach
-            <li class="breadcrumb-item">
-              <a href="{{ url('user-mgmt') }}">{{$segmentLabel}}</a>
-            </li>
-        @endforeach
-    </ol> 
+
     <div class="page-content">
         <div class="panel">            
             <div class="panel-body">
@@ -46,9 +31,6 @@
                 </div>
             </div>
         </div>
-        
-        
-        
         
         <div class="panel">
             <div class="panel-body">
@@ -81,6 +63,9 @@
                             @endif
                             </table> 
                         </div>
+                    </div>
+                    <div class="col-sm-12"> 
+                        {{ $logs->links() }}
                     </div>
                 </div>
             </div>                

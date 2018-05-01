@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Http\Resources\User as UserResource;
 use Response;
 use App\Profile;
 use Session;
@@ -40,9 +42,16 @@ class ProfileController extends Controller
         $lname = Auth::user()->lastname;
         $username = Auth::user()->username;
         $email = Auth::user()->email;
-        $id = Auth::user()->id; 
+        $id = Auth::user()->id;     
         
-        return view('profile/index', ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
+        $jsonurl = "http://localhost/coinoponlinebeta/public/jsonusers";
+        $json = file_get_contents($jsonurl,0,null,null);
+        $json_output = json_decode($json);
+        $newarray = json_decode(json_encode($json_output), True);
+        $data = array(
+            'users' => $newarray['data'],
+        );
+        return view('profile/index', $data, ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
 
     public function edit($id)
