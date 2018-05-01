@@ -75,15 +75,16 @@ class MachineManagementController extends Controller {
             if($data['startdate'] || $data['enddate']):
                 $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
                     $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
-                });            
+                })->orderBy('date_created','desc');            
             endif;
         endif;
-        $machines = $machines->latest('machines.created_at')->get(); 
+        $machines = $machines->orderBy('date_created','desc')->get()->toArray(); 
+        //print_r($machines);
        
         return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
     }     
-
+    
     public function date_filter() {
         // $reservations = Reservation::whereBetween('reservation_from', [$from, $to])->get();
     }
@@ -365,6 +366,23 @@ class MachineManagementController extends Controller {
         
         
     }  
+    
+    public function exportcsv(){        
+        
+        $jsonString = '[{"name":"Wayne","age":28},{"name":"John","age":21},{"name":"Sara","age":24}]';
+        $jsonDecoded = json_decode($jsonString, true);
+        $csvFileName = 'errorlogs.csv';
+        $fp = fopen($csvFileName, 'w');
+        
+        foreach($jsonDecoded as $row){            
+            fputcsv($fp, $row);
+        }
+        
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="'.$csvFileName.'"');
+      
+        fclose($fp);
+    }
        
     public function error($id) {
                                          

@@ -43,7 +43,7 @@ $(document).ready(function(){
         paging: true,
         autoFill: true,     
         pageLength: 100,
-        order: [[1, 'DESC']],
+        
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
