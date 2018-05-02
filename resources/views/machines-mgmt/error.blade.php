@@ -49,7 +49,7 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
                                 <input type="hidden" name="logtype" value="errorlogs">
@@ -61,13 +61,18 @@
                                 </div>
                             </form>
                         </div>
+                        <div class="col-md-3">
+                            <a href="{{ $export }}">
+                                <button type="submit" class="btn btn-danger">Export CSV</button> 
+                            </a>
+                        </div>
                         <br><br>
                         <div class="col-sm-12">
+                            
                             <table id="" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                             <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
-                                    <tr role="row">
-                                      
+                                    <tr role="row">                                      
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
                                         <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>

@@ -51,7 +51,7 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
                                 <input type="hidden" name="logtype" value="winlogs">
@@ -62,6 +62,11 @@
                                 <button type="submit" class="btn btn-primary">Search</button> 
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ $export }}">
+                                <button type="submit" class="btn btn-danger">Export CSV</button> 
+                            </a>
                         </div>
                         <br><br>
                         <div class="col-sm-12">
