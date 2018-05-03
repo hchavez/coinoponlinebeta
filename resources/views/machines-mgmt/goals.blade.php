@@ -51,20 +51,27 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <form role="form" method="GET" action="#">
                                 <div class="input-group input-daterange">
-                                <input type="hidden" name="logtype" value="winlogs">
+                                <input type="hidden" name="logtype" value="errorlogs">
                                 <input type="hidden" name="id" value="{{ $machine->id }}">
                                 <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                                 <div class="input-group-addon">to</div>
-                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">   
+                                
+                                <select class="form-control" name="status" style="margin: 0 1em;">
+                                    <option value="0" disabled="" selected="">Status</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                                
                                 <button type="submit" class="btn btn-primary">Search</button> 
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-3">
-                            <a href="{{ $export }}">
+                            <a href="{{ $export }}?page={{ $id }}">
                                 <button type="submit" class="btn btn-danger">Export CSV</button> 
                             </a>
                         </div>

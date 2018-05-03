@@ -366,25 +366,7 @@ class MachineManagementController extends Controller {
         
         
     }  
-    
-    public function exportcsv($data){                
-      
-        $dataExport = $this->jsondata($data);      
-        $selected_array = array('header:ID','header:Log ID','header:Machine ID','header:Type', 'header:Error Log','header:Date Time Log','header:Status');
-       
-        $Filename = $data.'.csv';
-        header('Content-Type: text/csv; charset=utf-8');
-        Header('Content-Type: application/force-download');
-        header('Content-Disposition: attachment; filename='.$Filename.'');
-      
-        $output = fopen('php://output', 'w');
-        fputcsv($output, $selected_array);
-        foreach ($dataExport['data'] as $row){
-            fputcsv($output, $row);
-        }
-        fclose($output);
-    }
-       
+              
     public function error($id) {
                                          
         $machine = $this->machinelogs($id);  
@@ -392,13 +374,14 @@ class MachineManagementController extends Controller {
             'id' =>  $id,
             'type' => 'errorlogs',
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
         );        
         $errorLogs = $this->kLogs($val);  
         $export = $this->apiurl('exportcsv/errorlogs');
-        $url = $this->apiurl('machine-management/error/') .$machine->id.'?logtype=errorlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
-       
-        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'],'url' => $url, 'export'=>$export, 'machine' => $machine]);
+        $url = $this->apiurl('machine-management/error/') .$machine->id.'?logtype=errorlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];          
+        
+        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'],'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
     }     
 
     public function win($id) {
@@ -408,13 +391,14 @@ class MachineManagementController extends Controller {
             'id' =>  $id,
             'type' => 'winlogs',
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
         );        
         $winLogs = $this->kLogs($val);
         $export = $this->apiurl('exportcsv/winlogs');
         $url = $this->apiurl('machine-management/win/') .$machine->id.'?logtype=winlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'url' => $url, 'export'=>$export,'machine' => $machine]);
+        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export,'machine' => $machine]);
     }
 
     public function money($id) {        
@@ -424,13 +408,14 @@ class MachineManagementController extends Controller {
             'id' =>  $id,
             'type' => 'moneylogs',
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
         );        
         $moneylogs = $this->kLogs($val);
         $export = $this->apiurl('exportcsv/moneylogs');
         $url = $this->apiurl('machine-management/money/') .$machine->id.'?logtype=moneylogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'export'=>$export, 'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
     }
 
     public function goals($id) {
@@ -440,13 +425,14 @@ class MachineManagementController extends Controller {
             'id' =>  $id,
             'type' => 'goalslogs',
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
         );        
         $moneylogs = $this->kLogs($val);
         $export = $this->apiurl('exportcsv/goalslogs');
         $url = $this->apiurl('machine-management/goals/') .$machine->id.'?logtype=goalslogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
         
-        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'export'=>$export, 'machine' => $machine]);
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
 
     }
 
@@ -478,14 +464,40 @@ class MachineManagementController extends Controller {
         return $actual_link;
     }
     
-    public function jsondata($logType){
+    public function exportcsv($data){                
+      
+        $dataExport = $this->jsondata($data,'filter');    
         
-        $pageid = Input::get('page');        
-        $actual_link = $this->apiurl($logType);
-        $jsonurl = $actual_link."?page=".$pageid;
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
+        //print_r($dataExport);
+        $selected_array = array('header:ID','header:Log ID','header:Machine ID','header:Type', 'header:Error Log','header:Date Time Log','header:Status');
+       
+        $Filename = $data.'.csv';
+        header('Content-Type: text/csv; charset=utf-8');
+        Header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$Filename.'');
+      
+        $output = fopen('php://output', 'w');
+        fputcsv($output, $selected_array);
+        foreach ($dataExport as $row){
+            fputcsv($output, $row);
+        }
+        fclose($output);
+    }
+    
+    public function jsondata($logType,$filter){
+        
+        $pageid = Input::get('page');
+        
+        if($filter != 'filter'){                    
+            $actual_link = $this->apiurl($logType);
+            $jsonurl = $actual_link."?page=".$pageid;
+            $json = file_get_contents($jsonurl,0,null,null);
+            $json_output = json_decode($json);
+            $newarray = json_decode(json_encode($json_output), True);
+        }else{            
+            $result = DB::table($logType)->where('machine_id',$pageid)->orderBy('created_at','desc')->get();         
+            $newarray = json_decode(json_encode($result), True);
+        }        
         
         return $newarray;        
     }
@@ -493,8 +505,9 @@ class MachineManagementController extends Controller {
     public function mlogs($filterParam){           
         
         $result = DB::table( $filterParam['logType'])
-                ->where('machine_id', $filterParam['id'])
-                ->whereBetween('created_at', array($filterParam['startdate'], $filterParam['enddate']))
+                ->where('machine_id', $filterParam['id'])      
+                ->orWhere('status',$filterParam['status'])
+                ->orWhereBetween('created_at', array($filterParam['startdate'], $filterParam['enddate']))                
                 ->paginate(10);         
         $newarray = json_decode(json_encode($result), True);
         
@@ -503,12 +516,13 @@ class MachineManagementController extends Controller {
     
     public function kLogs($val){
         
-        if($val['startdate'] != '1970-01-01'){            
+        if(($val['startdate'] != '1970-01-01') || ($val['status'] != '')){            
             $filterParam = array(
                 'id' => $val['id'],
                 'logType' => $val['type'],
                 'startdate' => $val['startdate'],
-                'enddate' => $val['enddate']
+                'enddate' => $val['enddate'],
+                'status' => $val['status']
             );   
             $result = $this->mlogs($filterParam);                   
             $data = $result['data'];    
@@ -519,7 +533,7 @@ class MachineManagementController extends Controller {
             );            
             
         }else{            
-            $jsonData = $this->jsondata($val['type']);
+            $jsonData = $this->jsondata($val['type'],'');
             $totalPage = $jsonData['meta']['last_page'];
             $data = $jsonData['data'];     
             $logs = array(
