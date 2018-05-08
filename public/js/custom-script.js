@@ -154,7 +154,7 @@ $(document).ready(function(){
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     console.log(baseUrl+'/public/errorapi');
     $('#klogs').dataTable({
-        ajax: baseUrl+'/errorapi',    
+        ajax: 'https://www.ascentri.com/errorapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -170,7 +170,7 @@ $(document).ready(function(){
     });    
    
     $('#winlogs').dataTable({
-        ajax: baseUrl+'/winapi',    
+        ajax: 'https://www.ascentri.com/winapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -194,7 +194,7 @@ $(document).ready(function(){
     });
     
     $('#moneyapi').dataTable({
-        ajax: baseUrl+'/moneyapi',    
+        ajax: 'https://www.ascentri.com/moneyapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -221,7 +221,7 @@ $(document).ready(function(){
     });
     
     $('#goalsapi').dataTable({
-        ajax: baseUrl+'/goalsapi',    
+        ajax: 'https://www.ascentri.com/goalsapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -250,43 +250,6 @@ $(document).ready(function(){
     $('#winlogs_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
     $('#moneyapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
     $('#goalsapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
-   
-    
-    $(".searchInput").on("input", function() {
-        var from = stringToDate($("#searchFrom").val());
-        var to = stringToDate($("#searchTo").val());
-
-        $("#klogs tr").each(function() {
-          var row = $(this);
-          var date = stringToDate(row.find("td").eq(2).text());
-
-          //show all rows by default
-          var show = true;
-
-          //if from date is valid and row date is less than from date, hide the row
-          if (from && date < from)
-            show = false;
-
-          //if to date is valid and row date is greater than to date, hide the row
-          if (to && date > to)
-            show = false;
-
-          if (show)
-            row.show();
-          else
-            row.hide();
-        });
-    });
-
+  
     
 });
-function stringToDate(s) {
-    var ret = NaN;
-    var parts = s.split("-");
-    date = new Date(parts[2], parts[0], parts[1]);
-    if (!isNaN(date.getTime())) {
-      ret = date;
-      console.log(ret);
-    }
-    return ret;
-}
