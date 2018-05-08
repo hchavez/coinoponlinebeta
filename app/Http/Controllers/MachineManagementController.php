@@ -273,7 +273,9 @@ class MachineManagementController extends Controller {
         //Get Win Result Data for graphview
         $graphdatawinquery = DB::table('winlogs')->select('winResult')->where('machine_id', $id)
                             //->whereMonth('created_at', '=', date('m'))
-                            ->where('testPlay', 'play')->get();
+                            ->where('testPlay', 'play')
+                            //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                            ->get();
         
         $totalPlay = $graphdatawinquery->count();
 
@@ -294,7 +296,9 @@ class MachineManagementController extends Controller {
         //Get Excess Win Data for graphview
         $graphdataExcessWinQuery = DB::table('winlogs')->select('excessWin')->where('machine_id', $id)
                                     //->whereMonth('created_at', '=', date('m'))
-                                    ->where('testPlay', 'play')->get();
+                                    ->where('testPlay', 'play')
+                                   //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                                    ->get();
         
         if ($graphdataExcessWinQuery->count() > 0) {
             foreach ($graphdataExcessWinQuery as $value) {
@@ -308,7 +312,9 @@ class MachineManagementController extends Controller {
         //Get Owned Win Data for graphview
         $graphdataOwnedWinQuery = DB::table('winlogs')->select('owedWin')->where('machine_id', $id)
                                        // ->whereMonth('created_at', '=', date('m'))
-                                        ->where('testPlay', 'play')->get();
+                                        ->where('testPlay', 'play')
+                                        //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                                        ->get();
         
         if ($graphdataOwnedWinQuery->count() > 0) {
             foreach ($graphdataOwnedWinQuery as $value) {
@@ -322,7 +328,9 @@ class MachineManagementController extends Controller {
         //Get RetVolt Data for graphview
         $graphdataDropVoltQuery = DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)
                                // ->whereMonth('created_at', '=', date('m'))    
-                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')->get();
+                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')
+                               // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                                ->get();
         
         if ($graphdataDropVoltQuery->count() > 0) {
             foreach ($graphdataDropVoltQuery as $value) {
@@ -336,7 +344,9 @@ class MachineManagementController extends Controller {
         //Get pickupvolt Data for graphview
         $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
-                                ->where('dropCount','=', '1')->where('testPlay', 'play')->get();
+                                ->where('dropCount','=', '1')->where('testPlay', 'play')
+                                // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                                ->get();
            
         if ($graphdataPkVoltQuery->count() > 0) {
             foreach ($graphdataPkVoltQuery as $value) {
@@ -428,7 +438,8 @@ class MachineManagementController extends Controller {
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.id', $id)->first();
 
-        $goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')->get();
+        $goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')   
+                    ->get();
         return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
 
     }
