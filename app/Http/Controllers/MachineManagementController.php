@@ -467,7 +467,7 @@ class MachineManagementController extends Controller {
     public function apiurl($log){
         
         $actual_link = 'https://'.$_SERVER['HTTP_HOST'];
-        if($actual_link == 'https://localhost'){
+        if($actual_link == 'http://localhost'){
             $actual_link = $actual_link.'/coinoponlinebeta/public/'.$log;
         }else{
             $actual_link = $actual_link.'/'.$log;
