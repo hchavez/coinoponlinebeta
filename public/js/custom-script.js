@@ -10,7 +10,7 @@ $(document).ready(function(){
         $("#machine_" + val).select2(); //Dropdown autosuggest
         $("#machine_" + val).on('change', function(e){  $('form#filter_table').submit();  }); //Auto submit filter
     });  
-
+    
     //Date picker
     $("#txtToDate").datepicker();
     $("#txtFromDate").datepicker(); 
@@ -150,7 +150,143 @@ $(document).ready(function(){
         }
     });
 
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    console.log(baseUrl+'/public/errorapi');
+    $('#klogs').dataTable({
+        ajax: baseUrl+'/errorapi',    
+        dom: 'Bfrtip',
+            buttons: [
+                'excel'           
+            ],
+        deferRender:    true,       
+        columns:[
+            {'data': 'id'},
+            {'data': 'type'},
+            {'data': 'error'},
+            {'data': 'created_at'},
+            {'data': 'status'}
+        ]       
+    });    
+   
+    $('#winlogs').dataTable({
+        ajax: baseUrl+'/winapi',    
+        dom: 'Bfrtip',
+            buttons: [
+                'excel'           
+            ],
+        deferRender:    true,       
+        columns:[
+            {'data': 'id'},
+            {'data': 'testPlay'},
+            {'data': 'winResult'},
+            {'data': 'created_at'},
+            {'data': 'totalWon'},
+            {'data': 'playIndex'},
+            {'data': 'owedWin'},
+            {'data': 'excessWin'},
+            {'data': 'stockLeft'},
+            {'data': 'stockRemoved'},
+            {'data': 'stockAdded'},
+            {'data': 'nTimesOfPlay'},
+            {'data': 'status'}            
+        ]       
+    });
     
+    $('#moneyapi').dataTable({
+        ajax: baseUrl+'/moneyapi',    
+        dom: 'Bfrtip',
+            buttons: [
+                'excel'           
+            ],
+        deferRender:    true,       
+        columns:[
+            {'data': 'id'},
+            {'data': 'created_at'},
+            {'data': 'coinIn'},
+            {'data': 'ttlCoinIn'},
+            {'data': 'billIn'},
+            {'data': 'ttlBillIn'},
+            {'data': 'swipeIn'},
+            {'data': 'type'},
+            {'data': 'payment_result'},
+            {'data': 'decline_reason'},
+            {'data': 'ttlMoneyIn'},
+            {'data': 'forPlay'},
+            {'data': 'forClick'},
+            {'data': 'pricePlay'},
+            {'data': 'credits'},
+            {'data': 'status'}
+        ]       
+    });
     
+    $('#goalsapi').dataTable({
+        ajax: baseUrl+'/goalsapi',    
+        dom: 'Bfrtip',
+            buttons: [
+                'excel'           
+            ],
+        deferRender:    true,       
+        columns:[
+            {'data': 'id'},
+            {'data': 'testPlay'},
+            {'data': 'pkPWM'},
+            {'data': 'created_at'},
+            {'data': 'pkVolt'},
+            {'data': 'retPWM'},
+            {'data': 'retVolt'},
+            {'data': 'voltDecRetPercentage'},
+            {'data': 'plusPickUp'},
+            {'data': 'dropCount'},
+            {'data': 'dropPWM'},
+            {'data': 'dropVolt'},
+            {'data': 'incVoltage'},
+            {'data': 'decVoltage'},
+            {'data': 'status'}
+        ]       
+    });
+    
+    $('#klogs_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
+    $('#winlogs_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
+    $('#moneyapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
+    $('#goalsapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
+   
+    
+    $(".searchInput").on("input", function() {
+        var from = stringToDate($("#searchFrom").val());
+        var to = stringToDate($("#searchTo").val());
+
+        $("#klogs tr").each(function() {
+          var row = $(this);
+          var date = stringToDate(row.find("td").eq(2).text());
+
+          //show all rows by default
+          var show = true;
+
+          //if from date is valid and row date is less than from date, hide the row
+          if (from && date < from)
+            show = false;
+
+          //if to date is valid and row date is greater than to date, hide the row
+          if (to && date > to)
+            show = false;
+
+          if (show)
+            row.show();
+          else
+            row.hide();
+        });
+    });
+
     
 });
+function stringToDate(s) {
+    var ret = NaN;
+    var parts = s.split("-");
+    date = new Date(parts[2], parts[0], parts[1]);
+    if (!isNaN(date.getTime())) {
+      ret = date;
+      console.log(ret);
+    }
+    return ret;
+}

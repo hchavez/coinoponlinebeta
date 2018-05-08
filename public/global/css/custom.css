@@ -185,3 +185,23 @@ table.dataTable td:nth-child(8){
 #custom_paging ul.pagination li{
     padding:5px;
 }
+
+/*logs*/
+#klogs_wrapper .dt-buttons,
+#winlogs_wrapper .dt-buttons,
+#moneyapi_wrapper .dt-buttons,
+#goalsapi_wrapper .dt-buttons{
+    position: inherit;
+}
+#klogs_filter, #winlogs_filter,#moneyapi_filter, #goalsapi_filter{
+    float:right;
+}
+#klogs_filter label input,
+#winlogs_filter label input,
+#moneyapi_wrapper input,
+#goalsapi_wrapper input{
+    margin: 0 1em;
+    border: 1px solid #ececec;
+    padding: 0.3em;
+    border-radius: 3px;
+}
