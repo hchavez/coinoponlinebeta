@@ -3,19 +3,6 @@
 @section('content')
 
 <div class="page-main">
-<ol class="breadcrumb breadcrumb-arrow">
-    <li class="breadcrumb-item"><a href="{{ url('user-mgmt') }}"><i class="fa fa-dashboard"></i>Admin Panel</a></li>
-    <?php $segments = ''; ?>
-    @foreach(Request::segments() as $segment)
-        <?php 
-        $segment = ($segment == 'user-mgmt')? 'User Management' : '';
-        $segments .= '/'.$segment;         
-        ?>
-        <li class="breadcrumb-item">
-          <a href="{{ $segments }}">{{$segment}}</a>
-        </li>
-    @endforeach
-</ol> 
     <div class="page-content">
         <div class="panel">   
             <div class="panel-body">                

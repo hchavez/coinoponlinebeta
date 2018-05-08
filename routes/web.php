@@ -11,6 +11,14 @@
 |
 */
 use App\MachineModel;
+use App\User;
+use App\Errorlogs;
+use App\WinLogs;
+use App\MoneyLogs;
+use App\GoalsLogs;
+use App\Http\Resources\User as UserResource;
+use App\Http\Resources\UserCollection;
+
 
 Route::get('/', function () {
     return redirect('dashboard');
@@ -24,6 +32,36 @@ Route::get('api/dropdown', function(){
     $id = Input::get('option');
     $models = Maker::find($id)->models;
     return $models->lists('name', 'id');
+});
+
+Route::get('/user', function(){
+   $user = User::find(1);
+   return new UserResource($user);
+});
+
+Route::get('/jsonusers', function(){
+   $userall = User::paginate(2);
+   return new UserCollection($userall);
+});
+
+Route::get('/errorlogs', function(){
+   $userall = Errorlogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
+Route::get('/winlogs', function(){
+   $userall = WinLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
+Route::get('/moneylogs', function(){
+   $userall = MoneyLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
+});
+
+Route::get('/goalslogs', function(){
+   $userall = GoalsLogs::orderBy('created_at', 'desc')->paginate(10);
+   return new UserCollection($userall);
 });
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue
@@ -54,6 +92,8 @@ Route::get('machine-management/show/{id}', 'MachineManagementController@show');
 Route::get('machine-management/error/{id}', 'MachineManagementController@error');
 Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_settings');
 Route::post('machine-management/filter', 'MachineManagementController@filter')->name('machine-management.filter');
+Route::get('machine-management/getError/{id}', 'MachineManagementController@getError');
+Route::get('machine-management/getMoney/{id}', 'MachineManagementController@getMoney');
 
 Route::resource('machine-reports', 'MachineReportsController');
 
@@ -180,3 +220,6 @@ Route::get('activity/show/{id}', 'ActivityController@userActivity');
 
 Route::get('add-to-log', 'ActivityController@myTestAddToLog');
 Route::get('logActivity', 'ActivityController@logActivity');
+
+Route::resource('messages', 'MessagesController');
+Route::get('messages/log', 'MessagesController@log');

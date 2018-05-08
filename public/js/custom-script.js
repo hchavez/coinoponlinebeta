@@ -1,6 +1,8 @@
 /*
 * Custom script
 */
+
+
 $(document).ready(function(){
 
     var machine_details = ['state', 'type', 'model', 'serial', 'site', 'route', 'area'];
@@ -41,7 +43,7 @@ $(document).ready(function(){
         paging: true,
         autoFill: true,     
         pageLength: 100,
-        order: [[1, 'DESC']],
+        
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -132,7 +134,23 @@ $(document).ready(function(){
     });
     
     
+    //test start
+    $('#dashboard_sort tbody tr td:eq(1)').each(function(index){
+        var val = $(this).text().split(' ');
+        
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+
+        var today = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month  + '/' + d.getFullYear();
+        
+        console.log(val[0] + '-' + today);
+        if(val[0] === today){
+            console.log('Hooray!');
+        }
+    });
+
+    
+    
     
 });
-
-

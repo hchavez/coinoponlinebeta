@@ -120,6 +120,7 @@ class GameSettingsController extends Controller {
         ];
 
         if (GameSettings::where('machine_id', $id)->update($input)) {
+            \LogActivity::addToLog('Updated Machine Game Settings');
             return back()->with('success', 'Machine Game Settings successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
     }

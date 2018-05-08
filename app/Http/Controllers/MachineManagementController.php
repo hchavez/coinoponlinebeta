@@ -27,6 +27,9 @@ use Carbon\Carbon;
 use URL;
 use Input;
 use DateTime;
+use App\User;
+use App\Http\Resources\UserCollection;
+
 
 class MachineManagementController extends Controller {
 
@@ -72,15 +75,16 @@ class MachineManagementController extends Controller {
             if($data['startdate'] || $data['enddate']):
                 $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
                     $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
-                });            
+                })->orderBy('date_created','desc');            
             endif;
         endif;
-        $machines = $machines->latest('machines.created_at')->get(); 
+        $machines = $machines->orderBy('date_created','desc')->get()->toArray(); 
+        //print_r($machines);
        
         return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
     }     
-
+    
     public function date_filter() {
         // $reservations = Reservation::whereBetween('reservation_from', [$from, $to])->get();
     }
@@ -371,79 +375,189 @@ class MachineManagementController extends Controller {
         ]);
         
         
-    }
-
+    }  
+              
     public function error($id) {
-     
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first(); 
-
-
-        $errorlogs = DB::table('errorlogs')->where('machine_id', $id)->latest('created_at')->get();
-     
-        return view('machines-mgmt/error', ['machine' => $machine, 'errorlogs' => $errorlogs]);
-    }
+                                         
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'errorlogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
+        );        
+        $errorLogs = $this->kLogs($val);  
+        $export = $this->apiurl('exportcsv/errorlogs');
+        $url = $this->apiurl('machine-management/error/') .$machine->id.'?logtype=errorlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];          
+        
+        return view('machines-mgmt/error', ['error' => $errorLogs['data'],'total' => $errorLogs['total'],'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
+    }     
 
     public function win($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
-
-        $winlogs = DB::table('winlogs')->where('machine_id', $id)->where('testPlay', 'play')->latest('created_at')->get();
-        return view('machines-mgmt/win', ['machine' => $machine, 'winlogs' => $winlogs]);
+        
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'winlogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
+        );        
+        $winLogs = $this->kLogs($val);
+        $export = $this->apiurl('exportcsv/winlogs');
+        $url = $this->apiurl('machine-management/win/') .$machine->id.'?logtype=winlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        
+        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export,'machine' => $machine]);
     }
 
-    public function money($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
-
-
-        $moneylogs = DB::table('moneylogs')->where('machine_id', $id)->latest('created_at')->get();
+    public function money($id) {        
         
-        return view('machines-mgmt/money', ['machine' => $machine, 'moneylogs' => $moneylogs]);
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'moneylogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
+        );        
+        $moneylogs = $this->kLogs($val);
+        $export = $this->apiurl('exportcsv/moneylogs');
+        $url = $this->apiurl('machine-management/money/') .$machine->id.'?logtype=moneylogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
     }
 
     public function goals($id) {
-        $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.id', $id)->first();
 
-        $goalslogs = DB::table('goalslogs')->where('machine_id',$id)->where('testPlay', 'play')->latest('log_id')   
-                    ->get();
-        return view('machines-mgmt/goals', ['machine' => $machine,'goalslogs' => $goalslogs]);
+        
+        $machine = $this->machinelogs($id);  
+        $val = array(
+            'id' =>  $id,
+            'type' => 'goalslogs',
+            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
+            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
+            'status' => Input::get('status')
+        );        
+        $moneylogs = $this->kLogs($val);
+        $export = $this->apiurl('exportcsv/goalslogs');
+        $url = $this->apiurl('machine-management/goals/') .$machine->id.'?logtype=goalslogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
+
 
     }
 
+    public function machinelogs($id){
+        
+        $machine = DB::table('machines')
+                    ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                            , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                            , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                    ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                    ->where('machines.id', $id)->first();   
+        
+        return $machine;
+    }
+    
+    public function apiurl($log){
+        
+        $actual_link = 'http://'.$_SERVER['HTTP_HOST'];
+        if($actual_link == 'http://localhost'){
+            $actual_link = $actual_link.'/coinoponlinebeta/public/'.$log;
+        }else{
+            $actual_link = $actual_link.'/'.$log;
+        }      
+        
+        return $actual_link;
+    }
+    
+    public function exportcsv($data){                
+      
+        $dataExport = $this->jsondata($data,'filter');    
+        
+        //print_r($dataExport);
+        $selected_array = array('header:ID','header:Log ID','header:Machine ID','header:Type', 'header:Error Log','header:Date Time Log','header:Status');
+       
+        $Filename = $data.'.csv';
+        header('Content-Type: text/csv; charset=utf-8');
+        Header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename='.$Filename.'');
+      
+        $output = fopen('php://output', 'w');
+        fputcsv($output, $selected_array);
+        foreach ($dataExport as $row){
+            fputcsv($output, $row);
+        }
+        fclose($output);
+    }
+    
+    public function jsondata($logType,$filter){
+        
+        $pageid = Input::get('page');
+        
+        if($filter != 'filter'){                    
+            $actual_link = $this->apiurl($logType);
+            $jsonurl = $actual_link."?page=".$pageid;
+            $json = file_get_contents($jsonurl,0,null,null);
+            $json_output = json_decode($json);
+            $newarray = json_decode(json_encode($json_output), True);
+        }else{            
+            $result = DB::table($logType)->where('machine_id',$pageid)->orderBy('created_at','desc')->get();         
+            $newarray = json_decode(json_encode($result), True);
+        }        
+        
+        return $newarray;        
+    }
+    
+    public function mlogs($filterParam){           
+        
+        $result = DB::table( $filterParam['logType'])
+                ->where('machine_id', $filterParam['id'])      
+                ->orWhere('status',$filterParam['status'])
+                ->orWhereBetween('created_at', array($filterParam['startdate'], $filterParam['enddate']))                
+                ->paginate(10);         
+        $newarray = json_decode(json_encode($result), True);
+        
+        return  $newarray;
+    }
+    
+    public function kLogs($val){
+        
+        if(($val['startdate'] != '1970-01-01') || ($val['status'] != '')){            
+            $filterParam = array(
+                'id' => $val['id'],
+                'logType' => $val['type'],
+                'startdate' => $val['startdate'],
+                'enddate' => $val['enddate'],
+                'status' => $val['status']
+            );   
+            $result = $this->mlogs($filterParam);                   
+            $data = $result['data'];    
+            $totalPage = $result['last_page'];              
+            $logs = array(
+                'data' =>$data,
+                'total' => $totalPage
+            );            
+            
+        }else{            
+            $jsonData = $this->jsondata($val['type'],'');
+            $totalPage = $jsonData['meta']['last_page'];
+            $data = $jsonData['data'];     
+            $logs = array(
+                'data' =>$data,
+                'total' => $totalPage
+            );               
+        } 
+        
+        return $logs;
+        
+    }
+    
     public function accounts($id) {
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'city.name as city_name', 'machine_model.title as machine_model', 'machine_type.title as machine_type')

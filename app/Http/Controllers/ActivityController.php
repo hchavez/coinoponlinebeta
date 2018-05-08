@@ -48,7 +48,7 @@ class ActivityController extends Controller
                             , 'log_activities.ip as ip', 'log_activities.agent as agent', 'log_activities.updated_at as updated_at')
                     ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id')                                        
                     ->where('log_activities.user_id', $id);  
-        $act = $get_user->latest('log_activities.updated_at')->get();     
+        $act = $get_user->latest('log_activities.updated_at')->paginate(10);     
         
         return view('activity/show', ['logs' => $logs, 'activity' => $act, 'user_id' => $id]);
     }

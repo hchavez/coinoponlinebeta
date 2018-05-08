@@ -120,6 +120,7 @@ class ProductDefinitionsController extends Controller
         ];
 
         if (ProductDefinitions::where('machine_id', $id)->update($input)) {
+            \LogActivity::addToLog('Updated Machine Product Definition Settings');
             return back()->with('success', 'Machine Product Definitions successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
         

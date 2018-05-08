@@ -46,7 +46,7 @@ class DashboardController extends Controller
             ->where('errorlogs.status','!=','2')
             ->whereDate('errorlogs.created_at', '=', Carbon::today())
             ->orderBy('date_created','DESC')
-            ->get();
+            ->paginate(15);
   
          $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*')

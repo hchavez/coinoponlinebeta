@@ -104,6 +104,7 @@ class MachineAccountsController extends Controller {
         ];
 
          if (MachineAccounts::where('machine_id', $id)->update($input)) {
+            \LogActivity::addToLog('Updated Machine Accounts Settings');
             return back()->with('success', 'Machine Accounts successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
         
