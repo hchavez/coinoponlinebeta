@@ -154,7 +154,7 @@ $(document).ready(function(){
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     console.log(baseUrl+'/public/errorapi');
     $('#klogs').dataTable({
-        ajax: 'https://www.ascentri.com/errorapi',    
+        ajax: baseUrl+'/public/errorapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -170,7 +170,7 @@ $(document).ready(function(){
     });    
    
     $('#winlogs').dataTable({
-        ajax: 'https://www.ascentri.com/winapi',    
+        ajax: baseUrl+'/public/winapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -194,7 +194,7 @@ $(document).ready(function(){
     });
     
     $('#moneyapi').dataTable({
-        ajax: 'https://www.ascentri.com/moneyapi',    
+        ajax: baseUrl+'/public/moneyapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           
@@ -221,7 +221,7 @@ $(document).ready(function(){
     });
     
     $('#goalsapi').dataTable({
-        ajax: 'https://www.ascentri.com/goalsapi',    
+        ajax: baseUrl+'/public/goalsapi',    
         dom: 'Bfrtip',
             buttons: [
                 'excel'           

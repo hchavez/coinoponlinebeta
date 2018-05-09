@@ -205,3 +205,17 @@ table.dataTable td:nth-child(8){
     padding: 0.3em;
     border-radius: 3px;
 }
+
+/*site page*/
+#site_wrapper #s2id_filter1,#site_wrapper #s2id_filter4{width:8%;}#site_wrapper #s2id_filter2{width:6.5%;}
+#site_wrapper #s2id_filter3{width:8.5%;}#site_wrapper #s2id_filter5,#site_wrapper #s2id_filter8,#site_wrapper #s2id_filter9{width:7%;}
+#site_wrapper #s2id_filter6,#site_wrapper #s2id_filter7{width:24%;}
+
+/*prizes page*/
+#prize_wrapper #s2id_filter1{width:17%;}#prize_wrapper #s2id_filter2{width:60%;}
+#prize_wrapper #s2id_filter3,#prize_wrapper #s2id_filter4{width:11%;}
+
+/*themes page*/
+#theme_wrapper #s2id_filter1{width:11%;}#theme_wrapper #s2id_filter2{width:40%;}
+#theme_wrapper #s2id_filter3{width:6%;}#theme_wrapper #s2id_filter4{width:12%;}
+#theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:14%;}
