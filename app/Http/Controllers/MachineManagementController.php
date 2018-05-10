@@ -384,7 +384,7 @@ class MachineManagementController extends Controller {
             'startdate' => $val['startdate'],
             'enddate' => $val['enddate']
         );   
-        $result = $this->mlogs($filterParam);                   
+        $result = $this->filterDate($filterParam);                   
         $data = $result['data'];    
         $totalPage = $result['last_page'];              
         $logs = array(
@@ -404,11 +404,9 @@ class MachineManagementController extends Controller {
             'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))           
         );               
-        $logs = $this->klogs($val);
-        $export = $this->apiurl('exportcsv/errorlogs');
-        $url = $this->apiurl('machine-management/error/') .$machine->id.'?logtype=errorlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];          
-        
-        return view('machines-mgmt/error', ['url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
+        $logs = $this->klogs($val);   
+       
+        return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
     }     
 
     public function win($id) {
@@ -421,11 +419,9 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
             'status' => Input::get('status')
         );        
-        $winLogs = $this->kLogs($val);
-        $export = $this->apiurl('exportcsv/winlogs');
-        $url = $this->apiurl('machine-management/win/') .$machine->id.'?logtype=winlogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        $winLogs = $this->kLogs($val);      
         
-        return view('machines-mgmt/win', ['win' => $winLogs['data'],'total' => $winLogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export,'machine' => $machine]);
+        return view('machines-mgmt/win', ['win' => $winLogs['data'], 'machine' => $machine]);
     }
 
     public function money($id) {        
@@ -438,15 +434,12 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
             'status' => Input::get('status')
         );        
-        $moneylogs = $this->kLogs($val);
-        $export = $this->apiurl('exportcsv/moneylogs');
-        $url = $this->apiurl('machine-management/money/') .$machine->id.'?logtype=moneylogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        $moneylogs = $this->kLogs($val);     
         
-        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
+        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'id'=>$id, 'machine' => $machine]);
     }
 
     public function goals($id) {
-
         
         $machine = $this->machinelogs($id);  
         $val = array(
@@ -456,13 +449,9 @@ class MachineManagementController extends Controller {
             'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
             'status' => Input::get('status')
         );        
-        $moneylogs = $this->kLogs($val);
-        $export = $this->apiurl('exportcsv/goalslogs');
-        $url = $this->apiurl('machine-management/goals/') .$machine->id.'?logtype=goalslogs&id='.$machine->id.'&startdate='.$val['startdate'].'&enddate='.$val['enddate'];
+        $moneylogs = $this->kLogs($val);        
         
-        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'total' => $moneylogs['total'], 'url' => $url,'id'=>$id, 'export'=>$export, 'machine' => $machine]);
-
-
+        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'id'=>$id, 'machine' => $machine]);
     }
 
     public function machinelogs($id){
@@ -480,38 +469,8 @@ class MachineManagementController extends Controller {
         
         return $machine;
     }
-    
-    public function apiurl($log){
-        
-        $actual_link = 'https://'.$_SERVER['HTTP_HOST'];
-        if($actual_link == 'http://localhost'){
-            $actual_link = $actual_link.'/coinoponlinebeta/public/'.$log;
-        }else{
-            $actual_link = $actual_link.'/'.$log;
-        }      
-        
-        return $actual_link;
-    }
-       
-    public function jsondata($logType,$filter){
-        
-        $pageid = Input::get('page');
-        
-        if($filter != 'filter'){                    
-            $actual_link = $this->apiurl($logType);
-            $jsonurl = $actual_link."?page=".$pageid;
-            $json = file_get_contents($jsonurl,0,null,null);
-            $json_output = json_decode($json);
-            $newarray = json_decode(json_encode($json_output), True);
-        }else{            
-            $result = DB::table($logType)->where('machine_id',$pageid)->orderBy('created_at','desc')->get();         
-            $newarray = json_decode(json_encode($result), True);
-        }        
-        
-        return $newarray;        
-    }
-    
-    public function mlogs($filterParam){           
+           
+    public function filterDate($filterParam){           
         
         $result = DB::table( $filterParam['logType'])
                 ->where('machine_id', $filterParam['id']) 
@@ -520,10 +479,8 @@ class MachineManagementController extends Controller {
         $newarray = json_decode(json_encode($result), True);
         
         return  $newarray;
-    }
-    
-   
-    
+    }  
+       
     public function accounts($id) {
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'city.name as city_name', 'machine_model.title as machine_model', 'machine_type.title as machine_type')

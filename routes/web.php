@@ -44,37 +44,21 @@ Route::get('/jsonusers', function(){
    return new UserCollection($userall);
 });
 
-/*Route::get('/errorlogs', function(){
-   $userall = Errorlogs::orderBy('created_at', 'desc')->paginate(10);
-   return new UserCollection($userall);
-});*/
 Route::get('/errorapi', function(){
    $userall = Errorlogs::orderBy('created_at', 'desc')->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/winlogs', function(){
-   $userall = WinLogs::orderBy('created_at', 'desc')->paginate(10);
-   return new UserCollection($userall);
-});
 Route::get('/winapi', function(){
    $userall = WinLogs::orderBy('created_at', 'desc')->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/moneylogs', function(){
-   $userall = MoneyLogs::orderBy('created_at', 'desc')->paginate(10);
-   return new UserCollection($userall);
-});
 Route::get('/moneyapi', function(){
    $userall = MoneyLogs::orderBy('created_at', 'desc')->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/goalslogs', function(){
-   $userall = GoalsLogs::orderBy('created_at', 'desc')->paginate(10);
-   return new UserCollection($userall);
-});
 Route::get('/goalsapi', function(){
    $userall = GoalsLogs::orderBy('created_at', 'desc')->limit(25000)->get();
    return new UserCollection($userall);

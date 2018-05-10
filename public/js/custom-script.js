@@ -4,7 +4,7 @@
 
 
 $(document).ready(function(){
-
+    $.fn.dataTable.ext.errMode = 'none';
     var machine_details = ['state', 'type', 'model', 'serial', 'site', 'route', 'area'];
     $.each(machine_details, function(num, val){        
         $("#machine_" + val).select2(); //Dropdown autosuggest
@@ -149,107 +149,77 @@ $(document).ready(function(){
             console.log('Hooray!');
         }
     });
-
-    var getUrl = window.location;
-    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-    console.log(baseUrl+'/public/errorapi');
-    $('#klogs').dataTable({
-        ajax: 'https://www.ascentri.com/errorapi',    
-        dom: 'Bfrtip',
-            buttons: [
-                'excel'           
-            ],
-        deferRender:    true,       
-        columns:[
-            {'data': 'id'},
-            {'data': 'type'},
-            {'data': 'error'},
-            {'data': 'created_at'},
-            {'data': 'status'}
-        ]       
-    });    
+    
+    var base_url = 'https://www.ascentri.com';
+    var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
    
-    $('#winlogs').dataTable({
-        ajax: 'https://www.ascentri.com/winapi',    
+    $('#klogs').dataTable({
+        ajax: base_url+'errorapi',    
         dom: 'Bfrtip',
-            buttons: [
-                'excel'           
-            ],
+        buttons: ['excel'],
         deferRender:    true,       
-        columns:[
-            {'data': 'id'},
-            {'data': 'testPlay'},
-            {'data': 'winResult'},
-            {'data': 'created_at'},
-            {'data': 'totalWon'},
-            {'data': 'playIndex'},
-            {'data': 'owedWin'},
-            {'data': 'excessWin'},
-            {'data': 'stockLeft'},
-            {'data': 'stockRemoved'},
-            {'data': 'stockAdded'},
-            {'data': 'nTimesOfPlay'},
-            {'data': 'status'}            
+        columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
+    }); 
+    $('#winlogs').dataTable({
+        ajax: base_url+'winapi',    
+        dom: 'Bfrtip',
+        buttons: ['excel'],
+        deferRender:    true,       
+        columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
+            {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}            
         ]       
     });
     
     $('#moneyapi').dataTable({
-        ajax: 'https://www.ascentri.com/moneyapi',    
+        ajax: base_url+'moneyapi',    
         dom: 'Bfrtip',
-            buttons: [
-                'excel'           
-            ],
+        buttons: ['excel'],
         deferRender:    true,       
         columns:[
-            {'data': 'id'},
-            {'data': 'created_at'},
-            {'data': 'coinIn'},
-            {'data': 'ttlCoinIn'},
-            {'data': 'billIn'},
-            {'data': 'ttlBillIn'},
-            {'data': 'swipeIn'},
-            {'data': 'type'},
-            {'data': 'payment_result'},
-            {'data': 'decline_reason'},
-            {'data': 'ttlMoneyIn'},
-            {'data': 'forPlay'},
-            {'data': 'forClick'},
-            {'data': 'pricePlay'},
-            {'data': 'credits'},
-            {'data': 'status'}
+            {'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
+            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'ttlMoneyIn'},{'data': 'forPlay'},{'data': 'forClick'},{'data': 'pricePlay'},{'data': 'credits'},{'data': 'status'}
         ]       
     });
     
     $('#goalsapi').dataTable({
-        ajax: 'https://www.ascentri.com/goalsapi',    
+        ajax: base_url+'goalsapi',    
         dom: 'Bfrtip',
-            buttons: [
-                'excel'           
-            ],
+        buttons: ['excel'],
         deferRender:    true,       
         columns:[
-            {'data': 'id'},
-            {'data': 'testPlay'},
-            {'data': 'pkPWM'},
-            {'data': 'created_at'},
-            {'data': 'pkVolt'},
-            {'data': 'retPWM'},
-            {'data': 'retVolt'},
-            {'data': 'voltDecRetPercentage'},
-            {'data': 'plusPickUp'},
-            {'data': 'dropCount'},
-            {'data': 'dropPWM'},
-            {'data': 'dropVolt'},
-            {'data': 'incVoltage'},
-            {'data': 'decVoltage'},
-            {'data': 'status'}
+            {'data': 'id'},{'data': 'testPlay'},{'data': 'pkPWM'},{'data': 'created_at'},{'data': 'pkVolt'},{'data': 'retPWM'},{'data': 'retVolt'},{'data': 'voltDecRetPercentage'},
+            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'},{'data': 'status'}
         ]       
     });
     
-    $('#klogs_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
-    $('#winlogs_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
-    $('#moneyapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
-    $('#goalsapi_wrapper button').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
+    $('#klogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
+    $('#winlogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
+    $('#moneyapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
+    $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
   
+    
+    // filter date range
+    $('.input-daterange input').each(function() {
+      $(this).datepicker('clearDates');
+    });
+    
+    table = $('#klogs').DataTable({ paging: false, info: false }); 
+    moneytable = $('#moneyapi').DataTable({ paging: false, info: false });    
+    
+    $.fn.dataTable.ext.search.push( function(settings, data, dataIndex) {
+        var min = $('#min-date').val();
+        var max = $('#max-date').val();
+        var createdAt = data[3] || 0; 
+        var moneyapi = data[1] || 0;
+        if ( (min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max)) ) { return true; }
+        if ( (min == "" || max == "") || (moment(moneyapi).isSameOrAfter(min) && moment(moneyapi).isSameOrBefore(max)) ) { return true; }
+        return false;
+    });
+    
+    $('.date-range-filter').change(function(){  table.draw();  });
+    $('.date-range-filter').change(function(){  moneytable.draw();  });
+    $('#my-table_filter').hide();
+    
+    
     
 });

@@ -50,16 +50,11 @@
 
                     <div class="row">
                         <div class="col-md-4">
-                            <form role="form" method="GET" action="#">
-                                <div class="input-group input-daterange">
-                                <input type="hidden" name="logtype" value="errorlogs">
-                                <input type="hidden" name="id" value="{{ $machine->id }}">
-                                <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                            <div class="input-group input-daterange">
+                                <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                                 <div class="input-group-addon">to</div>
-                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">  
-                                <button type="submit" class="btn btn-primary">Search</button> 
-                                </div>
-                            </form>
+                                <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
+                              </div>
                         </div>                       
                         <br><br>
                         <div class="col-sm-12">
