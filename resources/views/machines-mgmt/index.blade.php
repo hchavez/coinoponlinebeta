@@ -3,9 +3,11 @@
 
 <div class="panel">
     <header class="panel-heading">
-        <h3 class="panel-title">List of Machines</h3>
+        <h3 class="panel-title">List of Machines</h3>       
     </header>
+    
     <div class="panel-body">
+        
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             <div id="byDate">
                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
@@ -18,28 +20,8 @@
                 </form>
             </div>
             <div class="row"><div class="col-sm-12 longFilter">     
-                    <!--div id="toggleColumn">                          
-                        <a href="#" data-toggle="modal" data-target="#filterModal" style="text-decoration: none;"><button type="button" class="btn dark btn-primary">Filter</button></a>
-                        <button class="btn btn-primary dark" id="buttonSelectAll" type="button">Toggle Column/ Export CSV</button>
-                    </div>
-                    
-                    <div id="filterModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">                                 
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>                
-                                    Filter Machine List
-                                </div>
-                                <div class="modal-body">
-                                   
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" >Update</button>
-                                </div>            
-                            </div>
-                        </form>
-                        </div>
-                    </div-->                    
+                     
+                    <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                     <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
                     <div id="filterDiv"></div>
                         <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">

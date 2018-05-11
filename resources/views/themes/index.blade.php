@@ -9,8 +9,12 @@
        <div id="theme_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
 
 
-            <div class="row"><div class="col-sm-12">
-                    <div id="filterDiv">Filter by: <br/></div>
+            <div class="row">
+                <div class="col-md-12 text-left">
+                    <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
+                </div>
+                <div class="col-sm-12">
+                    <div id="filterDiv"><br/></div>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
                         
                         <thead>

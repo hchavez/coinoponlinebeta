@@ -19,6 +19,7 @@
             </div>
             
             <div class="row"><div class="col-sm-12 longFilter">
+                    <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                     <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
                     <div id="filterDiv"></div>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
