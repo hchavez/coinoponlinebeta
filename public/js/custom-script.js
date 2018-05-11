@@ -150,7 +150,7 @@ $(document).ready(function(){
         }
     });
     
-    var base_url = 'https://www.ascentri.com';
+    var base_url = 'https://www.ascentri.com/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
    
     $('#klogs').dataTable({
@@ -220,6 +220,8 @@ $(document).ready(function(){
     $('.date-range-filter').change(function(){  moneytable.draw();  });
     $('#my-table_filter').hide();
     
-    
+    $('#clearFilter').click(function() {
+        location.reload();
+    });
     
 });
