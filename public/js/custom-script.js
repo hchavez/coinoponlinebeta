@@ -1,8 +1,6 @@
 /*
 * Custom script
 */
-
-
 $(document).ready(function(){
     $.fn.dataTable.ext.errMode = 'none';
     var machine_details = ['state', 'type', 'model', 'serial', 'site', 'route', 'area'];
@@ -16,34 +14,20 @@ $(document).ready(function(){
     $("#txtFromDate").datepicker(); 
     $("#min-date").datepicker();
     $("#max-date").datepicker();
-   
+    
+    //toggle filter for machine list and report
     $('#filterBy').on('click', function(event) {        
-        $('#filterDiv').toggle('show'); //toggle filter 
+        $('#filterDiv').toggle('show'); 
     });
-    
-    //orderBy date
-    var url = window.location.href;    
-    var sortColumn;
-    
-    if( url.indexOf('reports') >- 1 ){
-        sortColumn = [19, 'DESC'];
-    }else if( url.indexOf('error') >- 1 ){
-        sortColumn = [1, 'DESC'];
-    }else if( url.indexOf('win') >- 1 || url.indexOf('goals') >- 1){
-        sortColumn = [2, 'DESC'];
-    }else{}
-      
+       
     //filter table
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
-        buttons: [
-            'excel'           
-        ],
+        buttons: ['excel'],
         scrollY: '450px',
         paging: true,
         autoFill: true,     
-        pageLength: 100,
-        
+        pageLength: 100,        
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -82,77 +66,24 @@ $(document).ready(function(){
         $('#select2-chosen-'+ (i+1)).html(label);
     });
     
-    var re = new RegExp(/^.*\//);
-    var baseUrl = re.exec(window.location.href);    
-    $('.dt-button.buttons-excel span').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); //Change export button label
-    $('#dashboard_sort_filter input').addClass('form-control'); //search input in all tables      
-     
-    //Show filter indicator on mouse hover
-    $(".table th").each(function() {
-
-        $(this).hover(
-          function() {
-            $(this).append('<i class="wb-sort-vertical"></i>');
-          }, function() {
-            $(".wb-sort-vertical").css('display','none');
-          }
-        );
-    });
+    //Change export button label    
+    $('.dt-button.buttons-excel span').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
     
-    
-    //test filter    
-    /*var check = setInterval(function(){ 
-        if( $('#filterDate').length > 0 ){
-            alert('olah');
-            clearInterval(check);
-        }
-    }, 500);	*/   
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {            
-            var min = parseInt( $('#min').val(), 10 );
-            var max = parseInt( $('#max').val(), 10 );
-            var age = parseFloat( data[0] ) || 0; // use data for the age column
-            //console.log('year:'+ age + ' = min:'+min+ ' = max:' + max);
-            if ( ( isNaN( min ) && isNaN( max ) ) ||
-                ( isNaN( min ) && age <= max ) ||
-                ( min <= age   && isNaN( max ) ) ||
-                ( min <= age   && age <= max ) )
-            {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-    $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
-    //var table = $('#dashboard_sort').DataTable();
-
-    // Event listener to the two range filtering inputs to redraw on input
-    $('#min, #max').change(function () {
-        table.draw();
-    });
-    
-    
-    //test start
-    $('#dashboard_sort tbody tr td:eq(1)').each(function(index){
-        var val = $(this).text().split(' ');
-        
-        var d = new Date();
-        var month = d.getMonth()+1;
-        var day = d.getDate();
-
-        var today = ((''+day).length<2 ? '0' : '') + day + '/' + ((''+month).length<2 ? '0' : '') + month  + '/' + d.getFullYear();
-        
-        console.log(val[0] + '-' + today);
-        if(val[0] === today){
-            console.log('Hooray!');
-        }
-    });
-    
-    var base_url = 'https://www.ascentri.com/';
+    //search input in all tables
+    $('#dashboard_sort_filter input').addClass('form-control');       
+            
+    //Display machine list from json query result
+    var base_url = 'http://localhost/coinoponlinebeta/public/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
-   
+    
+    
+    var searchDate = '';
+    $('#filterDate').click(function(){
+        var today = new Date();
+        var datey = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();    
+        var searchDate = '?date='+datey;        
+    });
+    console.log(searchDate);
     $('#klogs').dataTable({
         ajax: base_url+'errorapi',    
         dom: 'Bfrtip',
@@ -166,40 +97,33 @@ $(document).ready(function(){
         buttons: ['excel'],
         deferRender:    true,       
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
-            {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}            
-        ]       
-    });
-    
+            {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
+    });    
     $('#moneyapi').dataTable({
         ajax: base_url+'moneyapi',    
         dom: 'Bfrtip',
         buttons: ['excel'],
         deferRender:    true,       
-        columns:[
-            {'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
-            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'ttlMoneyIn'},{'data': 'forPlay'},{'data': 'forClick'},{'data': 'pricePlay'},{'data': 'credits'},{'data': 'status'}
-        ]       
-    });
-    
+        columns:[{'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
+            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'ttlMoneyIn'},{'data': 'forPlay'},{'data': 'forClick'},{'data': 'pricePlay'},{'data': 'credits'},{'data': 'status'}]       
+    });    
     $('#goalsapi').dataTable({
         ajax: base_url+'goalsapi',    
         dom: 'Bfrtip',
         buttons: ['excel'],
         deferRender:    true,       
-        columns:[
-            {'data': 'id'},{'data': 'testPlay'},{'data': 'pkPWM'},{'data': 'created_at'},{'data': 'pkVolt'},{'data': 'retPWM'},{'data': 'retVolt'},{'data': 'voltDecRetPercentage'},
-            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'},{'data': 'status'}
-        ]       
+        columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'pkPWM'},{'data': 'created_at'},{'data': 'pkVolt'},{'data': 'retPWM'},{'data': 'retVolt'},{'data': 'voltDecRetPercentage'},
+            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'},{'data': 'status'}]       
     });
     
+    //excel button append
     $('#klogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#winlogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#moneyapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
-  
-    
+      
     // filter date range
-    $('.input-daterange input').each(function() {
+    /*$('.input-daterange input').each(function() {
       $(this).datepicker('clearDates');
     });
     
@@ -218,10 +142,24 @@ $(document).ready(function(){
     
     $('.date-range-filter').change(function(){  table.draw();  });
     $('.date-range-filter').change(function(){  moneytable.draw();  });
-    $('#my-table_filter').hide();
+    $('#my-table_filter').hide();*/
     
-    $('#clearFilter').click(function() {
-        location.reload();
+    //clear filter
+    $('#clearFilter').click(function() {        
+        var baseurl = window.location.origin+window.location.pathname;
+        window.location.href = baseurl;       
     });
+    
+    //Show filter indicator on mouse hover
+    $(".table th").each(function() {
+        $(this).hover(
+          function() {
+            $(this).append('<i class="wb-sort-vertical"></i>');
+          }, function() {
+            $(".wb-sort-vertical").css('display','none');
+          }
+        );
+    });
+  
     
 });
