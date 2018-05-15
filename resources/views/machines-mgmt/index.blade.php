@@ -28,7 +28,7 @@
                             <thead>
                             <tr role="row">
                                 <th>State</th>
-                                <th>Type</th>
+                                <!--th>Type</th-->
                                 <th>Model</th>
                                 <th>Serial No</th>
                                 <th>Site</th>
@@ -52,7 +52,7 @@
                             <tbody>
                             @foreach ($machines as $machine)                            
                                 <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
-                                    <td> {{ $machine->state }} </td>
+                                    <!--td> {{ $machine->state }} </td-->
                                     <td>{{ $machine->machine_type }}</td>
                                     <td>{{ $machine->machine_model }}</td>
                                     <td> {{ $machine->machine_serial_no }}</td>
@@ -73,7 +73,7 @@
                                     <td></td>                                         
                                     <td> <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?><?php echo $active; ?> </td>
                                 </tr>                            
-                            @endforeach
+                            @endforeach 
                             </tbody>
                             
                         </table>
