@@ -300,9 +300,7 @@
                                                 <a class="animsition-link" href="{{ url('machine-management/create') }}">
                                                     <span class="site-menu-title">New Machine</span>
                                                 </a>
-                                            </li>
-                                           
-                                          
+                                            </li>                                        
 
                                         </ul>
                                     </div>
@@ -357,11 +355,10 @@
                     
                     
                     <li class="dropdown site-menu-item has-section has-sub">
-                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
+                        <a data-toggle="dropdown" href="{{ url('machine-error-reports') }}" data-dropdown-toggle="false">
                             <i class="site-menu-icon wb-bookmark" aria-hidden="true"></i>
                             <span class="site-menu-title">Reports</span>
                         </a>
-
                     </li>
                   
                     <li class="dropdown site-menu-item has-sub">
@@ -369,7 +366,6 @@
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Admin Panel</span>            
                         </a>    
-                  
                     </li>
 
                 </ul>

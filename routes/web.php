@@ -45,7 +45,7 @@ Route::get('/jsonusers', function(){
 });
 
 Route::get('/errorapi', function(){
-   $userall = Errorlogs::orderBy('created_at', 'desc')->limit(25000)->get();
+   $userall = Errorlogs::orderBy('created_at', 'desc')->limit(25)->get();
    return new UserCollection($userall);
 });
 
@@ -225,3 +225,6 @@ Route::get('logActivity', 'ActivityController@logActivity');
 
 Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
+
+Route::resource('machine-error-reports', 'MachineErrorReportController');
+Route::resource('machine-reports', 'MachineReportsController');
