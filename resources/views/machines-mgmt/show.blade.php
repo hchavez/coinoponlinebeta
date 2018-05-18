@@ -217,7 +217,10 @@
                         <!-- Example css animation Chart -->
                         <div class="example-wrap">
                             <div class="row row-lg">
+                                
                                 <div class="col-xl-12">
+                                                                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
                                     <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
@@ -266,8 +269,50 @@
                                                     data: [ {{ $graphdataDropVoltResult }} ], 
                                                 }]
                                         });
+                                        
+                                        
+                                        
+                                        //new chart for development
+                                          chart = new Highcharts.stockChart('container', {
+
+                                    chart: {
+                                        type: 'arearange'
+                                    },
+
+                                    rangeSelector: {
+                                        allButtonsEnabled: false,
+                                        selected: 2
+                                    },
+
+                                      yAxis: {
+                                                 min: 0,
+                                                    max: 50,
+                                                      tickInterval: 10,
+                                                title: {
+                                                    text: 'Voltage Graph',
+                                                    
+                                                }
+                                            },
+
+                                    tooltip: {
+                                        
+                                    },
+
+                                    series: [{
+                                        name: 'Data',
+                                        data: [ {{   $graphdataOwnedWinResult }} ],
+                                    }]
+
+                                });
+                                
                                     });
 
+
+                                    
+                            $.getJSON('https://cdn.rawgit.com/highcharts/highcharts/v6.0.5/samples/data/range.json', function (data) {
+
+                               
+                            });
 
 
                                 </script>
@@ -280,7 +325,10 @@
                 </div>
                 <!-- End Widget Jvmap -->
             </div>
-
+<?php
+//$leads = json_decode($graphdataPkVoltQuery2, true);
+//dd($leads);
+?>
             <div class="col-xxl-4 col-lg-6">
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">

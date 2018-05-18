@@ -67,7 +67,8 @@ class MachineManagementController extends Controller {
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')                                              
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
+                        ->where('machines.id','<>', 27)
                         ->where('machines.status', '1');
                         //->latest('machines.created_at')->paginate(100);   
         if ( !$data ) :
@@ -78,8 +79,9 @@ class MachineManagementController extends Controller {
                 })->orderBy('date_created','desc');            
             endif;
         endif;
+        
         $machines = $machines->orderBy('date_created','desc')->get()->toArray(); 
-        //print_r($machines);
+ 
        
         return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
@@ -361,6 +363,17 @@ class MachineManagementController extends Controller {
             $graphdataPkVoltResult = null;
         }
         
+            $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt')->where('machine_id', $id)
+                                //->whereMonth('created_at', '=', date('m'))
+                                ->where('dropCount','=', '1')
+                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')
+                                // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
+                                ->get();
+                       
+                        
+                        // $newgraphdataPkVoltQuery2 = json_encode($graphdataPkVoltQuery2);
+        
+                         //print_r($newarray);
         
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
@@ -372,6 +385,7 @@ class MachineManagementController extends Controller {
             'machinerecords' => $machinerecords,
             'totalPlay' => $totalPlay,
             'totalMoneyquery' => $totalMoneyquery
+            //'newgraphdataPkVoltQuery2' => $newgraphdataPkVoltQuery2
         ]);
         
         

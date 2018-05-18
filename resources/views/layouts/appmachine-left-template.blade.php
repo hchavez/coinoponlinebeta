@@ -35,8 +35,11 @@
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         
           <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script src="https://code.highcharts.com/stock/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
         <!--[if lt IE 9]>
         <script src="https://code.highcharts.com/modules/oldie.js"></script>
         <![endif]-->

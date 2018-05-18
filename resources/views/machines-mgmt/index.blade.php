@@ -43,10 +43,10 @@
                                 <th>RET Volt </th>	
                                 <th>Owed Win </th>	
                                 <th>Excess win  </th>	
-                                <th>Error</th>
+<!--                                <th>Error</th>-->
                                 <th>Activity  </th>	
-                                <th>Sync Status</th>
-                                <th>Active</th>
+<!--                                <th>Sync Status</th>
+                                <th>Active</th>-->
                             </tr>                            
                             </thead>
                             <tbody>
@@ -68,10 +68,10 @@
                                     <td>{{ $machine->ret_volt }}</td>
                                     <td>{{ $machine->owed_win }}</td>
                                     <td>{{ $machine->excess_win }}</td>                                
-                                    <td></td>
+                                    <!--<td></td>-->
                                     <td>{{date('d/m/Y h:i A', strtotime($machine->last_played))}}</td>
-                                    <td></td>                                         
-                                    <td> <?php if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?><?php echo $active; ?> </td>
+<!--                                    <td></td>                                         
+                                    <td> <?php //if($machine->status == '1') {$active = "Yes"; }else{ $active = "No"; }  ?><?php //echo $active; ?> </td>-->
                                 </tr>                            
                             @endforeach
                             </tbody>
