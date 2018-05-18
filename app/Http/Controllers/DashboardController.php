@@ -29,7 +29,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-         $machinelogs = DB::table('machines')
+        $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
                     'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
@@ -48,14 +48,35 @@ class DashboardController extends Controller
             ->orderBy('date_created','DESC')
             ->paginate(15);
   
-         $machinelogsgroup =  DB::table('errorlogs_list')
+        $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*')
             //->leftJoin('errorlogs', 'errorlogs_list.log_id', '=', 'errorlogs.log_id')
             ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
             ->orderBy('errorlogs_list.created_at','DESC')
             ->get();
-         
-        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup  ]);
+        $numMachine = MachineType::count();
+        $get_user = DB::table('users')
+                    ->select('users.*', 'users.id as users_id','users.username as username'
+                            , 'log_activities.subject as subject', 'log_activities.url as url'
+                            , 'log_activities.ip as ip', 'log_activities.agent as agent', 'log_activities.updated_at as updated_at')
+                    ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id');  
+        $act = $get_user->latest('log_activities.updated_at')->paginate(10);    
+       
+        $fromDate = date('Y-m').'-01';
+        $toDate = date('Y-m').'-31';
+        $incomeNote = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('ttlBillIn'); 
+        $incomeCoin = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('coinIn'); 
+        $incomeTap = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('swipeIn'); 
+        
+        
+        $total = array(
+            'note' => number_format($incomeNote),
+            'coin' => number_format($incomeCoin),
+            'tap' => number_format($incomeTap)
+        );
+        
+        
+        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine, 'logs'=>$act ,'total'=>$total ]);
         
     }
     

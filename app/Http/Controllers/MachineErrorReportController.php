@@ -16,7 +16,8 @@ use App\GoalsLogs;
 use App\WinLogs;
 use App\MoneyLogs;
 use App\MachineType;
-//use App\MachineModel;
+use App\MachineModel;
+use App\Site;
 use Carbon\Carbon;
 
 
@@ -55,7 +56,10 @@ class MachineErrorReportController extends Controller
             ->orderBy('errorlogs_list.created_at','DESC')
             ->get();
          
-        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup  ]);
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+         
+        return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel, 'site'=>$site ]);
         
     }
     

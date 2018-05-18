@@ -73,45 +73,51 @@ $(document).ready(function(){
     $('#dashboard_sort_filter input').addClass('form-control');       
             
     //Display machine list from json query result
+   //var base_url = 'http://localhost/coinoponlinebeta/public/';
     var base_url = 'https://www.ascentri.com/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
     
-    var searchDate = '';
-    $('#filterDate').click(function(){
-        var today = new Date();
-        var datey = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();    
-        var searchDate = '?date='+datey;        
-    });
-    console.log(searchDate);
+    var pathname = window.location.pathname; // Returns path only
+    var parts = pathname.split('/');
+    var currentID = parts.pop() || parts.pop();  // handle potential trailing slash
+
+    console.log(currentID);    
+    
+    //console.log(searchDate);
     $('#klogs').dataTable({
-        ajax: base_url+'errorapi',    
+        ajax: base_url+'errorapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
         deferRender:    true,       
+        order: [[3,'desc']],
         columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
     }); 
     $('#winlogs').dataTable({
-        ajax: base_url+'winapi',    
+        ajax: base_url+'winapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
-        deferRender:    true,       
+        deferRender:    true, 
+        order: [[3,'desc']],
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
-    $('#moneyapi').dataTable({
-        ajax: base_url+'moneyapi',    
+    $('#moneyapi').dataTable({   
+        ajax: base_url+'moneyapi/'+currentID,
         dom: 'Bfrtip',
         buttons: ['excel'],
-        deferRender:    true,       
+        deferRender:    true,   
+        order: [[1,'desc']],
         columns:[{'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
             {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'ttlMoneyIn'},{'data': 'forPlay'},{'data': 'forClick'},{'data': 'pricePlay'},{'data': 'credits'},{'data': 'status'}]       
+  
     });    
     $('#goalsapi').dataTable({
-        ajax: base_url+'goalsapi',    
+        ajax: base_url+'goalsapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
         deferRender:    true,       
+        order: [[3,'desc']],
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'pkPWM'},{'data': 'created_at'},{'data': 'pkVolt'},{'data': 'retPWM'},{'data': 'retVolt'},{'data': 'voltDecRetPercentage'},
             {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'},{'data': 'status'}]       
     });
@@ -122,44 +128,6 @@ $(document).ready(function(){
     $('#moneyapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
       
-    // filter date range
-    /*$('.input-daterange input').each(function() {
-      $(this).datepicker('clearDates');
-    });
-    
-    table = $('#klogs').DataTable({ paging: false, info: false }); 
-    moneytable = $('#moneyapi').DataTable({ paging: false, info: false });    
-    
-    $.fn.dataTable.ext.search.push( function(settings, data, dataIndex) {
-        var min = $('#min-date').val();
-        var max = $('#max-date').val();
-        var createdAt = data[3] || 0; 
-        var moneyapi = data[1] || 0;
-        if ( (min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max)) ) { return true; }
-        if ( (min == "" || max == "") || (moment(moneyapi).isSameOrAfter(min) && moment(moneyapi).isSameOrBefore(max)) ) { return true; }
-        return false;
-    });
-    
-    $('.date-range-filter').change(function(){  table.draw();  });
-    $('.date-range-filter').change(function(){  moneytable.draw();  });
-    $('#my-table_filter').hide();*/
-    
-    //clear filter
-    $('#clearFilter').click(function() {        
-        var baseurl = window.location.origin+window.location.pathname;
-        window.location.href = baseurl;       
-    });
-    
-    //Show filter indicator on mouse hover
-    $(".table th").each(function() {
-        $(this).hover(
-          function() {
-            $(this).append('<i class="wb-sort-vertical"></i>');
-          }, function() {
-            $(".wb-sort-vertical").css('display','none');
-          }
-        );
-    });
-  
+   
     
 });
