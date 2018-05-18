@@ -44,25 +44,27 @@ Route::get('/jsonusers', function(){
    return new UserCollection($userall);
 });
 
-Route::get('/errorapi', function(){
-   $userall = Errorlogs::orderBy('created_at', 'desc')->limit(25000)->get();
+Route::get('/errorapi/{id}', function($id){
+   $userall = Errorlogs::where('machine_id','=', $id)->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/winapi', function(){
-   $userall = WinLogs::orderBy('created_at', 'desc')->limit(25000)->get();
+Route::get('/winapi/{id}', function($id){
+   $userall = WinLogs::where('machine_id','=', $id)->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/moneyapi', function(){
-   $userall = MoneyLogs::orderBy('created_at', 'desc')->limit(25000)->get();
+Route::get('/moneyapi/{id}', function($id){
+   $userall = MoneyLogs::where('machine_id','=', $id)->limit(25000)->get();
    return new UserCollection($userall);
 });
 
-Route::get('/goalsapi', function(){
-   $userall = GoalsLogs::orderBy('created_at', 'desc')->limit(25000)->get();
+Route::get('/goalsapi/{id}', function($id){
+   $userall = GoalsLogs::where('machine_id','=', $id)->limit(25000)->get();
    return new UserCollection($userall);
 });
+
+Route::get('logdata/{id}', 'MachineManagementController@logdata');
 
 Route::get('exportcsv/{data}', 'MachineManagementController@exportcsv');
 Route::get('mlogs', 'MachineManagementController@mlogs');
@@ -225,3 +227,6 @@ Route::get('logActivity', 'ActivityController@logActivity');
 
 Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
+
+Route::resource('machine-error-reports', 'MachineErrorReportController');
+Route::resource('machine-reports', 'MachineReportsController');

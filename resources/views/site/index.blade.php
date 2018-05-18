@@ -16,7 +16,6 @@
                 <div class="col-sm-12">                    
                     <div id="filterDiv"><br/></div>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
-                       
                         <thead>
                             <tr role="row">
                                 <th>Route</th>	
@@ -29,8 +28,7 @@
                                 <th>Suburb</th>
                                 <th>City</th>
                         </thead>
-                        <tbody>
-                           
+                        <tbody>                           
                             @foreach ($sites as $site)
                             <tr role="row">
                                 <td> {{ $site->route_name  }} </td>

@@ -391,83 +391,30 @@ class MachineManagementController extends Controller {
         
     }  
     
-    public function klogs($val){
-        $filterParam = array(
-            'id' => $val['id'],
-            'logType' => $val['type'],
-            'startdate' => $val['startdate'],
-            'enddate' => $val['enddate']
-        );   
-        $result = $this->filterDate($filterParam);                   
-        $data = $result['data'];    
-        $totalPage = $result['last_page'];              
-        $logs = array(
-            'data' =>$data,
-            'total' => $totalPage
-        ); 
-        
-        return $logs;
-        
-    }
     public function error($id) {
                                          
-        $machine = $this->machinelogs($id);  
-        $val = array(
-            'id' =>  $id,
-            'type' => 'errorlogs',
-            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate')))           
-        );               
-        $logs = $this->klogs($val);   
-       
+        $machine = $this->machinelogs($id);         
         return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
     }     
 
     public function win($id) {
         
         $machine = $this->machinelogs($id);  
-        $val = array(
-            'id' =>  $id,
-            'type' => 'winlogs',
-            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
-            'status' => Input::get('status')
-        );        
-        $winLogs = $this->kLogs($val);      
-        
-        return view('machines-mgmt/win', ['win' => $winLogs['data'], 'machine' => $machine]);
+        return view('machines-mgmt/win', ['machine' => $machine]);
     }
 
     public function money($id) {        
         
-        $machine = $this->machinelogs($id);  
-        $val = array(
-            'id' =>  $id,
-            'type' => 'moneylogs',
-            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
-            'status' => Input::get('status')
-        );        
-        $moneylogs = $this->kLogs($val);     
-        
-        return view('machines-mgmt/money', ['money' => $moneylogs['data'], 'id'=>$id, 'machine' => $machine]);
-    }
+        $machine = $this->machinelogs($id);         
+        return view('machines-mgmt/money', ['id'=>$id, 'machine' => $machine]);
+    }   
 
     public function goals($id) {
         
-        $machine = $this->machinelogs($id);  
-        $val = array(
-            'id' =>  $id,
-            'type' => 'goalslogs',
-            'startdate' => date("Y-m-d", strtotime(Input::get('startdate'))),
-            'enddate' => date("Y-m-d", strtotime(Input::get('enddate'))),
-            'status' => Input::get('status')
-        );        
-        $moneylogs = $this->kLogs($val);        
-        
-        return view('machines-mgmt/goals', ['goals' => $moneylogs['data'], 'id'=>$id, 'machine' => $machine]);
+        $machine = $this->machinelogs($id);         
+        return view('machines-mgmt/goals', ['id'=>$id, 'machine' => $machine]);
     }
-
+    
     public function machinelogs($id){
         
         $machine = DB::table('machines')

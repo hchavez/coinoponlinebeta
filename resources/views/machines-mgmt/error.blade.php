@@ -59,11 +59,9 @@
                            <div class="input-group input-daterange">
 
                             <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-
                             <div class="input-group-addon">to</div>
-
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
-
+                           
                           </div>
                         </div>
                      
