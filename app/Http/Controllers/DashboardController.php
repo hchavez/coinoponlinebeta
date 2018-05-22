@@ -18,6 +18,7 @@ use App\MoneyLogs;
 use App\MachineType;
 //use App\MachineModel;
 use Carbon\Carbon;
+use App\MachineStatus;
 
 
 class DashboardController extends Controller
@@ -54,7 +55,12 @@ class DashboardController extends Controller
             ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
             ->orderBy('errorlogs_list.created_at','DESC')
             ->get();
+        
         $numMachine = MachineType::count();
+        $online = DB::table('machine_status')->where('status','=', '1')->sum('status'); 
+        $offline = DB::table('machine_status')->where('status','=', '0')->sum('status'); 
+        $wh = DB::table('machine_status')->where('status','=', '2')->sum('status');        
+        
         $get_user = DB::table('users')
                     ->select('users.*', 'users.id as users_id','users.username as username'
                             , 'log_activities.subject as subject', 'log_activities.url as url'
@@ -67,16 +73,14 @@ class DashboardController extends Controller
         $incomeNote = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('ttlBillIn'); 
         $incomeCoin = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('coinIn'); 
         $incomeTap = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('swipeIn'); 
-        
-        
+                
         $total = array(
             'note' => number_format($incomeNote),
             'coin' => number_format($incomeCoin),
             'tap' => number_format($incomeTap)
         );
-        
-        
-        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine, 'logs'=>$act ,'total'=>$total ]);
+                
+        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total ]);
         
     }
     

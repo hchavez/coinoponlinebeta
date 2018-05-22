@@ -2,26 +2,131 @@
 @section('content')
 <!-- Page -->
 <meta http-equiv="refresh" content="300" >
-
-<div class="row">   
+<div class="row" id="boxesCount">   
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $online }}</b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span><span class="counter-number-related">Machine Online</span>          </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $offline }}</b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span><span class="counter-number-related">Machine Offline</span>          </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $ttlMachines }}</b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                <div class="counter-number-group"><span class="counter-icon blue-600 mr-5"><i class="wb-stats-bars"></i></span><span class="counter-number-related">Total Machines</span>          </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['notice']; ?></b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-cyan-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                  <div class="counter-number-group"><span class="counter-icon cyan-600 mr-5"><i class="wb-alert-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=3') }}"><span class="counter-number-related">Notice</span>  </a>        </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['warning']; ?></b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                  <div class="counter-number-group"><span class="counter-icon orange-600 mr-5"><i class="wb-warning"></i></span><a href="{{ url('machine-error-reports?error_msg=2') }}"><span class="counter-number-related">Warning</span>   </a>       </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>    
+    <div class="col-lg-2"><!-- Card -->        
+        <div class="card card-block p-30">
+          <div class="counter counter-md text-left">            
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['error']; ?></b></h1></div>
+            <div class="counter-label">
+              <div class="progress progress-xs mb-10">
+                <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
+              </div>
+              <div class="counter counter-sm text-left">
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Needs Immediate Attention</span> </a>         </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Card -->        
+    </div>
+    
+    <!-- end boxes -->
     <!-- second Row -->
     <div class="col-12" id="ecommerceChartView">
         <div class="card card-shadow">
             <header class="panel-heading">
                 <h3 class="panel-title">Machine Error Reports</h3>       
             </header>
+            
             <form role="form" method="GET" action="{{ route('machine-management.index') }}">
                 <div class="row">           
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-6">                        
+                        <div id="filter_display">   
+                            <span id="m_modelDisplay" >
+                                <i class="icon" aria-hidden="true"><span class="badge badge-primary">{{ $filterData['machine_model'] }}</span></i> 
+                                <!--span id="model_close"class="badge badge-pill up badge-danger">{{ $filterData['removeFilter'] }}</span-->
+                            </span>                            
+                            <span id="m_typeDisplay" class="badge badge-primary">
+                                <i class="icon" aria-hidden="true"><span class="badge badge-primary">{{ $filterData['machine_type'] }}</span></i>      
+                                <!--span id="type_close" class="badge badge-pill up badge-danger">{{ $filterData['removeFilter'] }}</span-->
+                            </span>
+                            <span id="e_msgDisplay" class="badge badge-danger"></span>
+                            <span id="siteDisplay" class="badge badge-primary"></span>
+                            
+                        </div>
+                    </div>                   
                     <div class="col-md-3"></div>
                     <div class="col-md-3">                    
-                        <div class="input-group input-daterange">
+                        <!--div id="form_error" class="input-group input-daterange">
                         <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                         <div class="input-group-addon">to</div>
                         <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
                         <button type="submit" class="btn btn-primary">Search</button> 
-                        </div>  
+                        </div-->  
                     </div>
                 </div>
             </form>
@@ -38,21 +143,83 @@
                                   <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                               @endif
                           </div>
-                           <div class="example">                            
-                            <table class="table table-hover" id="machineErrorReport">
+                           <div class="example">   
+                            <form role="form" method="GET" class="error-list-form">
+                                <div class="col_empty ky-columns"></div>
+                                <div class="col_date ky-columns">
+                                    <div id="" class="input-group input-daterange">
+                                        <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                                        <div class="input-group-addon">to</div>
+                                        <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">  
+                                    </div>        
+                                </div>
+                                <div class="col_model ky-columns">
+                                    <select id="m_model" class="form-control" name="machine_model">
+                                        <option selected="" disabled="" value="A" name="machine_model">Machine Model</option>
+                                        @foreach ($model as $machinelog)
+                                        <?php    
+                                        if(!empty($_GET)): $sel = ($filterData['machine_model'] == $machinelog->machine_model)? 'selected' : '';
+                                        else: $sel= ''; endif;
+                                        ?>
+                                        <option value="{{ $machinelog->machine_model}}" <?php echo $sel; ?>>{{ $machinelog->machine_model}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col_type ky-columns">
+                                    <select id="m_type" class="form-control" name="machine_type">
+                                        <option selected="" disabled="" value="B" name="machine_type">Machine Type</option>
+                                        @foreach ($machine_type as $machinelog)
+                                        <?php    
+                                        if(!empty($_GET)): $sel = ($filterData['machine_type'] == $machinelog->machine_type)? 'selected' : '';
+                                        else: $sel= ''; endif;
+                                        ?>
+                                        <option value="{{ $machinelog->machine_type}}" <?php echo $sel; ?>>{{ $machinelog->machine_type}}</option>
+                                        @endforeach                                                                                        
+                                    </select>
+                                </div>
+                                <div class="col_serial ky-columns">
+                                    <select id="e_serial" class="form-control">
+                                        <option selected="" disabled="">Name & Serial No</option>
+                                    </select>
+                                </div>
+                                <div class="col_error ky-columns">
+                                    <select id="e_msg" class="form-control" name="error_msg">
+                                        <option selected="" disabled=""><b>Error Message</b></option>
+                                        <option value="3">Notice</option>
+                                        <option value="2">Warning</option>
+                                        <option value="1">Needs Immediate Attention</option>
+                                    </select>
+                                </div>
+                                <div class="col_site ky-columns">
+                                    <select id="site" class="form-control" name="machine_site">
+                                        <option selected="" disabled="" value="C">Site</option>
+                                        @foreach ($site as $machinelog)
+                                        <?php    
+                                        if(!empty($_GET)): $sel = ($filterData['machine_site'] == $machinelog->site_name)? 'selected' : '';
+                                        else: $sel= ''; endif;
+                                        ?>
+                                        <option value="{{ $machinelog->site_name}}" <?php echo $sel; ?>>{{ $machinelog->site_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col_ins ky-columns"></div>
+                                
+                                
+                           </form>
+                            <table class="table table-hover" id="machineErrorReport">                                    
                                 <thead>
-                                      <tr role="row">
-                                        <th></th>
-                                           <th>Date Time</th>
-                                           <th>Machine Model</th>
-                                           <th>Machine Type</th>
-                                           <th>Name & Serial No</th>
-                                           <th>Error Message</th>
-                                           <th>Site</th>
-                                           <th>Instances</th>
+                                    <tr role="row">                                                
+                                        <th class=""></th>
+                                        <th class="col_date">Date Time</th>
+                                        <th class="col_model">Machine Model</th>                                                
+                                        <th class="col_type">Machine Type</th>
+                                        <th class="col_serial">Name & Serial No</th>
+                                        <th class="col_error">Error Message</th>
+                                        <th class="col_site">Site</th>
+                                        <th class="">Instances</th>
                                        </tr> 
-                                </thead>
-
+                                </thead> 
+                                    
                                 @foreach ($machinelogs as $machinelog)
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
@@ -124,7 +291,7 @@
                                      @endforeach
                                 </tbody>
                                 @endforeach
-
+                                <tfoot></tfoot>
                             </table>
                           </div>
                         </div>              
@@ -148,7 +315,6 @@
 
 
 @foreach ($machinelogs as $machinelog)
-
 <div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -170,7 +336,7 @@
                 @endif
                 
                 @if ($machinelog->errortype == "2")
-                    <span class="badge badge-warning">Warning!</span
+                <span class="badge badge-warning">Warning!</span>
                 @endif
                 
                 @if ($machinelog->errortype == "3")

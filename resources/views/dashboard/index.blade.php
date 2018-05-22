@@ -4,6 +4,8 @@
 
 <meta http-equiv="refresh" content="300" >
 <div class="row">
+        
+    <!--end here -->
     <div class="col-xl-6 col-lg-12">
         <!-- Card -->
         <div class="card-group">

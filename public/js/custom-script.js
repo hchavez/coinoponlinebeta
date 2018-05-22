@@ -73,7 +73,7 @@ $(document).ready(function(){
     $('#dashboard_sort_filter input').addClass('form-control');       
             
     //Display machine list from json query result
-   //var base_url = 'http://localhost/coinoponlinebeta/public/';
+    //var base_url = 'http://localhost/coinoponlinebeta/public/';
     var base_url = 'https://www.ascentri.com/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
@@ -81,8 +81,7 @@ $(document).ready(function(){
     var pathname = window.location.pathname; // Returns path only
     var parts = pathname.split('/');
     var currentID = parts.pop() || parts.pop();  // handle potential trailing slash
-
-    console.log(currentID);    
+    
     
     //console.log(searchDate);
     $('#klogs').dataTable({
@@ -128,6 +127,38 @@ $(document).ready(function(){
     $('#moneyapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
       
-   
+    //Machine error report filter
+    $("#m_model").change(function(){ 
+        var select = $(this), form = select.closest('form');
+        form.attr('action', 'machine-error-reports/');
+        form.submit();
+    });
+   /* $("#model_close").click(function(){      
+        $('select#m_model').val('A').trigger('change');
+    });*/
+    $("#m_type").change(function(){ 
+        var select = $(this), form = select.closest('form');
+        form.attr('action', 'machine-error-reports/');
+        form.submit();
+    });
+    /*$("#type_close").click(function(){      
+        $('select#m_type').val('B').trigger('change');
+    });*/
+    $("#e_msg").change(function(){ 
+        var select = $(this), form = select.closest('form');
+        form.attr('action', 'machine-error-reports/');
+        form.submit();
+    });
+    $("#site").change(function(){ 
+        var select = $(this), form = select.closest('form');
+        form.attr('action', 'machine-error-reports/');
+        form.submit();
+    });    
+     $("#max-date").change(function(){ 
+        var select = $(this), form = select.closest('form');
+        form.attr('action', 'machine-error-reports/');
+        form.submit();
+    });
+    
     
 });
