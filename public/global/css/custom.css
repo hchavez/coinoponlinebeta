@@ -219,3 +219,21 @@ table.dataTable td:nth-child(8){
 #theme_wrapper #s2id_filter1{width:11%;}#theme_wrapper #s2id_filter2{width:40%;}
 #theme_wrapper #s2id_filter3{width:6%;}#theme_wrapper #s2id_filter4{width:12%;}
 #theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:14%;}
+
+/*machine error reports*/
+#boxesCount h1{margin:0;}
+#boxesCount b{font-size: 2em;}
+#filter_display, #form_error{ padding:0 2em; }
+.badge.up{
+    top: -8px;
+    margin: 0 -1em;
+}
+.error-list-form .ky-columns{display:inline-block; }
+.col_date{width:13%; padding-left: 10px;}
+.col_model,.col_type{width:9.4%;}
+.col_serial{width:16%;}
+.col_error{width:19%;}
+.col_site{width:24%;}
+.col_empty{width:1em;}
+
+
