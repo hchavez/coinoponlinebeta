@@ -54,7 +54,6 @@ class ProductDefinitionsController extends Controller
         $this->validateInput($request);
         ProductDefinitions::create([
              'coinPerPlay' => $request['coinPerPlay'],
-            'winPercentage' => $request['winPercentage'],
             'ttlPurCost' => $request['ttlPurCost'],
             'numberOfPlays' => $request['numberOfPlays'],
             'stockLeft' => $request['stockLeft'],
@@ -109,8 +108,7 @@ class ProductDefinitionsController extends Controller
     {
 
         $input = [
-            'coinPerPlay' => $request['coinPerPlay'],
-            'winPercentage' => $request['winPercentage'],
+             'coinPerPlay' => $request['coinPerPlay'],
             'ttlPurCost' => $request['ttlPurCost'],
             'numberOfPlays' => $request['numberOfPlays'],
             'stockLeft' => $request['stockLeft'],

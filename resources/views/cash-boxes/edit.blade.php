@@ -36,7 +36,7 @@
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
                                 <div class="form-group{{ $errors->has('coin1_total_in') ? ' has-error' : '' }}">
-                                    <label for="coin1_total_in" class="col-md-4 control-label">coin1_total_in</label>
+                                    <label for="coin1_total_in" class="col-md-4 control-label">Coin1 Total In</label>
 
                                     <div class="col-md-6">
                                         <input id="coin1_total_in" type="text" class="form-control" name="coin1_total_in" value="{{ $machine->coin1_total_in }}" required autofocus>
@@ -53,7 +53,7 @@
 
 
                                 <div class="form-group{{ $errors->has('coin2_total_in') ? ' has-error' : '' }}">
-                                    <label for="coin2_total_in" class="col-md-4 control-label">coin2_total_in</label>
+                                    <label for="coin2_total_in" class="col-md-4 control-label">Coin2 Total In</label>
 
                                     <div class="col-md-6">
                                         <input id="coin2_total_in" type="text" class="form-control" name="coin2_total_in" value="{{ $machine->coin2_total_in }}" required>
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('coin3_total_in') ? ' has-error' : '' }}">
-                                    <label for="coin3_total_in" class="col-md-4 control-label">coin3_total_in</label>
+                                    <label for="coin3_total_in" class="col-md-4 control-label">Coin3 Total In</label>
 
                                     <div class="col-md-6">
                                         <input id="coin3_total_in" type="text" class="form-control" name="coin3_total_in" value="{{ $machine->coin3_total_in }}" required>
@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('coin4_total_in') ? ' has-error' : '' }}">
-                                    <label for="coin4_total_in" class="col-md-4 control-label">coin4_total_in</label>
+                                    <label for="coin4_total_in" class="col-md-4 control-label">Coin4 Total In</label>
 
                                     <div class="col-md-6">
                                         <input id="coin4_total_in" type="text" class="form-control" name="coin4_total_in" value="{{ $machine->coin4_total_in }}" required>
@@ -95,10 +95,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('total_game') ? ' has-error' : '' }}">
-                                    <label for="total_game" class="col-md-4 control-label">total_game</label>
+                                    <label for="total_game" class="col-md-4 control-label">Total Game</label>
 
                                     <div class="col-md-6">
-                                        <input id="total_game" type="text" class="form-control" name="total_game" value="{{ $machine->total_game }}" required>
+                                        <input id="total_game" type="text" disabled="disabled" class="form-control" name="total_game" value="{{ $machine->total_game }}" required>
 
                                         @if ($errors->has('total_game'))
                                         <span class="help-block">
@@ -110,10 +110,10 @@
 
 
                                 <div class="form-group{{ $errors->has('total_test') ? ' has-error' : '' }}">
-                                    <label for="total_test" class="col-md-4 control-label">total_test</label>
+                                    <label for="total_test" class="col-md-4 control-label">Total Test</label>
 
                                     <div class="col-md-6">
-                                        <input id="total_test" type="text" class="form-control" name="total_test" value="{{ $machine->total_test }}" required>
+                                        <input id="total_test" type="text" class="form-control" disabled="disabled" name="total_test" value="{{ $machine->total_test }}" required>
 
                                         @if ($errors->has('total_test'))
                                         <span class="help-block">
@@ -124,10 +124,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('insuffMonPlay') ? ' has-error' : '' }}">
-                                    <label for="insuffMonPlay" class="col-md-4 control-label">insuffMonPlay</label>
+                                    <label for="insuffMonPlay" class="col-md-4 control-label">Insufficient Money Play</label>
 
                                     <div class="col-md-6">
-                                        <input id="insuffMonPlay" type="text" class="form-control" name="insuffMonPlay" value="{{ $machine->insuffMonPlay }}" required>
+                                        <input id="insuffMonPlay" type="text" class="form-control" disabled="disabled" name="insuffMonPlay" value="{{ $machine->insuffMonPlay }}" required>
 
                                         @if ($errors->has('insuffMonPlay'))
                                         <span class="help-block">
@@ -138,10 +138,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('rejectionCounter') ? ' has-error' : '' }}">
-                                    <label for="rejectionCounter" class="col-md-4 control-label">rejectionCounter</label>
+                                    <label for="rejectionCounter" class="col-md-4 control-label">Rejection Counter</label>
 
                                     <div class="col-md-6">
-                                        <input id="rejectionCounter" type="text" class="form-control" name="rejectionCounter" value="{{ $machine->rejectionCounter }}" required>
+                                        <input id="rejectionCounter" type="text" class="form-control" disabled="disabled" name="rejectionCounter" value="{{ $machine->rejectionCounter }}" required>
 
                                         @if ($errors->has('rejectionCounter'))
                                         <span class="help-block">
@@ -152,10 +152,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('insuffMonClick') ? ' has-error' : '' }}">
-                                    <label for="insuffMonClick" class="col-md-4 control-label">insuffMonClick</label>
+                                    <label for="insuffMonClick" class="col-md-4 control-label">Insufficient Money Click</label>
 
                                     <div class="col-md-6">
-                                        <input id="insuffMonClick" type="text" class="form-control" name="insuffMonClick" value="{{ $machine->insuffMonClick }}" required>
+                                        <input id="insuffMonClick" type="text" class="form-control" disabled="disabled" name="insuffMonClick" value="{{ $machine->insuffMonClick }}" required>
 
                                         @if ($errors->has('insuffMonClick'))
                                         <span class="help-block">

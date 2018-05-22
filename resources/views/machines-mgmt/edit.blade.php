@@ -140,8 +140,22 @@
                                             <textarea class="form-control" name="description" rows="4" cols="20" placeholder="description"> {{ $machine->machine_description }} </textarea>
                                         </div>
                                     </div>
+                                    
+                                     <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Status</label>
+                                        <div class="col-md-9">
 
+                                            <select class="form-control" name="status">
+                                             
+                                                <option {{ $machine->status == "1" ? 'selected' : ''}} value="1"> Online</option>
+                                                <option {{ $machine->status == "0" ? 'selected' : ''}} value="0"> Offline </option>
+                                                <option {{ $machine->status == "2" ? 'selected' : ''}} value="2"> Warehouse </option>
+                                            </select>
 
+                                        </div>
+                                    </div>
+
+                                
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <center> <button type="submit" class="btn btn-primary">

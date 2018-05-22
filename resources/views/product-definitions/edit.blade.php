@@ -36,10 +36,10 @@
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
                                 <div class="form-group{{ $errors->has('coinPerPlay') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">coinPerPlay</label>
+                                    <label for="xTime" class="col-md-4 control-label">Coin Per Play</label>
 
                                     <div class="col-md-6">
-                                        <input id="coinPerPlay" type="text" class="form-control" name="coinPerPlay" value="{{ $machine->coinPerPlay }}" required autofocus>
+                                        <input id="coinPerPlay" type="text" class="form-control" name="coinPerPlay" value="{{ $machine->coinPerPlay }}"  autofocus>
 
                                         @if ($errors->has('coinPerPlay'))
                                         <span class="help-block">
@@ -49,40 +49,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('winPercentage') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">winPercentage</label>
-
-                                    <div class="col-md-6">
-                                        <input id="winPercentage" type="text" class="form-control" name="winPercentage" value="{{ $machine->winPercentage }}" required autofocus>
-
-                                        @if ($errors->has('winPercentage'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('winPercentage') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group{{ $errors->has('numberOfPlays') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">numberOfPlays</label>
-
-                                    <div class="col-md-6">
-                                        <input id="numberOfPlays" type="text" class="form-control" name="numberOfPlays" value="{{ $machine->numberOfPlays }}" required autofocus>
-
-                                        @if ($errors->has('numberOfPlays'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('numberOfPlays') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                            
 
                                 <div class="form-group{{ $errors->has('stockLeft') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">stockLeft</label>
+                                    <label for="xTime" class="col-md-4 control-label">Stock Left</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockLeft" type="text" class="form-control" name="stockLeft" value="{{ $machine->stockLeft }}" required autofocus>
+                                        <input id="stockLeft" type="text" class="form-control" name="stockLeft" value="{{ $machine->stockLeft }}"  autofocus>
 
                                         @if ($errors->has('stockLeft'))
                                         <span class="help-block">
@@ -93,10 +66,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('stockAdded') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">stockAdded</label>
+                                    <label for="xTime" class="col-md-4 control-label">Stock Added</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockAdded" type="text" class="form-control" name="stockAdded" value="{{ $machine->stockAdded }}" required autofocus>
+                                        <input id="stockAdded" type="text" class="form-control" name="stockAdded" value="{{ $machine->stockAdded }}"  autofocus>
 
                                         @if ($errors->has('stockAdded'))
                                         <span class="help-block">
@@ -107,10 +80,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('stockRemoved') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">stockRemoved</label>
+                                    <label for="xTime" class="col-md-4 control-label">Stock Removed</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockRemoved" type="text" class="form-control" name="stockRemoved" value="{{ $machine->stockRemoved }}" required autofocus>
+                                        <input id="stockRemoved" type="text" class="form-control" name="stockRemoved" value="{{ $machine->stockRemoved }}"  autofocus>
 
                                         @if ($errors->has('stockRemoved'))
                                         <span class="help-block">
@@ -120,12 +93,24 @@
                                     </div>
                                 </div>
 
+                                    <div class="form-group{{ $errors->has('numberOfPlays') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">Plays per win</label>
 
+                                    <div class="col-md-6">
+                                        <input id="numberOfPlays" type="text" class="form-control" name="numberOfPlays" disabled="disabled" value="{{ $machine->numberOfPlays }}"  autofocus>
+
+                                        @if ($errors->has('numberOfPlays'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('numberOfPlays') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Update 
+                                            Update Product Diff
                                         </button>
                                     </div>
                                 </div>

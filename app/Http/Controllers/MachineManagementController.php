@@ -363,18 +363,26 @@ class MachineManagementController extends Controller {
             $graphdataPkVoltResult = null;
         }
         
-            $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt')->where('machine_id', $id)
+        $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
                                 ->where('dropCount','=', '1')
                                 ->where('startEndFlag','=',  '2')->where('testPlay', 'play')
                                 // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                 ->get();
-                       
-                        
-                        // $newgraphdataPkVoltQuery2 = json_encode($graphdataPkVoltQuery2);
         
-                         //print_r($newarray);
-        
+         if ($graphdataPkVoltQuery2->count() > 0) {
+            foreach ($graphdataPkVoltQuery2 as $value) {
+                
+                $asdate = strtotime($value->created_at) * 1000;
+                $graphdataPkVoltQuery2result[] = "[". $asdate .",". $value->pkVolt .",". $value->dropVolt."]";
+                
+            }
+            $graphdataPkVoltResult2 = join($graphdataPkVoltQuery2result, ',');
+
+        }else{
+             $graphdataPkVoltResult2 = null;
+        }
+  
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
             'graphdataWinResult' => $graphdataWinResult,
@@ -384,8 +392,8 @@ class MachineManagementController extends Controller {
             'graphdataPkVoltResult' => $graphdataPkVoltResult,
             'machinerecords' => $machinerecords,
             'totalPlay' => $totalPlay,
-            'totalMoneyquery' => $totalMoneyquery
-            //'newgraphdataPkVoltQuery2' => $newgraphdataPkVoltQuery2
+            'totalMoneyquery' => $totalMoneyquery,
+            'newgraphdataPkVoltQuery2' => $graphdataPkVoltResult2   
         ]);
         
         
@@ -470,7 +478,8 @@ class MachineManagementController extends Controller {
         //Get machine information
 
         $machine = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
+                        ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no'
+                                , 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address', 'sites.id as site_id'
                                 , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state'
                                 , 'sites.site_name as site', 'themes.theme as theme')
@@ -538,7 +547,8 @@ class MachineManagementController extends Controller {
             'machine_theme_id' => $request['theme'],
             'machine_description' => $request['description'],
             'comments' => $request['comments'],
-            'version' => $request['version']
+            'version' => $request['version'],
+             'status' => $request['status']
         ];
 
         if (Machine::where('id', $id)->update($input)) {

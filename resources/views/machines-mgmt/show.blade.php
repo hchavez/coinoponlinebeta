@@ -219,14 +219,16 @@
                             <div class="row row-lg">
                                 
                                 <div class="col-xl-12">
-                                                                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                    
+                                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
                                     <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
 
                                 </div>
 
                                 <script type="text/javascript">
+                                    
+                                 
                                     var chart = null;
 
                                     $(document).ready(function () {
@@ -271,39 +273,40 @@
                                         });
                                         
                                         
-                                        
-                                        //new chart for development
-                                          chart = new Highcharts.stockChart('container', {
+                                 //new chart for development-------------------------------------------------
+                                
+                                
+                                    chart = new Highcharts.stockChart('container', {
 
-                                    chart: {
-                                        type: 'arearange'
-                                    },
+                                        chart: {
+                                            type: 'arearange'
+                                        },
 
-                                    rangeSelector: {
-                                        allButtonsEnabled: false,
-                                        selected: 2
-                                    },
+                                        rangeSelector: {
+                                            allButtonsEnabled: false,
+                                            selected: 2
+                                        },
 
-                                      yAxis: {
-                                                 min: 0,
-                                                    max: 50,
-                                                      tickInterval: 10,
-                                                title: {
-                                                    text: 'Voltage Graph',
-                                                    
-                                                }
-                                            },
+                                          yAxis: {
+                                                     min: 0,
+                                                        max: 50,
+                                                          tickInterval: 10,
+                                                     title: {
+                                                        text: 'Voltage Graph',
+                                                    }
+                                                },
 
-                                    tooltip: {
-                                        
-                                    },
+                                        tooltip: {
 
-                                    series: [{
-                                        name: 'Data',
-                                        data: [ {{   $graphdataOwnedWinResult }} ],
-                                    }]
+                                        },
 
-                                });
+                                        series: [{
+                                            name: 'Data',
+                                            data: [ {{   $newgraphdataPkVoltQuery2 }} ], 
+                                        }]
+
+                                    });
+                                
                                 
                                     });
 
@@ -311,7 +314,8 @@
                                     
                             $.getJSON('https://cdn.rawgit.com/highcharts/highcharts/v6.0.5/samples/data/range.json', function (data) {
 
-                               
+                           
+                                
                             });
 
 
@@ -325,10 +329,7 @@
                 </div>
                 <!-- End Widget Jvmap -->
             </div>
-<?php
-//$leads = json_decode($graphdataPkVoltQuery2, true);
-//dd($leads);
-?>
+
             <div class="col-xxl-4 col-lg-6">
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">

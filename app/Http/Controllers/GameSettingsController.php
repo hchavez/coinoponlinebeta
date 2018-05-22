@@ -51,10 +51,6 @@ class GameSettingsController extends Controller {
             'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
-            'prevEwin' => $request['prevEwin'],
-            'luckyToWin' => $request['luckyToWin'],
-            'gameLeft' => $request['gameLeft'],
-            'randomedTime' => $request['randomedTime'],
             'gameTime' => $request['gameTime'],
             'status' => '0'
         ]);
@@ -105,16 +101,9 @@ class GameSettingsController extends Controller {
     public function update(Request $request, $id) {
 
         $input = [
-            'playIndex' => $request['playIndex'],
+          'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
-            'prevEwin' => $request['prevEwin'],
-            'luckyToWin' => $request['luckyToWin'],
-            'winGap' => $request['winGap'],
-            'prevWinIndex' => $request['prevWinIndex'],
-            'numberOfPlaysStayVoltage' => $request['numberOfPlaysStayVoltage'],
-            'gameLeft' => $request['gameLeft'],
-            'randomedTime' => $request['randomedTime'],
             'gameTime' => $request['gameTime'],
             'status' => '0'
         ];

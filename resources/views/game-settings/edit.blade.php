@@ -36,7 +36,7 @@
                                 <input type="hidden" name="myreferrer" value="{{ $myreferrer }}"/>
 
                                 <div class="form-group{{ $errors->has('playIndex') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">playIndex</label>
+                                    <label for="xTime" class="col-md-4 control-label">Play Index</label>
 
                                     <div class="col-md-6">
                                         <input id="playIndex" type="text" class="form-control" name="playIndex" value="{{ $machine->playIndex }}" required autofocus>
@@ -51,7 +51,7 @@
 
 
                                 <div class="form-group{{ $errors->has('owedWin') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">owedWin</label>
+                                    <label for="xTime" class="col-md-4 control-label">Owed Win</label>
 
                                     <div class="col-md-6">
                                         <input id="owedWin" type="text" class="form-control" name="owedWin" value="{{ $machine->owedWin }}" required autofocus>
@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('excessWin') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">excessWin</label>
+                                    <label for="xTime" class="col-md-4 control-label">Excess Win</label>
 
                                     <div class="col-md-6">
                                         <input id="excessWin" type="text" class="form-control" name="excessWin" value="{{ $machine->excessWin }}" required autofocus>
@@ -79,10 +79,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('prevEwin') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">prevEwin</label>
+                                    <label for="xTime" class="col-md-4 control-label">PrevE win</label>
 
                                     <div class="col-md-6">
-                                        <input id="prevEwin" type="text" class="form-control" name="prevEwin" value="{{ $machine->prevEwin }}" required autofocus>
+                                        <input id="prevEwin" type="text" class="form-control" disabled="disabled" name="prevEwin" value="{{ $machine->prevEwin }}" required autofocus>
 
                                         @if ($errors->has('prevEwin'))
                                         <span class="help-block">
@@ -93,10 +93,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('winGap') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">winGap</label>
+                                    <label for="xTime" class="col-md-4 control-label">Win Gap</label>
 
                                     <div class="col-md-6">
-                                        <input id="winGap" type="text" class="form-control" name="winGap" value="{{ $machine->winGap }}" required autofocus>
+                                        <input id="winGap" type="text" class="form-control" disabled="disabled" name="winGap" value="{{ $machine->winGap }}" required autofocus>
 
                                         @if ($errors->has('winGap'))
                                         <span class="help-block">
@@ -106,10 +106,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('prevEwin') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">prevWinIndex</label>
+                                    <label for="xTime" class="col-md-4 control-label">Prev Win Index</label>
 
                                     <div class="col-md-6">
-                                        <input id="prevWinIndex" type="text" class="form-control" name="prevWinIndex" value="{{ $machine->prevWinIndex }}" required autofocus>
+                                        <input id="prevWinIndex" type="text" class="form-control" disabled="disabled" name="prevWinIndex" value="{{ $machine->prevWinIndex }}" required autofocus>
 
                                         @if ($errors->has('prevWinIndex'))
                                         <span class="help-block">
@@ -120,10 +120,10 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('numberOfPlaysStayVoltage') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">numberOfPlaysStayVoltage</label>
+                                    <label for="xTime" class="col-md-4 control-label">Number Of Plays Stay Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="numberOfPlaysStayVoltage" type="text" class="form-control" name="numberOfPlaysStayVoltage" value="{{ $machine->numberOfPlaysStayVoltage }}" required autofocus>
+                                        <input id="numberOfPlaysStayVoltage" type="text" disabled="disabled" class="form-control" name="numberOfPlaysStayVoltage" value="{{ $machine->numberOfPlaysStayVoltage }}" required autofocus>
 
                                         @if ($errors->has('numberOfPlaysStayVoltage'))
                                         <span class="help-block">
@@ -132,11 +132,26 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">luckyToWin</label>
+                                
+                                   <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">Game Time</label>
 
                                     <div class="col-md-6">
-                                        <input id="luckyToWin" type="text" class="form-control" name="luckyToWin" value="{{ $machine->luckyToWin }}" required autofocus>
+                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus>
+
+                                        @if ($errors->has('gameTime'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('gameTime') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">Lucky To Win</label>
+
+                                    <div class="col-md-6">
+                                        <input id="luckyToWin" type="text" class="form-control"  name="luckyToWin" value="{{ $machine->luckyToWin }}" required autofocus>
 
                                         @if ($errors->has('luckyToWin'))
                                         <span class="help-block">
@@ -145,7 +160,7 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                  
                                 <div class="form-group{{ $errors->has('gameLeft') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">gameLeft</label>
 
@@ -173,20 +188,8 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">gameTime</label>
-
-                                    <div class="col-md-6">
-                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus>
-
-                                        @if ($errors->has('gameTime'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('gameTime') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                            -->
+                             
 
 
                                 <div class="form-group">

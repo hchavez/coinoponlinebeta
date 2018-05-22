@@ -78,10 +78,8 @@
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >type</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >paymentResult</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >declineReason</th>
+                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >procesTime</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlMoneyIn</th>
-                                        <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forPlay</th>
-                                        <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >forClick</th>
-                                        <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >pricePlay</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >credits</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>

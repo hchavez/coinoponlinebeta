@@ -65,14 +65,15 @@ class MachineReportsController extends Controller {
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')                        
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')     
+                        ->where('machines.id','<>', 27)
                         ->where('machines.status', '1');     
         if ( !$data ) :
         else:            
             if($data['startdate'] || $data['enddate']):
                 $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
                     $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
-                });            
+                })->orderBy('date_created','desc');            
             endif;
         endif;
         

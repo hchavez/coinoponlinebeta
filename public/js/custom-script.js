@@ -73,7 +73,7 @@ $(document).ready(function(){
     $('#dashboard_sort_filter input').addClass('form-control');       
             
     //Display machine list from json query result
-   //var base_url = 'http://localhost/coinoponlinebeta/public/';
+    //var base_url = 'http://localhost/coinoponlinebeta/public/';
     var base_url = 'https://www.ascentri.com/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
@@ -109,7 +109,7 @@ $(document).ready(function(){
         deferRender:    true,   
         order: [[1,'desc']],
         columns:[{'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
-            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'ttlMoneyIn'},{'data': 'forPlay'},{'data': 'forClick'},{'data': 'pricePlay'},{'data': 'credits'},{'data': 'status'}]       
+            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'payment_span'},{'data': 'ttlMoneyIn'},{'data': 'credits'},{'data': 'status'}]       
   
     });    
     $('#goalsapi').dataTable({
