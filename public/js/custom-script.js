@@ -128,37 +128,10 @@ $(document).ready(function(){
     $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
       
     //Machine error report filter
-    $("#m_model").change(function(){ 
-        var select = $(this), form = select.closest('form');
-        form.attr('action', 'machine-error-reports/');
-        form.submit();
-    });
-   /* $("#model_close").click(function(){      
-        $('select#m_model').val('A').trigger('change');
-    });*/
-    $("#m_type").change(function(){ 
-        var select = $(this), form = select.closest('form');
-        form.attr('action', 'machine-error-reports/');
-        form.submit();
-    });
-    /*$("#type_close").click(function(){      
-        $('select#m_type').val('B').trigger('change');
-    });*/
-    $("#e_msg").change(function(){ 
-        var select = $(this), form = select.closest('form');
-        form.attr('action', 'machine-error-reports/');
-        form.submit();
-    });
-    $("#site").change(function(){ 
-        var select = $(this), form = select.closest('form');
-        form.attr('action', 'machine-error-reports/');
-        form.submit();
-    });    
-     $("#max-date").change(function(){ 
-        var select = $(this), form = select.closest('form');
-        form.attr('action', 'machine-error-reports/');
-        form.submit();
-    });
-    
+    $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
+    $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
+    $("#e_msg").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
+    $("#site").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });    
+    $("#max-date").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
     
 });

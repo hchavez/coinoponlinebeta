@@ -106,17 +106,27 @@
                 <div class="row">           
                     <div class="col-md-6">                        
                         <div id="filter_display">   
-                            <span id="m_modelDisplay" >
-                                <i class="icon" aria-hidden="true"><span class="badge badge-primary">{{ $filterData['machine_model'] }}</span></i> 
-                                <!--span id="model_close"class="badge badge-pill up badge-danger">{{ $filterData['removeFilter'] }}</span-->
-                            </span>                            
-                            <span id="m_typeDisplay" class="badge badge-primary">
-                                <i class="icon" aria-hidden="true"><span class="badge badge-primary">{{ $filterData['machine_type'] }}</span></i>      
-                                <!--span id="type_close" class="badge badge-pill up badge-danger">{{ $filterData['removeFilter'] }}</span-->
-                            </span>
-                            <span id="e_msgDisplay" class="badge badge-danger"></span>
-                            <span id="siteDisplay" class="badge badge-primary"></span>
-                            
+                            <div class="bootstrap-tagsinput">
+                                    <?php if($filterData['startdate'] !=''): ?>
+                                        <span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
+                                    <?php endif; ?>
+                                    <?php if($filterData['machine_model'] !=''): ?>
+                                        <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        
+                                    <?php endif; ?>
+                                    <?php if($filterData['machine_type'] !=''): ?>
+                                        <span class="tag badge badge-default">{{ $filterData['machine_type'] }}</span>                                        
+                                    <?php endif; ?>    
+                                    <?php if($filterData['error_msg'] !=''): 
+                                        if($filterData['error_msg']=='1'){ $error = 'Needs Immediate Attention'; }
+                                        if($filterData['error_msg']=='2'){ $error = 'Warning'; }
+                                        if($filterData['error_msg']=='3'){ $error = 'Notice'; }  ?>
+                                        <span class="tag badge badge-default"><?php echo $error; ?></span>
+                                    <?php endif; ?>     
+                                    <?php if($filterData['machine_site'] !=''): ?>
+                                        <span class="tag badge badge-default">{{ $filterData['machine_site'] }}</span>
+                                    <?php endif; ?> 
+                               
+                            </div>                            
                         </div>
                     </div>                   
                     <div class="col-md-3"></div>
@@ -144,7 +154,7 @@
                               @endif
                           </div>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form">
+                            <form role="form" method="GET" class="error-list-form" id="formFilter">
                                 <div class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns">
                                     <div id="" class="input-group input-daterange">
@@ -155,7 +165,8 @@
                                 </div>
                                 <div class="col_model ky-columns">
                                     <select id="m_model" class="form-control" name="machine_model">
-                                        <option selected="" disabled="" value="A" name="machine_model">Machine Model</option>
+                                        <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
+                                        <option value="" class="clearFilterOption">Clear Filter </option>
                                         @foreach ($model as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_model'] == $machinelog->machine_model)? 'selected' : '';
@@ -167,7 +178,8 @@
                                 </div>
                                 <div class="col_type ky-columns">
                                     <select id="m_type" class="form-control" name="machine_type">
-                                        <option selected="" disabled="" value="B" name="machine_type">Machine Type</option>
+                                        <option selected="selected" disabled="" value="B" name="machine_type">Machine Type</option>
+                                        <option value="" class="clearFilterOption">Clear Filter </option>
                                         @foreach ($machine_type as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_type'] == $machinelog->machine_type)? 'selected' : '';
@@ -184,15 +196,17 @@
                                 </div>
                                 <div class="col_error ky-columns">
                                     <select id="e_msg" class="form-control" name="error_msg">
-                                        <option selected="" disabled=""><b>Error Message</b></option>
-                                        <option value="3">Notice</option>
-                                        <option value="2">Warning</option>
-                                        <option value="1">Needs Immediate Attention</option>
+                                        <option selected="selected" disabled=""><b>Error Message</b></option>  
+                                        <option value="" class="clearFilterOption">Clear Filter </option>
+                                        <option value="3" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '3')? 'selected' : ''; endif; ?> >Notice</option>
+                                        <option value="2" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '2')? 'selected' : ''; endif; ?> >Warning</option>
+                                        <option value="1" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '1')? 'selected' : ''; endif; ?> >Needs Immediate Attention</option>
                                     </select>
                                 </div>
                                 <div class="col_site ky-columns">
                                     <select id="site" class="form-control" name="machine_site">
-                                        <option selected="" disabled="" value="C">Site</option>
+                                        <option selected="selected" disabled="" value="C">Site</option>
+                                        <option value="" class="clearFilterOption">Clear Filter </option>
                                         @foreach ($site as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_site'] == $machinelog->site_name)? 'selected' : '';
@@ -202,21 +216,21 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col_ins ky-columns"></div>
+                                <div class="col_ins ky-columns"><select id="" class="form-control" name="" disabled=""></select></div>
                                 
                                 
                            </form>
                             <table class="table table-hover" id="machineErrorReport">                                    
                                 <thead>
                                     <tr role="row">                                                
-                                        <th class=""></th>
-                                        <th class="col_date">Date Time</th>
-                                        <th class="col_model">Machine Model</th>                                                
-                                        <th class="col_type">Machine Type</th>
-                                        <th class="col_serial">Name & Serial No</th>
-                                        <th class="col_error">Error Message</th>
-                                        <th class="col_site">Site</th>
-                                        <th class="">Instances</th>
+                                        <th id="" class="col_empty"></th>
+                                        <th style="width:11.2%;" class="col_date">Date Time</th>
+                                        <th style="width:9.2%;" class="col_model">Machine Model</th>                                                
+                                        <th style="width:9.2%;" class="col_type">Machine Type</th>
+                                        <th style="width:16.3%;" class="col_serial">Name & Serial No</th>
+                                        <th id="" class="col_error">Error Message</th>
+                                        <th id="" class="col_site">Site</th>
+                                        <th id="" class="">Instances</th>
                                        </tr> 
                                 </thead> 
                                     

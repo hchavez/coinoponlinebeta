@@ -228,12 +228,19 @@ table.dataTable td:nth-child(8){
     top: -8px;
     margin: 0 -1em;
 }
+#filter_display .tag span{ padding: 0 0 0 8px; cursor:pointer;}
 .error-list-form .ky-columns{display:inline-block; }
-.col_date{width:13%; padding-left: 10px;}
-.col_model,.col_type{width:9.4%;}
+.col_date{width:11%; padding-left: 0;}
+.col_model{width:9%;}
+.col_type{width:9%;}
 .col_serial{width:16%;}
 .col_error{width:19%;}
 .col_site{width:24%;}
-.col_empty{width:1em;}
+.col_empty{width:1%;}
+.col_ins {width:6%;}
+.clearFilterOption{
+    background:#E62020;
+    color:#fff;
+}
 
 

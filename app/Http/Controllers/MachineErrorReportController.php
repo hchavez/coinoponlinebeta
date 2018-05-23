@@ -29,7 +29,7 @@ class MachineErrorReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {        
         $remove = '';
         $machinelogs = DB::table('machines')
@@ -48,7 +48,7 @@ class MachineErrorReportController extends Controller
             ->where('errorlogs.status','!=','2')
             ->whereDate('errorlogs.created_at', '=', Carbon::today());
                         
-        if(!empty(Input::get())):
+        if(!empty(Input::get())):            
             $remove = 'x';
             $model = Input::get('machine_model');
             $type = Input::get('machine_type');
@@ -103,7 +103,11 @@ class MachineErrorReportController extends Controller
             'removeFilter' => $remove,
             'machine_model' => Input::get('machine_model'),
             'machine_type' => Input::get('machine_type'),
-            'machine_site' => Input::get('machine_site')
+            'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),
+            'machine_site' => Input::get('machine_site'),
+            'startdate' => Input::get('startdate'),
+            'enddate' => Input::get('enddate')
         );
         $ttlMachines = DB::table('machines')->count('status'); 
         $online = DB::table('machines')->where('status','=', '1')->count('status'); 
