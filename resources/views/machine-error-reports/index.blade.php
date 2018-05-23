@@ -166,7 +166,7 @@
                                 <div class="col_model ky-columns">
                                     <select id="m_model" class="form-control" name="machine_model">
                                         <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
-                                        <option value="" class="clearFilterOption">Clear Filter </option>
+                                        <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($model as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_model'] == $machinelog->machine_model)? 'selected' : '';
@@ -179,7 +179,7 @@
                                 <div class="col_type ky-columns">
                                     <select id="m_type" class="form-control" name="machine_type">
                                         <option selected="selected" disabled="" value="B" name="machine_type">Machine Type</option>
-                                        <option value="" class="clearFilterOption">Clear Filter </option>
+                                        <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($machine_type as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_type'] == $machinelog->machine_type)? 'selected' : '';
@@ -190,14 +190,15 @@
                                     </select>
                                 </div>
                                 <div class="col_serial ky-columns">
-                                    <select id="e_serial" class="form-control">
-                                        <option selected="" disabled="">Name & Serial No</option>
+                                    <select id="e_serial" class="form-control" disabled="">
+                                        <option selected="" disabled=""></option>
+                                        <option disabled="">Name & Serial No</option>
                                     </select>
                                 </div>
                                 <div class="col_error ky-columns">
                                     <select id="e_msg" class="form-control" name="error_msg">
                                         <option selected="selected" disabled=""><b>Error Message</b></option>  
-                                        <option value="" class="clearFilterOption">Clear Filter </option>
+                                        <option value="" class="clearFilterOption">------Filter All------</option>
                                         <option value="3" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '3')? 'selected' : ''; endif; ?> >Notice</option>
                                         <option value="2" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '2')? 'selected' : ''; endif; ?> >Warning</option>
                                         <option value="1" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '1')? 'selected' : ''; endif; ?> >Needs Immediate Attention</option>
@@ -206,7 +207,7 @@
                                 <div class="col_site ky-columns">
                                     <select id="site" class="form-control" name="machine_site">
                                         <option selected="selected" disabled="" value="C">Site</option>
-                                        <option value="" class="clearFilterOption">Clear Filter </option>
+                                        <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($site as $machinelog)
                                         <?php    
                                         if(!empty($_GET)): $sel = ($filterData['machine_site'] == $machinelog->site_name)? 'selected' : '';

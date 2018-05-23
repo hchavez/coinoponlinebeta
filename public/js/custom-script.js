@@ -134,4 +134,9 @@ $(document).ready(function(){
     $("#site").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });    
     $("#max-date").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
     
+    $("#m_model").select2();
+    $("#m_type").select2();
+    $("#e_msg").select2();
+    $("#site").select2();
+    
 });
