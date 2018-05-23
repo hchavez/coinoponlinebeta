@@ -160,6 +160,11 @@ Breakpoints();
          
         <!--CustomStyle-->
         <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
+        <link rel="stylesheet" href="{{ asset("/global/css/dataTables.bootstrap4.css") }}">
+        <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedcolumns.bootstrap4.min.css") }}">
+        <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedheader.bootstrap4.min.css") }}">
+        <link rel="stylesheet" href="{{ asset("/global/css/dataTables.buttons.bootstrap4.min.css") }}">
+
 
     </body>
 </html>

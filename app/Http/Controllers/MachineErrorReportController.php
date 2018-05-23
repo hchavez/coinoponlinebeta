@@ -97,8 +97,7 @@ class MachineErrorReportController extends Controller
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
         $machineType = MachineType::orderBy('created_at', 'desc')->get();
-         
-        //$get_model = Input::get('machine_model');
+                
         $filterData = array(
             'removeFilter' => $remove,
             'machine_model' => Input::get('machine_model'),
@@ -115,8 +114,11 @@ class MachineErrorReportController extends Controller
         $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
         
         $totalStatus = array('error'=>$this->totalError(), 'warning'=>$this->totalWarning(), 'notice'=>$this->totalNotice());
-     
-        return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines]);
+        $offlineLists = $this->offlineMachineLists(); 
+        $onlineLists = $this->onlineMachineLists();
+        $totalLists = $this->totalMachineLists();
+        
+        return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists]);
         
     }  
     
@@ -155,7 +157,43 @@ class MachineErrorReportController extends Controller
         return $notice;
     }
     
-      /**
+    public function machinesCount(){       
+        $machineLists = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
+                                , 'machine_reports.slip_volt as slip_volt'
+                                , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
+                                , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
+                                , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
+                                , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id');
+        
+        return $machineLists;
+    }
+    function offlineMachineLists(){
+        $machineList = $this->machinesCount();
+        $lists = $machineList->where('machines.status','=','0')->orderBy('updated_at','desc')->get(); 
+        return $lists;
+    }
+    function onlineMachineLists(){
+        $machineList = $this->machinesCount();
+        $online = $machineList->where('machines.status','=','1')->orderBy('updated_at','desc')->get(); 
+        return $online;
+    }
+    function totalMachineLists(){
+        $machineList = $this->machinesCount();
+        $online = $machineList->where('machines.status','=','1')
+                ->orWhere('machines.status','=','0')                
+                ->orderBy('updated_at','desc')->get(); 
+        return $online;
+    }
+    /**
      * This will update status once machine is fixed.
      *
      * @return \Illuminate\Http\Response

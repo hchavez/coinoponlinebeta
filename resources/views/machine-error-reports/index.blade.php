@@ -12,7 +12,8 @@
                 <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span><span class="counter-number-related">Machine Online</span>          </div>
+                <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span>
+                    <span class="counter-number-related"><a href="" data-target=".online-modal-lg" data-toggle="modal">Machine Online</a></span>          </div>
               </div>
             </div>
           </div>
@@ -27,7 +28,8 @@
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span><span class="counter-number-related">Machine Offline</span>          </div>
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span>
+                    <span class="counter-number-related"><a href="" data-target=".example-modal-lg" data-toggle="modal">Machine Offline </a></span>          </div>
               </div>
             </div>
           </div>
@@ -42,7 +44,8 @@
                 <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon blue-600 mr-5"><i class="wb-stats-bars"></i></span><span class="counter-number-related">Total Machines</span>          </div>
+                <div class="counter-number-group"><span class="counter-icon blue-600 mr-5"><i class="wb-stats-bars"></i></span>
+                    <span class="counter-number-related"><a href="" data-target=".total-modal-lg" data-toggle="modal">Total Machines</a></span>          </div>
               </div>
             </div>
           </div>
@@ -379,8 +382,101 @@
     </form>
     </div>
 </div>
-
 @endforeach
+
+
+<!-- Modal -->
+<div class="modal fade example-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Offline Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <tbody>
+              @foreach ($offlineList as $lists)                      
+                <tr>                            
+                    <td><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td>{{ $lists->state }}</td>
+                    <td>{{ $lists->machine_model }}</td>
+                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td>{{ $lists->route }}</td>                                 
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+<!-- Modal -->
+<div class="modal fade online-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <tbody>
+              @foreach ($onlineLists as $lists)                      
+                <tr>                            
+                    <td><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td>{{ $lists->state }}</td>
+                    <td>{{ $lists->machine_model }}</td>
+                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td>{{ $lists->route }}</td>                                 
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+<!-- Modal -->
+<div class="modal fade total-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <tbody>
+              @foreach ($totalLists as $lists)                      
+                <tr>                            
+                    <td>
+                        <?php if($lists->status =='1'){ ?>
+                        <i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
+                        <?php }else{ ?>
+                        <i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
+                        <?php } ?>
+                    </td> 
+                    <td>{{ $lists->state }}</td>
+                    <td>{{ $lists->machine_model }}</td>
+                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td>{{ $lists->route }}</td>                                 
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+
 
 <script>
     
