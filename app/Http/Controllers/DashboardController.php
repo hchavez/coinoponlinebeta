@@ -54,11 +54,12 @@ class DashboardController extends Controller
             //->leftJoin('errorlogs', 'errorlogs_list.log_id', '=', 'errorlogs.log_id')
             ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
             ->orderBy('errorlogs_list.created_at','DESC')
-            ->get();
+            ->get();        
         
-        $numMachine = MachineType::count();
-        $online = DB::table('machine_status')->where('status','=', '1')->sum('status'); 
-        $offline = DB::table('machine_status')->where('status','=', '0')->sum('status'); 
+        $online = DB::table('machines')->where('status','=', '1')->count('status'); 
+        $offline = DB::table('machines')->where('status','=', '0')->count('status');
+        $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
+        $numMachine = $online + $offline + $wh; 
         $wh = DB::table('machine_status')->where('status','=', '2')->sum('status');        
         
         $get_user = DB::table('users')
@@ -83,7 +84,7 @@ class DashboardController extends Controller
         return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total ]);
         
     }
-    
+       
       /**
      * This will update status once machine is fixed.
      *
