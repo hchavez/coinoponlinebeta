@@ -87,11 +87,11 @@ class MachineErrorReportController extends Controller
             endif; 
         endif;
                 
-        $machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(15);
+        $machinelogs = $machinelogs->orderBy('errorlogs.type','asc')->paginate(15);
         $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*')            
             ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
-            ->orderBy('errorlogs_list.created_at','DESC')
+            ->orderBy('type','asc')
             ->get();
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
