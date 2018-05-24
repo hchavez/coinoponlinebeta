@@ -78,7 +78,7 @@ Route::resource('profile', 'ProfileController');
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::resource('user-mgmt', 'UserManagementController');
-Route::get('user-management/show/{id}', 'UserManagementController@show');
+Route::get('user-mgmt/show/{id}', 'UserManagementController@show');
 Route::post('user-management/set_permission', 'UserManagementController@set_permission')->name('user-mgmt.set_permission');
 
 Route::resource('employee-management', 'EmployeeManagementController');

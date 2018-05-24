@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\City;
 use App\State;
 use App\Site;
+use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
@@ -28,7 +29,7 @@ class SiteController extends Controller
     public function index()
     {
         //$sites = Site::paginate(20);
-        
+            $currerntUserRole = Auth::User()->id;
             $sites = DB::table('sites')
 //                ->select('sites.*')
                 ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
@@ -38,7 +39,7 @@ class SiteController extends Controller
                 ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
                 ->orderBy('sites.site_name', 'asc')->get();
                     
-        return view('site/index', ['sites' => $sites]);
+        return view('site/index', ['sites' => $sites,'userRole' =>$currerntUserRole]);
     }
 
     /**

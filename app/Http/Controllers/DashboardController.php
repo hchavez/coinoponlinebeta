@@ -19,6 +19,7 @@ use App\MachineType;
 //use App\MachineModel;
 use Carbon\Carbon;
 use App\MachineStatus;
+use Illuminate\Support\Facades\Auth;
 
 
 class DashboardController extends Controller
@@ -30,6 +31,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
@@ -81,7 +83,7 @@ class DashboardController extends Controller
             'tap' => number_format($incomeTap)
         );
                 
-        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total ]);
+        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$currerntUserRole ]);
         
     }
        

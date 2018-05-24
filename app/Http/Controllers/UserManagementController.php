@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\UsersRole;
+use App\UsersGroup;
+use Illuminate\Support\Facades\Auth;
 
 class UserManagementController extends Controller
 {
@@ -33,7 +36,8 @@ class UserManagementController extends Controller
     public function index()
     {
         $users = User::get();       
-        return view('users-mgmt/index', ['users' => $users]);
+        $currerntUserRole = Auth::User()->id;
+        return view('users-mgmt/index', ['users' => $users,'userRole' =>$currerntUserRole]);
     }
 
     /**
@@ -76,6 +80,9 @@ class UserManagementController extends Controller
     {
         
         $users = DB::table('users')->where('id', '=', $id)->get();
+        $usersGroup = DB::table('users_group')->get();
+        $usersRole = DB::table('users_role')->where('user_id', '=', $id)->first();
+       
         $logs = \LogActivity::logActivityLists();  
             
         $get_user = DB::table('users')
@@ -86,7 +93,7 @@ class UserManagementController extends Controller
                     ->where('log_activities.user_id', $id);  
         $act = $get_user->latest('log_activities.updated_at')->get();       
         
-        return view('users-mgmt/show', ['users' => $users, 'logs' => $act]);
+        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'group'=>$usersGroup, 'currentRole'=>$usersRole]);
     }
     
     public function set_permission(Request $request)

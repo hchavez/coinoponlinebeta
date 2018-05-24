@@ -81,11 +81,13 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-
+  
   <script src="{{asset('js/custom.js')}}"></script>
   <script src="{{asset('js/custom-script.js')}}"></script>
+  <script src="{{asset('js/dataTables.bootstrap4.js')}}"></script>
+  <script src="{{asset('js/dataTables.fixedColumns.min.js')}}"></script>
+  <script src="{{asset('js/dataTables.fixedHeader.min.js')}}"></script>
+  <script src="{{asset('js/dataTables.buttons.min.js')}}"></script>
   <!-- Scripts -->
   <script src="{{ asset("/global/js/State.js") }}"></script>
   <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -112,6 +114,11 @@
 
   <!--CustomStyle-->
   <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
+  <link rel="stylesheet" href="{{ asset("/global/css/dataTables.bootstrap4.css") }}">
+    <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedcolumns.bootstrap4.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedheader.bootstrap4.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/global/css/dataTables.buttons.bootstrap4.min.css") }}">
+
   <script>
   (function(document, window, $) {
     'use strict';
