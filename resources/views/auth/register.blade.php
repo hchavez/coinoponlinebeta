@@ -60,17 +60,32 @@
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
 
                             <div class="col-md-12">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="Name">
+                                <input id="name" type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" required autofocus placeholder="First Name">
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('firstname') }}</strong>
                                     </span>
                                 @endif
                             </div>
+                            
+                        </div>
+                        
+                        <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
+
+                            <div class="col-md-12">
+                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required autofocus placeholder="Last Name">
+
+                                @if ($errors->has('lastname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

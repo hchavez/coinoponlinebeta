@@ -90,7 +90,7 @@
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Needs Immediate Attention</span> </a>         </div>
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Attention</span> </a>         </div>
               </div>
             </div>
           </div>

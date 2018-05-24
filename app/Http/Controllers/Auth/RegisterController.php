@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\UsersGroup;
+use App\UsersRole;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -48,7 +50,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -62,10 +65,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $insert = User::create([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'username' => $data['firstname'].'.'.$data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        
+        $user = User::whereEmail($data['email'])->first();       
+        $today = date("Y-m-d H:i:s");
+        
+        if($insert):
+            UsersRole::create([
+                'user_id' => $user->id,
+                'user_role' => '5',
+                'created_at' => $today,
+                'updated_at' => $today,
+                'updated_by' => '0'
+            ]);
+        endif;
+        
+        return $insert;
     }
 }
