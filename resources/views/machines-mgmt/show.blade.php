@@ -143,9 +143,12 @@
                         <!-- Example css animation Chart -->
                         <div class="example-wrap">
                             <div class="row row-lg">
+                                 <div class="col-xl-12">
+                                    <div id="containerwinwithdate" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+                                </div>
                                 <div class="col-xl-12">
                                     <div id="containerwin" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
 
                                 </div>
 
@@ -273,7 +276,7 @@
                                         });
                                         
                                         
-                                 //new chart for development-------------------------------------------------
+                                 //new chart for development-------voltage with  date graph------------------------------------------
                                 
                                 
                                     chart = new Highcharts.stockChart('container', {
@@ -306,6 +309,39 @@
                                         }]
 
                                     });
+                                    
+                                    //win graph chart with date
+                                     chart = new Highcharts.stockChart('containerwinwithdate', {
+
+                                        chart: {
+                                            type: 'arearange'
+                                        },
+
+                                        rangeSelector: {
+                                            allButtonsEnabled: false,
+                                            selected: 3
+                                        },
+
+                                          yAxis: {
+                                                     min: -10,
+                                                        max: 90,
+                                                         // tickInterval: 10,
+                                                     title: {
+                                                        text: 'Win Graph',
+                                                    }
+                                                },
+
+                                        tooltip: {
+                                                  valueDecimals: 2  
+                                        },
+
+                                        series: [{
+                                            name: 'Data',
+                                            data: [ {{ $graphdataWinResultwithDate }} ], 
+                                        }]
+
+                                    });
+                                    
                                 
                                 
                                     });

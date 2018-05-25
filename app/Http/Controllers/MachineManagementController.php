@@ -324,7 +324,7 @@ class MachineManagementController extends Controller {
         
         if ($graphdataOwnedWinQuery->count() > 0) {
             foreach ($graphdataOwnedWinQuery as $value) {
-                $graphdataOwnedWinresult[] = $value->owedWin;
+                $graphdataOwnedWinresult[] = $value->owedWin * -1;
             }
             $graphdataOwnedWinResult = join($graphdataOwnedWinresult, ',');
         } else {
@@ -382,6 +382,38 @@ class MachineManagementController extends Controller {
         }else{
              $graphdataPkVoltResult2 = null;
         }
+        
+        
+        
+         //Win Result with graph data display
+         $graphdataWinResultwithDateQuery = DB::table('winlogs')->select('created_at','winResult','excessWin','owedWin')
+                                ->where('machine_id', $id)
+                                ->where('testPlay', 'play')
+                                ->get();
+         
+         if ($graphdataWinResultwithDateQuery->count() > 0) {
+            foreach ($graphdataWinResultwithDateQuery as $value) {
+                
+                $asdate = strtotime($value->created_at) * 1000;
+                $ownedWin = $value->owedWin * -1;
+                
+                 if ($value->winResult == 'won') {
+                    $tempwinResult = '75';
+                } else {
+                    $tempwinResult = '0';
+                }
+                
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $ownedWin .",". $value->excessWin.",". $tempwinResult."]";
+                //$graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+        
+         //var_dump($graphdataWinResultwithDate);
   
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
@@ -393,9 +425,10 @@ class MachineManagementController extends Controller {
             'machinerecords' => $machinerecords,
             'totalPlay' => $totalPlay,
             'totalMoneyquery' => $totalMoneyquery,
-            'newgraphdataPkVoltQuery2' => $graphdataPkVoltResult2   
+            'newgraphdataPkVoltQuery2' => $graphdataPkVoltResult2,
+            'graphdataWinResultwithDate' => $graphdataWinResultwithDate
         ]);
-        
+//        
         
     }  
     

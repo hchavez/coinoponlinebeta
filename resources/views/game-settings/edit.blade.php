@@ -146,6 +146,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                
                                 <!--
                                 <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">Lucky To Win</label>
