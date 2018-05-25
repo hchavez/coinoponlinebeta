@@ -242,7 +242,8 @@ table.dataTable td:nth-child(8){
     background:#E62020;
     color:#fff;
 }
-#formFilter .select2-container{
+#formFilter .select2-container,
+#formFilterHistory .select2-container{
     width:100%;
     padding: 0;
     border:0;

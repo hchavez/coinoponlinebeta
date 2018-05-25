@@ -229,4 +229,5 @@ Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
 
 Route::resource('machine-error-reports', 'MachineErrorReportController');
+Route::get('history', 'MachineErrorReportController@history');
 Route::resource('machine-reports', 'MachineReportsController');

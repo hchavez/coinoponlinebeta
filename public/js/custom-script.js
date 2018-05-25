@@ -73,8 +73,8 @@ $(document).ready(function(){
     $('#dashboard_sort_filter input').addClass('form-control');       
             
     //Display machine list from json query result
-    var base_url = 'http://localhost/coinoponlinebeta/public/';
-    //var base_url = 'https://www.ascentri.com/';
+    //var base_url = 'http://localhost/coinoponlinebeta/public/';
+    var base_url = 'https://www.ascentri.com/';
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
     
@@ -138,5 +138,16 @@ $(document).ready(function(){
     $("#m_type").select2();
     $("#e_msg").select2();
     $("#site").select2();
+
+    $("#m_model_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
+    $("#m_type_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
+    $("#e_msg_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
+    $("#site_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });    
+    $("#max-date_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
     
+    $("#m_model_history").select2();
+    $("#m_type_history").select2();
+    $("#e_msg_history").select2();
+    $("#site_history").select2();
+
 });
