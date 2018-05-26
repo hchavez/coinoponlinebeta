@@ -337,7 +337,7 @@
     <div class="modal-dialog">
 
         Modal content
-        <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
+        <form action="{{ URL::to('machine-error-reports/update_error_status') }}" method="post" id="status-update" >   
         <meta id="token" name="token" content="{ { csrf_token() } }">     
         {{ csrf_field() }}   
         <input type="hidden" name="errorid" value="{{ $machinelog->error_id }} ">

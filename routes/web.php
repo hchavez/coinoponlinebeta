@@ -303,4 +303,6 @@ Route::get('messages/log', 'MessagesController@log');
 
 Route::resource('machine-error-reports', 'MachineErrorReportController');
 Route::get('history', 'MachineErrorReportController@history');
+Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
+
 Route::resource('machine-reports', 'MachineReportsController');
