@@ -186,10 +186,10 @@
                                         <th style="width:16.3%;" class="col_serial">Name & Serial No</th>
                                         <th id="" class="col_error">Error Message</th>
                                         <th id="" class="col_site">Site</th>
-                                        <th id="" class="">Instances</th>
+                                        <th id="" class="">Resolved By</th>
                                        </tr> 
                                 </thead> 
-                                    
+                                <?php //print_r($machinelogs); ?>
                                 @foreach ($machinelogs as $machinelog)
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
@@ -224,18 +224,7 @@
                                              {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
                                         </td>
                                         <td class="hidden-sm-down">
-                                            <?php
-                                            $countarray = array();
-                                            $temp=0;
-                                            foreach ($machinelogsgroup as $machineloggroup):
-                                                   if ($machineloggroup->error == $machinelog->error){ ?>
-                                                 <?php 
-                                                 $count = 1;
-                                                 array_push($countarray, $count); 
-                                                 ?>
-                                            <?php }
-                                                endforeach;?>
-                                                 <span class="text-muted"><?php echo sizeof($countarray);?></span>
+                                           {{ $machinelog->firstname }} {{ $machinelog->lastname }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -288,7 +277,7 @@
     <div class="modal-dialog">
 
         Modal content
-        <form action="{{ URL::to('dashboard/update_error_status') }}" method="post" id="status-update" >   
+        <form action="{{ URL::to('MachineErrorReportController/update_error_status') }}" method="post" id="status-update" >   
         <meta id="token" name="token" content="{ { csrf_token() } }">     
         {{ csrf_field() }}   
         <input type="hidden" name="errorid" value="{{ $machinelog->error_id }} ">

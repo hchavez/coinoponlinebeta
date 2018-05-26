@@ -35,8 +35,9 @@
                                 <th>Route</th>
                                 <th>Area</th>
                                 <th>Comments</th>
+                                <th>Category</th>
                                 <th>Total Money </th>	
-                                <th>Total Toys won </th>	
+                                <th>Toys won </th>	
                                 <th>Stock left </th>
                                 <th>Slip Voltage </th>
                                 <th>PK Volt </th>	
@@ -60,6 +61,7 @@
                                     <td>{{ $machine->route }} </td>
                                     <td> {{ $machine->area }}</td>
                                     <td>{{ $machine->comments }} - {{ $machine->version }}</td>
+                                    <td> {{ $machine->category }} </td>
                                     <td> {{ $machine->total_money }} </td>
                                     <td> {{ $machine->total_toys_win }} </td>                                   
                                     <td> {{ $machine->stock_left }} </td>

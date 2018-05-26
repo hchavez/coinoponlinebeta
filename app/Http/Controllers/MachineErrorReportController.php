@@ -134,15 +134,17 @@ class MachineErrorReportController extends Controller
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
                     'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
-                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
+                    'machines.machine_serial_no as serial_no','machines.id as machine_id',
                     'machines.comments as comments','errorlogs.log_id as log_id',
-                    'errorlogs.error as error','errorlogs.type as errortype',
-                    'errorlogs.created_at as date_created','errorlogs.id as error_id')
+                    'errorlogs.error as error','errorlogs.type as errortype','errorlogs.created_at as date_created','errorlogs.id as error_id',
+                    'users.firstname as firstname','users.lastname as lastname')
             ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
             ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-            ->leftJoin('state', 'sites.state', '=', 'state.id')          
+            ->leftJoin('state', 'sites.state', '=', 'state.id')   
+            ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
+            ->leftJoin('users','users.id','=','errorlogs_history.user_id')
             ->where('errorlogs.status','=','2');
                         
         if(!empty(Input::get())):
@@ -183,7 +185,7 @@ class MachineErrorReportController extends Controller
             endif; 
         endif;
                 
-        $machinelogs = $machinelogs->orderBy('created_at','desc')->paginate(10);
+        $machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(10);
         $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*') 
             ->orderBy('created_at','desc')
@@ -193,15 +195,8 @@ class MachineErrorReportController extends Controller
         $site = Site::orderBy('site_name', 'asc')->get();
         $machineType = MachineType::orderBy('created_at', 'asc')->get();
                 
-        $filterData = array(            
-            'machine_model' => Input::get('machine_model'),
-            'machine_type' => Input::get('machine_type'),
-            'machine_site' => Input::get('machine_site'),
-            'error_msg' => Input::get('error_msg'),
-            'machine_site' => Input::get('machine_site'),
-            'startdate' => Input::get('startdate'),
-            'enddate' => Input::get('enddate')
-        );
+        $filterData = array('machine_model' => Input::get('machine_model'),'machine_type' => Input::get('machine_type'),'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),'machine_site' => Input::get('machine_site'),'startdate' => Input::get('startdate'),'enddate' => Input::get('enddate'));
         
         $totalStatus = array('error'=>$this->totalError('1'), 'warning'=>$this->totalWarning('1'), 'notice'=>$this->totalNotice('1'));
         $offlineLists = $this->offlineMachineLists(); 
@@ -304,12 +299,10 @@ class MachineErrorReportController extends Controller
         $resolve = DB::table('errorlogs')->where('id', $request['errorid'] )->update(['status' => $request['resolve']]);    
         
         if($resolve):
-
-            /*$resolveBy = DB::table('errorlogs_history')->insert([
-                'error_type' => $request['errorid'], 
-                'user_id' => $request['resolve_by'], 
-                'created_at' => $today  
-            ]);*/
+                        
+            DB::table('errorlogs_history')->insert(
+                ['error_type' => $request['errorid'], 'user_id' => $request['resolve_by'], 'created_at' => $today ]
+            );
 
             return back()->with('message','Resolve Successfully!');
         else:
