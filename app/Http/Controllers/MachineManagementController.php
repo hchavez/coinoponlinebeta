@@ -398,7 +398,7 @@ class MachineManagementController extends Controller {
                 $ownedWin = $value->owedWin * -1;
                 
                  if ($value->winResult == 'won') {
-                    $tempwinResult = '75';
+                    $tempwinResult = '1';
                 } else {
                     $tempwinResult = '0';
                 }

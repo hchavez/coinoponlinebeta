@@ -64,6 +64,79 @@ Route::get('/goalsapi/{id}', function($id){
    return new UserCollection($userall);
 });
 
+/***********************************Graph Result API********************************************/
+Route::get('/ownedwin/{id}', function($id){
+   $userall = WinLogs::select('created_at','owedWin')->where('machine_id','=', $id)->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $ownedWin = $value->owedWin * -1;
+
+                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $ownedWin ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataWinResultwithDate . "]";
+         
+});
+
+Route::get('/winresult/{id}', function($id){
+      $userall = WinLogs::select('created_at','winResult')->where('machine_id','=', $id)->get();
+
+     if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+               
+                $asdate = strtotime($value->created_at) * 1000;
+
+                if ($value->winResult == 'won') {
+                    $tempwinResult = '1';
+                } else {
+                    $tempwinResult = '0';
+                }
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataWinResultwithDate . "]";
+});
+
+Route::get('/excesswin/{id}', function($id){
+   
+    $userall = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
+
+     if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+                
+                   $asdate = strtotime($value->created_at) * 1000;
+
+                $excessWin = $value->excessWin;
+
+                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $excessWin ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataWinResultwithDate . "]";
+});
+
+
+
 Route::get('logdata/{id}', 'MachineManagementController@logdata');
 
 Route::get('exportcsv/{data}', 'MachineManagementController@exportcsv');

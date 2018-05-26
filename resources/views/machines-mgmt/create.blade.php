@@ -72,6 +72,21 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Category: </label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" name="site" required>
+                                            <option value="">-- Select Category --</option>
+                                            
+                                            <option value="cardreader">cardreader</option>
+                                            <option value="george systems">george systems</option>
+                                            <option value="both">both</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
                             
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
@@ -131,6 +146,7 @@
 
                         <!-- Example Horizontal Form -->
                         <div class="example-wrap">  
+                            
                             <div class="form-group{{ $errors->has('serial_no') ? ' has-error' : '' }}">
                                 <div class="form-group row">
                                     <label for="serial_no" class="col-md-3 form-control-label">Serial No: </label>

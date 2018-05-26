@@ -143,19 +143,97 @@
                         <!-- Example css animation Chart -->
                         <div class="example-wrap">
                             <div class="row row-lg">
-                                 <div class="col-xl-12">
-                                    <div id="containerwinwithdate" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-                                </div>
+                                
                                 <div class="col-xl-12">
                                     <div id="containerwin" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
                                 </div>
+                                
+                                 <div class="col-xl-12">
+                                     
+                                    <div id="containercompare" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+
+                                </div>
+                                
+                                
+                                
 
                                 <script type="text/javascript">
                                     var chart = null;
 
                                     $(document).ready(function () {
+                                        
+                                                         
+                                    //win graph version 2 using comparison data
+                                    
+                                    var seriesOptions = [],
+                                        seriesCounter = 0,
+                                        id = {{ $machine->id }}
+                                        names = ['winresult', 'excesswin', 'ownedwin'];
+
+                                    /**
+                                     * Create the chart when all data is loaded
+                                     * @returns {undefined}
+                                     */
+                                    function createChart() {
+
+                                        Highcharts.stockChart('containercompare', {
+
+                                            rangeSelector: {
+                                                selected: 4
+                                            },
+
+                                            yAxis: {
+                                                  min: -10,
+                                                        max: 150,
+                                                        tickInterval: 20,
+                                                     title: {
+                                                        text: 'Win Graph',
+                                                    },
+                                                plotLines: [{
+                                                    value: 0,
+                                                    width: 2,
+                                                    color: 'silver'
+                                                }]
+                                            },
+
+                                            plotOptions: {
+                                                series: {
+                                                   
+                                                    showInNavigator: true
+                                                }
+                                            },
+
+                                            tooltip: {
+                                                //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                                                valueDecimals: 2,
+                                                split: true
+                                            },
+
+                                            series: seriesOptions
+                                        });
+                                    }
+
+                                    $.each(names, function (i, name) {
+
+                                        $.getJSON('http://localhost/coinoponlinebeta/public/' + name + '/' + id,    function (data) {
+
+                                            seriesOptions[i] = {
+                                                name: name,
+                                                data: data
+                                            };
+
+                                            // As we're loading the data asynchronously, we don't know what order it will arrive. So
+                                            // we keep a counter and create the chart when all the data is loaded.
+                                            seriesCounter += 1;
+
+                                            if (seriesCounter === names.length) {
+                                                createChart();
+                                            }
+                                        });
+                                    });
+                                    
+                                        //win result graph version 1
 
                                         chart = new Highcharts.chart('containerwin', {
                                             chart: {
@@ -223,6 +301,8 @@
                                 
                                 <div class="col-xl-12">
                                     
+                                   
+                                   
                                     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
                                     <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -309,39 +389,9 @@
                                         }]
 
                                     });
+                 
                                     
-                                    //win graph chart with date
-                                     chart = new Highcharts.stockChart('containerwinwithdate', {
 
-                                        chart: {
-                                            type: 'arearange'
-                                        },
-
-                                        rangeSelector: {
-                                            allButtonsEnabled: false,
-                                            selected: 3
-                                        },
-
-                                          yAxis: {
-                                                     min: -10,
-                                                        max: 90,
-                                                         // tickInterval: 10,
-                                                     title: {
-                                                        text: 'Win Graph',
-                                                    }
-                                                },
-
-                                        tooltip: {
-                                                  valueDecimals: 2  
-                                        },
-
-                                        series: [{
-                                            name: 'Data',
-                                            data: [ {{ $graphdataWinResultwithDate }} ], 
-                                        }]
-
-                                    });
-                                    
                                 
                                 
                                     });
