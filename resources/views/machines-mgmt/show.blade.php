@@ -221,7 +221,7 @@
 
                                     $.each(names, function (i, name) {
 
-                                        $.getJSON('http://localhost/coinoponlinebeta/public/' + name + '/' + id,    function (data) {
+                                        $.getJSON('https://www.ascentri.com/' + name + '/' + id,    function (data) {
 
                                             seriesOptions[i] = {
                                                 name: name,
