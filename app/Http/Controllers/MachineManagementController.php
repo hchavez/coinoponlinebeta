@@ -54,11 +54,10 @@ class MachineManagementController extends Controller {
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
 
         $machines = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
                                     , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
                                 , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
-                                , 'machine_reports.slip_volt as slip_volt'
-                                , 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
+                                , 'machine_reports.slip_volt as slip_volt', 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
                                 , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
                                 , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
                                 , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
