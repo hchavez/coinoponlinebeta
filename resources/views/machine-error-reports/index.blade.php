@@ -396,7 +396,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
             <tbody>
               @foreach ($offlineList as $lists)                      
                 <tr>                            
@@ -404,7 +404,8 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
+                    <td>{{ $lists->site }}</td>      
+                    <td>{{ $lists->area }}</td>   
                 </tr>                          
               @endforeach   
             </tbody>
@@ -424,7 +425,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
             <tbody>
               @foreach ($onlineLists as $lists)                      
                 <tr>                            
@@ -432,7 +433,8 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
+                    <td>{{ $lists->site }}</td>      
+                    <td>{{ $lists->area }}</td>                                   
                 </tr>                          
               @endforeach   
             </tbody>
@@ -452,7 +454,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
             <tbody>
               @foreach ($totalLists as $lists)                      
                 <tr>                            
@@ -466,7 +468,8 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
+                    <td>{{ $lists->site }}</td>      
+                    <td>{{ $lists->area }}</td>                                  
                 </tr>                          
               @endforeach   
             </tbody>
