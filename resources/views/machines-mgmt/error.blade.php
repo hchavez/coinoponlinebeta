@@ -20,6 +20,11 @@
                                     <label class="col-sm-12 control-label">Machine Type: {{ $machine->machine_type }} </label>
                                 </div>
                             </div>
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Category: {{ $machine->category }} </label>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label">Machine Model: {{ $machine->machine_model }} </label>
@@ -35,17 +40,25 @@
                                     <label class="col-sm-12 control-label">Site: {{ $machine->site }}</label>
                                 </div>
                             </div>
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label"> Description: {{ $machine->machine_description }}</label>
                                 </div>
                             </div>
+                            
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Theme: {{ $machine->theme }}</label>
+                                </div>
+                            </div>
+                            
                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label"> IP Address: {{ $machine->ip_address }}</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label">Comments: {{ $machine->machine_comments }}  </label>
                                 </div>

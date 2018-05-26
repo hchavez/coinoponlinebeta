@@ -91,6 +91,11 @@
                                     <label class="col-sm-12 control-label">Machine Type: {{ $machine->machine_type }} </label>
                                 </div>
                             </div>
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Category: {{ $machine->category }} </label>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-12 control-label">Machine Model: {{ $machine->machine_model }} </label>
@@ -185,8 +190,8 @@
 
                                             yAxis: {
                                                   min: -10,
-                                                        max: 150,
-                                                        tickInterval: 20,
+                                                        max: 80,
+                                                        tickInterval: 5,
                                                      title: {
                                                         text: 'Win Graph',
                                                     },
