@@ -19,7 +19,7 @@
                     </div>
                 </form>
             </div>
-            <div class="row"><div class="col-sm-12 longFilter">     
+            <div class="row"><div class="col-sm-12 longFilter" style="padding:0;">     
                      
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                     <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>                    
@@ -27,15 +27,15 @@
                         <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
                             <thead>
                             <tr role="row">
-                                <th>State</th>
+                                <th>Category</th>                                
                                 <!--th>Type</th-->
                                 <th>Model</th>
                                 <th>Serial No</th>
                                 <th>Site</th>
+                                <th>State</th>
                                 <th>Route</th>
                                 <th>Area</th>
-                                <th>Comments</th>
-                                <th>Category</th>
+                                <th>Comments</th>                                
                                 <th>Total Money </th>	
                                 <th>Toys won </th>	
                                 <th>Stock left </th>
@@ -53,15 +53,15 @@
                             <tbody>
                             @foreach ($machines as $machine)                            
                                 <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
-                                    <td> {{ $machine->state }} </td>
+                                    <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>
                                     <td> {{ $machine->machine_serial_no }}</td>
                                     <td> {{ $machine->site }} </td>  
+                                    <td> {{ $machine->state }} </td>
                                     <td>{{ $machine->route }} </td>
                                     <td> {{ $machine->area }}</td>
-                                    <td>{{ $machine->comments }} - {{ $machine->version }}</td>
-                                    <td> {{ $machine->category }} </td>
+                                    <td>{{ $machine->comments }} - {{ $machine->version }}</td>                                    
                                     <td> {{ $machine->total_money }} </td>
                                     <td> {{ $machine->total_toys_win }} </td>                                   
                                     <td> {{ $machine->stock_left }} </td>
