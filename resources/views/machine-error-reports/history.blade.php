@@ -2,56 +2,8 @@
 @section('content')
 <!-- Page -->
 <meta http-equiv="refresh" content="300" >
-<div class="row" id="boxesCount">   
-    <div class="col-lg-2"><!-- Card -->        
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $online }}</b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".online-modal-lg" data-toggle="modal">Machine Online</a></span>          </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Card -->        
-    </div>
-    <div class="col-lg-2"><!-- Card -->        
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $offline }}</b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".example-modal-lg" data-toggle="modal">Machine Offline </a></span>          </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Card -->        
-    </div>
-    <div class="col-lg-2"><!-- Card -->        
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $ttlMachines }}</b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon blue-600 mr-5"><i class="wb-stats-bars"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".total-modal-lg" data-toggle="modal">Total Machines</a></span>          </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Card -->        
-    </div>
-    <div class="col-lg-2"><!-- Card -->        
+<div class="row" id="boxesCount">  
+    <!--div class="col-lg-2">        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
             <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['notice']; ?></b></h1></div>
@@ -60,13 +12,13 @@
                 <div class="progress-bar progress-bar-info bg-cyan-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                  <div class="counter-number-group"><span class="counter-icon cyan-600 mr-5"><i class="wb-alert-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=3') }}"><span class="counter-number-related">Notice</span>  </a>        </div>
+                  <div class="counter-number-group"><span class="counter-icon cyan-600 mr-5"><i class="wb-alert-circle"></i></span><a href="{{ url('history?error_msg=3') }}"><span class="counter-number-related">Notice Resolved</span>  </a>        </div>
               </div>
             </div>
           </div>
-        </div><!-- End Card -->        
+        </div>       
     </div>
-    <div class="col-lg-2"><!-- Card -->        
+    <div class="col-lg-2">      
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
             <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['warning']; ?></b></h1></div>
@@ -75,13 +27,13 @@
                 <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                  <div class="counter-number-group"><span class="counter-icon orange-600 mr-5"><i class="wb-warning"></i></span><a href="{{ url('machine-error-reports?error_msg=2') }}"><span class="counter-number-related">Warning</span>   </a>       </div>
+                  <div class="counter-number-group"><span class="counter-icon orange-600 mr-5"><i class="wb-warning"></i></span><a href="{{ url('history?error_msg=2') }}"><span class="counter-number-related">Warning Resolved</span>   </a>       </div>
               </div>
             </div>
           </div>
-        </div><!-- End Card -->        
+        </div>       
     </div>    
-    <div class="col-lg-2"><!-- Card -->        
+    <div class="col-lg-2">        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
             <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['error']; ?></b></h1></div>
@@ -90,22 +42,22 @@
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Attention</span> </a>         </div>
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('history?error_msg=1') }}"><span class="counter-number-related">Attention Resolved</span> </a>         </div>
               </div>
             </div>
           </div>
-        </div><!-- End Card -->        
-    </div>
+        </div>        
+    </div-->
     
     <!-- end boxes -->
     <!-- second Row -->
     <div class="col-12" id="ecommerceChartView">
         <div class="card card-shadow">
             <header class="panel-heading">
-                <h3 class="panel-title">Machine Error Reports</h3>       
+                <h3 class="panel-title">Machine Error Reports History</h3>       
             </header>
             
-            <form role="form" method="GET" action="{{ route('machine-management.index') }}">
+            <form role="form" method="GET" action="{{ url('history') }}">
                 <div class="row">           
                     <div class="col-md-6">                        
                         <div id="filter_display">   
@@ -134,9 +86,9 @@
                     </div>                   
                     <div class="col-md-3"></div>
                     <div class="col-md-3 text-right" style="padding-right:3em;"> 
-                        <a href="{{ url('history') }}">
+                        <a href="{{ url('machine-error-reports') }}">
                         <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
-                            <span class="ladda-label">View History<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
+                            <span class="ladda-label">View Error Reports<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
                             <span class="ladda-spinner"></span>
                         </button>
                         </a>
@@ -157,7 +109,7 @@
                               @endif
                           </div>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter">
+                            <form role="form" method="GET" class="error-list-form" id="formFilterHistory">
                                 <div class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns">
                                     <div id="" class="input-group input-daterange">
@@ -167,7 +119,7 @@
                                     </div>        
                                 </div>
                                 <div class="col_model ky-columns">
-                                    <select id="m_model" class="form-control" name="machine_model">
+                                    <select id="m_model_history" class="form-control" name="machine_model">
                                         <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($model as $machinelog)
@@ -180,7 +132,7 @@
                                     </select>
                                 </div>
                                 <div class="col_type ky-columns">
-                                    <select id="m_type" class="form-control" name="machine_type">
+                                    <select id="m_type_history" class="form-control" name="machine_type">
                                         <option selected="selected" disabled="" value="B" name="machine_type">Machine Type</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($machine_type as $machinelog)
@@ -193,13 +145,13 @@
                                     </select>
                                 </div>
                                 <div class="col_serial ky-columns">
-                                    <select id="e_serial" class="form-control" disabled="">
+                                    <select id="e_serial_history" class="form-control" disabled="">
                                         <option selected="" disabled=""></option>
                                         <option disabled="">Name & Serial No</option>
                                     </select>
                                 </div>
                                 <div class="col_error ky-columns">
-                                    <select id="e_msg" class="form-control" name="error_msg">
+                                    <select id="e_msg_history" class="form-control" name="error_msg">
                                         <option selected="selected" disabled=""><b>Error Message</b></option>  
                                         <option value="" class="clearFilterOption">------Filter All------</option>
                                         <option value="3" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '3')? 'selected' : ''; endif; ?> >Notice</option>
@@ -208,7 +160,7 @@
                                     </select>
                                 </div>
                                 <div class="col_site ky-columns">
-                                    <select id="site" class="form-control" name="machine_site">
+                                    <select id="site_history" class="form-control" name="machine_site">
                                         <option selected="selected" disabled="" value="C">Site</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
                                         @foreach ($site as $machinelog)
@@ -253,8 +205,7 @@
                                         <td>{{ $machinelog->machine_type}}</td>
                                         <td class="hidden-sm-down"><span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span></td>
                                         <td class="hidden-sm-down">
-                                            <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
-
+                                            <strong>
                                             @if ($machinelog->errortype == '2') 
                                             <span class="badge badge-warning">Warning!</span> 
                                             @endif @if ($machinelog->errortype == '3')
@@ -262,11 +213,11 @@
                                             @endif
 
                                             @if ($machinelog->errortype == '1') 
-                                            <span class="badge badge-danger blink_me" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="blink_me" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                            <span class="badge badge-danger" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                             @else
                                             <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                             @endif
-                                             </a></strong>
+                                            </strong>
                                         </td>
                                         <td class="hidden-sm-down">
                                             @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else
@@ -372,7 +323,6 @@
                  <p>Machine Model: {{ $machinelog->machine_model}} </p>
                  <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
                  <p>  <input type="checkbox" id="error-resolve" name="resolve" value="2" > Resolve</p>
-                 <input type="hidden" id="resolve-by" name="resolve_by" value="{{ $userID }}" >
             </div>
             <div class="modal-footer">
                  <input class="btn btn-primary" type="submit" value="Update" />
@@ -396,7 +346,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
             <tbody>
               @foreach ($offlineList as $lists)                      
                 <tr>                            
@@ -404,8 +354,7 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>   
+                    <td>{{ $lists->route }}</td>                                 
                 </tr>                          
               @endforeach   
             </tbody>
@@ -425,7 +374,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
             <tbody>
               @foreach ($onlineLists as $lists)                      
                 <tr>                            
@@ -433,8 +382,7 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>                                   
+                    <td>{{ $lists->route }}</td>                                 
                 </tr>                          
               @endforeach   
             </tbody>
@@ -454,7 +402,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
             <tbody>
               @foreach ($totalLists as $lists)                      
                 <tr>                            
@@ -468,8 +416,7 @@
                     <td>{{ $lists->state }}</td>
                     <td>{{ $lists->machine_model }}</td>
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>                                  
+                    <td>{{ $lists->route }}</td>                                 
                 </tr>                          
               @endforeach   
             </tbody>

@@ -73,7 +73,7 @@ class DashboardController extends Controller
        
         $fromDate = date('Y-m').'-01';
         $toDate = date('Y-m').'-31';
-        $incomeNote = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('ttlBillIn'); 
+        $incomeNote = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->count('ttlBillIn'); 
         $incomeCoin = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('coinIn'); 
         $incomeTap = DB::table('moneylogs')->whereBetween('created_at', [$fromDate, $toDate])->sum('swipeIn'); 
                 
