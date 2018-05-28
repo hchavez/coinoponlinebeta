@@ -221,7 +221,16 @@
 
                                     $.each(names, function (i, name) {
 
-                                        $.getJSON('https://www.ascentri.com/' + name + '/' + id,    function (data) {
+                                       
+                                    var base_urllink = window.location.origin;
+                                    
+                                    if (base_urllink == "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                    }
+                                        
+                                        $.getJSON(base_url + name + '/' + id,    function (data) {
 
                                             seriesOptions[i] = {
                                                 name: name,

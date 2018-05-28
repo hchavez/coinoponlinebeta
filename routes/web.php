@@ -96,7 +96,7 @@ Route::get('/winresult/{id}', function($id){
                 $asdate = strtotime($value->created_at) * 1000;
 
                 if ($value->winResult == 'won') {
-                    $tempwinResult = '1';
+                    $tempwinResult = '50';
                 } else {
                     $tempwinResult = '0';
                 }

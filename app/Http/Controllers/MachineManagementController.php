@@ -278,7 +278,7 @@ class MachineManagementController extends Controller {
         //Get Win Result Data for graphview
         $graphdatawinquery = DB::table('winlogs')->select('winResult')->where('machine_id', $id)
                             //->whereMonth('created_at', '=', date('m'))
-                            ->where('testPlay', 'play')
+                            //->where('testPlay', 'play')
                             //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                             ->get();
         
@@ -301,7 +301,7 @@ class MachineManagementController extends Controller {
         //Get Excess Win Data for graphview
         $graphdataExcessWinQuery = DB::table('winlogs')->select('excessWin')->where('machine_id', $id)
                                     //->whereMonth('created_at', '=', date('m'))
-                                    ->where('testPlay', 'play')
+                                    //->where('testPlay', 'play')
                                    //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                     ->get();
         
@@ -317,7 +317,7 @@ class MachineManagementController extends Controller {
         //Get Owned Win Data for graphview
         $graphdataOwnedWinQuery = DB::table('winlogs')->select('owedWin')->where('machine_id', $id)
                                        // ->whereMonth('created_at', '=', date('m'))
-                                        ->where('testPlay', 'play')
+                                        //->where('testPlay', 'play')
                                         //->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                         ->get();
         
@@ -333,7 +333,7 @@ class MachineManagementController extends Controller {
         //Get RetVolt Data for graphview
         $graphdataDropVoltQuery = DB::table('goalslogs')->select('dropVolt')->where('machine_id', $id)
                                // ->whereMonth('created_at', '=', date('m'))    
-                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')
+                                ->where('startEndFlag','=',  '2')
                                // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                 ->get();
         
@@ -349,7 +349,7 @@ class MachineManagementController extends Controller {
         //Get pickupvolt Data for graphview
         $graphdataPkVoltQuery = DB::table('goalslogs')->select('pkVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
-                                ->where('dropCount','=', '1')->where('testPlay', 'play')
+                                ->where('dropCount','=', '1')
                                 // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                 ->get();
            
@@ -365,7 +365,7 @@ class MachineManagementController extends Controller {
         $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
                                 ->where('dropCount','=', '1')
-                                ->where('startEndFlag','=',  '2')->where('testPlay', 'play')
+                                ->where('startEndFlag','=',  '2')
                                 // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                 ->get();
         
@@ -387,7 +387,7 @@ class MachineManagementController extends Controller {
          //Win Result with graph data display
          $graphdataWinResultwithDateQuery = DB::table('winlogs')->select('created_at','winResult','excessWin','owedWin')
                                 ->where('machine_id', $id)
-                                ->where('testPlay', 'play')
+                                //->where('testPlay', 'play')
                                 ->get();
          
          if ($graphdataWinResultwithDateQuery->count() > 0) {
@@ -412,7 +412,7 @@ class MachineManagementController extends Controller {
              $graphdataWinResultwithDate = null;
          }
         
-         //var_dump($graphdataWinResultwithDate);
+         //var_dump($graphdataPkVoltResult2);
   
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,

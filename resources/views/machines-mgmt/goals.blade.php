@@ -89,13 +89,15 @@
                                 <thead>
                                     <tr role="row">
                                         
-                                        <th width="5%" class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending">ID</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
                                         <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
+                                        <th width="2%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">playIndex</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkVolt</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retPWM</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">retVolt</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">slipPWM</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">slipVolt</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">voltDecRetPercentage</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">plusPickUp</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropCount</th>
@@ -103,7 +105,7 @@
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">dropVolt</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">incVoltage</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">decVoltage</th>
-                                        <th width="2%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Status</th>
+                                        
                                     </tr>
                                 </thead>
                          

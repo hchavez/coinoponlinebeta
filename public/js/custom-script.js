@@ -75,6 +75,15 @@ $(document).ready(function(){
     //Display machine list from json query result
     //var base_url = 'http://localhost/coinoponlinebeta/public/';
     var base_url = 'https://www.ascentri.com/';
+    
+    //var base_urllink = window.location.origin;
+                                    
+   //if (base_urllink == "http://localhost"){
+            var base_url = "http://localhost/coinoponlinebeta/public/";
+     //   }else{
+       //    var base_url = "https://www.ascentri.com/";
+   //}
+                                    
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
     
@@ -117,8 +126,9 @@ $(document).ready(function(){
         buttons: ['excel'],
         deferRender:    true,       
         order: [[3,'desc']],
-        columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'pkPWM'},{'data': 'created_at'},{'data': 'pkVolt'},{'data': 'retPWM'},{'data': 'retVolt'},{'data': 'voltDecRetPercentage'},
-            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'},{'data': 'status'}]       
+        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt'},{'data': 'retPWM'},
+            {'data': 'retVolt'},{'data': 'slipPWM'},{'data': 'slipVolt'},{'data': 'voltDecRetPercentage'},
+            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'}]       
     });
     
     //excel button append
