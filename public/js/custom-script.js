@@ -79,7 +79,7 @@ $(document).ready(function(){
     //var base_urllink = window.location.origin;
                                     
    //if (base_urllink == "http://localhost"){
-            var base_url = "http://localhost/coinoponlinebeta/public/";
+   //var base_url = "http://localhost/coinoponlinebeta/public/";
      //   }else{
        //    var base_url = "https://www.ascentri.com/";
    //}
