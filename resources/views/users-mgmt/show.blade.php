@@ -28,7 +28,7 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                                         <tr><td><b>Email</b></td><td>{{ $user->email }}</td></tr>                                       
                                         <tr><td><b>Date Created</b></td><td>{{ $user->created_at }} </td></tr>                                        
                                     @endforeach                                  
-                                    <tr><td><b>Date Created</b></td><td><span class="badge badge-<?php echo $color; ?>"><?php echo $urole; ?></span> </td></tr>
+                                    <tr><td><b>User Type</b></td><td><span class="badge badge-<?php echo $color; ?>"><?php echo $urole; ?></span> </td></tr>
                                 </tbody>
                               </table>                                
                             </div>                             
@@ -43,10 +43,16 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row">
                         <div class="col-sm-7"> 
+                            <div id="success_msg">
+                                @if(session()->has('message'))
+                                    <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
+                                @endif
+                            </div>
                             <h4 class="example-title">Update user role</h4>
                             <p>Select user role</p>
                             <div class="example table-responsive">
-                                <form>
+                                <form role="form" method="GET" action="{{ url('set_permission') }}">
+                                    @foreach ($users as $user) <input type="hidden" value="{{ $user->id }}" name="user_id"> @endforeach 
                                     <div class="col-sm-4">
                                     <select class="form-control" name="user_role">
                                         @foreach ($group as $role) 

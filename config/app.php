@@ -227,6 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Input' => Illuminate\Support\Facades\Input::class,
         'LogActivity' => App\Helpers\LogActivity::class,
+        'AppHelper' => App\Helpers\AppHelper::class,
     ],
 
 ];

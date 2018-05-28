@@ -42,19 +42,8 @@
 
                             </tr>
                             @endforeach
-                        </tbody>
-                        
-                        <tfoot>
-                            <tr role="row">
-                                <th>Prize Code</th>	
-                                <th>Theme</th>	
-                                <th>Cost</th>	
-                                <th>PrizeSetting</th>	
-                                <th>Min Exp $perwin</th>	
-                                <th>Max Exp $perwin</th>
-                                <th>Active</th>
-                                
-                        </tfoot>
+                        </tbody>                        
+                       
                     
                     </table>
                 </div></div>

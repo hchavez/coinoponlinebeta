@@ -212,14 +212,14 @@ table.dataTable td:nth-child(8){
 #site_wrapper #s2id_filter6,#site_wrapper #s2id_filter7{width:24%;}
 
 /*prizes page*/
-#prize_wrapper #s2id_filter1{width:17%;}#prize_wrapper #s2id_filter2{width:60%;}
-#prize_wrapper #s2id_filter3,#prize_wrapper #s2id_filter4{width:11%;}
+#prize_wrapper #s2id_filter1{width:19%;}#prize_wrapper #s2id_filter2{width:54.5%;}
+#prize_wrapper #s2id_filter3,#prize_wrapper #s2id_filter4{width:12%;}
 
 /*themes page*/
-#theme_wrapper #s2id_filter1{width:11%;}#theme_wrapper #s2id_filter2{width:40%;}
-#theme_wrapper #s2id_filter3{width:6%;}#theme_wrapper #s2id_filter4{width:12%;}
-#theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:14%;}
-
+#theme_wrapper #s2id_filter1{width:12%;}#theme_wrapper #s2id_filter2{width:35%;}
+#theme_wrapper #s2id_filter3{width:6%;}#theme_wrapper #s2id_filter4{width:14.5%;}
+#theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:16%;}
+#s2id_filter7{width: 9%;}
 /*machine error reports*/
 #boxesCount h1{margin:0;}
 #boxesCount b{font-size: 2em;}
@@ -248,5 +248,9 @@ table.dataTable td:nth-child(8){
     padding: 0;
     border:0;
 }
-
+/*Datatables*/
+.dataTables_scrollHeadInner{
+    width: 100% !important;
+    padding-right: 0 !important;
+}
 

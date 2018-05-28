@@ -45,18 +45,7 @@
                             @endforeach
                         </tbody>
                         
-                        <tfoot>
-                            <tr role="row">
-                                <th>Route</th>	
-                                <th>Area</th>	
-                                <th>SiteType</th>	
-                                <th>SiteGroup</th>	
-                                <th>State</th>	
-                                <th>Site</th>
-                                <th>Street</th>
-                                <th>Suburb</th>
-                                <th>City</th>
-                        </tfoot>
+                        
                         
                     </table>
                 </div></div>

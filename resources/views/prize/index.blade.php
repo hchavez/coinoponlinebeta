@@ -34,15 +34,7 @@
                           
                             </tr>
                             @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr role="row">
-                                <th>Prize Code</th>	
-                                <th>Prize Name</th>	
-                                <th>Cost</th>	
-                                <th>Active</th>	
-                            </tr>
-                        </tfoot>
+                        </tbody>                        
                     </table>
                 </div></div>    
             

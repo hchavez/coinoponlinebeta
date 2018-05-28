@@ -8,6 +8,7 @@ use App\User;
 use App\UsersRole;
 use App\UsersGroup;
 use Illuminate\Support\Facades\Auth;
+use Input;
 
 class UserManagementController extends Controller
 {
@@ -97,13 +98,12 @@ class UserManagementController extends Controller
     }
     
     public function set_permission(Request $request)
-    {
-        $id = $request->input('id');        
-        
+    {        
+        $id = Input::get('user_id');
         $input = [
-            'role' => $request['inputRole']            
+            'user_role' => Input::get('user_role')            
         ];
-        if (User::where('id', $id)->update($input)) {
+        if (UsersRole::where('user_id', $id)->update($input)) {
             return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
     }

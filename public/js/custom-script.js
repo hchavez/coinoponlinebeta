@@ -94,6 +94,8 @@ $(document).ready(function(){
     
     //console.log(searchDate);
     $('#klogs').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        processing : true,
         ajax: base_url+'errorapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
@@ -102,6 +104,8 @@ $(document).ready(function(){
         columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
     }); 
     $('#winlogs').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        processing : true,
         ajax: base_url+'winapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
@@ -110,7 +114,9 @@ $(document).ready(function(){
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
-    $('#moneyapi').dataTable({   
+    $('#moneyapi').dataTable({  
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        processing : true,
         ajax: base_url+'moneyapi/'+currentID,
         dom: 'Bfrtip',
         buttons: ['excel'],
@@ -121,6 +127,8 @@ $(document).ready(function(){
   
     });    
     $('#goalsapi').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        processing : true,
         ajax: base_url+'goalsapi/'+currentID,    
         dom: 'Bfrtip',
         buttons: ['excel'],
