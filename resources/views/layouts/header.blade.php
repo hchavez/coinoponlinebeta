@@ -354,20 +354,47 @@
                     </li>
                     
                     
-                    <li class="dropdown site-menu-item has-section has-sub">
+                    <!--li class="dropdown site-menu-item has-section has-sub">
                         <a data-toggle="dropdown" href="{{ url('machine-error-reports') }}" data-dropdown-toggle="false">
                             <i class="site-menu-icon wb-bookmark" aria-hidden="true"></i>
                             <span class="site-menu-title">Reports</span>
                         </a>
+                    </li-->
+                    
+                    <li class="dropdown site-menu-item has-sub">
+                        <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
+                            <i class="site-menu-icon wb-file" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reports</span>            
+                        </a>     
+                        <div class="dropdown-menu">
+                            <div class="site-menu-scroll-wrap is-list scrollable is-enabled scrollable-vertical" style="position: relative;">
+                                <div class="scrollable-container">
+                                    <div class="scrollable-content">
+                                        <ul class="site-menu-sub site-menu-normal-list">
+                                             <li class="site-menu-item">
+                                                <a class="animsition-link" href="{{ url('machine-error-reports') }}">
+                                                    <span class="site-menu-title">Machine Error Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="{{ url('financial-reports') }}">
+                                                    <span class="site-menu-title">Financial Reports</span>
+                                                </a>
+                                            </li>    
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="scrollable-bar scrollable-bar-vertical is-disabled scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle"></div></div></div>
+                        </div>
                     </li>
-                  
+                    <?php //if($userRole=='1'): ?>
                     <li class="dropdown site-menu-item has-sub">
                         <a  class="animsition-link" href="{{ url('user-mgmt') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Admin Panel</span>            
                         </a>    
                     </li>
-
+                    <?php //endif; ?>
                 </ul>
             </div>
         </div>

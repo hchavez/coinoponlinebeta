@@ -50,8 +50,8 @@ class MachineManagementController extends Controller {
     public function index() 
     {
         $data = Input::all();
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
+        $startnewformat = date("Y-m-d", strtotime(Input::get('datefrom')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('dateto')) );
 
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
@@ -72,7 +72,7 @@ class MachineManagementController extends Controller {
                         //->latest('machines.created_at')->paginate(100);   
         if ( !$data ) :
         else:            
-            if($data['startdate'] || $data['enddate']):
+            if($data['datefrom'] || $data['dateto']):
                 $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
                     $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
                 })->orderBy('date_created','desc');            

@@ -12,9 +12,9 @@
             <div id="byDate">
                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
                     <div class="input-group input-daterange">
-                    <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                    <input type="text" id="min-date" name="datefrom" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                     <div class="input-group-addon">to</div>
-                    <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
+                    <input type="text" id="max-date" name="dateto" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
                     <button type="submit" class="btn btn-primary">Search</button> 
                     </div>
                 </form>

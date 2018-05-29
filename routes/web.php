@@ -152,7 +152,6 @@ Route::resource('profile', 'ProfileController');
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::resource('user-mgmt', 'UserManagementController');
 Route::get('user-mgmt/show/{id}', 'UserManagementController@show');
-//Route::post('set_permission', 'UserManagementController@set_permission')->name('user-mgmt.set_permission');
 Route::get('set_permission', 'UserManagementController@set_permission');
 
 Route::resource('employee-management', 'EmployeeManagementController');
@@ -305,5 +304,7 @@ Route::get('messages/log', 'MessagesController@log');
 Route::resource('machine-error-reports', 'MachineErrorReportController');
 Route::get('history', 'MachineErrorReportController@history');
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
+
+Route::resource('financial-reports', 'FinancialReportController');
 
 Route::resource('machine-reports', 'MachineReportsController');

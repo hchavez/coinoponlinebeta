@@ -160,11 +160,7 @@
                             <form role="form" method="GET" class="error-list-form" id="formFilter">
                                 <div class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns">
-                                    <div id="" class="input-group input-daterange">
-                                        <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-                                        <div class="input-group-addon">to</div>
-                                        <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">  
-                                    </div>        
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left">     
                                 </div>
                                 <div class="col_model ky-columns">
                                     <select id="m_model" class="form-control" name="machine_model">
@@ -481,38 +477,65 @@
 <!-- End Modal -->
 
 
-
-<script>
-    
-    $(document).ready(function() {   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>    
+$(document).ready(function() {   
 
     $("#status-update").submit(function(e) {
-            e.preventDefault();
-            
-            $('.modal-dialog').css('text-align','center');
-            $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
-            
-            var statusval = $("input#error-resolve").val();            
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                    url: $(this).attr('action'),
-                    type: "POST",
-                    data: $(this).serialize(),
-                    success: function(response){                     
-                    $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
-                    setTimeout(function() { location.reload(); }, 1000);                      
-                },
-                error: function(response){
-                    $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
-                }
-            }); 
+        e.preventDefault();
 
+        $('.modal-dialog').css('text-align','center');
+        $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
+
+        var statusval = $("input#error-resolve").val();            
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+                url: $(this).attr('action'),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response){                     
+                $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
+                setTimeout(function() { location.reload(); }, 1000);                      
+            },
+            error: function(response){
+                $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
+            }
+        }); 
     });
-
+    
+    //Machine error report filter
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
+    });
+    $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
+    });
+    
+    $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
+    $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
+    $("#e_msg").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
+    $("#site").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });    
+    $("#max-date").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
+    
+    $("#m_model").select2();
+    $("#m_type").select2();
+    $("#e_msg").select2();
+    $("#site").select2();
+    
 });
 
 
