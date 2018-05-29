@@ -68,7 +68,8 @@ class MachineManagementController extends Controller {
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
                         ->where('machines.id','<>', 27)
-                        ->where('machines.status', '1');
+                        ->where('machines.status', '1')
+                        ->where('machine_reports.last_played','!=','null');
                         //->latest('machines.created_at')->paginate(100);   
         if ( !$data ) :
         else:            
