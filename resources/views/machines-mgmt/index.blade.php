@@ -11,12 +11,7 @@
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             <div id="byDate">
                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-                    <div class="input-group input-daterange">
-                    <input type="text" id="min-date" name="datefrom" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-                    <div class="input-group-addon">to</div>
-                    <input type="text" id="max-date" name="dateto" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">                        
-                    <button type="submit" class="btn btn-primary">Search</button> 
-                    </div>
+                    <input type="text" name="datePicker" id="datePicker" class="form-control pull-left" placeholder="Filter By Date">
                 </form>
             </div>
             <div class="row"><div class="col-sm-12 longFilter" style="padding:0;">     
@@ -85,4 +80,27 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>    
+$(document).ready(function() {   
+    /*Resolve*/
+    $('input[name="datePicker"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="datePicker"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
+    });
+    $('input[name="datePicker"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
+    });
+});
+</script>
+
 @endsection

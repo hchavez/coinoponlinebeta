@@ -70,20 +70,31 @@ class MachineManagementController extends Controller {
                         ->where('machines.id','<>', 27)
                         ->where('machines.status', '1')
                         ->where('machine_reports.last_played','!=','null');
-                        //->latest('machines.created_at')->paginate(100);   
+                        //->latest('machines.created_at')->paginate(100); 
+        
+        $dateRange = Input::get('datePicker');
+        $from = $to = '';        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+        endif;
+        
         if ( !$data ) :
         else:            
-            if($data['datefrom'] || $data['dateto']):
-                $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
-                    $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
+            if($from || $to):
+                $machines = $machines->where(function($query) use ($from,$to){                    
+                    $query->whereBetween('machine_reports.last_played', [$from, $to]);               
                 })->orderBy('date_created','desc');            
             endif;
         endif;
         
-        $machines = $machines->orderBy('date_created','desc')->get()->toArray(); 
+        $machines = $machines->orderBy('machine_reports.last_played','desc')->get()->toArray(); 
  
        
-        return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
+        return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'machines' => $machines]);
         
     }     
     
