@@ -447,7 +447,11 @@ $(document).ready(function() {
     $("#site_history").select2();
     $("#dates").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); }); 
     $("#dateResolve").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); }); 
-    
+    $("#m_type_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
+    $("#e_msg_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
+    $("#site_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });    
+    $("#max-date_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
+
 
 });
 
