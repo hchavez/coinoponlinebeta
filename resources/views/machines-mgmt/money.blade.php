@@ -81,8 +81,7 @@
                                 <thead>
                                     
                                     <tr role="row">
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" >ID</th>
-                                        <th width="20%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th width="20%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >DateLog</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >coinIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlCoinIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >billIn</th>
@@ -91,10 +90,13 @@
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >type</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >paymentResult</th>
                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >declineReason</th>
+                                         <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >cardType</th>
+                                          <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >tCardData</th>
                                          <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >procesTime</th>
+                                          <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >reference</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ttlMoneyIn</th>
                                         <th width="15%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >credits</th>
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                      
                                     </tr>
                                 </thead>
                                

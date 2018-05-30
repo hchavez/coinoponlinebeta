@@ -149,10 +149,10 @@
                         <div class="example-wrap">
                             <div class="row row-lg">
                                 
-                                <div class="col-xl-12">
+<!--                                <div class="col-xl-12">
                                     <div id="containerwin" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-                                </div>
+                                </div>-->
                                 
                                  <div class="col-xl-12">
                                      
@@ -249,47 +249,47 @@
                                     
                                         //win result graph version 1
 
-                                        chart = new Highcharts.chart('containerwin', {
-                                            chart: {
-                                                type: 'line'
-                                            },
-                                            title: {
-                                                text: ''
-                                            },
-                                            subtitle: {
-                                                text: ''
-                                            },
-                                            xAxis: {
-                                              
-                                            },
-                                            yAxis: {
-                                                 min: -5,
-                                                    max: 20,
-                                                      tickInterval: 10,
-                                                title: {
-                                                    text: 'Win Graph ',
-                                                    
-                                                }
-                                            },
-                                            plotOptions: {
-                                                line: {
-                                                    dataLabels: {
-                                                        enabled: false
-                                                    },
-                                                    enableMouseTracking: true
-                                                }
-                                            },
-                                            series: [ {
-                                                    name: 'WinResult',
-                                                    data: [ {{  $graphdataWinResult }} ]
-                                                }, {
-                                                    name: 'ExcessWin',
-                                                    data: [ {{ $graphdataExcessWinResult }} ]
-                                                }, {
-                                                    name: 'OwedWin',
-                                                    data: [ {{ $graphdataOwnedWinResult }} ]
-                                                }]
-                                        });
+//                                        chart = new Highcharts.chart('containerwin', {
+//                                            chart: {
+//                                                type: 'line'
+//                                            },
+//                                            title: {
+//                                                text: ''
+//                                            },
+//                                            subtitle: {
+//                                                text: ''
+//                                            },
+//                                            xAxis: {
+//                                              
+//                                            },
+//                                            yAxis: {
+//                                                 min: -5,
+//                                                    max: 20,
+//                                                      tickInterval: 10,
+//                                                title: {
+//                                                    text: 'Win Graph ',
+//                                                    
+//                                                }
+//                                            },
+//                                            plotOptions: {
+//                                                line: {
+//                                                    dataLabels: {
+//                                                        enabled: false
+//                                                    },
+//                                                    enableMouseTracking: true
+//                                                }
+//                                            },
+//                                            series: [ {
+//                                                    name: 'WinResult',
+//                                                    data: [ {{  $graphdataWinResult }} ]
+//                                                }, {
+//                                                    name: 'ExcessWin',
+//                                                    data: [ {{ $graphdataExcessWinResult }} ]
+//                                                }, {
+//                                                    name: 'OwedWin',
+//                                                    data: [ {{ $graphdataOwnedWinResult }} ]
+//                                                }]
+//                                        });
                                     });
 
 
@@ -319,7 +319,7 @@
                                    
                                     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-                                    <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!--                                    <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
 
                                 </div>
 
@@ -330,81 +330,158 @@
 
                                     $(document).ready(function () {
 
-                                        chart = new Highcharts.chart('containervoltage', {
-                                            chart: {
-                                                type: 'line'
-                                            },
-                                            title: {
-                                                text: ''
-                                            },
-                                            subtitle: {
-                                                text: ''
-                                            },
-                                            xAxis: {
-                                              
-                                            },
-                                            yAxis: {
-                                                 min: 0,
-                                                    max: 50,
-                                                      tickInterval: 10,
-                                                title: {
-                                                    text: 'Voltage Graph',
-                                                    
-                                                }
-                                            },
-                                            plotOptions: {
-                                                line: {
-                                                    dataLabels: {
-                                                        enabled: false
-                                                    },
-                                                    enableMouseTracking: true
-                                                }
-                                            },
-                                            series: [{
-                                                    name: 'PickupVoltage', 
-                                                    data: [ {{ $graphdataPkVoltResult }} ], 
-                                                }, {
-                                                    name: 'RetVoltage',
-                                                    data: [ {{ $graphdataDropVoltResult }} ], 
-                                                }]
-                                        });
+//                                        chart = new Highcharts.chart('containervoltage', {
+//                                            chart: {
+//                                                type: 'line'
+//                                            },
+//                                            title: {
+//                                                text: ''
+//                                            },
+//                                            subtitle: {
+//                                                text: ''
+//                                            },
+//                                            xAxis: {
+//                                              
+//                                            },
+//                                            yAxis: {
+//                                                 min: 0,
+//                                                    max: 50,
+//                                                      tickInterval: 10,
+//                                                title: {
+//                                                    text: 'Voltage Graph',
+//                                                    
+//                                                }
+//                                            },
+//                                            plotOptions: {
+//                                                line: {
+//                                                    dataLabels: {
+//                                                        enabled: false
+//                                                    },
+//                                                    enableMouseTracking: true
+//                                                }
+//                                            },
+//                                            series: [{
+//                                                    name: 'PickupVoltage', 
+//                                                    data: [ {{ $graphdataPkVoltResult }} ], 
+//                                                }, {
+//                                                    name: 'RetVoltage',
+//                                                    data: [ {{ $graphdataDropVoltResult }} ], 
+//                                                }]
+//                                        });
                                         
                                         
                                  //new chart for development-------voltage with  date graph------------------------------------------
                                 
                                 
-                                    chart = new Highcharts.stockChart('container', {
+//                                    chart = new Highcharts.stockChart('container', {
+//
+//                                        chart: {
+//                                            type: 'arearange'
+//                                        },
+//
+//                                        rangeSelector: {
+//                                            allButtonsEnabled: false,
+//                                            selected: 3 
+//                                        },
+//
+//                                          yAxis: {
+//                                                     min: 0,
+//                                                        max: 50,
+//                                                          tickInterval: 10,
+//                                                     title: {
+//                                                        text: 'Voltage Graph',
+//                                                    }
+//                                                },
+//
+//                                        tooltip: {
+//
+//                                        },
+//
+//                                        series: [{
+//                                            name: 'Data',
+//                                            data: [ {{   $newgraphdataPkVoltQuery2 }} ], 
+//                                        }]
+//
+//                                    });
+                 
+                                                         
+                                    //win graph version 2 using comparison data
+                                    
+                                    var seriesOptions = [],
+                                        seriesCounter = 0,
+                                        id = {{ $machine->id }}
+                                        names = ['pkvolt', 'slipvolt', 'dropvolt'];
 
-                                        chart: {
-                                            type: 'arearange'
-                                        },
+                                    /**
+                                     * Create the chart when all data is loaded
+                                     * @returns {undefined}
+                                     */
+                                    function createChart() {
 
-                                        rangeSelector: {
-                                            allButtonsEnabled: false,
-                                            selected: 2
-                                        },
+                                        Highcharts.stockChart('container', {
 
-                                          yAxis: {
-                                                     min: 0,
-                                                        max: 50,
-                                                          tickInterval: 10,
+                                            rangeSelector: {
+                                                selected: 4
+                                            },
+
+                                            yAxis: {
+                                                  min: -10,
+                                                        max: 80,
+                                                        tickInterval: 5,
                                                      title: {
                                                         text: 'Voltage Graph',
-                                                    }
-                                                },
+                                                    },
+                                                plotLines: [{
+                                                    value: 0,
+                                                    width: 2,
+                                                    color: 'silver'
+                                                }]
+                                            },
 
-                                        tooltip: {
+                                            plotOptions: {
+                                                series: {
+                                                   
+                                                    showInNavigator: true
+                                                }
+                                            },
 
-                                        },
+                                            tooltip: {
+                                                //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                                                valueDecimals: 2,
+                                                split: true
+                                            },
 
-                                        series: [{
-                                            name: 'Data',
-                                            data: [ {{   $newgraphdataPkVoltQuery2 }} ], 
-                                        }]
+                                            series: seriesOptions
+                                        });
+                                    }
 
-                                    });
-                 
+                                    $.each(names, function (i, name) {
+
+                                       
+                                    var base_urllink = window.location.origin;
                                     
+                                    if (base_urllink == "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                    }
+                                        
+                                        $.getJSON(base_url + name + '/' + id,    function (data) {
+
+                                            seriesOptions[i] = {
+                                                name: name,
+                                                data: data
+                                            };
+
+                                            // As we're loading the data asynchronously, we don't know what order it will arrive. So
+                                            // we keep a counter and create the chart when all the data is loaded.
+                                            seriesCounter += 1;
+
+                                            if (seriesCounter === names.length) {
+                                                createChart();
+                                            }
+                                        });
+                                    });
 
                                 
                                 

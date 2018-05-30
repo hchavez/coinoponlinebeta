@@ -362,9 +362,8 @@ class MachineManagementController extends Controller {
             $graphdataPkVoltResult = null;
         }
         
-        $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt')->where('machine_id', $id)
+        $graphdataPkVoltQuery2 = DB::table('goalslogs')->select('created_at','pkVolt','dropVolt','slipVolt')->where('machine_id', $id)
                                 //->whereMonth('created_at', '=', date('m'))
-                                ->where('dropCount','=', '1')
                                 ->where('startEndFlag','=',  '2')
                                 // ->whereDate('created_at', date("Y-m-d", strtotime( '-1 days' ) ) )
                                 ->get();
@@ -372,9 +371,10 @@ class MachineManagementController extends Controller {
          if ($graphdataPkVoltQuery2->count() > 0) {
             foreach ($graphdataPkVoltQuery2 as $value) {
                 
+
                 $asdate = strtotime($value->created_at) * 1000;
-                $graphdataPkVoltQuery2result[] = "[". $asdate .",". $value->pkVolt .",". $value->dropVolt."]";
-                
+                $graphdataPkVoltQuery2result[] = "[". $asdate .",". $value->pkVolt .",". $value->dropVolt .",".$value->slipVolt."]";
+
             }
             $graphdataPkVoltResult2 = join($graphdataPkVoltQuery2result, ',');
 
@@ -382,7 +382,7 @@ class MachineManagementController extends Controller {
              $graphdataPkVoltResult2 = null;
         }
         
-        
+        //var_dump($graphdataPkVoltResult2); exit();
         
          //Win Result with graph data display
          $graphdataWinResultwithDateQuery = DB::table('winlogs')->select('created_at','winResult','excessWin','owedWin')

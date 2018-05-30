@@ -122,8 +122,8 @@ $(document).ready(function(){
         buttons: ['excel'],
         deferRender:    true,   
         order: [[1,'desc']],
-        columns:[{'data': 'id'},{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
-            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'payment_span'},{'data': 'ttlMoneyIn'},{'data': 'credits'},{'data': 'status'}]       
+        columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
+            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},{'data': 'ttlMoneyIn'},{'data': 'credits'}]       
   
     });    
     $('#goalsapi').dataTable({

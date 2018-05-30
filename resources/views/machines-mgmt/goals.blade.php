@@ -89,7 +89,7 @@
                                 <thead>
                                     <tr role="row">
                                         
-                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Date Time Log</th>
+                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">DateLog</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="2%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">playIndex</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>

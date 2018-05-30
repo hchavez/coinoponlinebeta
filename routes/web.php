@@ -135,6 +135,75 @@ Route::get('/excesswin/{id}', function($id){
     return "[". $graphdataWinResultwithDate . "]";
 });
 
+/********************************VOLTAGE*************************************************/
+
+Route::get('/pkvolt/{id}', function($id){
+   $userall = GoalsLogs::select('created_at','pkVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $pkVolt = $value->pkVolt;
+
+                 $graphdataVoltageResultwithDateresult[] = "[". $asdate .",". $pkVolt ."]";
+                
+            }
+            $graphdataVoltageResultwithDate = join($graphdataVoltageResultwithDateresult, ',');
+
+         }else{
+             $graphdataVoltageResultwithDate = null;
+         }
+         
+    return "[". $graphdataVoltageResultwithDate . "]";
+         
+});
+
+Route::get('/slipvolt/{id}', function($id){
+   $userall = GoalsLogs::select('created_at','slipVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $slipVolt = $value->slipVolt;
+
+                 $graphdataVoltageResultwithDateresult[] = "[". $asdate .",". $slipVolt ."]";
+                
+            }
+            $graphdataVoltageResultwithDate = join($graphdataVoltageResultwithDateresult, ',');
+
+         }else{
+             $graphdataVoltageResultwithDate = null;
+         }
+         
+    return "[". $graphdataVoltageResultwithDate . "]";
+         
+});
+
+Route::get('/dropvolt/{id}', function($id){
+   $userall = GoalsLogs::select('created_at','dropVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $dropVolt = $value->dropVolt;
+
+                 $graphdataVoltageResultwithDateresult[] = "[". $asdate .",". $dropVolt ."]";
+                
+            }
+            $graphdataVoltageResultwithDate = join($graphdataVoltageResultwithDateresult, ',');
+
+         }else{
+             $graphdataVoltageResultwithDate = null;
+         }
+         
+    return "[". $graphdataVoltageResultwithDate . "]";
+         
+});
+
+/***********************************Graph Result API********************************************/
 
 
 Route::get('logdata/{id}', 'MachineManagementController@logdata');
