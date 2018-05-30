@@ -50,8 +50,8 @@ class MachineManagementController extends Controller {
     public function index() 
     {
         $data = Input::all();
-        $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );
+        $startnewformat = date("Y-m-d", strtotime(Input::get('datefrom')) );     
+        $endnewformat = date("Y-m-d", strtotime(Input::get('dateto')) );
 
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
@@ -68,21 +68,33 @@ class MachineManagementController extends Controller {
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
                         ->where('machines.id','<>', 27)
-                        ->where('machines.status', '1');
-                        //->latest('machines.created_at')->paginate(100);   
+                        ->where('machines.status', '1')
+                        ->where('machine_reports.last_played','!=','null');
+                        //->latest('machines.created_at')->paginate(100); 
+        
+        $dateRange = Input::get('datePicker');
+        $from = $to = '';        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+        endif;
+        
         if ( !$data ) :
         else:            
-            if($data['startdate'] || $data['enddate']):
-                $machines = $machines->where(function($query) use ($startnewformat,$endnewformat){                    
-                    $query->whereBetween('machine_reports.date_created', [$startnewformat, $endnewformat]);               
+            if($from || $to):
+                $machines = $machines->where(function($query) use ($from,$to){                    
+                    $query->whereBetween('machine_reports.last_played', [$from, $to]);               
                 })->orderBy('date_created','desc');            
             endif;
         endif;
         
-        $machines = $machines->orderBy('date_created','desc')->get()->toArray(); 
+        $machines = $machines->orderBy('machine_reports.last_played','desc')->get()->toArray(); 
  
        
-        return view('machines-mgmt/index', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
+        return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'machines' => $machines]);
         
     }     
     

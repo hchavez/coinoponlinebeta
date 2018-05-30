@@ -49,7 +49,18 @@ class MachineErrorReportController extends Controller
             ->leftJoin('state', 'sites.state', '=', 'state.id')          
             ->where('errorlogs.status','!=','2')
             ->whereDate('errorlogs.created_at', '=', Carbon::today());
-                        
+        
+        
+        $dateRange = Input::get('dateRange');
+        $from = $to = '';        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+        endif;
+        
         if(!empty(Input::get())):
             $model = Input::get('machine_model');
             $type = Input::get('machine_type');
@@ -82,8 +93,8 @@ class MachineErrorReportController extends Controller
             endif; 
             
             if($enddate):
-                $machinelogs = $machinelogs->where(function($query) use ($startdate,$enddate){                    
-                    $query->whereBetween('machines.created_at', [$startdate, $enddate]);          
+                $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                    $query->whereBetween('errorlogs_history.created_at', [$from, $to]);          
                 })->orderBy('date_created','desc');            
             endif; 
         endif;
@@ -105,8 +116,8 @@ class MachineErrorReportController extends Controller
             'machine_site' => Input::get('machine_site'),
             'error_msg' => Input::get('error_msg'),
             'machine_site' => Input::get('machine_site'),
-            'startdate' => Input::get('startdate'),
-            'enddate' => Input::get('enddate')
+            'startdate' => $from,
+            'enddate' => $to
         );
          
         $online = DB::table('machines')->where('status','=', '1')->count('status'); 
@@ -128,7 +139,7 @@ class MachineErrorReportController extends Controller
     }
     
     public function history(){
-
+        
         $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
@@ -137,23 +148,43 @@ class MachineErrorReportController extends Controller
                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
                     'machines.comments as comments','errorlogs.log_id as log_id',
                     'errorlogs.error as error','errorlogs.type as errortype','errorlogs.created_at as date_created','errorlogs.id as error_id',
-                    'users.firstname as firstname','users.lastname as lastname')
+                    'users.firstname as firstname','users.lastname as lastname',
+                    'errorlogs_history.created_at as errorResolve')
             ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
             ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')   
             ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
-            ->leftJoin('users','users.id','=','errorlogs_history.user_id')
+            ->leftJoin('users','users.id','=','errorlogs_history.user_id')            
             ->where('errorlogs.status','=','2');
-                        
+        
+        $dateOccur = Input::get('dates');
+        $dateResolve = Input::get('dateResolve');
+        $from = $to = '';
+        $resolvefrom = $resolveto = '';
+        if($dateOccur !=''):
+            $explode = explode('-',$dateOccur);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+        endif;
+        
+        if($dateResolve !=''):
+            $explode = explode('-',$dateResolve);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $resolvefrom = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $resolveto = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+        endif;
+        
         if(!empty(Input::get())):
             $model = Input::get('machine_model');
             $type = Input::get('machine_type');
             $error_msg = Input::get('error_msg');
             $machine_site = Input::get('machine_site');
-            $startdate = Input::get('startdate');
-            $enddate = Input::get('enddate');
+            
             if($model):
                 $machinelogs = $machinelogs->where(function($query) use ($model){                    
                     $query->where('machine_models.machine_model', '=', $model);               
@@ -178,11 +209,18 @@ class MachineErrorReportController extends Controller
                 })->orderBy('date_created','desc');            
             endif; 
             
-            if($enddate):
-                $machinelogs = $machinelogs->where(function($query) use ($startdate,$enddate){                    
-                    $query->whereBetween('machines.created_at', [$startdate, $enddate]);          
+            if($dateOccur):
+                $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                    $query->whereBetween('errorlogs.created_at', [$from, $to]);          
                 })->orderBy('date_created','desc');            
-            endif; 
+            endif;
+            
+            if($dateResolve):
+                $machinelogs = $machinelogs->where(function($query) use ($resolvefrom,$resolveto){                    
+                    $query->whereBetween('errorlogs_history.created_at', [$resolvefrom, $resolveto]);          
+                })->orderBy('date_created','desc');            
+            endif;
+            
         endif;
                 
         $machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(10);
@@ -190,13 +228,14 @@ class MachineErrorReportController extends Controller
             ->select('errorlogs_list.*') 
             ->orderBy('created_at','desc')
             ->get();
+       
          
         $machineModel = MachineModel::orderBy('created_at', 'asc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
         $machineType = MachineType::orderBy('created_at', 'asc')->get();
                 
         $filterData = array('machine_model' => Input::get('machine_model'),'machine_type' => Input::get('machine_type'),'machine_site' => Input::get('machine_site'),
-            'error_msg' => Input::get('error_msg'),'machine_site' => Input::get('machine_site'),'startdate' => Input::get('startdate'),'enddate' => Input::get('enddate'));
+            'error_msg' => Input::get('error_msg'),'machine_site' => Input::get('machine_site'),'startdate' => $from,'enddate' => $to,'startdateresolve' => $resolvefrom,'enddateresolve' => $resolveto);
         
         $totalStatus = array('error'=>$this->totalError('1'), 'warning'=>$this->totalWarning('1'), 'notice'=>$this->totalNotice('1'));
         $offlineLists = $this->offlineMachineLists(); 

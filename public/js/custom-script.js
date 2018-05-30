@@ -146,26 +146,6 @@ $(document).ready(function(){
     $('#goalsapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
       
     //Machine error report filter
-    $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
-    $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
-    $("#e_msg").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
-    $("#site").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });    
-    $("#max-date").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
     
-    $("#m_model").select2();
-    $("#m_type").select2();
-    $("#e_msg").select2();
-    $("#site").select2();
-
-    $("#m_model_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
-    $("#m_type_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
-    $("#e_msg_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
-    $("#site_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });    
-    $("#max-date_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
-    
-    $("#m_model_history").select2();
-    $("#m_type_history").select2();
-    $("#e_msg_history").select2();
-    $("#site_history").select2();
 
 });

@@ -3,52 +3,6 @@
 <!-- Page -->
 <meta http-equiv="refresh" content="300" >
 <div class="row" id="boxesCount">  
-    <!--div class="col-lg-2">        
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['notice']; ?></b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-cyan-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                  <div class="counter-number-group"><span class="counter-icon cyan-600 mr-5"><i class="wb-alert-circle"></i></span><a href="{{ url('history?error_msg=3') }}"><span class="counter-number-related">Notice Resolved</span>  </a>        </div>
-              </div>
-            </div>
-          </div>
-        </div>       
-    </div>
-    <div class="col-lg-2">      
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['warning']; ?></b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                  <div class="counter-number-group"><span class="counter-icon orange-600 mr-5"><i class="wb-warning"></i></span><a href="{{ url('history?error_msg=2') }}"><span class="counter-number-related">Warning Resolved</span>   </a>       </div>
-              </div>
-            </div>
-          </div>
-        </div>       
-    </div>    
-    <div class="col-lg-2">        
-        <div class="card card-block p-30">
-          <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['error']; ?></b></h1></div>
-            <div class="counter-label">
-              <div class="progress progress-xs mb-10">
-                <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
-              </div>
-              <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('history?error_msg=1') }}"><span class="counter-number-related">Attention Resolved</span> </a>         </div>
-              </div>
-            </div>
-          </div>
-        </div>        
-    </div-->
-    
     <!-- end boxes -->
     <!-- second Row -->
     <div class="col-12" id="ecommerceChartView">
@@ -62,8 +16,12 @@
                     <div class="col-md-6">                        
                         <div id="filter_display">   
                             <div class="bootstrap-tagsinput">
+                                    
                                     <?php if($filterData['startdate'] !=''): ?>
-                                        <span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
+                                        <span class="tag badge badge-default">Date Occur: {{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
+                                    <?php endif; ?>
+                                    <?php if($filterData['startdateresolve'] !=''): ?>
+                                        <span class="tag badge badge-default">Date Resolve: {{ $filterData['startdateresolve'] }} - {{ $filterData['enddateresolve'] }}</span>                                        
                                     <?php endif; ?>
                                     <?php if($filterData['machine_model'] !=''): ?>
                                         <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        
@@ -111,13 +69,8 @@
                            <div class="example">   
                             <form role="form" method="GET" class="error-list-form" id="formFilterHistory">
                                 <div class="col_empty ky-columns"></div>
-                                <div class="col_date ky-columns">
-                                    <div id="" class="input-group input-daterange">
-                                        <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-                                        <div class="input-group-addon">to</div>
-                                        <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">  
-                                    </div>        
-                                </div>
+                                <div class="col_date ky-columns"><input type="text" name="dates" id="dates" class="form-control pull-left"></div>
+                                <div class="col_date ky-columns"><input type="text" name="dateResolve" id="dateResolve" class="form-control pull-left"></div>
                                 <div class="col_model ky-columns">
                                     <select id="m_model_history" class="form-control" name="machine_model">
                                         <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
@@ -180,11 +133,12 @@
                                 <thead>
                                     <tr role="row">                                                
                                         <th id="" class="col_empty"></th>
-                                        <th style="width:11.2%;" class="col_date">Date Time</th>
+                                        <th style="" class="col_date">Date Occur</th>
+                                        <th style="" class="col_date">Date Resolve</th>
                                         <th style="width:9.2%;" class="col_model">Machine Model</th>                                                
                                         <th style="width:9.2%;" class="col_type">Machine Type</th>
-                                        <th style="width:16.3%;" class="col_serial">Name & Serial No</th>
-                                        <th id="" class="col_error">Error Message</th>
+                                        <th style="width:15.5%;" class="col_serial">Name & Serial No</th>
+                                        <th style="width:19.5%;" id="" class="col_error">Error Message</th>
                                         <th id="" class="col_site">Site</th>
                                         <th id="" class="">Resolved By</th>
                                        </tr> 
@@ -201,6 +155,7 @@
                                             endforeach; ?>
                                         </td>
                                         <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
+                                        <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->errorResolve))}} </td>
                                         <td class="font-weight-medium">{{ $machinelog->machine_model}}</td>
                                         <td>{{ $machinelog->machine_type}}</td>
                                         <td class="hidden-sm-down"><span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span></td>
@@ -235,6 +190,7 @@
                                           <tr>
                                               <td> &nbsp;</td>
                                               <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td> 
+                                              <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machinelog->errorResolve))}}</td> 
                                               <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
                                               <td>
                                                   @if ($machineloggroup->type == '1') 
@@ -254,11 +210,12 @@
                           </div>
                         </div>              
                         <!-- End Example Table-section -->
-                    </div>
-                    <div class="col-sm-12">
                         <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
                             {{ $machinelogs->links() }}
-                        </div>                            
+                        </div> 
+                    </div>
+                    <div class="col-sm-12">
+                                                   
                     </div>
                 </div>
                 <!-- End Team Total Completed -->
@@ -418,36 +375,83 @@
 
 
 
-<script>
-    
-    $(document).ready(function() {   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>    
+$(document).ready(function() {   
 
     $("#status-update").submit(function(e) {
-            e.preventDefault();
-            
-            $('.modal-dialog').css('text-align','center');
-            $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
-            
-            var statusval = $("input#error-resolve").val();            
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                    url: $(this).attr('action'),
-                    type: "POST",
-                    data: $(this).serialize(),
-                    success: function(response){                     
-                    $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
-                    setTimeout(function() { location.reload(); }, 1000);                      
-                },
-                error: function(response){
-                    $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
-                }
-            }); 
+        e.preventDefault();
 
+        $('.modal-dialog').css('text-align','center');
+        $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
+
+        var statusval = $("input#error-resolve").val();            
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+                url: $(this).attr('action'),
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response){                     
+                $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
+                setTimeout(function() { location.reload(); }, 1000);                      
+            },
+            error: function(response){
+                $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
+            }
+        }); 
     });
+    
+    
+    /*Occur*/
+    $('input[name="dates"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit();
+    });
+    $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit();
+    });
+    
+    
+    /*Resolve*/
+    $('input[name="dateResolve"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateResolve"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit();
+    });
+    $('input[name="dateResolve"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit();
+    });
+    
+    $("#m_model_history").select2();
+    $("#m_type_history").select2();
+    $("#e_msg_history").select2();
+    $("#site_history").select2();
+    $("#dates").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); }); 
+    $("#dateResolve").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); }); 
+    $("#m_type_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });   
+    $("#e_msg_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
+    $("#site_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });    
+    $("#max-date_history").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'history'); form.submit(); });
+
 
 });
 
