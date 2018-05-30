@@ -121,7 +121,7 @@ $(document).ready(function(){
         dom: 'Bfrtip',
         buttons: ['excel'],
         deferRender:    true,   
-        order: [[1,'desc']],
+        order: [[3,'desc']],
         columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
             {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},{'data': 'ttlMoneyIn'},{'data': 'credits'}]       
   
