@@ -12,7 +12,7 @@
                 
                 <div class="col-lg-4"></div>
                 <div class="col-lg-3"></div>                
-                <div class="col-lg-3">Date: <code>{{ date('F j, Y', strtotime($from))}} - {{ date('F j, Y', strtotime($to))}}</code></div>
+                <div class="col-lg-3 text-right">Date: <code>{{ date('F j, Y', strtotime($from))}} - {{ date('F j, Y', strtotime($to))}}</code></div>
                 <div class="col-lg-2">   
                     <form role="form" method="GET" class="error-list-form" id="formFilter">                                         
                         <input type="text" name="dateFilter" id="dateFilter" class="form-control pull-right" placeholder="Filter By Date"> 
@@ -38,11 +38,11 @@
                   <div class="nav-tabs-horizontal" data-plugin="tabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
-                          aria-controls="exampleTabsOne" role="tab">Card Reader</a></li>
+                          aria-controls="exampleTabsOne" role="tab">George System and Card Reader</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
                           aria-controls="exampleTabsTwo" role="tab">George System</a></li>    
                         <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
-                          aria-controls="exampleTabsThree" role="tab">Both</a></li>    
+                          aria-controls="exampleTabsThree" role="tab">Card Reader</a></li>    
                     </ul>
                     <div class="tab-content pt-20">
                       <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
@@ -51,7 +51,7 @@
                           <h4 class="example-title"></h4>
                           <p> </p>
                           <div class="example">
-                            <div id="exampleC3StackedBar"></div>
+                            <div id="bothShow"></div>
                           </div>
                         </div>
                         <!-- End Example C3 Stacked Bar -->
@@ -66,7 +66,18 @@
                           </div>
                         </div>
                         <!-- End Example C3 Stacked Bar -->
-                      </div>                                          
+                      </div>   
+                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
+                            <!-- Example C3 Stacked Bar -->
+                            <div class="example-wrap m-md-0">
+                              <h4 class="example-title"></h4>
+                              <p> </p>
+                              <div class="example">
+                                <div id="exampleC3StackedBar"></div>
+                              </div>
+                            </div>
+                            <!-- End Example C3 Stacked Bar -->
+                      </div>  
                     </div>
                   </div>
                 </div>

@@ -26,7 +26,9 @@
             type: 'bar',
             groups: [['cardreader']]
           },
-
+          color: {
+            pattern: [Config.colors("primary", 300)]
+          },
           bar: {
             width: {
               max: 80
@@ -72,7 +74,9 @@
               type: 'bar',
               groups: [['George System']]
             },
-
+            color: {
+                pattern: [Config.colors("light-green", 300)]
+            },
             bar: {
               width: {
                 max: 80
@@ -109,6 +113,53 @@
           }, 2000);
         })();
       
+      
+        (function () {
+            var stacked_bar_chart = c3.generate({
+              bindto: '#bothShow',
+              data: {
+                columns: [['George System and Card Reader', coin28, coin29, coin30, coin31, coin35, coin36, coin37, swipe38, swipe40, coin41, swipe42, swipe43]],
+                type: 'bar',
+                groups: [['data1', 'data2']]
+              },
+              color: {
+                pattern: [Config.colors("primary", 500)]
+              },
+              bar: {
+                width: {
+                  max: 80
+                }
+              },
+              grid: {
+                y: {
+                  show: true,
+                  lines: [{
+                    value: 0
+                  }]
+                }
+              },
+                axis: {
+                    x: {
+                        type: 'category',
+                        categories: ['Andy', 'Jack','Robert','Brian','George','James','Barry','Philippines Advam Test Unit','raspberrypi for Advam-08','Philippines Single Chip Board - under development','raspberrypi for Advam-18','raspberrypi for Advam-12']
+                    }
+                }
+            });
+
+            setTimeout(function () {
+              stacked_bar_chart.groups([['George System and Card Reader']]);
+            }, 1000);
+
+            setTimeout(function () {
+              stacked_bar_chart.load({
+                columns: [['data4']]
+              });
+            }, 1500);
+
+            setTimeout(function () {
+              stacked_bar_chart.groups([['George System and Card Reader']]);
+            }, 2000);
+        })();
       
   });
   

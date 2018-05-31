@@ -52,7 +52,7 @@ class FinancialReportController extends Controller
         $cardreader_04 = '42';
         $cardreader_05 = '43';
         //$cardreader = array('38','39','40','42','43');
-        //$george = array('28','29','30','31','34','35','36','37','41');
+        //$george = array('28','29','30','31','35','36','37','41');
         $george_01 = '28';
         $george_02 = '29';
         $george_03 = '30';
