@@ -70,6 +70,8 @@ class FinancialReportController extends Controller
         $swipe43 = $this->getSwipe($cardreader_05,$date);
       // echo $swipe39['swipe'];
         $coin28 = $this->getCoin($george_01,$date);
+        $coin28s = $this->getSwipe($george_01,$date);
+        echo $coin28s['swipe'];
         $coin29 = $this->getCoin($george_02,$date);
         $coin30 = $this->getCoin($george_03,$date);
         $coin31 = $this->getCoin($george_04,$date);        
