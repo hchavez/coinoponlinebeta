@@ -113,7 +113,7 @@ Breakpoints();
         <script src="{{asset('js/custom.js')}}"></script>
         <script src="{{asset('js/custom-script.js')}}"></script>
         <script src="{{asset('js/Config.js')}}"></script>
-        <script src="{{asset('js/financial-script.js')}}"></script>
+        
         
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
