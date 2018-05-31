@@ -22,9 +22,9 @@
         var stacked_bar_chart = c3.generate({
           bindto: '#exampleC3StackedBar',
           data: {
-            columns: [['cardreader', swipe38, swipe39, swipe40, swipe42, swipe43]],
+            columns: [['Card', swipe38, swipe39, swipe40, swipe42, swipe43]],
             type: 'bar',
-            groups: [['cardreader']]
+            groups: [['Card']]
           },
           color: {
             pattern: [Config.colors("light-green", 300)]
@@ -51,7 +51,7 @@
         });
 
         setTimeout(function () {
-          stacked_bar_chart.groups([['cardreader']]);
+          stacked_bar_chart.groups([['Card']]);
         }, 1000);
 
        /* setTimeout(function () {
@@ -61,7 +61,7 @@
         }, 1500);*/
 
         setTimeout(function () {
-          stacked_bar_chart.groups([['cardreader']]);
+          stacked_bar_chart.groups([['Card']]);
         }, 2000);
       })();
       
@@ -70,9 +70,9 @@
         var stacked_bar_chart_coin = c3.generate({
             bindto: '#coinbillin',
             data: {
-              columns: [['George System', coin28, coin29, coin30, coin31, coin35, coin36, coin37, coin41]],
+              columns: [['Coin', coin28, coin29, coin30, coin31, coin35, coin36, coin37, coin41]],
               type: 'bar',
-              groups: [['George System']]
+              groups: [['Coin']]
             },
             color: {
                 pattern: [Config.colors("primary", 300)]
@@ -99,7 +99,7 @@
           });
 
           setTimeout(function () {
-            stacked_bar_chart_coin.groups([['George System']]);
+            stacked_bar_chart_coin.groups([['Coin']]);
           }, 1000);
 
          /* setTimeout(function () {
@@ -109,7 +109,7 @@
           }, 1500);*/
 
           setTimeout(function () {
-            stacked_bar_chart_coin.groups([['George System']]);
+            stacked_bar_chart_coin.groups([['Coin']]);
           }, 2000);
         })();
       
@@ -118,8 +118,8 @@
             var stacked_bar_chart = c3.generate({
               bindto: '#bothShow',
               data: {
-                columns: [['George System', coin28, coin29, coin30, coin31, coin35, coin36, coin37, '', '', coin41, '', ''],
-                           ['Card Reader', '', '', '', '', '', '', '', swipe38, swipe40, '', swipe42, swipe43]],
+                columns: [['Coin', coin28, coin29, coin30, coin31, coin35, coin36, coin37, '', '', coin41, '', ''],
+                           ['Card', '', '', '', '', '', '', '', swipe38, swipe40, '', swipe42, swipe43]],
                 type: 'bar',
                 groups: [['data1', 'data2']]
               },
@@ -148,7 +148,7 @@
             });
 
             setTimeout(function () {
-              stacked_bar_chart.groups([['George System','Card Reader']]);
+              stacked_bar_chart.groups([['Coin','Card']]);
             }, 1000);
 
             setTimeout(function () {
@@ -158,7 +158,7 @@
             }, 1500);
 
             setTimeout(function () {
-              stacked_bar_chart.groups([['George System','Card Reader']]);
+              stacked_bar_chart.groups([['Coin','Card']]);
             }, 2000);
         })();
       
