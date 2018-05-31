@@ -11,8 +11,8 @@
             <div class="row">
                 
                 <div class="col-lg-4"></div>
-                <div class="col-lg-4"></div>                
-                <div class="col-lg-2"></div>
+                <div class="col-lg-3"></div>                
+                <div class="col-lg-3">Date: <code>{{ date('F j, Y', strtotime($from))}} - {{ date('F j, Y', strtotime($to))}}</code></div>
                 <div class="col-lg-2">   
                     <form role="form" method="GET" class="error-list-form" id="formFilter">                                         
                         <input type="text" name="dateFilter" id="dateFilter" class="form-control pull-right" placeholder="Filter By Date"> 

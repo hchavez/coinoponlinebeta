@@ -82,7 +82,7 @@ class FinancialReportController extends Controller
             $category = Input::get('category');
         endif;  
         
-        return view('financial-reports/index', ['swipe38' => $swipe38['swipe'],'swipe39' => $swipe39['swipe'],'swipe40' => $swipe40['swipe'],'swipe42' => $swipe42['swipe'],'swipe43' => $swipe43['swipe'],
+        return view('financial-reports/index', ['from'=>$from,'to'=>$to,'swipe38' => $swipe38['swipe'],'swipe39' => $swipe39['swipe'],'swipe40' => $swipe40['swipe'],'swipe42' => $swipe42['swipe'],'swipe43' => $swipe43['swipe'],
                 'coin28'=>$coin28,'coin29'=>$coin29,'coin30'=>$coin30,'coin31'=>$coin31,'coin35'=>$coin35,'coin36'=>$coin36,'coin37'=>$coin37,'coin41'=>$coin41]);
         
     }  
