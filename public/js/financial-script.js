@@ -29,7 +29,7 @@
 
           bar: {
             width: {
-              max: 45
+              max: 80
             }
           },
           grid: {
@@ -75,7 +75,7 @@
 
             bar: {
               width: {
-                max: 45
+                max: 80
               }
             },
             grid: {
