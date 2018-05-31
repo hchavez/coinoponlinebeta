@@ -12,14 +12,7 @@
                 
                 <div class="col-lg-4"></div>
                 <div class="col-lg-4"></div>                
-                <div class="col-lg-2">
-                    <select id="e_category" name="e_category" class="form-control">
-                        <option selected="" disabled="">Category</option>
-                        <option value="cardreader">Card Reader</option>
-                        <option value="george system">George System</option>
-                        <option value="george system and cardreader">Both</option>
-                    </select>
-                </div>
+                <div class="col-lg-2"></div>
                 <div class="col-lg-2">   
                     <form role="form" method="GET" class="error-list-form" id="formFilter">                                         
                         <input type="text" name="dateFilter" id="dateFilter" class="form-control pull-right" placeholder="Filter By Date"> 
@@ -28,20 +21,57 @@
                         <input type="hidden" name="coin" id="swipe40" value="{{ $swipe40 }}">
                         <input type="hidden" name="coin" id="swipe42" value="{{ $swipe42 }}">
                         <input type="hidden" name="coin" id="swipe43" value="{{ $swipe43 }}">
+                        <input type="hidden" name="coin28" id="coin28" value="{{ $coin28 }}">
+                        <input type="hidden" name="coin28" id="coin29" value="{{ $coin29 }}">
+                        <input type="hidden" name="coin28" id="coin30" value="{{ $coin30 }}">
+                        <input type="hidden" name="coin28" id="coin31" value="{{ $coin31 }}">                       
+                        <input type="hidden" name="coin28" id="coin35" value="{{ $coin35 }}">
+                        <input type="hidden" name="coin28" id="coin36" value="{{ $coin36 }}">
+                        <input type="hidden" name="coin28" id="coin37" value="{{ $coin37 }}">
+                        <input type="hidden" name="coin28" id="coin41" value="{{ $coin41 }}">
                     </form>                                       
                 </div>
                 
-                <div class="col-lg-12">
-                    <!-- Example C3 Stacked Bar -->
-                    <div class="example-wrap m-md-0">
-                      <h4 class="example-title"></h4>
-                      <p> </p>
-                      <div class="example">
-                        <div id="exampleC3StackedBar"></div>
+                <div class="col-xl-12">
+                <!-- Example Tabs -->
+                <div class="example-wrap">
+                  <div class="nav-tabs-horizontal" data-plugin="tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+                          aria-controls="exampleTabsOne" role="tab">Card Reader</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                          aria-controls="exampleTabsTwo" role="tab">George System</a></li>    
+                        <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
+                          aria-controls="exampleTabsThree" role="tab">Both</a></li>    
+                    </ul>
+                    <div class="tab-content pt-20">
+                      <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                        <!-- Example C3 Stacked Bar -->
+                        <div class="example-wrap m-md-0">
+                          <h4 class="example-title"></h4>
+                          <p> </p>
+                          <div class="example">
+                            <div id="exampleC3StackedBar"></div>
+                          </div>
+                        </div>
+                        <!-- End Example C3 Stacked Bar -->
                       </div>
+                      <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                        <!-- Example C3 Stacked Bar -->
+                        <div class="example-wrap m-md-0">
+                          <h4 class="example-title"></h4>
+                          <p> </p>
+                          <div class="example">
+                            <div id="coinbillin"></div>
+                          </div>
+                        </div>
+                        <!-- End Example C3 Stacked Bar -->
+                      </div>                                          
                     </div>
-                    <!-- End Example C3 Stacked Bar -->
-                </div>               
+                  </div>
+                </div>
+                <!-- End Example Tabs -->
+              </div>
             </div>
         </div>
     </div>

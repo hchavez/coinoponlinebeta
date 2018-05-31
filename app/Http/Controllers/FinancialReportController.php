@@ -53,6 +53,14 @@ class FinancialReportController extends Controller
         $cardreader_05 = '43';
         //$cardreader = array('38','39','40','42','43');
         //$george = array('28','29','30','31','34','35','36','37','41');
+        $george_01 = '28';
+        $george_02 = '29';
+        $george_03 = '30';
+        $george_04 = '31';       
+        $george_05 = '35';
+        $george_06 = '36';
+        $george_07 = '37';
+        $george_08 = '41';
         
         //$coin28 = $this->getCoin($machine_01,$date);
         $swipe38 = $this->getSwipe($cardreader_01,$date);
@@ -61,12 +69,21 @@ class FinancialReportController extends Controller
         $swipe42 = $this->getSwipe($cardreader_04,$date);
         $swipe43 = $this->getSwipe($cardreader_05,$date);
       // echo $swipe39['swipe'];
+        $coin28 = $this->getCoin($george_01,$date);
+        $coin29 = $this->getCoin($george_02,$date);
+        $coin30 = $this->getCoin($george_03,$date);
+        $coin31 = $this->getCoin($george_04,$date);        
+        $coin35 = $this->getCoin($george_05,$date);
+        $coin36 = $this->getCoin($george_06,$date);
+        $coin37 = $this->getCoin($george_07,$date);
+        $coin41 = $this->getCoin($george_08,$date);
         
         if(!empty(Input::get())):
             $category = Input::get('category');
         endif;  
         
-        return view('financial-reports/index', ['swipe38' => $swipe38['swipe'],'swipe39' => $swipe39['swipe'],'swipe40' => $swipe40['swipe'],'swipe42' => $swipe42['swipe'],'swipe43' => $swipe43['swipe'] ]);
+        return view('financial-reports/index', ['swipe38' => $swipe38['swipe'],'swipe39' => $swipe39['swipe'],'swipe40' => $swipe40['swipe'],'swipe42' => $swipe42['swipe'],'swipe43' => $swipe43['swipe'],
+                'coin28'=>$coin28,'coin29'=>$coin29,'coin30'=>$coin30,'coin31'=>$coin31,'coin35'=>$coin35,'coin36'=>$coin36,'coin37'=>$coin37,'coin41'=>$coin41]);
         
     }  
     
