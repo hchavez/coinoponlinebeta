@@ -27,7 +27,7 @@
             groups: [['cardreader']]
           },
           color: {
-            pattern: [Config.colors("primary", 300)]
+            pattern: [Config.colors("light-green", 300)]
           },
           bar: {
             width: {
@@ -75,7 +75,7 @@
               groups: [['George System']]
             },
             color: {
-                pattern: [Config.colors("light-green", 300)]
+                pattern: [Config.colors("primary", 300)]
             },
             bar: {
               width: {
@@ -118,12 +118,13 @@
             var stacked_bar_chart = c3.generate({
               bindto: '#bothShow',
               data: {
-                columns: [['George System and Card Reader', coin28, coin29, coin30, coin31, coin35, coin36, coin37, swipe38, swipe40, coin41, swipe42, swipe43]],
+                columns: [['George System', coin28, coin29, coin30, coin31, coin35, coin36, coin37, '', '', coin41, '', ''],
+                           ['Card Reader', '', '', '', '', '', '', '', swipe38, swipe40, '', swipe42, swipe43]],
                 type: 'bar',
                 groups: [['data1', 'data2']]
               },
               color: {
-                pattern: [Config.colors("primary", 500)]
+                pattern: [Config.colors("primary", 500), Config.colors("light-green", 300)]
               },
               bar: {
                 width: {
@@ -147,7 +148,7 @@
             });
 
             setTimeout(function () {
-              stacked_bar_chart.groups([['George System and Card Reader']]);
+              stacked_bar_chart.groups([['George System','Card Reader']]);
             }, 1000);
 
             setTimeout(function () {
@@ -157,7 +158,7 @@
             }, 1500);
 
             setTimeout(function () {
-              stacked_bar_chart.groups([['George System and Card Reader']]);
+              stacked_bar_chart.groups([['George System','Card Reader']]);
             }, 2000);
         })();
       
