@@ -102,11 +102,12 @@ class GameSettingsController extends Controller {
     public function update(Request $request, $id) {
 
         $input = [
-          'playIndex' => $request['playIndex'],
+           'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
+            'gameLeft' => $request['gameLeft'],
             'gameTime' => $request['gameTime'],
-            'status' => '0'
+            'status' => '2'
         ];
 
         if (GameSettings::where('machine_id', $id)->update($input)) {
