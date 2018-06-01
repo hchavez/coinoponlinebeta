@@ -94,7 +94,7 @@
                                 </div>
                                 
                                  <div class="form-group{{ $errors->has('ttlPurCost') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">Total Toy </label>
+                                    <label for="xTime" class="col-md-4 control-label">Total Toy Purchase Cost </label>
 
                                     <div class="col-md-6">
                                         <input id="ttlPurCost" type="text" class="form-control" name="ttlPurCost" value="{{ $machine->ttlPurCost }}"  autofocus>
