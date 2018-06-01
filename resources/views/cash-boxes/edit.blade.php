@@ -5,7 +5,7 @@
 
     <div class="page-content">
         <div class="panel">
-             <?php if($machine->status == '0'): ?>
+             <?php if($machine->status == '2'): ?>
              <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>

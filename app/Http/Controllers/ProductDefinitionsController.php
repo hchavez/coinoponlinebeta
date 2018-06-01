@@ -110,11 +110,10 @@ class ProductDefinitionsController extends Controller
         $input = [
              'coinPerPlay' => $request['coinPerPlay'],
             'ttlPurCost' => $request['ttlPurCost'],
-            'numberOfPlays' => $request['numberOfPlays'],
             'stockLeft' => $request['stockLeft'],
             'stockAdded' => $request['stockAdded'],
             'stockRemoved' => $request['stockRemoved'],
-            'status' => '0'
+            'status' => '2'
         ];
 
         if (ProductDefinitions::where('machine_id', $id)->update($input)) {

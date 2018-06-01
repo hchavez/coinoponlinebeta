@@ -5,7 +5,7 @@
 
     <div class="page-content">
         <div class="panel">
-             <?php if($machine->status == '0'): ?>
+             <?php if($machine->status == '2'): ?>
              <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -88,6 +88,20 @@
                                         @if ($errors->has('stockRemoved'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('stockRemoved') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                 <div class="form-group{{ $errors->has('ttlPurCost') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">Total Toy Cost</label>
+
+                                    <div class="col-md-6">
+                                        <input id="ttlPurCost" type="text" class="form-control" name="stockRemoved" value="{{ $machine->ttlPurCost }}"  autofocus>
+
+                                        @if ($errors->has('ttlPurCost'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('ttlPurCost') }}</strong>
                                         </span>
                                         @endif
                                     </div>

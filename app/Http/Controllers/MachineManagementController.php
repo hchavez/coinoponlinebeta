@@ -55,7 +55,7 @@ class MachineManagementController extends Controller {
 
         $machines = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
-                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
                                 , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
                                 , 'machine_reports.slip_volt as slip_volt', 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
                                 , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
@@ -68,10 +68,10 @@ class MachineManagementController extends Controller {
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
                         ->where('machines.id','<>', 27)
-                        ->where('machines.status', '1')
-                        ->where('machine_reports.last_played','!=','null');
+                        ->where('machines.status', '1');
+                        //->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
                         //->latest('machines.created_at')->paginate(100); 
-        
+
         $dateRange = Input::get('datePicker');
         $from = $to = '';        
         if($dateRange !=''):
@@ -79,15 +79,20 @@ class MachineManagementController extends Controller {
             $explode_from = explode('/',$explode[0]);
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+            $plusoneday = $explode_to[1]+ 1;
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);
+        else:
+            
         endif;
+        //echo $from."<br>".$to;exit();
         
         if ( !$data ) :
+              $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
         else:            
             if($from || $to):
                 $machines = $machines->where(function($query) use ($from,$to){                    
                     $query->whereBetween('machine_reports.last_played', [$from, $to]);               
-                })->orderBy('date_created','desc');            
+                })->orderBy('machine_reports.last_played','desc');            
             endif;
         endif;
         

@@ -5,7 +5,7 @@
 
     <div class="page-content">
         <div class="panel">
-             <?php if($machine->status == '0'): ?>
+             <?php if($machine->status == '2'): ?>
              <div class="alert dark alert-icon alert-info alert-dismissible" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -77,6 +77,20 @@
                                         @endif
                                     </div>
                                 </div>
+                                
+                                <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">Game Time</label>
+
+                                    <div class="col-md-6">
+                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus>
+
+                                        @if ($errors->has('gameTime'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('gameTime') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group{{ $errors->has('prevEwin') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">PrevE win</label>
@@ -133,19 +147,7 @@
                                     </div>
                                 </div>
                                 
-                                   <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">Game Time</label>
-
-                                    <div class="col-md-6">
-                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus>
-
-                                        @if ($errors->has('gameTime'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('gameTime') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
+                                   
                                 
                                 <!--
                                 <div class="form-group{{ $errors->has('luckyToWin') ? ' has-error' : '' }}">

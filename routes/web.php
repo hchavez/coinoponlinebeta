@@ -203,6 +203,28 @@ Route::get('/dropvolt/{id}', function($id){
          
 });
 
+Route::get('/retvolt/{id}', function($id){
+   $userall = GoalsLogs::select('created_at','retVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $retVolt = $value->retVolt;
+
+                 $graphdataVoltageResultwithDateresult[] = "[". $asdate .",". $retVolt ."]";
+                
+            }
+            $graphdataVoltageResultwithDate = join($graphdataVoltageResultwithDateresult, ',');
+
+         }else{
+             $graphdataVoltageResultwithDate = null;
+         }
+         
+    return "[". $graphdataVoltageResultwithDate . "]";
+         
+});
+
 /***********************************Graph Result API********************************************/
 
 

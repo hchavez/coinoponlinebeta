@@ -48,7 +48,6 @@ class MachineSettingsController extends Controller {
     public function store(Request $request) {
         $this->validateInput($request);
         MachineSettings::create([
-            'machine_id' => 2,
             'xTime' => $request['xTime'],
             'yTime' => $request['yTime'],
             'xSpeed' => $request['xSpeed'],
@@ -105,7 +104,7 @@ class MachineSettingsController extends Controller {
             'xSpeed' => $request['xSpeed'],
             'ySpeed' => $request['ySpeed'],
             'zSpeed' => $request['zSpeed'],
-            'status' => '0',
+            'status' => '2',
         ];
         
         

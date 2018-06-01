@@ -190,7 +190,7 @@
 
                                             yAxis: {
                                                   min: -10,
-                                                        max: 80,
+                                                        max: 60,
                                                         tickInterval: 5,
                                                      title: {
                                                         text: 'Win Graph',
@@ -410,7 +410,7 @@
                                     var seriesOptions = [],
                                         seriesCounter = 0,
                                         id = {{ $machine->id }}
-                                        names = ['pkvolt', 'slipvolt', 'dropvolt'];
+                                        names = ['pkvolt', 'slipvolt', 'retvolt'];
 
                                     /**
                                      * Create the chart when all data is loaded
@@ -426,7 +426,7 @@
 
                                             yAxis: {
                                                   min: -10,
-                                                        max: 80,
+                                                        max: 50,
                                                         tickInterval: 5,
                                                      title: {
                                                         text: 'Voltage Graph',
@@ -518,28 +518,28 @@
                         <table class="table table-bordered"> 
                             <tbody>
                                 <tr>
-                                    <td> max_voltage : {{ $claw_settings->max_voltage }} </br>
-                                        min_voltage : {{ $claw_settings->min_voltage }}  </br>
-                                        max_PWM : {{ $claw_settings->max_PWM }} </br>
-                                        min_PWM : {{ $claw_settings->min_PWM }} </br>
-                                        voltDecRetPercentage : {{ $claw_settings->voltDecRetPercentage }} </br>
-                                        latest_voltage : {{ $claw_settings->latest_voltage }} </br>
-                                        latest_PWM : {{ $claw_settings->latest_PWM }} </br>
-                                        plusPick : {{ $claw_settings->plusPick }} </br>
-                                        plusPickUpPWM : {{ $claw_settings->plusPickUpPWM }} </br>
-                                        startPWM : {{ $claw_settings->startPWM }} </br>
+                                    <td> Max Voltage : {{ $claw_settings->max_voltage }} </br>
+                                        Min Voltage : {{ $claw_settings->min_voltage }}  </br>
+                                        Max PWM : {{ $claw_settings->max_PWM }} </br>
+                                        Min PWM : {{ $claw_settings->min_PWM }} </br>
+                                        VoltDecRet %: {{ $claw_settings->voltDecRetPercentage }} </br>
+                                        Latest Voltage : {{ $claw_settings->latest_voltage }} </br>
+                                        Latest PWM : {{ $claw_settings->latest_PWM }} </br>
+                                        Plus Pick : {{ $claw_settings->plusPick }} </br>
+                                        Plus PickUp PWM : {{ $claw_settings->plusPickUpPWM }} </br>
+                                        Start PWM : {{ $claw_settings->startPWM }} </br>
                                     </td>
                                     <td>
-                                        startVolt : {{ $claw_settings->startVolt }} </br>    
-                                        retPWM : {{ $claw_settings->retPWM }} </br>
-                                        retVolt : {{ $claw_settings->retVolt }} </br>
-                                        pickPWM : {{ $claw_settings->pickPWM }} </br>
-                                        pickVolt :  {{ $claw_settings->pickVolt }} </br>
-                                        incVolt : {{ $claw_settings->incVolt }} </br>
-                                        decVolt : {{ $claw_settings->decVolt  }} </br>
-                                        diffPickRe : {{ $claw_settings->diffPickRet }} </br>
-                                        voltSupply : {{ $claw_settings->voltSupply }} </br>
-                                        insuffVoltInc : {{ $claw_settings->insuffVoltInc  }} </br> 
+                                        Slip Voltage : {{ $claw_settings->startVolt }} </br>    
+                                        Ret PWM : {{ $claw_settings->retPWM }} </br>
+                                        Ret Voltage : {{ $claw_settings->retVolt }} </br>
+                                        Pick PWM : {{ $claw_settings->pickPWM }} </br>
+                                        Pick Voltage :  {{ $claw_settings->pickVolt }} </br>
+                                        Inc Voltage : {{ $claw_settings->incVolt }} </br>
+                                        Dec Voltage : {{ $claw_settings->decVolt  }} </br>
+                                        Diff PickRe : {{ $claw_settings->diffPickRet }} </br>
+                                        Volt Supply : {{ $claw_settings->voltSupply }} </br>
+                                        Insuff Voltage Inc : {{ $claw_settings->insuffVoltInc  }} </br> 
                                     </td>
                                 </tr>
 
@@ -588,14 +588,14 @@
                             <tbody>
                                 <tr>
                                     <td> 
-                                        playIndex : {{ $game_settings->playIndex }} </br>
-                                        owedWin : {{ $game_settings->owedWin }} </br>
-                                        excessWin : {{ $game_settings->excessWin }}  </br>
-                                        prevEwin : {{ $game_settings->prevEwin }}  </br>
-                                        luckyToWin : {{ $game_settings->luckyToWin }} </br>
-                                        gameLeft : {{ $game_settings->gameLeft }} </br>
-                                        randomedTime : {{ $game_settings->randomedTime }} </br>
-                                        gameTime : {{ $game_settings->gameTime }} </br>
+                                        Play Index : {{ $game_settings->playIndex }} </br>
+                                        Owed Win : {{ $game_settings->owedWin }} </br>
+                                        Excess Win : {{ $game_settings->excessWin }}  </br>
+                                        Prev Ewin : {{ $game_settings->prevEwin }}  </br>
+                                        LuckyToWin : {{ $game_settings->luckyToWin }} </br>
+                                        Game Left : {{ $game_settings->gameLeft }} </br>
+                                        Random Time : {{ $game_settings->randomedTime }} </br>
+                                        Game Time : {{ $game_settings->gameTime }} </br>
 
                                     </td>
 
@@ -621,8 +621,8 @@
                         <table class="table table-bordered"> 
                             <tbody>
                                 <tr>
-                                    <td> total_won : {{ $machine_accounts->total_won }} </br>
-                                        total_dollar_in : {{ $machine_accounts->total_dollar_in }}  </br>
+                                    <td> Total Won : {{ $machine_accounts->total_won }} </br>
+                                        Total Dollar In : {{ $machine_accounts->total_dollar_in }}  </br>
 
                                     </td>
 
@@ -638,7 +638,7 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('machine-settings.edit', ['id' => $cash_boxes->machine_id]) }}"> 
+                        <h3 class="panel-title"> <a href="{{ route('cash-boxes.edit', ['id' => $cash_boxes->machine_id]) }}"> 
                               <i class="icon wb-edit" aria-hidden="true"></i>  </a>Cash Boxes
                         </h3> 
                     </div>
@@ -648,15 +648,15 @@
                             <tbody>
                                 <tr>
                                     <td>  
-                                        coin1_total_in : {{ $cash_boxes->coin1_total_in }} </br>
-                                        coin2_total_in : {{ $cash_boxes->coin2_total_in }} </br>
-                                        coin3_total_in : {{ $cash_boxes->coin3_total_in }} </br>
-                                        coin4_total_in : {{ $cash_boxes->coin4_total_in }} </br>
-                                        total_game : {{ $cash_boxes->total_game }} </br>
-                                        total_test : {{ $cash_boxes->total_test }} </br>
-                                        insuffMonPlay : {{ $cash_boxes->insuffMonPlay }} </br>
-                                        rejectionCounter : {{ $cash_boxes->rejectionCounter }} </br>
-                                        insuffMonClick : {{ $cash_boxes->insuffMonClick }} </br>
+                                        Coin1 Total In : {{ $cash_boxes->coin1_total_in }} </br>
+                                        Coin2 Total In : {{ $cash_boxes->coin2_total_in }} </br>
+                                        Coin3 Total In : {{ $cash_boxes->coin3_total_in }} </br>
+                                        Coin4 Total In : {{ $cash_boxes->coin4_total_in }} </br>
+                                        Total Game : {{ $cash_boxes->total_game }} </br>
+                                        Total Test : {{ $cash_boxes->total_test }} </br>
+                                        Rejection Counter : {{ $cash_boxes->rejectionCounter }} </br>
+                                        InsuffMonPlay : {{ $cash_boxes->insuffMonPlay }} </br>
+                                        InsuffMonClick : {{ $cash_boxes->insuffMonClick }} </br>
                                     </td>
 
                                 </tr>
@@ -680,13 +680,13 @@
                             <tbody>
                                 <tr>
                                     <td> 
-                                        coinPerPlay : {{ $product_def->coinPerPlay }} </br>
-                                        winPercentage : {{ $product_def->winPercentage }} </br>
-                                        ttlPurCost : {{ $product_def->ttlPurCost }} </br>
-                                        numberOfPlays : {{ $product_def->numberOfPlays }} </br>
-                                        stockLeft : {{ $product_def->stockLeft }} </br>
-                                        stockAdded : {{ $product_def->stockAdded }} </br>
-                                        stockRemoved : {{ $product_def->stockRemoved }} </br>
+                                        Coin Per Play : {{ $product_def->coinPerPlay }} </br>
+                                        Win Percentage : {{ $product_def->winPercentage }} </br>
+                                        Total PurCost : {{ $product_def->ttlPurCost }} </br>
+                                        No Of Plays : {{ $product_def->numberOfPlays }} </br>
+                                        Stock Left : {{ $product_def->stockLeft }} </br>
+                                        Stock Added : {{ $product_def->stockAdded }} </br>
+                                        Stock Removed : {{ $product_def->stockRemoved }} </br>
                                     </td>
 
                                 </tr>

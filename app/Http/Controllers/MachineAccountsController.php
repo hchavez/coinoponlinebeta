@@ -51,7 +51,7 @@ class MachineAccountsController extends Controller {
              'machine_id' => $request['machine_id'],
             'total_dollar_in' => $request['total_dollar_in'],
             'total_won' => $request['total_won'],
-            'status' => '0'
+            'status' => '2'
         ]);
 
 

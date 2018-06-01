@@ -51,7 +51,7 @@ class CashBoxesController extends Controller {
             'machine_id' => $request['machine_id'],
             'total_dollar_in' => $request['total_dollar_in'],
             'total_won' => $request['total_won'],
-            'status' => '0'
+            'status' => '2'
         ]);
 
 
@@ -101,12 +101,7 @@ class CashBoxesController extends Controller {
             'coin2_total_in' => $request['coin2_total_in'],
             'coin3_total_in' => $request['coin3_total_in'],
             'coin4_total_in' => $request['coin4_total_in'],
-            'total_game' => $request['total_game'],
-            'total_test' => $request['total_test'],
-            'insuffMonPlay' => $request['insuffMonPlay'],
-            'rejectionCounter' => $request['rejectionCounter'],
-            'insuffMonClick' => $request['insuffMonClick'],
-            'status' => '0'
+            'status' => '2'
         ];
 
 
