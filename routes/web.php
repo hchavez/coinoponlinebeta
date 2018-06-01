@@ -375,5 +375,5 @@ Route::get('history', 'MachineErrorReportController@history');
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
 
 Route::resource('financial-reports', 'FinancialReportController');
-
+Route::resource('admin-panel', 'AdminPanelController');
 Route::resource('machine-reports', 'MachineReportsController');

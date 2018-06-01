@@ -224,9 +224,9 @@
 
 </div>
 <div class="row">
-    <div class="col-xl-6 col-lg-12">
+    <div class="col-xl-12 col-lg-12">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <!-- Card -->
                 <div class="card card-block p-30">
                   <div class="counter counter-md text-left">
@@ -254,7 +254,7 @@
                 <!-- End Card -->
               </div>
 
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <!-- Card -->
                 <div class="card card-block p-30">
                   <div class="counter counter-md text-left">
@@ -282,7 +282,7 @@
                 <!-- End Card -->
               </div>
 
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <!-- Card -->
                 <div class="card card-block p-30">
                   <div class="counter counter-md text-left">
@@ -310,7 +310,7 @@
                 <!-- End Card -->
               </div>
 
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <!-- Card -->
                 <div class="card card-block p-30">
                   <div class="counter counter-md text-left">
@@ -340,49 +340,6 @@
             </div>
           </div>
     
-    
-    <div class="col-lg-6 masonry-item">
-        <!-- Panel Last threads -->
-        <div class="panel">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="panel-title-icon icon wb-chat-group" aria-hidden="true"></i>User Activity</h3>
-            <div class="panel-actions panel-actions-keep">
-              <div class="dropdown">
-                <a href="{{ url('logActivity') }}" class="panel-action">
-                    <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
-                        <span class="ladda-label">View All<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
-                    <span class="ladda-spinner"></span></button>
-                </a>   
-              </div>
-            </div>
-          </div>
-          <div class="panel-body h-300 scrollable is-enabled scrollable-vertical" data-plugin="scrollable">
-            <div data-role="container" class="scrollable-container" style="height: 270px; width: 924px;">
-              <div data-role="content" class="scrollable-content" style="width: 907px;">
-                <ul class="list-group list-group-dividered list-group-full">
-                    @foreach($logs as $key => $log)
-                    <li class="list-group-item">
-                      <div class="media">
-                        <div class="pr-20">
-                          <a class="avatar avatar-online" href="javascript:void(0)">                           
-                            <i></i>
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <small class="float-right">{{ $log->updated_at }}</small>
-                          <h5 class="mt-0 mb-5">{{ $log->username }} {{ $log->subject }} </h5>
-                          <small>{{ $log->url }} <a class="badge badge-outline badge-default" href="javascript:void(0)" title="">{{ $log->ip }}</a></small>
-                        </div>
-                      </div>
-                    </li>
-                    @endforeach                   
-                </ul>
-              </div>
-            </div>
-          <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle" style="height: 167.586px; transform: translate3d(0px, 0px, 0px);"></div></div></div>
-        </div>
-        <!-- End Panel Last threads -->
-      </div>
 </div>
 
 @foreach ($machinelogs as $machinelog)
