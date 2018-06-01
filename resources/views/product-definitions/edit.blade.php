@@ -94,10 +94,10 @@
                                 </div>
                                 
                                  <div class="form-group{{ $errors->has('ttlPurCost') ? ' has-error' : '' }}">
-                                    <label for="xTime" class="col-md-4 control-label">Total Toy Cost</label>
+                                    <label for="xTime" class="col-md-4 control-label">Total Toy </label>
 
                                     <div class="col-md-6">
-                                        <input id="ttlPurCost" type="text" class="form-control" name="stockRemoved" value="{{ $machine->ttlPurCost }}"  autofocus>
+                                        <input id="ttlPurCost" type="text" class="form-control" name="ttlPurCost" value="{{ $machine->ttlPurCost }}"  autofocus>
 
                                         @if ($errors->has('ttlPurCost'))
                                         <span class="help-block">
