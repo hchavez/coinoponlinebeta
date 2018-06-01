@@ -396,11 +396,11 @@
             <tbody>
               @foreach ($offlineList as $lists)                      
                 <tr>                            
-                    <td><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
+                    <td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td  style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>   
                 </tr>                          
               @endforeach   
@@ -425,11 +425,11 @@
             <tbody>
               @foreach ($onlineLists as $lists)                      
                 <tr>                            
-                    <td><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
+                    <td width="5%"><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>                                   
                 </tr>                          
               @endforeach   
@@ -454,17 +454,17 @@
             <tbody>
               @foreach ($totalLists as $lists)                      
                 <tr>                            
-                    <td>
+                    <td width="5%">
                         <?php if($lists->status =='1'){ ?>
                         <i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
                         <?php }else{ ?>
                         <i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
                         <?php } ?>
                     </td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->site }}</td>      
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>                                  
                 </tr>                          
               @endforeach   

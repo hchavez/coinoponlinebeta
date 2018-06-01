@@ -23,7 +23,11 @@ $(document).ready(function(){
     //filter table
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
-        buttons: ['excel'],
+        buttons: [{
+                extend: 'excel',
+                title: '',
+                filename: 'coinopsoftware'
+            }],
         scrollY: '450px',
         paging: true,
         autoFill: true,     
@@ -98,7 +102,11 @@ $(document).ready(function(){
         processing : true,
         ajax: base_url+'errorapi/'+currentID,    
         dom: 'Bfrtip',
-        buttons: ['excel'],
+        buttons: [{
+                extend: 'excel',
+                title: '',
+                filename: 'errorlogs'
+            }],
         deferRender:    true,       
         order: [[3,'desc']],
         columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
@@ -108,7 +116,11 @@ $(document).ready(function(){
         processing : true,
         ajax: base_url+'winapi/'+currentID,    
         dom: 'Bfrtip',
-        buttons: ['excel'],
+        buttons: [{
+                extend: 'excel',
+                title: '',
+                filename: 'winlogs'
+            }],
         deferRender:    true, 
         order: [[3,'desc']],
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
@@ -119,7 +131,11 @@ $(document).ready(function(){
         processing : true,
         ajax: base_url+'moneyapi/'+currentID,
         dom: 'Bfrtip',
-        buttons: ['excel'],
+        buttons: [{
+                extend: 'excel',
+                title: '',
+                filename: 'moneylogs'
+            }],
         deferRender:    true,   
         order: [[3,'desc']],
         columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
@@ -131,7 +147,11 @@ $(document).ready(function(){
         processing : true,
         ajax: base_url+'goalsapi/'+currentID,    
         dom: 'Bfrtip',
-        buttons: ['excel'],
+        buttons: [{
+                extend: 'excel',
+                title: '',
+                filename: 'goalslog'
+            }],
         deferRender:    true,       
         order: [[3,'desc']],
         columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt'},{'data': 'retPWM'},

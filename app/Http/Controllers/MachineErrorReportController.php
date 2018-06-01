@@ -120,16 +120,18 @@ class MachineErrorReportController extends Controller
             'enddate' => $to
         );
          
-        $online = DB::table('machines')->where('status','=', '1')->count('status'); 
-        $offline = DB::table('machines')->where('status','=', '0')->count('status'); 
+        //$online = DB::table('machines')->where('status','=', '1')->count('status');         
+        //$offline = DB::table('machines')->where('status','=', '0')->count('status'); 
         $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
-        $ttlMachines = $online + $offline; 
+        //$ttlMachines = 1 + $offline; 
         
         $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
         $offlineLists = $this->offlineMachineLists(); 
         $onlineLists = $this->onlineMachineLists();
         $totalLists = $this->totalMachineLists();
-        
+        $online = count($onlineLists);
+        $offline = count($offlineLists);
+        $ttlMachines = $online + $offline; 
         return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
         
     }  
@@ -157,7 +159,8 @@ class MachineErrorReportController extends Controller
             ->leftJoin('state', 'sites.state', '=', 'state.id')   
             ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
             ->leftJoin('users','users.id','=','errorlogs_history.user_id')            
-            ->where('errorlogs.status','=','2');
+            ->where('errorlogs.status','=','2')
+            ->where('machine_id','!=','28');
         
         $dateOccur = Input::get('dates');
         $dateResolve = Input::get('dateResolve');
@@ -306,7 +309,8 @@ class MachineErrorReportController extends Controller
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id');
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                        ->where('machines.id','<>', 27);
         
         return $machineLists;
     }
@@ -317,12 +321,13 @@ class MachineErrorReportController extends Controller
     }
     function onlineMachineLists(){
         $machineList = $this->machinesCount();
-        $online = $machineList->where('machines.status','=','1')->orderBy('updated_at','desc')->get(); 
+        $online = $machineList->where('machines.status','=','1')->where('machine_reports.last_played','!=','null')->orderBy('updated_at','desc')->get(); 
         return $online;
     }
     function totalMachineLists(){
         $machineList = $this->machinesCount();
         $online = $machineList->where('machines.status','=','1')
+                ->where('machine_reports.last_played','!=','null')
                 ->orWhere('machines.status','=','0')                
                 ->orderBy('updated_at','desc')->get(); 
         return $online;

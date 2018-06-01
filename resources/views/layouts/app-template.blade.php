@@ -107,10 +107,14 @@ Breakpoints();
             <div class="site-footer-legal">© 2017 <a href="#">CoinOpSolutions Inc.</a></div>
         </div>
         <!-- End Page -->
-        <script src="{{asset('js/chartist.js')}}"></script>        
+        <script src="{{asset('js/chartist.js')}}"></script>  
+        <script src="{{asset('js/d3.min.js')}}"></script>
+        <script src="{{asset('js/c3.min.js')}}"></script>     
         <script src="{{asset('js/custom.js')}}"></script>
         <script src="{{asset('js/custom-script.js')}}"></script>
-        <script src="{{asset('js/financial-script.js')}}"></script>
+        <script src="{{asset('js/Config.js')}}"></script>
+        
+        
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
         <script src="{{ asset("/global/js/Component.js") }}"></script>
@@ -166,7 +170,7 @@ Breakpoints();
         <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedcolumns.bootstrap4.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/css/dataTables.fixedheader.bootstrap4.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/css/dataTables.buttons.bootstrap4.min.css") }}">
-        <link rel="stylesheet" href="{{ asset("/global/css/chart.css") }}">
+        <link rel="stylesheet" href="{{ asset("/global/css/c3.css") }}">
 
     </body>
 </html>

@@ -389,7 +389,7 @@
                     </li>
                     <?php //if($userRole=='1'): ?>
                     <li class="dropdown site-menu-item has-sub">
-                        <a  class="animsition-link" href="{{ url('user-mgmt') }}">
+                        <a  class="animsition-link" href="{{ url('admin-panel') }}">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
                             <span class="site-menu-title">Admin Panel</span>            
                         </a>    
