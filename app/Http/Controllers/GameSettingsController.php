@@ -51,6 +51,7 @@ class GameSettingsController extends Controller {
             'playIndex' => $request['playIndex'],
             'owedWin' => $request['owedWin'],
             'excessWin' => $request['excessWin'],
+            'gameLeft' => $request['gameLeft'],
             'gameTime' => $request['gameTime'],
             'status' => '2'
         ]);

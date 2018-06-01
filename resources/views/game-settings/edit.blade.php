@@ -78,6 +78,20 @@
                                     </div>
                                 </div>
                                 
+                                 <div class="form-group{{ $errors->has('gameLeft') ? ' has-error' : '' }}">
+                                    <label for="xTime" class="col-md-4 control-label">gameLeft</label>
+
+                                    <div class="col-md-6">
+                                        <input id="gameLeft" type="text" class="form-control" name="gameLeft" value="{{ $machine->gameLeft }}" required autofocus>
+
+                                        @if ($errors->has('gameLeft'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('gameLeft') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group{{ $errors->has('gameTime') ? ' has-error' : '' }}">
                                     <label for="xTime" class="col-md-4 control-label">Game Time</label>
 
