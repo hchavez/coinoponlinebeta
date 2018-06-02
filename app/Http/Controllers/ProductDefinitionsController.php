@@ -51,7 +51,7 @@ class ProductDefinitionsController extends Controller
     public function store(Request $request)
     {
         ProductDefinitions::findOrFail($request['state_id']);
-        $this->validateInput($request);
+        //$this->validateInput($request);
         ProductDefinitions::create([
              'coinPerPlay' => $request['coinPerPlay'],
             'ttlPurCost' => $request['ttlPurCost'],
