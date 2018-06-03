@@ -49,6 +49,26 @@ Route::get('/errorapi/{id}', function($id){
    return new UserCollection($userall);
 });
 
+Route::get('/financial', function(){
+   //$userall = MoneyLogs::where('machine_id','=', '39')->whereBetween('created_at', ['2018-03-03','2018-06-03'])->get();
+        $userall = MoneyLogs::select('created_at','coinIn','billIn','swipeIn')
+           ->whereBetween('created_at', ['2018-03-03','2018-06-03'])->get();
+        //return $userall;
+        if ($userall->count() > 0) {
+                 foreach ($userall as $value) { 
+                     $asdate = strtotime($value->created_at) * 1000;
+                     $coin = $value->coinIn;
+                     $bill = $value->billIn;
+                     $swipe = $value->swipeIn;
+                     $financialGraph[] = "[". $asdate .",". $coin .",". $bill .",". $swipe ."]";               
+                 }
+                 $graphdataWinResultwithDate = join($financialGraph, ',');
+             }else{
+                  $graphdataWinResultwithDate = null;
+             }         
+         return "[". $graphdataWinResultwithDate . "]";   
+});
+
 Route::get('/winapi/{id}', function($id){
    $userall = WinLogs::where('machine_id','=', $id)->limit(25000)->get();
    return new UserCollection($userall);
@@ -397,5 +417,11 @@ Route::get('history', 'MachineErrorReportController@history');
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
 
 Route::resource('financial-reports', 'FinancialReportController');
+Route::resource('financial-reports-graph', 'FinancialReportsGraphController');
 Route::resource('admin-panel', 'AdminPanelController');
+
+Route::get('financialLogs', 'FinancialReportsGraphController@financialLogs');
+Route::get('georgeLogs', 'FinancialReportsGraphController@georgeLogs');
+Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
+
 Route::resource('machine-reports', 'MachineReportsController');
