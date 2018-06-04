@@ -20,8 +20,7 @@ class FinancialReportsGraphController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {            
-                
+    {                            
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');
         $totalSwipe = $this->getTotal('swipeIn');
@@ -47,18 +46,18 @@ class FinancialReportsGraphController extends Controller
     }
     
     public function financialLogs(){  
-        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
+        $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
         $today = date("Y-m-d H:i:s");
-        $userall = MoneyLogs::select('moneylogs.created_at','coinIn','billIn','swipeIn','machines.comments as comments')
+        /*$userall = MoneyLogs::select('moneylogs.created_at','coinIn','billIn','swipeIn','machines.comments as comments')
                 ->leftJoin('machines','machines.id','=','moneylogs.machine_id')
-                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();
+                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();*/
         
-        /*$userall = DB::table('moneylogs')
+        $userall = DB::table('moneylogs')
                      ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum(coinIn) as coinIn, sum(billIn) as billIn, sum(swipeIn) as swipeIn'))
                      ->whereBetween('created_at',[$fromDate,$today])
                      ->where('status', '=', 1)
                      ->groupBy(DB::raw('DATE(created_at), machine_id'))
-                     ->get();*/
+                     ->get();
         //print_r($userall);
         if ($userall->count() > 0) {
                  foreach ($userall as $value) { 
@@ -99,11 +98,11 @@ class FinancialReportsGraphController extends Controller
                      $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
                      $financialGraph[] = "[". $asdate .",". $coin .",". $bill .",". $swipe ."]";    
                  }
-                 $graphdataWinResultwithDate = join($financialGraph, ',');
+                 $financialGraphDate = join($financialGraph, ',');
              }else{
-                  $graphdataWinResultwithDate = null;
+                  $financialGraphDate = null;
              }         
-         return "[". $graphdataWinResultwithDate . "]";  
+         return "[". $financialGraphDate . "]";  
     }
     
     public function cardReaderLogs(){

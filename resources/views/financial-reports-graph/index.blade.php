@@ -102,14 +102,17 @@
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-<script>    
+<script>   
+var base_urllink = window.location.origin;
+if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
+else{var base_url = "https://www.ascentri.com/";}
 var seriesOptions = [], seriesCounter = 0, names = ['Coin', 'Bill','Card'];
 
 function createChart() {
     Highcharts.stockChart('container', {
         title: { text: 'George system and Card reader' },        
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
-        yAxis: { min: -10, max: 60, tickInterval: 10,title: { text: 'Revenue'},plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }] },
+        yAxis: { min: -10, max: 300, tickInterval: 10,title: { text: 'Revenue'},plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }] },
         plotOptions: { series: { showInNavigator: true }  },
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
@@ -120,7 +123,7 @@ function createChart() {
     });
 }
 $.each(names, function (i, name) {
-    $.getJSON('http://localhost/coinoponlinebeta/public/financialLogs', function (data) {
+    $.getJSON(base_url + 'financialLogs', function (data) {
         seriesOptions[i] = { name: name, data: data, type: 'column' };       
         seriesCounter += 1;
         if (seriesCounter === names.length) { createChart(); }
