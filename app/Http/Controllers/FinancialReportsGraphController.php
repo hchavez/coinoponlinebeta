@@ -20,16 +20,46 @@ class FinancialReportsGraphController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {               
-        return view('financial-reports-graph/index');
+    {            
+                
+        $totalCoin = $this->getTotal('coinIn');
+        $totalBill = $this->getTotal('billIn');
+        $totalSwipe = $this->getTotal('swipeIn');
+       
+        return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]);        
     }   
+    
+    public function getTotal($type){
+        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
+        $today = date("Y-m-d");
+        $yesterday = date('Y-m-d',strtotime("-1 days"));
+        $weekFrom = date('Y-m-d',strtotime("-7 days"));
+        $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
+        
+        $Today = MoneyLogs::where('status', '=', 1)->where('created_at','like','%'.$today.'%')->sum($type);    
+        $Yesterday = MoneyLogs::where('status', '=', 1)->where('created_at','like','%'.$yesterday.'%')->sum($type);
+        $Week = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Month = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $Year = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        
+        $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisYear'=>$Year);
+        return $total;
+    }
     
     public function financialLogs(){  
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
         $today = date("Y-m-d H:i:s");
-        $userall = MoneyLogs::select('created_at','coinIn','billIn','swipeIn')
-           ->whereBetween('created_at', [$fromDate,$today])->get();
+        $userall = MoneyLogs::select('moneylogs.created_at','coinIn','billIn','swipeIn','machines.comments as comments')
+                ->leftJoin('machines','machines.id','=','moneylogs.machine_id')
+                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();
         
+        /*$userall = DB::table('moneylogs')
+                     ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum(coinIn) as coinIn, sum(billIn) as billIn, sum(swipeIn) as swipeIn'))
+                     ->whereBetween('created_at',[$fromDate,$today])
+                     ->where('status', '=', 1)
+                     ->groupBy(DB::raw('DATE(created_at), machine_id'))
+                     ->get();*/
+        //print_r($userall);
         if ($userall->count() > 0) {
                  foreach ($userall as $value) { 
                      $asdate = strtotime($value->created_at) * 1000;

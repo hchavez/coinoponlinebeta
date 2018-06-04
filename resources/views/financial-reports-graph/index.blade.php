@@ -9,12 +9,6 @@
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4"> 
             <div class="row">
-                
-                <div class="col-lg-4"></div>
-                <div class="col-lg-3"></div>                
-                <div class="col-lg-3 text-right"></div>
-                <div class="col-lg-2"></div>
-                
                 <div class="col-xl-12">
                 <!-- Example Tabs -->
                 <div class="example-wrap">
@@ -43,6 +37,65 @@
                 <!-- End Example Tabs -->
               </div>
             </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <!-- Example Bordered Table -->
+                    <div class="example-wrap">                                     
+                      <div class="example table-responsive">
+                        <table class="table table-bordered">
+                          <thead><tr><th></th><th>Coin</th></tr></thead>
+                          <tbody>
+                            <tr><td>Today</td><td>{{ $coin['today'] }}</td></tr>
+                            <tr><td>Yesterday</td><td>{{ $coin['yesterday'] }}</td></tr>
+                            <tr><td>This week</td><td>{{ $coin['thisWeek'] }}</td></tr>
+                            <tr><td>This Calendar Month</td><td>{{ $coin['thisMonth'] }}</td></tr>
+                            <tr><td>This Year Financial</td><td>{{ $coin['thisYear'] }}</td></tr>                        
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- End Example Bordered Table -->
+                </div>
+                <div class="col-lg-3">
+                    <!-- Example Bordered Table -->
+                    <div class="example-wrap">                                     
+                      <div class="example table-responsive">
+                        <table class="table table-bordered">
+                          <thead><tr><th></th><th>Bill</th></tr></thead>
+                          <tbody>
+                            <tr><td>Today</td><td>{{ $bill['today'] }}</td></tr>
+                            <tr><td>Yesterday</td><td>{{ $bill['yesterday'] }}</td></tr>
+                            <tr><td>This week</td><td>{{ $bill['thisWeek'] }}</td></tr>
+                            <tr><td>This Calendar Month</td><td>{{ $bill['thisMonth'] }}</td></tr>
+                            <tr><td>This Year Financial</td><td>{{ $bill['thisYear'] }}</td></tr>                          
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- End Example Bordered Table -->
+                </div>
+                <div class="col-lg-3">
+                    <!-- Example Bordered Table -->
+                    <div class="example-wrap">                                 
+                      <div class="example table-responsive">
+                        <table class="table table-bordered">
+                          <thead><tr><th></th><th>Card</th></tr></thead>
+                          <tbody>
+                            <tr><td>Today</td><td>{{ $card['today'] }}</td></tr>
+                            <tr><td>Yesterday</td><td>{{ $card['yesterday'] }}</td></tr>
+                            <tr><td>This week</td><td>{{ $card['thisWeek'] }}</td></tr>
+                            <tr><td>This Calendar Month</td><td>{{ $card['thisMonth'] }}</td></tr>
+                            <tr><td>This Year Financial</td><td>{{ $card['thisYear'] }}</td></tr>                         
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- End Example Bordered Table -->
+                </div>
+                
+            </div>
+            
         </div>
     </div>
 </div>
@@ -55,9 +108,8 @@ var seriesOptions = [], seriesCounter = 0, names = ['Coin', 'Bill','Card'];
 function createChart() {
     Highcharts.stockChart('container', {
         title: { text: 'George system and Card reader' },        
-        rangeSelector: { buttons: [{type: 'ytd',count: 1,text: 'YTD'}, {type: 'all',text: 'All'}],selected: 4},
-        yAxis: { min: -10, max: 60, tickInterval: 10,title: { text: 'Revenue'},            
-            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }] },
+        rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
+        yAxis: { min: -10, max: 60, tickInterval: 10,title: { text: 'Revenue'},plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }] },
         plotOptions: { series: { showInNavigator: true }  },
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
@@ -74,6 +126,7 @@ $.each(names, function (i, name) {
         if (seriesCounter === names.length) { createChart(); }
     });
 });
+
 </script>
 
 
