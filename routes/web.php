@@ -404,4 +404,8 @@ Route::get('financialLogs', 'FinancialReportsGraphController@financialLogs');
 Route::get('georgeLogs', 'FinancialReportsGraphController@georgeLogs');
 Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
 
+Route::get('getCoin', 'FinancialReportsGraphController@getCoin');
+Route::get('getBill', 'FinancialReportsGraphController@getBill');
+Route::get('swipeIn', 'FinancialReportsGraphController@swipeIn');
+
 Route::resource('machine-reports', 'MachineReportsController');

@@ -58,7 +58,7 @@ class FinancialReportsGraphController extends Controller
                      ->where('status', '=', 1)
                      ->groupBy(DB::raw('DATE(created_at), machine_id'))
                      ->get();
-        //print_r($userall);
+        
         if ($userall->count() > 0) {
                  foreach ($userall as $value) { 
                      $asdate = strtotime($value->created_at) * 1000;
@@ -66,12 +66,81 @@ class FinancialReportsGraphController extends Controller
                      $bill = $value->billIn;                     
                      $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
                      $financialGraph[] = "[". $asdate .",". $coin .",". $bill .",". $swipe ."]";    
+                     //$financialGraph[] = "[". $asdate .",". $bill ."]";    
                  }
-                 $graphdataWinResultwithDate = join($financialGraph, ',');
+                 $financialGraphDate = join($financialGraph, ',');
              }else{
-                  $graphdataWinResultwithDate = null;
-             }         
-         return "[". $graphdataWinResultwithDate . "]";  
+                  $financialGraphDate = null;
+             }   
+             
+         return "[". $financialGraphDate . "]";  
+    }
+    
+    public function getCoin(){  
+        $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
+        $today = date("Y-m-d H:i:s");    
+        
+        $userall = DB::table('moneylogs')
+                     ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum(coinIn) as coinIn'))
+                     ->whereBetween('created_at',[$fromDate,$today])->where('status', '=', 1)
+                     ->groupBy(DB::raw('DATE(created_at), machine_id'))->get();
+        
+        if ($userall->count() > 0) {
+                 foreach ($userall as $value) { 
+                     $asdate = strtotime($value->created_at) * 1000;
+                     $coin = $value->coinIn;                       
+                     $financialGraph[] = "[". $asdate .",". $coin ."]";  
+                 }
+                 $financialGraphDate = join($financialGraph, ',');
+             }else{
+                  $financialGraphDate = null;
+             }   
+             
+         return "[". $financialGraphDate . "]";  
+    }
+    public function getBill(){  
+        $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
+        $today = date("Y-m-d H:i:s");    
+        
+        $userall = DB::table('moneylogs')
+                     ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum(billIn) as billIn'))
+                     ->whereBetween('created_at',[$fromDate,$today])->where('status', '=', 1)
+                     ->groupBy(DB::raw('DATE(created_at), machine_id'))->get();
+        
+        if ($userall->count() > 0) {
+                 foreach ($userall as $value) { 
+                     $asdate = strtotime($value->created_at) * 1000;
+                     $billIn = $value->billIn;                       
+                     $financialGraph[] = "[". $asdate .",". $billIn ."]";  
+                 }
+                 $financialGraphDate = join($financialGraph, ',');
+             }else{
+                  $financialGraphDate = null;
+             }   
+             
+         return "[". $financialGraphDate . "]";  
+    }
+    public function swipeIn(){  
+        $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
+        $today = date("Y-m-d H:i:s");    
+        
+        $userall = DB::table('moneylogs')
+                     ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum(swipeIn) as swipeIn'))
+                     ->whereBetween('created_at',[$fromDate,$today])->where('status', '=', 1)
+                     ->groupBy(DB::raw('DATE(created_at), machine_id'))->get();
+        
+        if ($userall->count() > 0) {
+                 foreach ($userall as $value) { 
+                     $asdate = strtotime($value->created_at) * 1000;
+                     $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                     
+                     $financialGraph[] = "[". $asdate .",". $swipeIn ."]";  
+                 }
+                 $financialGraphDate = join($financialGraph, ',');
+             }else{
+                  $financialGraphDate = null;
+             }   
+             
+         return "[". $financialGraphDate . "]";  
     }
     /**
      * Show the form for creating a new resource.

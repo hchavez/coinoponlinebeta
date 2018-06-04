@@ -22,15 +22,9 @@
                           aria-controls="exampleTabsThree" role="tab">Card Reader</a></li>    
                     </ul>
                     <div class="tab-content pt-20">
-                      <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                          <div id="container" style="height: 400px"></div>
-                      </div>
-                      <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                            <div id="createGeorge" style="height: 400px"></div>
-                      </div>   
-                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                           Card reader
-                      </div>  
+                      <div class="tab-pane active" id="exampleTabsOne" role="tabpanel"><div id="container" style="height: 400px"></div></div>
+                      <div class="tab-pane" id="exampleTabsTwo" role="tabpanel"><div id="createGeorge" style="height: 400px"></div></div>   
+                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">Card reader</div>  
                     </div>
                   </div>
                 </div>
@@ -39,63 +33,26 @@
             </div>
             
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <!-- Example Bordered Table -->
                     <div class="example-wrap">                                     
                       <div class="example table-responsive">
                         <table class="table table-bordered">
-                          <thead><tr><th></th><th>Coin</th></tr></thead>
+                          <thead><tr><th></th><th>Coin</th><th>Bill</th><th>Card</th></tr></thead>
                           <tbody>
-                            <tr><td>Today</td><td>{{ $coin['today'] }}</td></tr>
-                            <tr><td>Yesterday</td><td>{{ $coin['yesterday'] }}</td></tr>
-                            <tr><td>This week</td><td>{{ $coin['thisWeek'] }}</td></tr>
-                            <tr><td>This Calendar Month</td><td>{{ $coin['thisMonth'] }}</td></tr>
-                            <tr><td>This Year Financial</td><td>{{ $coin['thisYear'] }}</td></tr>                        
+                            <tr><td>Today</td><td>{{ $coin['today'] }}</td><td>{{ $bill['today'] }}</td><td>{{ $card['today'] }}</td></tr>
+                            <tr><td>Yesterday</td><td>{{ $coin['yesterday'] }}</td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td></tr>
+                            <tr><td>This week</td><td>{{ $coin['thisWeek'] }}</td><td>{{ $bill['thisWeek'] }}</td><td>{{ $card['thisWeek'] }}</td></tr>
+                            <tr><td>This Calendar Month</td><td>{{ $coin['thisMonth'] }}</td><td>{{ $bill['thisMonth'] }}</td><td>{{ $card['thisMonth'] }}</td></tr>
+                            <tr><td>This Year Financial</td><td>{{ $coin['thisYear'] }}</td><td>{{ $bill['thisYear'] }}</td><td>{{ $card['thisYear'] }}</td></tr>                        
                           </tbody>
                         </table>
                       </div>
                     </div>
                     <!-- End Example Bordered Table -->
-                </div>
-                <div class="col-lg-3">
-                    <!-- Example Bordered Table -->
-                    <div class="example-wrap">                                     
-                      <div class="example table-responsive">
-                        <table class="table table-bordered">
-                          <thead><tr><th></th><th>Bill</th></tr></thead>
-                          <tbody>
-                            <tr><td>Today</td><td>{{ $bill['today'] }}</td></tr>
-                            <tr><td>Yesterday</td><td>{{ $bill['yesterday'] }}</td></tr>
-                            <tr><td>This week</td><td>{{ $bill['thisWeek'] }}</td></tr>
-                            <tr><td>This Calendar Month</td><td>{{ $bill['thisMonth'] }}</td></tr>
-                            <tr><td>This Year Financial</td><td>{{ $bill['thisYear'] }}</td></tr>                          
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <!-- End Example Bordered Table -->
-                </div>
-                <div class="col-lg-3">
-                    <!-- Example Bordered Table -->
-                    <div class="example-wrap">                                 
-                      <div class="example table-responsive">
-                        <table class="table table-bordered">
-                          <thead><tr><th></th><th>Card</th></tr></thead>
-                          <tbody>
-                            <tr><td>Today</td><td>{{ $card['today'] }}</td></tr>
-                            <tr><td>Yesterday</td><td>{{ $card['yesterday'] }}</td></tr>
-                            <tr><td>This week</td><td>{{ $card['thisWeek'] }}</td></tr>
-                            <tr><td>This Calendar Month</td><td>{{ $card['thisMonth'] }}</td></tr>
-                            <tr><td>This Year Financial</td><td>{{ $card['thisYear'] }}</td></tr>                         
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <!-- End Example Bordered Table -->
-                </div>
+                </div>                
                 
-            </div>
-            
+            </div>            
         </div>
     </div>
 </div>
@@ -106,16 +63,26 @@
 var base_urllink = window.location.origin;
 if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
 else{var base_url = "https://www.ascentri.com/";}
-var seriesOptions = [], seriesCounter = 0, names = ['Coin', 'Bill','Card'];
+
+var seriesOptions = [], seriesCounter = 0, names = ['getCoin','getBill','swipeIn'];
 
 function createChart() {
-    Highcharts.stockChart('container', {
+    Highcharts.stockChart('container', {        
         title: { text: 'George system and Card reader' },        
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
-        yAxis: { min: -10, max: 300, tickInterval: 10,title: { text: 'Revenue'},plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }] },
+        yAxis: { 
+            min: -10, 
+            max: 300, 
+            tickInterval: 10,
+            title: { text: 'Revenue'},
+            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }],
+            formatter: function () {
+                return (this.value > 0 ? ' + ' : '') + this.value + '%';
+            }
+        },
         plotOptions: { series: { showInNavigator: true }  },
         tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+            //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
             changeDecimals: 2,
             valueDecimals: 2
         },
@@ -123,14 +90,14 @@ function createChart() {
     });
 }
 $.each(names, function (i, name) {
-    $.getJSON(base_url + 'financialLogs', function (data) {
-        seriesOptions[i] = { name: name, data: data, type: 'column' };       
+    $.getJSON(base_url +  name , function (data) {
+        //console.log(data);
+        seriesOptions[i] = { type: 'column', name: name, data: data };       
         seriesCounter += 1;
+        
         if (seriesCounter === names.length) { createChart(); }
     });
 });
 
 </script>
-
-
 @endsection
