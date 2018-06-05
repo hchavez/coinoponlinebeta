@@ -64,7 +64,7 @@ var base_urllink = window.location.origin;
 if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
 else{var base_url = "https://www.ascentri.com/";}
 
-var seriesOptions = [], seriesCounter = 0, names = ['getCoin','getBill','swipeIn'];
+var seriesOptions = [], seriesCounter = 0, names = ['coinIn','billIn','swipeIn'];
 
 function createChart() {
     Highcharts.stockChart('container', {        
@@ -72,26 +72,45 @@ function createChart() {
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
         yAxis: { 
             min: -10, 
-            max: 300, 
+            max: 400, 
             tickInterval: 10,
             title: { text: 'Revenue'},
-            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }],
-            formatter: function () {
-                return (this.value > 0 ? ' + ' : '') + this.value + '%';
+            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
+        },
+        plotOptions: { 
+            series: { showInNavigator: true },
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black, 0 0 3px black'
+                    }
+                },
+                dataGrouping: {
+                    enabled: true,
+                    forced: true,
+                    units: [
+                        ['day', [1]]
+                    ]
+                }
             }
         },
-        plotOptions: { series: { showInNavigator: true }  },
-        tooltip: {
-            //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+        tooltip: {            
             changeDecimals: 2,
-            valueDecimals: 2
+            valueDecimals: 2,
+            //shared: true,
+            //useHTML: true,
+            //headerFormat: '<small>{point.key}</small><table>',
+            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
+            //footerFormat: '</table>'
         },
         series: seriesOptions
     });
 }
 $.each(names, function (i, name) {
-    $.getJSON(base_url +  name , function (data) {
-        //console.log(data);
+    $.getJSON(base_url +  name , function (data) {        
         seriesOptions[i] = { type: 'column', name: name, data: data };       
         seriesCounter += 1;
         
