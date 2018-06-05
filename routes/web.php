@@ -262,6 +262,7 @@ Route::get('machine-management/claw/{id}', 'MachineManagementController@claw_set
 Route::post('machine-management/filter', 'MachineManagementController@filter')->name('machine-management.filter');
 Route::get('machine-management/getError/{id}', 'MachineManagementController@getError');
 Route::get('machine-management/getMoney/{id}', 'MachineManagementController@getMoney');
+Route::post('machine-management/testGo', array('as' => 'testGo', 'uses' => 'MachineManagementController@testGo'));
 
 Route::resource('machine-reports', 'MachineReportsController');
 

@@ -33,6 +33,11 @@
         <link rel="stylesheet" href="{{ asset("/global/fonts/web-icons/web-icons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/global/fonts/brand-icons/brand-icons.min.css") }}">
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+         <!-- toastr notifications -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+
+
         
           <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
         <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
@@ -101,6 +106,10 @@ Breakpoints();
         <script src="{{ asset("/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js") }}"></script>
         <script src="https://momentjs.com/downloads/moment.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>       
+        
+            <!-- toastr notifications -->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    
         <script src="{{ asset("/global/vendor/bootstrap/bootstrap.js") }}"></script>
                
         <!-- Scripts -->

@@ -39,7 +39,7 @@
                                     <label for="max_voltage" class="col-md-4 control-label">Max Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="max_voltage" type="text" class="form-control" name="max_voltage" value="{{ $machine->max_voltage }}"   autofocus>
+                                        <input id="max_voltage" type="text" class="form-control" disabled="disabled"  name="max_voltage" value="{{ $machine->max_voltage }}"   autofocus>
 
                                         @if ($errors->has('max_voltage'))
                                         <span class="help-block">
@@ -54,7 +54,7 @@
                                     <label for="min_voltage" class="col-md-4 control-label">Min Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="min_voltage" type="text" class="form-control" name="min_voltage" value="{{ $machine->min_voltage }}"   autofocus>
+                                        <input id="min_voltage" type="text" class="form-control" disabled="disabled"  name="min_voltage" value="{{ $machine->min_voltage }}"   autofocus>
 
                                         @if ($errors->has('max_voltage'))
                                         <span class="help-block">
