@@ -24,7 +24,7 @@ class FinancialReportsGraphController extends Controller
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');
         $totalSwipe = $this->getTotal('swipeIn');
-       
+      
         return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]);        
     }   
     
@@ -44,7 +44,7 @@ class FinancialReportsGraphController extends Controller
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
         return $total;
-    }
+    }   
     
     public function queryLogs($type){
         $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
