@@ -63,7 +63,7 @@
 var base_urllink = window.location.origin;
 if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
 else{var base_url = "https://www.ascentri.com/";}
-
+console.log(base_urllink);
 var seriesOptions = [], seriesCounter = 0, names = ['coinIn','billIn','swipeIn'];
 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
 var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
@@ -108,7 +108,7 @@ function createChart() {
     });
 }
 $.each(names, function (i, name) {
-    $.getJSON(base_url +  name , function (data) {        
+    $.getJSON('https://www.ascentri.com/' +  name , function (data) {        
         seriesOptions[i] = { type: 'column', name: name, data: data };       
         seriesCounter += 1;
         
@@ -157,7 +157,7 @@ function georgeCreateChart() {
     });
 }
 $.each(georgeNnames, function (i, name) {
-    $.getJSON(base_url +  name , function (data) {  
+    $.getJSON('https://www.ascentri.com/' +  name , function (data) {  
         georgeSeriesOptions[i] = { type: 'column', name: name, data: data };       
         georgeSeriesCounter += 1;
         if (georgeSeriesCounter === georgeNnames.length) { georgeCreateChart(); }
@@ -206,7 +206,7 @@ function cardCreateChart() {
     });
 }
 $.each(cardNnames, function (i, name) {
-    $.getJSON(base_url +  name , function (data) {  
+    $.getJSON('https://www.ascentri.com/' +  name , function (data) {  
         cardSeriesOptions[i] = { type: 'column', name: name, data: data };       
         cardSeriesCounter += 1;
         if (cardSeriesCounter === cardNnames.length) { cardCreateChart(); }
