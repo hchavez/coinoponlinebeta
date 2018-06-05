@@ -400,8 +400,14 @@ Route::resource('financial-reports', 'FinancialReportController');
 Route::resource('financial-reports-graph', 'FinancialReportsGraphController');
 Route::resource('admin-panel', 'AdminPanelController');
 
-Route::get('financialLogs', 'FinancialReportsGraphController@financialLogs');
-Route::get('georgeLogs', 'FinancialReportsGraphController@georgeLogs');
+Route::get('georgeCoin', 'FinancialReportsGraphController@georgeCoin');
+Route::get('georgeBill', 'FinancialReportsGraphController@georgeBill');
+Route::get('georgeCard', 'FinancialReportsGraphController@georgeCard');
+
+Route::get('cardReader_Coin', 'FinancialReportsGraphController@cardReader_Coin');
+Route::get('cardReader_Bill', 'FinancialReportsGraphController@cardReader_Bill');
+Route::get('cardReader_Swipe', 'FinancialReportsGraphController@cardReader_Swipe');
+
 Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
 
 Route::get('coinIn', 'FinancialReportsGraphController@coinIn');

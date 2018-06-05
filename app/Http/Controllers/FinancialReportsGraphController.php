@@ -100,69 +100,115 @@ class FinancialReportsGraphController extends Controller
         return "[". $financialGraphDate . "]";  
     }
     
-    /*public function machinesLists(){
-        $userall = DB::table('machines')
+    public function machinesLists(){
+        $machines = DB::table('machines')
                 ->select('machines.*', 'machines.comments as comments','')
                 ->leftJoin('moneylogs', 'moneylogs.id', '=', 'machines.machine_id')
                 ->where('machines.category','=','george system')
-                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();          
-    }*/
+                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();  
+        return $machines;
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
-    public function georgeLogs(){
+    public function byCategory($type,$cat){
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
         $today = date("Y-m-d H:i:s");
-        $userall = DB::table('moneylogs')
+        $category = DB::table('moneylogs')
                         ->select('moneylogs.*', 'moneylogs.created_at as createdDate', 'moneylogs.coinIn as coin','moneylogs.billIn as bill','moneylogs.swipeIn as swipe'
                                 , 'machines.id as machineID', 'machines.category as category')
                         ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
-                        ->where('machines.category','=','george system')
+                        ->where('machines.category','=',$cat)
                         ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();
-                       
-        
-        if ($userall->count() > 0) {
-                 foreach ($userall as $value) { 
-                     $asdate = strtotime($value->created_at) * 1000;
-                     $coin = $value->coinIn;
-                     $bill = $value->billIn;                     
-                     $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
-                     $financialGraph[] = "[". $asdate .",". $coin .",". $bill .",". $swipe ."]";    
-                 }
-                 $financialGraphDate = join($financialGraph, ',');
-             }else{
-                  $financialGraphDate = null;
-             }         
-         return "[". $financialGraphDate . "]";  
+        return $category;
     }
     
-    public function cardReaderLogs(){
-        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
-        $today = date("Y-m-d H:i:s");
-        $userall = DB::table('moneylogs')
-                        ->select('moneylogs.*', 'moneylogs.created_at as createdDate', 'moneylogs.coinIn as coin','moneylogs.billIn as bill','moneylogs.swipeIn as swipe'
-                                , 'machines.id as machineID', 'machines.category as category')
-                        ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
-                        ->where('machines.category','=','cardreader')
-                        ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();
-                       
-        
-        if ($userall->count() > 0) {
-                 foreach ($userall as $value) { 
-                     $asdate = strtotime($value->created_at) * 1000;
-                     $coin = $value->coinIn;
-                     $bill = $value->billIn;                     
-                     $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
-                     $financialGraph[] = "[". $asdate .",". $coin .",". $bill .",". $swipe ."]";    
-                 }
-                 $graphdataWinResultwithDate = join($financialGraph, ',');
-             }else{
-                  $graphdataWinResultwithDate = null;
-             }         
-         return "[". $graphdataWinResultwithDate . "]";  
+    public function georgeCoin(){
+        $georgieCoin = $this->byCategory('coinIn','george system');
+        if ($georgieCoin->count() > 0) {
+            foreach ($georgieCoin as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $coin = $value->coinIn;                
+                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    public function georgeBill(){
+        $georgieBill = $this->byCategory('billIn','george system');
+        if ($georgieBill->count() > 0) {
+            foreach ($georgieBill as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $billIn = $value->billIn;                
+                $financialGraph[] = "[". $asdate .",". $billIn ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    public function georgeCard(){
+        $georgieCard = $this->byCategory('swipeIn','george system');
+        if ($georgieCard->count() > 0) {
+            foreach ($georgieCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;                
+                $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                
+                $financialGraph[] = "[". $asdate .",". $swipeIn ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    
+    public function cardReader_Coin(){        
+        $coinCard = $this->byCategory('coinIn','Card Reader');
+        if ($coinCard->count() > 0) {
+            foreach ($coinCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $coin = $value->coinIn;
+                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+            }
+            $graphdataWinResultwithDate = join($financialGraph, ',');
+        }else{
+             $graphdataWinResultwithDate = null;
+        }         
+        return "[". $graphdataWinResultwithDate . "]";  
+    }
+    public function cardReader_Bill(){        
+        $coinCard = $this->byCategory('billIn','Card Reader');
+        if ($coinCard->count() > 0) {
+            foreach ($coinCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;               
+                $bill = $value->billIn;          
+                $financialGraph[] = "[". $asdate .",". $bill ."]";    
+            }
+            $graphdataWinResultwithDate = join($financialGraph, ',');
+        }else{
+             $graphdataWinResultwithDate = null;
+        }         
+        return "[". $graphdataWinResultwithDate . "]";  
+    }
+    public function cardReader_Swipe(){        
+        $coinCard = $this->byCategory('swipeIn','Card Reader');
+        if ($coinCard->count() > 0) {
+            foreach ($coinCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;                                
+                $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
+                $financialGraph[] = "[". $asdate .",". $swipe ."]";    
+            }
+            $graphdataWinResultwithDate = join($financialGraph, ',');
+        }else{
+             $graphdataWinResultwithDate = null;
+        }         
+        return "[". $graphdataWinResultwithDate . "]";  
     }
     
     public function create()

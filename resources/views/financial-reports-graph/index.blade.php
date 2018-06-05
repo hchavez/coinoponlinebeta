@@ -24,7 +24,7 @@
                     <div class="tab-content pt-20">
                       <div class="tab-pane active" id="exampleTabsOne" role="tabpanel"><div id="container" style="height: 400px"></div></div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel"><div id="createGeorge" style="height: 400px"></div></div>   
-                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">Card reader</div>  
+                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel"><div id="cardReader" style="height: 400px"></div></div>  
                     </div>
                   </div>
                 </div>
@@ -65,6 +65,8 @@ if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinopo
 else{var base_url = "https://www.ascentri.com/";}
 
 var seriesOptions = [], seriesCounter = 0, names = ['coinIn','billIn','swipeIn'];
+var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
+var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
 
 function createChart() {
     Highcharts.stockChart('container', {        
@@ -84,16 +86,12 @@ function createChart() {
                 dataLabels: {
                     enabled: false,
                     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                    style: {
-                        textShadow: '0 0 3px black, 0 0 3px black'
-                    }
+                    style: {textShadow: '0 0 3px black, 0 0 3px black' }
                 },
                 dataGrouping: {
                     enabled: true,
                     forced: true,
-                    units: [
-                        ['day', [1]]
-                    ]
+                    units: [ ['day', [1]] ]
                 }
             }
         },
@@ -115,6 +113,103 @@ $.each(names, function (i, name) {
         seriesCounter += 1;
         
         if (seriesCounter === names.length) { createChart(); }
+    });
+});
+
+//Georgie only
+function georgeCreateChart() {
+    Highcharts.stockChart('createGeorge', {        
+        title: { text: 'George system' },        
+        rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
+        yAxis: { 
+            min: -10, 
+            max: 400, 
+            tickInterval: 10,
+            title: { text: 'Revenue'},
+            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
+        },
+        plotOptions: { 
+            series: { showInNavigator: true },
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {textShadow: '0 0 3px black, 0 0 3px black' }
+                },
+                dataGrouping: {
+                    enabled: true,
+                    forced: true,
+                    units: [ ['day', [1]] ]
+                }
+            }
+        },
+        tooltip: {            
+            changeDecimals: 2,
+            valueDecimals: 2,
+            //shared: true,
+            //useHTML: true,
+            //headerFormat: '<small>{point.key}</small><table>',
+            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
+            //footerFormat: '</table>'
+        },
+        series: georgeSeriesOptions
+    });
+}
+$.each(georgeNnames, function (i, name) {
+    $.getJSON(base_url +  name , function (data) {  
+        georgeSeriesOptions[i] = { type: 'column', name: name, data: data };       
+        georgeSeriesCounter += 1;
+        if (georgeSeriesCounter === georgeNnames.length) { georgeCreateChart(); }
+    });
+});
+
+
+//Card reader
+function cardCreateChart() {
+    Highcharts.stockChart('cardReader', {        
+        title: { text: 'Card Reader' },        
+        rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
+        yAxis: { 
+            min: -10, 
+            max: 400, 
+            tickInterval: 10,
+            title: { text: 'Revenue'},
+            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
+        },
+        plotOptions: { 
+            series: { showInNavigator: true },
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {textShadow: '0 0 3px black, 0 0 3px black' }
+                },
+                dataGrouping: {
+                    enabled: true,
+                    forced: true,
+                    units: [ ['day', [1]] ]
+                }
+            }
+        },
+        tooltip: {            
+            changeDecimals: 2,
+            valueDecimals: 2,
+            //shared: true,
+            //useHTML: true,
+            //headerFormat: '<small>{point.key}</small><table>',
+            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
+            //footerFormat: '</table>'
+        },
+        series: cardSeriesOptions
+    });
+}
+$.each(cardNnames, function (i, name) {
+    $.getJSON(base_url +  name , function (data) {  
+        cardSeriesOptions[i] = { type: 'column', name: name, data: data };       
+        cardSeriesCounter += 1;
+        if (cardSeriesCounter === cardNnames.length) { cardCreateChart(); }
     });
 });
 
