@@ -398,5 +398,21 @@ Route::get('history', 'MachineErrorReportController@history');
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
 
 Route::resource('financial-reports', 'FinancialReportController');
+Route::resource('financial-reports-graph', 'FinancialReportsGraphController');
 Route::resource('admin-panel', 'AdminPanelController');
+
+Route::get('georgeCoin', 'FinancialReportsGraphController@georgeCoin');
+Route::get('georgeBill', 'FinancialReportsGraphController@georgeBill');
+Route::get('georgeCard', 'FinancialReportsGraphController@georgeCard');
+
+Route::get('cardReader_Coin', 'FinancialReportsGraphController@cardReader_Coin');
+Route::get('cardReader_Bill', 'FinancialReportsGraphController@cardReader_Bill');
+Route::get('cardReader_Swipe', 'FinancialReportsGraphController@cardReader_Swipe');
+
+Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
+
+Route::get('coinIn', 'FinancialReportsGraphController@coinIn');
+Route::get('billIn', 'FinancialReportsGraphController@billIn');
+Route::get('swipeIn', 'FinancialReportsGraphController@swipeIn');
+
 Route::resource('machine-reports', 'MachineReportsController');

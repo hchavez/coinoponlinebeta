@@ -16,19 +16,60 @@
                 <div class="col-lg-2">   
                     <form role="form" method="GET" class="error-list-form" id="formFilter">                                         
                         <input type="text" name="dateFilter" id="dateFilter" class="form-control pull-right" placeholder="Filter By Date"> 
-                        <input type="hidden" name="coin" id="swipe38" value="{{ $swipe38 }}">
-                        <input type="hidden" name="coin" id="swipe39" value="{{ $swipe39 }}">
-                        <input type="hidden" name="coin" id="swipe40" value="{{ $swipe40 }}">
-                        <input type="hidden" name="coin" id="swipe42" value="{{ $swipe42 }}">
-                        <input type="hidden" name="coin" id="swipe43" value="{{ $swipe43 }}">
+                                                
                         <input type="hidden" name="coin28" id="coin28" value="{{ $coin28 }}">
+                        <input type="hidden" name="coin28B" id="coin28B" value="{{ $coin28B }}">
+                        <input type="hidden" name="coin28S" id="coin28S" value="{{ $coin28S }}">
+                        
                         <input type="hidden" name="coin28" id="coin29" value="{{ $coin29 }}">
-                        <input type="hidden" name="coin28" id="coin30" value="{{ $coin30 }}">
-                        <input type="hidden" name="coin28" id="coin31" value="{{ $coin31 }}">                       
-                        <input type="hidden" name="coin28" id="coin35" value="{{ $coin35 }}">
-                        <input type="hidden" name="coin28" id="coin36" value="{{ $coin36 }}">
-                        <input type="hidden" name="coin28" id="coin37" value="{{ $coin37 }}">
-                        <input type="hidden" name="coin28" id="coin41" value="{{ $coin41 }}">
+                        <input type="hidden" name="coin29B" id="coin29B" value="{{ $coin29B }}">
+                        <input type="hidden" name="coin29S" id="coin29S" value="{{ $coin29S }}">
+                        
+                        <input type="hidden" name="coin30" id="coin30" value="{{ $coin30 }}">
+                        <input type="hidden" name="coin30B" id="coin30B" value="{{ $coin30B }}">
+                        <input type="hidden" name="coin30S" id="coin30S" value="{{ $coin30S }}">
+                        
+                        <input type="hidden" name="coin31" id="coin31" value="{{ $coin31 }}">   
+                        <input type="hidden" name="coin31B" id="coin31B" value="{{ $coin31B }}">
+                        <input type="hidden" name="coin31S" id="coin31S" value="{{ $coin31S }}">
+                        
+                        <input type="hidden" name="coin35" id="coin35" value="{{ $coin35 }}">
+                        <input type="hidden" name="coin35B" id="coin35B" value="{{ $coin35B }}">
+                        <input type="hidden" name="coin35S" id="coin35S" value="{{ $coin35S }}">
+                        
+                        <input type="hidden" name="coin36" id="coin36" value="{{ $coin36 }}">
+                        <input type="hidden" name="coin36B" id="coin36B" value="{{ $coin36B }}">
+                        <input type="hidden" name="coin36S" id="coin36S" value="{{ $coin36S }}">
+                        
+                        <input type="hidden" name="coin37" id="coin37" value="{{ $coin37 }}">
+                        <input type="hidden" name="coin37B" id="coin37B" value="{{ $coin37B }}">
+                        <input type="hidden" name="coin37S" id="coin37S" value="{{ $coin37S }}">
+                        
+                        <input type="hidden" name="coin38" id="coin38" value="{{ $coin38 }}">
+                        <input type="hidden" name="coin38B" id="coin38B" value="{{ $coin38B }}">
+                        <input type="hidden" name="coin38S" id="coin38S" value="{{ $coin38S }}">
+                        
+                        <input type="hidden" name="coin39" id="coin39" value="{{ $coin39 }}">
+                        <input type="hidden" name="coin39B" id="coin39B" value="{{ $coin39B }}">
+                        <input type="hidden" name="coin39S" id="coin39S" value="{{ $coin39S }}">
+                        
+                        <input type="hidden" name="coin40" id="coin40" value="{{ $coin40 }}">
+                        <input type="hidden" name="coin40B" id="coin40B" value="{{ $coin40B }}">
+                        <input type="hidden" name="coin40S" id="coin40S" value="{{ $coin40S }}">
+                        
+                        <input type="hidden" name="coin41" id="coin41" value="{{ $coin41 }}">
+                        <input type="hidden" name="coin41B" id="coin41B" value="{{ $coin41B }}">
+                        <input type="hidden" name="coin41S" id="coin41S" value="{{ $coin41S }}">
+                        
+                        <input type="hidden" name="coin42" id="coin42" value="{{ $coin42 }}">
+                        <input type="hidden" name="coin42B" id="coin42B" value="{{ $coin42B }}">
+                        <input type="hidden" name="coin42S" id="coin42S" value="{{ $coin42S }}">
+                        
+                        <input type="hidden" name="coin43" id="coin43" value="{{ $coin43 }}">
+                        <input type="hidden" name="coin43B" id="coin43B" value="{{ $coin43B }}">
+                        <input type="hidden" name="coin43S" id="coin43S" value="{{ $coin43S }}">
+                        
+                        <!--input type="hidden" name="coin28" id="coin41" value="{{ $coin41 }}"-->
                     </form>                                       
                 </div>
                 

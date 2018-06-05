@@ -380,7 +380,12 @@
                                                 <a class="animsition-link" href="{{ url('financial-reports') }}">
                                                     <span class="site-menu-title">Financial Reports</span>
                                                 </a>
-                                            </li>    
+                                            </li>  
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="{{ url('financial-reports-graph') }}">
+                                                    <span class="site-menu-title">Financial Reports Graph</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
