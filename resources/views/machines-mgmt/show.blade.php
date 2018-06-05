@@ -775,26 +775,18 @@ $('.modal-footer').on('click', '.delete', function() {
                     'id': id
                 },
                
-//                success: function(data) {
-//                    toastr.success('Test Go Successfully Sent! Machine now processing the data.', 'Success Alert', {timeOut: 10000});
-//                    console.log(data['id']);
-//                }
 
-                
                 success: function(data) {
-                    //console.log(response.msg);
-                     //alert("Test Go Successfully Sent! Machine now processing the data.");
                      toastr.success('Test Go Successfully Sent! Machine now processing the data.', 'Success Alert', {timeOut: 10000});
                      console.log('successss')
                 },
                 error: function(response) {
-                    // console says, that response.msg is undefinded
                     console.log(response.msg);
                     console.log('errorrrrr')
                 }
     
             });
-});
+    });
         
 });
 
