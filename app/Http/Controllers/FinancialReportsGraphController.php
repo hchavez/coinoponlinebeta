@@ -117,11 +117,11 @@ class FinancialReportsGraphController extends Controller
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
         $today = date("Y-m-d H:i:s");
         $category = DB::table('moneylogs')
-                        ->select('moneylogs.*', 'moneylogs.created_at as createdDate', 'moneylogs.coinIn as coin','moneylogs.billIn as bill','moneylogs.swipeIn as swipe'
-                                , 'machines.id as machineID', 'machines.category as category')
-                        ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
-                        ->where('machines.category','=',$cat)
-                        ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();
+                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
+                     ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
+                     ->where('machines.category','=',$cat)
+                     ->whereBetween('moneylogs.created_at',[$fromDate,$today])->where('moneylogs.status', '=', 1)
+                     ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
         return $category;
     }
     
