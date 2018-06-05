@@ -29,6 +29,7 @@ use Input;
 use DateTime;
 use App\User;
 use App\Http\Resources\UserCollection;
+use View;
 
 
 class MachineManagementController extends Controller {
@@ -833,5 +834,28 @@ class MachineManagementController extends Controller {
           
         return json_encode($machinemodels);
      }
+     
+        /**
+     * Test Go button function
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function testGo() { 
+       $id = Input::get('id');
+       
+        $game = GameSettings::where('machine_id', $id)->first();
+        $game->gameLeft = "1";
+        $game->status = "2";
+        $game->save();
+        
+        return response()->json($game);
+        
+//            if( $game->save() ){
+//                return response()->json(array('data'=>$game, 'status'=>'success', 'msg'=>'Success!.'), 200);
+//            }else{
+//                return response()->json(array('status'=>'error', 'msg'=>'Error!'), 500);
+//            }
+    }
 
 }

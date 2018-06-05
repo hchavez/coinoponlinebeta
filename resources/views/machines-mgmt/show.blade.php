@@ -81,7 +81,13 @@
                 <!-- Panel Projects -->
                 <div class="panel" id="projects">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Version - {{ $machine->version }} </h3>
+                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Version - {{ $machine->version }} 
+                        <a href="#">                        
+                        <button class="delete-modal btn btn-danger" data-id="{{$machine->id}}" data-content="{{$machine->id}}">
+                                        <span class="glyphicon glyphicon-trash"></span> TEST GO!</button>
+                        </a>
+                        </h3>
+                        
                     </div>
 
                     <div class="table-responsive">
@@ -706,6 +712,93 @@
 
 
 
+  <!-- Modal form for test Go function -->
+    <div id="testgoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="text-center">Are you sure you want to do Test Go? No of Play Given: 1 (One)</h4>
 
+                    <form class="form-horizontal" role="form">
+                        <meta id="token" name="token" content="{ { csrf_token() } }">     
+                        {{ csrf_field() }}   
+<!--                        <input type="text" name="id" value="{{ $machine->id }} ">-->
+                        <div class="form-group">
+                            <div class="col-sm-10">                               
+                                <input type="text" class="form-control" id="id_delete" disabled="" style="display: none;">
+                            </div>
+                        </div>
+                    
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger delete" data-dismiss="modal">
+                            <span id="" class='glyphicon glyphicon-trash'></span> Proceed
+                        </button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">
+                            <span class='glyphicon glyphicon-remove'></span> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+  
+  <script>    
+$(document).ready(function() {   
+  
+//Test Go Functionality
+$('.delete-modal').on('click', function() {
+           // $('.modal-title').text('Run Machine Test Go!');
+            $('#id_delete').val($(this).data('id'));
+            $('#testgoModal').modal('show');
+            id = $('#id_delete').val();
+});
+
+$('.modal-footer').on('click', '.delete', function() {
+    
+             $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        
+            $.ajax({
+                type: 'POST',
+                url: "{{ URL::route('testGo') }}",
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id': id
+                },
+               
+//                success: function(data) {
+//                    toastr.success('Test Go Successfully Sent! Machine now processing the data.', 'Success Alert', {timeOut: 10000});
+//                    console.log(data['id']);
+//                }
+
+                
+                success: function(data) {
+                    //console.log(response.msg);
+                     //alert("Test Go Successfully Sent! Machine now processing the data.");
+                     toastr.success('Test Go Successfully Sent! Machine now processing the data.', 'Success Alert', {timeOut: 10000});
+                     console.log('successss')
+                },
+                error: function(response) {
+                    // console says, that response.msg is undefinded
+                    console.log(response.msg);
+                    console.log('errorrrrr')
+                }
+    
+            });
+});
+        
+});
+
+
+</script>
 
 @endsection
