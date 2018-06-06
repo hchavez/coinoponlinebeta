@@ -180,8 +180,9 @@
                                     var seriesOptions = [],
                                         seriesCounter = 0,
                                         id = {{ $machine->id }}
-                                        names = ['winresult', 'excesswin', 'ownedwin'];
-
+                                        namesresult = ["winresult", "excesswin", "ownedwin"];
+                                        //names = ["excesswin"];       
+                                            
                                     /**
                                      * Create the chart when all data is loaded
                                      * @returns {undefined}
@@ -191,14 +192,14 @@
                                         Highcharts.stockChart('containercompare', {
 
                                             rangeSelector: {
-                                                selected: 4
+                                                //selected: 4
                                             },
 
                                             yAxis: {
                                                   min: -10,
                                                         max: 60,
                                                         tickInterval: 5,
-                                                     title: {
+                                                      title: {
                                                         text: 'Win Graph',
                                                     },
                                                 plotLines: [{
@@ -210,22 +211,21 @@
 
                                             plotOptions: {
                                                 series: {
-                                                   
                                                     showInNavigator: true
                                                 }
                                             },
 
                                             tooltip: {
-                                                //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                                                valueDecimals: 2,
-                                                split: true
+                                               //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                                                valueDecimals: 0,
+                                                //split: true
                                             },
 
                                             series: seriesOptions
                                         });
                                     }
 
-                                    $.each(names, function (i, name) {
+                                    $.each(namesresult, function (i, name) {
 
                                        
                                     var base_urllink = window.location.origin;
@@ -236,11 +236,11 @@
                                         var base_url = "https://www.ascentri.com/";
                                     }
                                         
-                                        $.getJSON(base_url + name + '/' + id,    function (data) {
+                                        $.getJSON(base_url + name + "/" + id,    function (dataresult) {
 
                                             seriesOptions[i] = {
                                                 name: name,
-                                                data: data
+                                                data: dataresult
                                             };
 
                                             // As we're loading the data asynchronously, we don't know what order it will arrive. So
@@ -253,49 +253,7 @@
                                         });
                                     });
                                     
-                                        //win result graph version 1
-
-//                                        chart = new Highcharts.chart('containerwin', {
-//                                            chart: {
-//                                                type: 'line'
-//                                            },
-//                                            title: {
-//                                                text: ''
-//                                            },
-//                                            subtitle: {
-//                                                text: ''
-//                                            },
-//                                            xAxis: {
-//                                              
-//                                            },
-//                                            yAxis: {
-//                                                 min: -5,
-//                                                    max: 20,
-//                                                      tickInterval: 10,
-//                                                title: {
-//                                                    text: 'Win Graph ',
-//                                                    
-//                                                }
-//                                            },
-//                                            plotOptions: {
-//                                                line: {
-//                                                    dataLabels: {
-//                                                        enabled: false
-//                                                    },
-//                                                    enableMouseTracking: true
-//                                                }
-//                                            },
-//                                            series: [ {
-//                                                    name: 'WinResult',
-//                                                    data: [ {{  $graphdataWinResult }} ]
-//                                                }, {
-//                                                    name: 'ExcessWin',
-//                                                    data: [ {{ $graphdataExcessWinResult }} ]
-//                                                }, {
-//                                                    name: 'OwedWin',
-//                                                    data: [ {{ $graphdataOwnedWinResult }} ]
-//                                                }]
-//                                        });
+                                      
                                     });
 
 
@@ -336,81 +294,7 @@
 
                                     $(document).ready(function () {
 
-//                                        chart = new Highcharts.chart('containervoltage', {
-//                                            chart: {
-//                                                type: 'line'
-//                                            },
-//                                            title: {
-//                                                text: ''
-//                                            },
-//                                            subtitle: {
-//                                                text: ''
-//                                            },
-//                                            xAxis: {
-//                                              
-//                                            },
-//                                            yAxis: {
-//                                                 min: 0,
-//                                                    max: 50,
-//                                                      tickInterval: 10,
-//                                                title: {
-//                                                    text: 'Voltage Graph',
-//                                                    
-//                                                }
-//                                            },
-//                                            plotOptions: {
-//                                                line: {
-//                                                    dataLabels: {
-//                                                        enabled: false
-//                                                    },
-//                                                    enableMouseTracking: true
-//                                                }
-//                                            },
-//                                            series: [{
-//                                                    name: 'PickupVoltage', 
-//                                                    data: [ {{ $graphdataPkVoltResult }} ], 
-//                                                }, {
-//                                                    name: 'RetVoltage',
-//                                                    data: [ {{ $graphdataDropVoltResult }} ], 
-//                                                }]
-//                                        });
-                                        
-                                        
-                                 //new chart for development-------voltage with  date graph------------------------------------------
-                                
-                                
-//                                    chart = new Highcharts.stockChart('container', {
-//
-//                                        chart: {
-//                                            type: 'arearange'
-//                                        },
-//
-//                                        rangeSelector: {
-//                                            allButtonsEnabled: false,
-//                                            selected: 3 
-//                                        },
-//
-//                                          yAxis: {
-//                                                     min: 0,
-//                                                        max: 50,
-//                                                          tickInterval: 10,
-//                                                     title: {
-//                                                        text: 'Voltage Graph',
-//                                                    }
-//                                                },
-//
-//                                        tooltip: {
-//
-//                                        },
-//
-//                                        series: [{
-//                                            name: 'Data',
-//                                            data: [ {{   $newgraphdataPkVoltQuery2 }} ], 
-//                                        }]
-//
-//                                    });
                  
-                                                         
                                     //win graph version 2 using comparison data
                                     
                                     var seriesOptions = [],
@@ -431,9 +315,9 @@
                                             },
 
                                             yAxis: {
-                                                  min: -10,
-                                                        max: 50,
-                                                        tickInterval: 5,
+                                                     min: -10,
+                                                     max: 50,
+                                                     tickInterval: 5,
                                                      title: {
                                                         text: 'Voltage Graph',
                                                     },
@@ -463,7 +347,6 @@
 
                                     $.each(names, function (i, name) {
 
-                                       
                                     var base_urllink = window.location.origin;
                                     
                                     if (base_urllink == "http://localhost"){
@@ -492,14 +375,6 @@
                                 
                                 
                                     });
-
-
-                                    
-                            $.getJSON('https://cdn.rawgit.com/highcharts/highcharts/v6.0.5/samples/data/range.json', function (data) {
-
-                           
-                                
-                            });
 
 
                                 </script>
@@ -720,8 +595,6 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <div class="modal-body">
-                    <h4 class="text-center">Are you sure you want to do Test Go? No of Play Given: 1 (One)</h4>
-
                     <form class="form-horizontal" role="form">
                         <meta id="token" name="token" content="{ { csrf_token() } }">     
                         {{ csrf_field() }}   
@@ -729,6 +602,7 @@
                         <div class="form-group">
                             <div class="col-sm-10">                               
                                 <input type="text" class="form-control" id="id_delete" disabled="" style="display: none;">
+                                Please Enter Play Credits: <input type="text" id="playcredits">
                             </div>
                         </div>
                     
@@ -756,29 +630,30 @@ $('.delete-modal').on('click', function() {
            // $('.modal-title').text('Run Machine Test Go!');
             $('#id_delete').val($(this).data('id'));
             $('#testgoModal').modal('show');
+            //playcredits = $('#playcredits').val();
             id = $('#id_delete').val();
 });
 
 $('.modal-footer').on('click', '.delete', function() {
-    
+           playcredits = $('#playcredits').val();
              $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        
+           
             $.ajax({
                 type: 'POST',
                 url: "{{ URL::route('testGo') }}",
                 data: {
                     '_token': $('input[name=_token]').val(),
-                    'id': id
+                    'id': id,
+                    'playcredits': playcredits
                 },
-               
 
                 success: function(data) {
                      toastr.success('Test Go Successfully Sent! Machine now processing the data.', 'Success Alert', {timeOut: 10000});
-                     console.log('successss')
+                     console.log(data['gameLeft'])
                 },
                 error: function(response) {
                     console.log(response.msg);

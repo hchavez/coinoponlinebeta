@@ -842,10 +842,11 @@ class MachineManagementController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function testGo() { 
-       $id = Input::get('id');
-       
+        $id = Input::get('id');
+        $playcredits = Input::get('playcredits');
+        
         $game = GameSettings::where('machine_id', $id)->first();
-        $game->gameLeft = "1";
+        $game->gameLeft = $playcredits;
         $game->status = "2";
         $game->save();
         

@@ -74,36 +74,38 @@ Route::get('/ownedwin/{id}', function($id){
                 $asdate = strtotime($value->created_at) * 1000;
                 $ownedWin = $value->owedWin * -1;
 
-                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $ownedWin ."]";
+                 $graphdataOwnedWinResultwithDateresult[] = "[". $asdate .",". $ownedWin ."]";
                 
             }
-            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+            $graphdataOwnedWinResultwithDate = join($graphdataOwnedWinResultwithDateresult, ',');
 
          }else{
-             $graphdataWinResultwithDate = null;
+             $graphdataOwnedWinResultwithDate = null;
          }
          
-    return "[". $graphdataWinResultwithDate . "]";
+    return "[". $graphdataOwnedWinResultwithDate . "]";
          
 });
 
 Route::get('/winresult/{id}', function($id){
-      $userall = WinLogs::select('created_at','winResult')->where('machine_id','=', $id)->get();
+      $userallwinresult = WinLogs::select('created_at','winResult')->where('machine_id','=', $id)->get();
 
-     if ($userall->count() > 0) {
-            foreach ($userall as $value) {
-               
+     if ($userallwinresult->count() > 0) {
+        
+            foreach ($userallwinresult as $value) {
+                $tempwinResult = 0;
+            
                 $asdate = strtotime($value->created_at) * 1000;
 
                 if ($value->winResult == 'won') {
-                    $tempwinResult = '50';
+                    $tempwinResult = 50;
                 } else {
-                    $tempwinResult = '0';
+                    $tempwinResult = 0;
                 }
                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
                 
             }
-            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
 
          }else{
              $graphdataWinResultwithDate = null;
@@ -114,34 +116,34 @@ Route::get('/winresult/{id}', function($id){
 
 Route::get('/excesswin/{id}', function($id){
    
-    $userall = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
+    $userallexcesswin = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
 
-     if ($userall->count() > 0) {
-            foreach ($userall as $value) {
+     if ($userallexcesswin->count() > 0) {
+            foreach ($userallexcesswin as $value) {
                 
                    $asdate = strtotime($value->created_at) * 1000;
 
                 $excessWin = $value->excessWin;
 
-                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $excessWin ."]";
+                 $graphdataExcessWinResultwithDateresult[] = "[". $asdate .",". $excessWin ."]";
                 
             }
-            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ',');
+            $graphdataExcessWinResultwithDate = join($graphdataExcessWinResultwithDateresult, ',');
 
          }else{
-             $graphdataWinResultwithDate = null;
+             $graphdataExcessWinResultwithDate = null;
          }
          
-    return "[". $graphdataWinResultwithDate . "]";
+    return "[". $graphdataExcessWinResultwithDate . "]";
 });
 
 /********************************VOLTAGE*************************************************/
 
 Route::get('/pkvolt/{id}', function($id){
-   $userall = GoalsLogs::select('created_at','pkVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   $userallpkvolt = GoalsLogs::select('created_at','pkVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
    
-    if ($userall->count() > 0) {
-            foreach ($userall as $value) {
+    if ($userallpkvolt->count() > 0) {
+            foreach ($userallpkvolt as $value) {
             
                 $asdate = strtotime($value->created_at) * 1000;
                 $pkVolt = $value->pkVolt;
