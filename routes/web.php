@@ -413,8 +413,8 @@ Route::get('cardReader_Swipe', 'FinancialReportsGraphController@cardReader_Swipe
 
 Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
 
-Route::get('coinIn', 'FinancialReportsGraphController@coinIn');
-Route::get('billIn', 'FinancialReportsGraphController@billIn');
-Route::get('swipeIn', 'FinancialReportsGraphController@swipeIn');
+Route::get('coin', 'FinancialReportsGraphController@coin');
+Route::get('bill', 'FinancialReportsGraphController@bill');
+Route::get('card', 'FinancialReportsGraphController@card');
 
 Route::resource('machine-reports', 'MachineReportsController');

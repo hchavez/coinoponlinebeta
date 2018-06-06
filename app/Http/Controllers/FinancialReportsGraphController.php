@@ -24,12 +24,12 @@ class FinancialReportsGraphController extends Controller
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');
         $totalSwipe = $this->getTotal('swipeIn');
-       
+      
         return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]);        
     }   
     
     public function getTotal($type){
-        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
+        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));        
         $today = date("Y-m-d");
         $yesterday = date('Y-m-d',strtotime("-1 days"));
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
@@ -39,11 +39,12 @@ class FinancialReportsGraphController extends Controller
         $Yesterday = MoneyLogs::where('status', '=', 1)->where('created_at','like','%'.$yesterday.'%')->sum($type);
         $Week = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
         $Month = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $financial = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
         $Year = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$thisYear, $today])->sum($type);
         
-        $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisYear'=>$Year);
+        $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
         return $total;
-    }
+    }   
     
     public function queryLogs($type){
         $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
@@ -55,7 +56,7 @@ class FinancialReportsGraphController extends Controller
         return $queryAll;         
     }
     
-    public function coinIn(){                  
+    public function coin(){                  
         $coin = $this->queryLogs('coinIn');        
         if ($coin->count() > 0) {
             foreach ($coin as $value) { 
@@ -70,7 +71,7 @@ class FinancialReportsGraphController extends Controller
         return "[". $financialGraphDate . "]";  
     }
     
-    public function billIn(){      
+    public function bill(){      
         $bill = $this->queryLogs('billIn');
         if ($bill->count() > 0) {
             foreach ($bill as $value) { 
@@ -85,7 +86,7 @@ class FinancialReportsGraphController extends Controller
         return "[". $financialGraphDate . "]";  
     }
     
-    public function swipeIn(){          
+    public function card(){          
         $swipe = $this->queryLogs('swipeIn');
         if ($swipe->count() > 0) {
             foreach ($swipe as $value) { 
@@ -99,15 +100,7 @@ class FinancialReportsGraphController extends Controller
         }   
         return "[". $financialGraphDate . "]";  
     }
-    
-    public function machinesLists(){
-        $machines = DB::table('machines')
-                ->select('machines.*', 'machines.comments as comments','')
-                ->leftJoin('moneylogs', 'moneylogs.id', '=', 'machines.machine_id')
-                ->where('machines.category','=','george system')
-                ->whereBetween('moneylogs.created_at', [$fromDate,$today])->get();  
-        return $machines;
-    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -169,7 +162,7 @@ class FinancialReportsGraphController extends Controller
     }
     
     public function cardReader_Coin(){        
-        $coinCard = $this->byCategory('coinIn','Card Reader');
+        $coinCard = $this->byCategory('coinIn','cardreader');        
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
@@ -183,7 +176,7 @@ class FinancialReportsGraphController extends Controller
         return "[". $graphdataWinResultwithDate . "]";  
     }
     public function cardReader_Bill(){        
-        $coinCard = $this->byCategory('billIn','Card Reader');
+        $coinCard = $this->byCategory('billIn','cardreader');
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;               
@@ -197,7 +190,7 @@ class FinancialReportsGraphController extends Controller
         return "[". $graphdataWinResultwithDate . "]";  
     }
     public function cardReader_Swipe(){        
-        $coinCard = $this->byCategory('swipeIn','Card Reader');
+        $coinCard = $this->byCategory('swipeIn','cardreader');
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                                
