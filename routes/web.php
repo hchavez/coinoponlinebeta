@@ -102,7 +102,19 @@ Route::get('/winresult/{id}', function($id){
                 } else {
                     $tempwinResult = 0;
                 }
-                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
+                
+                if($tempwinResult == 25){
+                    $winindicator = 50;
+                }
+                
+                if($tempwinResult == 50){
+                    $winindicator = 50;
+                }
+                
+                if($tempwinResult == 0){
+                    $winindicator = 0;
+                }
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $winindicator ."]";
                 
             }
             $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
