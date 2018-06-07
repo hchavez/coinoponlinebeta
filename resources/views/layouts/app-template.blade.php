@@ -143,7 +143,7 @@ Breakpoints();
         <script src="{{ asset("/global/js/Plugin/aspieprogress.js") }}"></script>
         <script src="{{ asset("/global/js/Plugin/bootstrap-datepicker.js") }}"></script>
         <script src="{{ asset("/global/js/Plugin/asscrollable.js") }}"></script>
-        <script src="{{ asset("/assets/examples/js/dashboard/team.js") }}"></script>
+        <!--<script src="{{ asset("/assets/examples/js/dashboard/team.js") }}"></script>-->
         <script src="{{ asset("/global/js/Plugin/bootbox.js") }}"></script>
         <script src="{{ asset("/global/js/Plugin/sweetalert.js") }}"></script>
                 

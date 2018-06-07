@@ -881,15 +881,21 @@ class MachineManagementController extends Controller {
     }
      
     public function queryLogs($type,$id){
-       $queryMachine = DB::table('moneylogs')
-                       // ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
-                        ->select(DB::raw('created_at, moneylogs.machine_id,'. $type .', moneylogs.type as type '))
-                        ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
-                        ->whereDate('moneylogs.created_at', '=', Carbon::today()->toDateString())->get();  
-        return $queryMachine;  
-        //var_dump($queryMachine); exit();
+//       $queryMachine = DB::table('moneylogs')
+//                       // ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
+//                        ->select(DB::raw('created_at, moneylogs.machine_id,'. $type .', moneylogs.type as type '))
+//                        ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
+//                        ->whereDate('moneylogs.created_at', '=', Carbon::today()->toDateString())->get();  
+// 
+
+        $queryMachine = DB::table('moneylogs')
+                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
+                     ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
+                     ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
+        return $queryMachine;
     }
     
+   
     public function excesswin($id){
     $userallexcesswin = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
 
@@ -966,4 +972,49 @@ class MachineManagementController extends Controller {
     }
     
 
+    public function dailyCoin($id){
+        $georgieCoin = $this->queryLogs('coinIn',$id);
+        
+        if ($georgieCoin->count() > 0) {
+            foreach ($georgieCoin as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $coin = $value->coinIn;                
+                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    public function dailyBill($id){
+        $georgieBill = $this->queryLogs('billIn',$id);
+        if ($georgieBill->count() > 0) {
+            foreach ($georgieBill as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $billIn = $value->billIn;                
+                $financialGraph[] = "[". $asdate .",". $billIn ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    public function dailyCard($id){
+        $georgieCard = $this->queryLogs('swipeIn',$id);
+        if ($georgieCard->count() > 0) {
+            foreach ($georgieCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;                
+                $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                
+                $financialGraph[] = "[". $asdate .",". $swipeIn ."]";    
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+             $financialGraphDate = null;
+        }         
+        return "[". $financialGraphDate . "]";  
+    }
+    
+    
 }

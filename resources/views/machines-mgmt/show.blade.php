@@ -161,7 +161,7 @@
                              
       
                                 <div class="col-xl-12">
-                                <div id="containermoney" style="height: 400px"></div>
+                                <div id="containermoney" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
                                 <div class="col-lg-12">
                                     <!-- Example Bordered Table -->
                                     <div class="example-wrap">                                     
@@ -170,7 +170,7 @@
                                           <thead><tr><th></th><th>Coin</th><th>Bill</th><th>Card</th><th>Total</th></tr></thead>
                                           <tbody>
                                             <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td>{{ $card['today'] }}</td><td><?php echo round($coin['today'] + $bill['today'] + $card['today'], 2); ?></td></tr>
-                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td><td><?php echo round($coin['today'] + $bill['today'] + $card['today'], 2); ?></td></tr>
+                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td><td><?php echo round($coin['yesterday'] + $bill['yesterday'] + $card['yesterday'], 2); ?></td></tr>
                                             <tr><td>This week</td><td><?php echo round( $coin['thisWeek'],2);  ?></td><td>{{ $bill['thisWeek'] }}</td><td>{{ $card['thisWeek'] }}</td><td><?php echo round($coin['thisWeek'] + $bill['thisWeek'] + $card['thisWeek'], 2); ?></td></tr>
                                             <tr><td>This Month</td><td><?php echo round( $coin['thisMonth'],2);  ?></td><td>{{ $bill['thisMonth'] }}</td><td>{{ $card['thisMonth'] }}</td><td><?php echo round($coin['thisMonth'] + $bill['thisMonth'] + $card['thisMonth'], 2); ?></td></tr>
                                             <tr><td>This Financial Year</td><td><?php echo round( $coin['thisFinancial'],2);  ?></td><td>{{ $bill['thisFinancial'] }}</td><td>{{ $card['thisFinancial'] }}</td><td><?php echo round($coin['thisFinancial'] + $bill['thisFinancial'] + $card['thisFinancial'], 2); ?></td></tr>
@@ -184,54 +184,64 @@
                                 </div>
                                 
                                 <script type="text/javascript">
-                                 
-                                    Highcharts.chart('containermoney', {
-                                        chart: {
-                                            type: 'column'
+                                 var base_urllink = window.location.origin;
+                   
+                                    if (base_urllink == "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                    }
+                                    
+                                var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['dailyCoin','dailyBill','dailyCard'];
+                                var id = {{ $machine->id }};  
+                                //Georgie only
+                                function georgeCreateChart() {
+                                    Highcharts.stockChart('containermoney', {  
+                                        chart: { height: 500 },
+                                        title: { text: 'Daily TurnOver Graph' },        
+                                        rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
+                                        yAxis: { 
+                                            min: 0, 
+       
+                                            tickInterval: 10,
+                                            title: { text: 'Revenue'},
+                                            plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
                                         },
-                                        title: {
-                                            text: 'Daily Turnover Graph'
-                                        },
-                                        xAxis: {
-                                            categories: [
-                                                'Today'
-                                            ],
-                                            crosshair: true
-                                        },
-                                        yAxis: {
-                                            min: 0,
-                                            title: {
-                                                text: ''
-                                            }
-                                        },
-                                        tooltip: {
-                                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-                                            footerFormat: '</table>',
-                                            shared: true,
-                                            useHTML: true
-                                        },
-                                        plotOptions: {
+                                        plotOptions: { 
+                                            series: { showInNavigator: true },
                                             column: {
-                                                pointPadding: 0.3,
-                                                borderWidth: 0
+                                                stacking: 'normal',
+                                                dataLabels: {
+                                                    enabled: false,
+                                                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                                                    style: {textShadow: '0 0 3px black, 0 0 3px black' }
+                                                },
+                                                dataGrouping: {
+                                                    enabled: true,
+                                                    forced: true,
+                                                    units: [ ['day', [1]] ]
+                                                }
                                             }
                                         },
-                                        series: [{
-                                            name: 'Coin',
-                                            data: [<?php echo round($coin['today'],2);  ?>]
-
-                                        }, {
-                                            name: 'Bill',
-                                            data: [{{ $bill['today'] }}]
-
-                                        }, {
-                                            name: 'Card',
-                                            data: [{{ $card['today'] }}]
-
-                                        }]
+                                        //tooltip: {            
+                                          //  changeDecimals: 2,
+                                          //  valueDecimals: 2,
+                                            //shared: true,
+                                            //useHTML: true,
+                                            //headerFormat: '<small>{point.key}</small><table>',
+                                            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
+                                            //footerFormat: '</table>'
+                                        //},
+                                        series: georgeSeriesOptions
                                     });
+                                }
+                                $.each(georgeNnames, function (i, name) {
+                                    $.getJSON(base_url + name + "/" + id, function (data) {  
+                                        georgeSeriesOptions[i] = { type: 'column', name: name, data: data };       
+                                        georgeSeriesCounter += 1;
+                                        if (georgeSeriesCounter === georgeNnames.length) { georgeCreateChart(); }
+                                    });
+                                });
                                 </script>
                                 
                                  <div class="col-xl-12">

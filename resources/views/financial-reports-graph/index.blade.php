@@ -66,7 +66,7 @@
 //else{var base_url = "https://www.ascentri.com/";}
 //console.log(base_urllink);
 
-var base_url = "https://www.ascentri.com/";
+
 var seriesOptions = [], seriesCounter = 0, names = ['coin','bill','card'];
 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
 var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
@@ -99,18 +99,30 @@ function createChart() {
                 }
             }
         },
-        tooltip: {            
-            changeDecimals: 2,
-            valueDecimals: 2,
+        //tooltip: {            
+            //changeDecimals: 2,
+            //valueDecimals: 2,
             //shared: true,
             //useHTML: true,
             //headerFormat: '<small>{point.key}</small><table>',
             //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
             //footerFormat: '</table>'
-        },
+       // },
         series: seriesOptions
     });
 }
+   
+     var base_urllink = window.location.origin;
+          console.log(base_urllink);
+                   
+                                    if (String(base_urllink) === "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                             console.log(base_url);
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                        console.log(base_url);
+                                    }
+                                    
 $.each(names, function (i, name) {
     $.getJSON(base_url +  name , function (data) {        
         seriesOptions[i] = { type: 'column', name: name, data: data };       
@@ -149,18 +161,30 @@ function georgeCreateChart() {
                 }
             }
         },
-        tooltip: {            
-            changeDecimals: 2,
-            valueDecimals: 2,
+        //tooltip: {            
+          //  changeDecimals: 2,
+          //  valueDecimals: 2,
             //shared: true,
             //useHTML: true,
             //headerFormat: '<small>{point.key}</small><table>',
             //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
             //footerFormat: '</table>'
-        },
+        //},
         series: georgeSeriesOptions
     });
 }
+
+        var base_urllink = window.location.origin;
+          console.log(base_urllink);
+                   
+                                    if (String(base_urllink) === "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                             console.log(base_url);
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                        console.log(base_url);
+                                    }
+                                    
 $.each(georgeNnames, function (i, name) {
     $.getJSON(base_url +  name , function (data) {  
         georgeSeriesOptions[i] = { type: 'column', name: name, data: data };       
@@ -199,18 +223,30 @@ function cardCreateChart() {
                 }
             }
         },
-        tooltip: {            
-            changeDecimals: 2,
-            valueDecimals: 2,
+//        tooltip: {            
+//            changeDecimals: 2,
+//            valueDecimals: 2,
             //shared: true,
             //useHTML: true,
             //headerFormat: '<small>{point.key}</small><table>',
             //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
             //footerFormat: '</table>'
-        },
+      //  },
         series: cardSeriesOptions
     });
 }
+
+     var base_urllink = window.location.origin;
+          console.log(base_urllink);
+                   
+                                    if (String(base_urllink) === "http://localhost"){
+                                        var base_url = "http://localhost/coinoponlinebeta/public/";
+                                             console.log(base_url);
+                                    }else{
+                                        var base_url = "https://www.ascentri.com/";
+                                        console.log(base_url);
+                                    }
+                                    
 $.each(cardNnames, function (i, name) {
     $.getJSON(base_url +  name , function (data) {  
         cardSeriesOptions[i] = { type: 'column', name: name, data: data };       

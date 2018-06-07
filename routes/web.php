@@ -276,6 +276,10 @@ Route::get('coin/{id}', 'MachineManagementController@coin');
 Route::get('bill/{id}', 'MachineManagementController@bill');
 Route::get('card/{id}', 'MachineManagementController@card');
 
+Route::get('dailyCoin/{id}', 'MachineManagementController@dailyCoin');
+Route::get('dailyBill/{id}', 'MachineManagementController@dailyBill');
+Route::get('dailyCard/{id}', 'MachineManagementController@dailyCard');
+
 Route::get('winresult/{id}', 'MachineManagementController@winresult');
 Route::get('ownedwin/{id}', 'MachineManagementController@ownedwin');
 Route::get('excesswin/{id}', 'MachineManagementController@excesswin');
