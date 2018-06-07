@@ -57,17 +57,17 @@ class FinancialReportsGraphController extends Controller
     }
     
     public function coin(){                  
-        $coin = $this->queryLogs('coinIn');        
-        if ($coin->count() > 0) {
-            foreach ($coin as $value) { 
-                $asdate = strtotime($value->created_at) * 1000;
-                $coin = $value->coinIn;                       
-                $financialGraph[] = "[". $asdate .",". $coin ."]";  
+        $georgieCoin = $this->queryLogs('coinIn');
+        if ($georgieCoin->count() > 0) {
+            foreach ($georgieCoin as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;                    
+                $coin = ($value->coinIn == '')? '0' : $value->coinIn;
+                $financialGraph[] = "[". $asdate .",". $coin ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
-            $financialGraphDate = null;
-        }                
+             $financialGraphDate = null;
+        }         
         return "[". $financialGraphDate . "]";  
     }
     
@@ -75,8 +75,8 @@ class FinancialReportsGraphController extends Controller
         $bill = $this->queryLogs('billIn');
         if ($bill->count() > 0) {
             foreach ($bill as $value) { 
-                $asdate = strtotime($value->created_at) * 1000;
-                $billIn = $value->billIn;                       
+                $asdate = strtotime($value->created_at) * 1000;                         
+                $billIn = ($value->billIn == '')? '0' : $value->billIn;
                 $financialGraph[] = "[". $asdate .",". $billIn ."]";  
             }
             $financialGraphDate = join($financialGraph, ',');
@@ -165,8 +165,8 @@ class FinancialReportsGraphController extends Controller
         $coinCard = $this->byCategory('coinIn','cardreader');        
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
-                $asdate = strtotime($value->created_at) * 1000;
-                $coin = $value->coinIn;
+                $asdate = strtotime($value->created_at) * 1000;                
+                $coin = ($value->coinIn == '')? '0' : $value->coinIn; 
                 $financialGraph[] = "[". $asdate .",". $coin ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
@@ -179,8 +179,8 @@ class FinancialReportsGraphController extends Controller
         $coinCard = $this->byCategory('billIn','cardreader');
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
-                $asdate = strtotime($value->created_at) * 1000;               
-                $bill = $value->billIn;          
+                $asdate = strtotime($value->created_at) * 1000;                        
+                $bill = ($value->billIn == '')? '0' : $value->billIn;
                 $financialGraph[] = "[". $asdate .",". $bill ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
