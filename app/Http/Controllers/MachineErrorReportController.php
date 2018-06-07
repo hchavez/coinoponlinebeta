@@ -314,20 +314,36 @@ class MachineErrorReportController extends Controller
         
         return $machineLists;
     }
+    
+     public function machinesOnlyLists(){       
+        $machineLists = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
+                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                        ->where('machines.id','<>', 27);
+        
+        return $machineLists;
+    }
+    
     function offlineMachineLists(){
-        $machineList = $this->machinesCount();
+        $machineList = $this->machinesOnlyLists();
         $lists = $machineList->where('machines.status','=','0')->orderBy('updated_at','desc')->get(); 
         return $lists;
     }
     function onlineMachineLists(){
-        $machineList = $this->machinesCount();
-        $online = $machineList->where('machines.status','=','1')->where('machine_reports.last_played','!=','null')->orderBy('updated_at','desc')->get(); 
+        $machineList = $this->machinesOnlyLists();
+        $online = $machineList->where('machines.status','=','1')->orderBy('updated_at','desc')->get(); 
         return $online;
     }
     function totalMachineLists(){
-        $machineList = $this->machinesCount();
+        $machineList = $this->machinesOnlyLists();
         $online = $machineList->where('machines.status','=','1')
-                ->where('machine_reports.last_played','!=','null')
+               // ->where('machine_reports.last_played','!=','null')
                 ->orWhere('machines.status','=','0')                
                 ->orderBy('updated_at','desc')->get(); 
         return $online;

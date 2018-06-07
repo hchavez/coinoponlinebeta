@@ -68,8 +68,7 @@ class MachineManagementController extends Controller {
                         ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
-                        ->where('machines.id','<>', 27)
-                        ->where('machines.status', '1');
+                        ->where('machines.status','<>', '1111');
                         //->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
                         //->latest('machines.created_at')->paginate(100); 
 
@@ -430,7 +429,9 @@ class MachineManagementController extends Controller {
              $graphdataWinResultwithDate = null;
          }
         
-         //var_dump($graphdataPkVoltResult2);
+         $totalCoin = $this->getTotal('coinIn',$id);
+        $totalBill = $this->getTotal('billIn',$id);
+        $totalSwipe = $this->getTotal('swipeIn',$id);
   
         return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
             'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
@@ -443,11 +444,31 @@ class MachineManagementController extends Controller {
             'totalPlay' => $totalPlay,
             'totalMoneyquery' => $totalMoneyquery,
             'newgraphdataPkVoltQuery2' => $graphdataPkVoltResult2,
-            'graphdataWinResultwithDate' => $graphdataWinResultwithDate
+            'graphdataWinResultwithDate' => $graphdataWinResultwithDate,
+            'coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe
         ]);
 //        
         
     }  
+    
+     public function getTotal($type,$id){
+        $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));        
+        $today = date("Y-m-d");
+        $yesterday = date('Y-m-d',strtotime("-1 days"));
+        $weekFrom = date('Y-m-d',strtotime("-7 days"));
+        $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
+        
+        $Today = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);    
+        $Yesterday = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->where('created_at','like','%'.$yesterday.'%')->sum($type);
+        $Week = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Month = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $financial = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
+        $Year = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        
+        $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
+        return $total;
+    } 
+    
     
     public function error($id) {
                                          
@@ -841,7 +862,7 @@ class MachineManagementController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function testGo() { 
+    public function testGo() {
         $id = Input::get('id');
         $playcredits = Input::get('playcredits');
         
@@ -858,5 +879,91 @@ class MachineManagementController extends Controller {
 //                return response()->json(array('status'=>'error', 'msg'=>'Error!'), 500);
 //            }
     }
+     
+    public function queryLogs($type,$id){
+       $queryMachine = DB::table('moneylogs')
+                       // ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
+                        ->select(DB::raw('created_at, moneylogs.machine_id,'. $type .', moneylogs.type as type '))
+                        ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
+                        ->whereDate('moneylogs.created_at', '=', Carbon::today()->toDateString())->get();  
+        return $queryMachine;  
+        //var_dump($queryMachine); exit();
+    }
+    
+    public function excesswin($id){
+    $userallexcesswin = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
+
+     if ($userallexcesswin->count() > 0) {
+            foreach ($userallexcesswin as $value) {
+                
+                   $asdate = strtotime($value->created_at) * 1000;
+
+                $excessWin = $value->excessWin;
+
+                 $graphdataExcessWinResultwithDateresult[] = "[". $asdate .",". $excessWin ."]";
+                
+            }
+            $graphdataExcessWinResultwithDate = join($graphdataExcessWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataExcessWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataExcessWinResultwithDate . "]";
+    }
+    
+    public function ownedwin($id){
+        
+   $userall = WinLogs::select('created_at','owedWin')->where('machine_id','=', $id)->get();
+   
+    if ($userall->count() > 0) {
+            foreach ($userall as $value) {
+            
+                $asdate = strtotime($value->created_at) * 1000;
+                $ownedWin = $value->owedWin * -1;
+
+                 $graphdataOwnedWinResultwithDateresult[] = "[". $asdate .",". $ownedWin ."]";
+                
+            }
+            $graphdataOwnedWinResultwithDate = join($graphdataOwnedWinResultwithDateresult, ',');
+
+         }else{
+             $graphdataOwnedWinResultwithDate = null;
+         }
+         
+     return "[". $graphdataOwnedWinResultwithDate . "]";
+    }
+    
+    public function winresult($id){
+        $graphdataWinResultwithDate = null;
+      $userallwinresult = WinLogs::select('created_at','winResult')->where('machine_id','=', $id)->get();
+
+     if ($userallwinresult->count() > 0) {
+        
+            foreach ($userallwinresult as $temp) {
+                $tempwinResult = 0;
+            
+                $asdate = strtotime($temp->created_at) * 1000;
+                $aswiresult = $temp->winResult;
+       
+                if ($aswiresult == "won") {
+                    $tempwinResult = 10 * 1;
+                } else {
+                    $tempwinResult = 0 * 1;
+                }
+                
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
+
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataWinResultwithDate . "]";
+    }
+    
 
 }

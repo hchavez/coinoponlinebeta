@@ -5,8 +5,10 @@
 
     <div class="page-content container-fluid">
         <div class="row" data-plugin="matchHeight" data-by-row="true">
+            
+<!--          
             <div class="col-xl-3 col-md-6">
-                <!-- Widget Linearea One-->
+                 Widget Linearea One
              
                    <div class="card card-shadow" id="widgetLineareaTwo">
                     <div class="card-block p-20 pt-10">
@@ -21,10 +23,10 @@
   
                     </div>
                 </div>
-                <!-- End Widget Linearea One -->
+                 End Widget Linearea One 
             </div>
             <div class="col-xl-3 col-md-6">
-                <!-- Widget Linearea Two -->
+                 Widget Linearea Two 
                 <div class="card card-shadow" id="widgetLineareaOne">
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
@@ -38,10 +40,10 @@
 
                     </div>
                 </div>
-                <!-- End Widget Linearea Two -->
+                 End Widget Linearea Two 
             </div>
             <div class="col-xl-3 col-md-6">
-                <!-- Widget Linearea Three -->
+                 Widget Linearea Three 
                 <div class="card card-shadow" id="widgetLineareaThree">
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
@@ -56,10 +58,10 @@
 
                     </div>
                 </div>
-                <!-- End Widget Linearea Three -->
+                 End Widget Linearea Three 
             </div>
             <div class="col-xl-3 col-md-6">
-                <!-- Widget Linearea Four -->
+                 Widget Linearea Four 
                 <div class="card card-shadow" id="widgetLineareaFour">
                     <div class="card-block p-20 pt-10">
                         <div class="clearfix">
@@ -73,9 +75,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Widget Linearea Four -->
+                 End Widget Linearea Four 
             </div>
-
+**/-->
 
             <div class="col-xxl-12 col-lg-12">
                 <!-- Panel Projects -->
@@ -155,15 +157,85 @@
                         <div class="example-wrap">
                             <div class="row row-lg">
                                 
-<!--                                <div class="col-xl-12">
-                                    <div id="containerwin" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                 
+                             
+      
+                                <div class="col-xl-12">
+                                <div id="containermoney" style="height: 400px"></div>
+                                <div class="col-lg-12">
+                                    <!-- Example Bordered Table -->
+                                    <div class="example-wrap">                                     
+                                      <div class="example table-responsive">
+                                        <table class="table table-bordered">
+                                          <thead><tr><th></th><th>Coin</th><th>Bill</th><th>Card</th><th>Total</th></tr></thead>
+                                          <tbody>
+                                            <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td>{{ $card['today'] }}</td><td><?php echo round($coin['today'] + $bill['today'] + $card['today'], 2); ?></td></tr>
+                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td><td><?php echo round($coin['today'] + $bill['today'] + $card['today'], 2); ?></td></tr>
+                                            <tr><td>This week</td><td><?php echo round( $coin['thisWeek'],2);  ?></td><td>{{ $bill['thisWeek'] }}</td><td>{{ $card['thisWeek'] }}</td><td><?php echo round($coin['thisWeek'] + $bill['thisWeek'] + $card['thisWeek'], 2); ?></td></tr>
+                                            <tr><td>This Month</td><td><?php echo round( $coin['thisMonth'],2);  ?></td><td>{{ $bill['thisMonth'] }}</td><td>{{ $card['thisMonth'] }}</td><td><?php echo round($coin['thisMonth'] + $bill['thisMonth'] + $card['thisMonth'], 2); ?></td></tr>
+                                            <tr><td>This Financial Year</td><td><?php echo round( $coin['thisFinancial'],2);  ?></td><td>{{ $bill['thisFinancial'] }}</td><td>{{ $card['thisFinancial'] }}</td><td><?php echo round($coin['thisFinancial'] + $bill['thisFinancial'] + $card['thisFinancial'], 2); ?></td></tr>
+                                            <tr><td>This Calendar Year</td><td><?php echo round( $coin['thisYear'],2);  ?></td><td>{{ $bill['thisYear'] }}</td><td>{{ $card['thisYear'] }}</td><td><?php echo round($coin['thisYear'] + $bill['thisYear'] + $card['thisYear'], 2); ?></td></tr>                        
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                    <!-- End Example Bordered Table -->
+                                </div>   
+                                </div>
+                                
+                                <script type="text/javascript">
+                                 
+                                    Highcharts.chart('containermoney', {
+                                        chart: {
+                                            type: 'column'
+                                        },
+                                        title: {
+                                            text: 'Daily Turnover Graph'
+                                        },
+                                        xAxis: {
+                                            categories: [
+                                                'Today'
+                                            ],
+                                            crosshair: true
+                                        },
+                                        yAxis: {
+                                            min: 0,
+                                            title: {
+                                                text: ''
+                                            }
+                                        },
+                                        tooltip: {
+                                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                                            footerFormat: '</table>',
+                                            shared: true,
+                                            useHTML: true
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                pointPadding: 0.3,
+                                                borderWidth: 0
+                                            }
+                                        },
+                                        series: [{
+                                            name: 'Coin',
+                                            data: [<?php echo round($coin['today'],2);  ?>]
 
-                                </div>-->
+                                        }, {
+                                            name: 'Bill',
+                                            data: [{{ $bill['today'] }}]
+
+                                        }, {
+                                            name: 'Card',
+                                            data: [{{ $card['today'] }}]
+
+                                        }]
+                                    });
+                                </script>
                                 
                                  <div class="col-xl-12">
-                                     
                                     <div id="containercompare" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
-
                                 </div>
                                 
                                 
@@ -173,15 +245,12 @@
                                     var chart = null;
 
                                     $(document).ready(function () {
-                                        
-                                                         
                                     //win graph version 2 using comparison data
                                     
-                                    var seriesOptions = [],
-                                        seriesCounter = 0,
-                                        id = {{ $machine->id }}
-                                        namesresult = ["winresult", "excesswin", "ownedwin"];
-                                        //names = ["excesswin"];       
+                                    var seriesOptions = [];
+                                    var seriesCounter = 0;
+                                    var namesresult = ['winresult', 'excesswin', 'ownedwin'];
+                                    var id = {{ $machine->id }};    
                                             
                                     /**
                                      * Create the chart when all data is loaded
@@ -190,14 +259,22 @@
                                     function createChart() {
 
                                         Highcharts.stockChart('containercompare', {
-
-                                            rangeSelector: {
-                                                //selected: 4
+                                        //rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 1},
+                                       rangeSelector: {
+                                                    inputPosition: {
+                                                            align: 'left',
+                                                            x: 5,
+                                                            y: 23
+                                            },
+                                                    buttonPosition: {
+                                                            align: 'right',
+                                                            x: 4,
+                                                            y: 45
+                                            },
                                             },
 
                                             yAxis: {
                                                   min: -10,
-                                                        max: 60,
                                                         tickInterval: 5,
                                                       title: {
                                                         text: 'Win Graph',
@@ -210,15 +287,20 @@
                                             },
 
                                             plotOptions: {
-                                                series: {
-                                                    showInNavigator: true
-                                                }
+                                                series: { showInNavigator: true }
                                             },
 
+//                                            tooltip: {
+//                                                valueDecimals: 0,
+//                                                split: true
+//                                            },
+                                                    
                                             tooltip: {
-                                               //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                                                valueDecimals: 0,
-                                                //split: true
+                                                formatter: function() {
+                                                    var ex = this.points[0].series.xAxis.getExtremes();
+
+                                                    //return 'min: ' + new Date(ex.min) + '<br>max: ' + new Date(ex.max) + '<br>actual point: ' + new Date(this.x);
+                                                }
                                             },
 
                                             series: seriesOptions
@@ -226,10 +308,9 @@
                                     }
 
                                     $.each(namesresult, function (i, name) {
-
                                        
                                     var base_urllink = window.location.origin;
-                                    
+                   
                                     if (base_urllink == "http://localhost"){
                                         var base_url = "http://localhost/coinoponlinebeta/public/";
                                     }else{
@@ -237,21 +318,20 @@
                                     }
                                         
                                         $.getJSON(base_url + name + "/" + id,    function (dataresult) {
-
                                             seriesOptions[i] = {
                                                 name: name,
                                                 data: dataresult
                                             };
-                                            //console.log(dataresult);
-                                            // As we're loading the data asynchronously, we don't know what order it will arrive. So
-                                            // we keep a counter and create the chart when all the data is loaded.
+
                                             seriesCounter += 1;
 
-                                            if (seriesCounter === names.length) {
+                                            if (seriesCounter === namesresult.length) {
                                                 createChart();
                                             }
                                         });
                                     });
+                                    
+                                    
                                     
                                       
                                     });
@@ -297,16 +377,16 @@
                  
                                     //win graph version 2 using comparison data
                                     
-                                    var seriesOptions = [],
-                                        seriesCounter = 0,
-                                        id = {{ $machine->id }}
-                                        names = ['pkvolt', 'slipvolt', 'retvolt'];
+                                    var seriesOptions = [];
+                                    var seriesCounter = 0;
+                                    var id = {{ $machine->id }};
+                                    var names = ['pkvolt', 'slipvolt', 'retvolt'];
 
                                     /**
                                      * Create the chart when all data is loaded
                                      * @returns {undefined}
                                      */
-                                    function createChart() {
+                                    function createChartVolt() {
 
                                         Highcharts.stockChart('container', {
 
@@ -367,7 +447,7 @@
                                             seriesCounter += 1;
 
                                             if (seriesCounter === names.length) {
-                                                createChart();
+                                                createChartVolt();
                                             }
                                         });
                                     });

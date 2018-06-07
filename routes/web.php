@@ -65,7 +65,8 @@ Route::get('/goalsapi/{id}', function($id){
 });
 
 /***********************************Graph Result API********************************************/
-Route::get('/ownedwin/{id}', function($id){
+
+Route::get('/ownedwinaaa/{id}', function($id){
    $userall = WinLogs::select('created_at','owedWin')->where('machine_id','=', $id)->get();
    
     if ($userall->count() > 0) {
@@ -87,46 +88,39 @@ Route::get('/ownedwin/{id}', function($id){
          
 });
 
-Route::get('/winresult/{id}', function($id){
+Route::get('/winresultaaa/{id}', function($id){
+      $graphdataWinResultwithDate = null;
       $userallwinresult = WinLogs::select('created_at','winResult')->where('machine_id','=', $id)->get();
 
      if ($userallwinresult->count() > 0) {
         
-            foreach ($userallwinresult as $value) {
+            foreach ($userallwinresult as $temp) {
                 $tempwinResult = 0;
             
-                $asdate = strtotime($value->created_at) * 1000;
-
-                if ($value->winResult == 'won') {
-                    $tempwinResult = 50;
+                $asdate = strtotime($temp->created_at) * 1000;
+                $aswiresult = $temp->winResult;
+       
+                if ($aswiresult == "won") {
+                    $tempwinResult = 55 * 1;
                 } else {
-                    $tempwinResult = 0;
+                    $tempwinResult = 0 * 1;
                 }
                 
-                if($tempwinResult == 25){
-                    $winindicator = 50;
-                }
-                
-                if($tempwinResult == 50){
-                    $winindicator = 50;
-                }
-                
-                if($tempwinResult == 0){
-                    $winindicator = 0;
-                }
-                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $winindicator ."]";
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult ."]";
                 
             }
             $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
+
 
          }else{
              $graphdataWinResultwithDate = null;
          }
          
     return "[". $graphdataWinResultwithDate . "]";
+    
 });
 
-Route::get('/excesswin/{id}', function($id){
+Route::get('/excesswinaaa/{id}', function($id){
    
     $userallexcesswin = WinLogs::select('created_at','excessWin')->where('machine_id','=', $id)->get();
 
@@ -174,10 +168,10 @@ Route::get('/pkvolt/{id}', function($id){
 });
 
 Route::get('/slipvolt/{id}', function($id){
-   $userall = GoalsLogs::select('created_at','slipVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   $userallslipvolt = GoalsLogs::select('created_at','slipVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
    
-    if ($userall->count() > 0) {
-            foreach ($userall as $value) {
+    if ($userallslipvolt->count() > 0) {
+            foreach ($userallslipvolt as $value) {
             
                 $asdate = strtotime($value->created_at) * 1000;
                 $slipVolt = $value->slipVolt;
@@ -196,10 +190,10 @@ Route::get('/slipvolt/{id}', function($id){
 });
 
 Route::get('/dropvolt/{id}', function($id){
-   $userall = GoalsLogs::select('created_at','dropVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   $useralldropvolt = GoalsLogs::select('created_at','dropVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
    
-    if ($userall->count() > 0) {
-            foreach ($userall as $value) {
+    if ($useralldropvolt->count() > 0) {
+            foreach ($useralldropvolt as $value) {
             
                 $asdate = strtotime($value->created_at) * 1000;
                 $dropVolt = $value->dropVolt;
@@ -218,10 +212,10 @@ Route::get('/dropvolt/{id}', function($id){
 });
 
 Route::get('/retvolt/{id}', function($id){
-   $userall = GoalsLogs::select('created_at','retVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
+   $userallretvolt = GoalsLogs::select('created_at','retVolt')->where('machine_id','=', $id)->where('startEndFlag','=',  '2')->get();
    
-    if ($userall->count() > 0) {
-            foreach ($userall as $value) {
+    if ($userallretvolt->count() > 0) {
+            foreach ($userallretvolt as $value) {
             
                 $asdate = strtotime($value->created_at) * 1000;
                 $retVolt = $value->retVolt;
@@ -277,6 +271,14 @@ Route::post('machine-management/filter', 'MachineManagementController@filter')->
 Route::get('machine-management/getError/{id}', 'MachineManagementController@getError');
 Route::get('machine-management/getMoney/{id}', 'MachineManagementController@getMoney');
 Route::post('machine-management/testGo', array('as' => 'testGo', 'uses' => 'MachineManagementController@testGo'));
+
+Route::get('coin/{id}', 'MachineManagementController@coin');
+Route::get('bill/{id}', 'MachineManagementController@bill');
+Route::get('card/{id}', 'MachineManagementController@card');
+
+Route::get('winresult/{id}', 'MachineManagementController@winresult');
+Route::get('ownedwin/{id}', 'MachineManagementController@ownedwin');
+Route::get('excesswin/{id}', 'MachineManagementController@excesswin');
 
 Route::resource('machine-reports', 'MachineReportsController');
 

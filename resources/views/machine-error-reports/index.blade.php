@@ -399,7 +399,7 @@
                     <td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
                     <td width="9%">{{ $lists->state }}</td>
                     <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
                     <td  style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>   
                 </tr>                          
@@ -428,7 +428,7 @@
                     <td width="5%"><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
                     <td width="9%">{{ $lists->state }}</td>
                     <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
                     <td style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>                                   
                 </tr>                          
@@ -463,7 +463,7 @@
                     </td> 
                     <td width="9%">{{ $lists->state }}</td>
                     <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
                     <td style="width:30% !important;">{{ $lists->site }}</td>      
                     <td>{{ $lists->area }}</td>                                  
                 </tr>                          

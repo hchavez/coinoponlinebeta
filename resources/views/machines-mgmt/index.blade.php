@@ -9,11 +9,11 @@
     <div class="panel-body">
         
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
-            <div id="byDate">
+<!--            <div id="byDate">
                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
                     <input type="text" name="datePicker" id="datePicker" class="form-control pull-left" placeholder="Filter By Date">
                 </form>
-            </div>
+            </div>-->
             <div class="row"><div class="col-sm-12 longFilter" style="padding:0;">     
                      
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
