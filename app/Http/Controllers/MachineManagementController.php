@@ -881,12 +881,6 @@ class MachineManagementController extends Controller {
     }
      
     public function queryLogs($type,$id){
-//       $queryMachine = DB::table('moneylogs')
-//                       // ->select('moneylogs.ttlMoneyIn as ttlMoneyIn')
-//                        ->select(DB::raw('created_at, moneylogs.machine_id,'. $type .', moneylogs.type as type '))
-//                        ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
-//                        ->whereDate('moneylogs.created_at', '=', Carbon::today()->toDateString())->get();  
-// 
 
         $queryMachine = DB::table('moneylogs')
                      ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))

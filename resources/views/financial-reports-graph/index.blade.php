@@ -5,7 +5,7 @@
     <header class="panel-heading">
         <h3 class="panel-title">Financial Reports</h3>
     </header>
-    <?php //print_r($machinelogs); ?>
+    <?php //print_r($machinelogs); ?> 
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4"> 
             <div class="row">
