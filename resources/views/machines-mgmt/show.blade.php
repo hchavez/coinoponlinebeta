@@ -194,7 +194,7 @@
                                     
                                 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['dailyCoin','dailyBill','dailyCard'];
                                 var id = {{ $machine->id }};  
-                                //Georgie only
+                           
                                 function georgeCreateChart() {
                                     Highcharts.stockChart('containermoney', {  
                                         chart: { height: 500 },
@@ -300,18 +300,18 @@
                                                 series: { showInNavigator: true }
                                             },
 
-//                                            tooltip: {
-//                                                valueDecimals: 0,
-//                                                split: true
-//                                            },
-                                                    
                                             tooltip: {
-                                                formatter: function() {
-                                                    var ex = this.points[0].series.xAxis.getExtremes();
+                                                valueDecimals: 0,
+                                                split: true
+                                            },
+                                                    
+//                                            tooltip: {
+//                                                formatter: function() {
+//                                                    var ex = this.points[0].series.xAxis.getExtremes();
 
                                                     //return 'min: ' + new Date(ex.min) + '<br>max: ' + new Date(ex.max) + '<br>actual point: ' + new Date(this.x);
-                                                }
-                                            },
+//                                                }
+//                                            },
 
                                             series: seriesOptions
                                         });
@@ -428,7 +428,7 @@
                                             tooltip: {
                                                 //pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
                                                 valueDecimals: 2,
-                                                split: true
+                                                //split: true
                                             },
 
                                             series: seriesOptions
