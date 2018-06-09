@@ -77,12 +77,12 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Category: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="site" required>
+                                        <select class="form-control" name="category" required>
                                             <option value="">-- Select Category --</option>
                                             
                                             <option value="cardreader">cardreader</option>
-                                            <option value="george systems">george systems</option>
-                                            <option value="both">both</option>
+                                            <option value="george system">george systems</option>
+                                            <option value="george system and cardreader">both</option>
                                         </select>
                                     </div>
                                 </div>

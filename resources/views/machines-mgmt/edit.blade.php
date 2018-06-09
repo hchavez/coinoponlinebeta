@@ -96,6 +96,21 @@
                                         </div>
                                     </div>
                                     
+                                     <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Category</label>
+                                        <div class="col-md-9">
+
+                                            <select class="form-control" name="category">
+                                                
+                                            <option {{ $machine->category == "cardreader" ? 'selected' : '' }} value="cardreader">cardreader</option>
+                                            <option {{ $machine->category == "george system" ? 'selected' : '' }} value="george system">george systems</option>
+                                            <option {{ $machine->category == "george system and cardreader" ? 'selected' : '' }} value="george system and cardreader">both</option>
+                                            
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    
                                     <div class="form-group row{{ $errors->has('version') ? ' has-error' : '' }}">
                                         <label class="col-md-3 form-control-label">Version</label>
                                         <div class="col-md-9">
