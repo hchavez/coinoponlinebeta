@@ -167,7 +167,7 @@
                                     <div class="example-wrap">                                     
                                       <div class="example table-responsive">
                                         <table class="table table-bordered">
-                                          <thead><tr><th></th><th>Coin</th><th>Bill</th><th>Card</th><th>Total</th></tr></thead>
+                                          <thead><tr><th></th><th>Coin</th><th>Note</th><th>Card</th><th>Total</th></tr></thead>
                                           <tbody>
                                             <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td>{{ $card['today'] }}</td><td><?php echo round($coin['today'] + $bill['today'] + $card['today'], 2); ?></td></tr>
                                             <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td><td><?php echo round($coin['yesterday'] + $bill['yesterday'] + $card['yesterday'], 2); ?></td></tr>
