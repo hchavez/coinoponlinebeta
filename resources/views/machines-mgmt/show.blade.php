@@ -156,10 +156,7 @@
                         <!-- Example css animation Chart -->
                         <div class="example-wrap">
                             <div class="row row-lg">
-                                
-                                 
-                             
-      
+
                                 <div class="col-xl-12">
                                 <div id="containermoney" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
                                 <div class="col-lg-12">
