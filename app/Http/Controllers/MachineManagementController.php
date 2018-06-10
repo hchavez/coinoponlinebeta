@@ -566,7 +566,6 @@ class MachineManagementController extends Controller {
                         ->where('machines.id', $id)->first();
 
 
-    
         if ($machine == null || count($machine) == 0) {
             return redirect()->intended('/machine-management');
         }
@@ -1014,3 +1013,4 @@ class MachineManagementController extends Controller {
     
     
 }
+
