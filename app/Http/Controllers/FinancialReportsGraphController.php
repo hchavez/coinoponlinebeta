@@ -100,6 +100,21 @@ class FinancialReportsGraphController extends Controller
         }   
         return "[". $financialGraphDate . "]";  
     }
+    
+    public function total(){
+        $swipe = $this->queryLogs('ttlMoneyIn');
+        if ($swipe->count() > 0) {
+            foreach ($swipe as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;
+                $ttlMoneyIn = ($value->ttlMoneyIn == '')? '0' : $value->ttlMoneyIn;                     
+                $financialGraph[] = "[". $asdate .",". $ttlMoneyIn ."]";  
+            }
+            $financialGraphDate = join($financialGraph, ',');
+        }else{
+            $financialGraphDate = null;
+        }   
+        return "[". $financialGraphDate . "]";  
+    }
 
     /**
      * Show the form for creating a new resource.

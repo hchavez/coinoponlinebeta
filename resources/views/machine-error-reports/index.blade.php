@@ -258,7 +258,7 @@
                                             @endif
 
                                             @if ($machinelog->errortype == '1') 
-                                            <span class="badge badge-danger blink_me" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="blink_me" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                            <span class="badge badge-danger" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                             @else
                                             <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                             @endif

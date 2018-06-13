@@ -78,8 +78,8 @@ function createChart() {
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
         yAxis: { 
             min: -10, 
-            max: 700, 
-            tickInterval: 10,
+            max: 1200, 
+            tickInterval: 100,
             title: { text: 'Revenue'},
             plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
         },
@@ -99,15 +99,9 @@ function createChart() {
                 }
             }
         },
-        //tooltip: {            
-            //changeDecimals: 2,
-            //valueDecimals: 2,
-            //shared: true,
-            //useHTML: true,
-            //headerFormat: '<small>{point.key}</small><table>',
-            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
-            //footerFormat: '</table>'
-       // },
+        tooltip: {            
+        
+        },
         series: seriesOptions
     });
 }
