@@ -256,7 +256,7 @@
                                     
                                     var seriesOptions = [];
                                     var seriesCounter = 0;
-                                    var namesresult = ['winresult', 'excesswin', 'ownedwin'];
+                                    var namesresult = ['winresult', 'excesswin', 'owedwin'];
                                     var id = {{ $machine->id }};    
                                             
                                     /**
@@ -298,7 +298,7 @@
                                             },
 
                                             tooltip: {
-                                                valueDecimals: 0,
+                                                valueDecimals: 2,
                                                 split: true
                                             },
                                                     

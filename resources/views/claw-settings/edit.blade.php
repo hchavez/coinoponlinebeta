@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('voltDecRetPercentage') ? ' has-error' : '' }}">
-                                    <label for="voltDecRetPercentage" class="col-md-4 control-label">Volt Dec Ret Percentage</label>
+                                    <label for="voltDecRetPercentage" class="col-md-4 control-label">Retaining Add-On Voltage</label>
 
                                     <div class="col-md-6">
                                         <input id="voltDecRetPercentage" type="text" class="form-control" name="voltDecRetPercentage" value="{{ $machine->voltDecRetPercentage }}"   autofocus>
@@ -106,7 +106,7 @@
                                 </div>
                               
                                 <div class="form-group{{ $errors->has('plusPick') ? ' has-error' : '' }}">
-                                    <label for="plusPick" class="col-md-4 control-label">Plus Pick</label>
+                                    <label for="plusPick" class="col-md-4 control-label">Pick Up Add-On Voltage</label>
 
                                     <div class="col-md-6">
                                         <input id="plusPick" type="text" class="form-control" name="plusPick" value="{{ $machine->plusPick }}"   autofocus>
@@ -208,28 +208,29 @@
                                     </div>
                                 </div>
 
-                                  <div class="form-group{{ $errors->has('latest_voltage') ? ' has-error' : '' }}">
-                                    <label for="latest_voltage" class="col-md-4 control-label">Latest Voltage</label>
+                                  <div class="form-group{{ $errors->has('startVolt') ? ' has-error' : '' }}">
+                                    <label for="startVolt" class="col-md-4 control-label">Slip Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="latest_voltage" type="text" class="form-control" disabled="disabled" name="latest_voltage" value="{{ $machine->latest_voltage }}"   autofocus>
+                                        <input id="startVolt" type="text" class="form-control" disabled="disabled" name="startVolt" value="{{ $machine->startVolt }}"   autofocus>
 
-                                        @if ($errors->has('latest_voltage'))
+                                        @if ($errors->has('startVolt'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('latest_voltage') }}</strong>
+                                            <strong>{{ $errors->first('startVolt') }}</strong>
                                         </span>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="form-group{{ $errors->has('latest_PWM') ? ' has-error' : '' }}">
-                                    <label for="latest_PWM" class="col-md-4 control-label">Latest PWM</label>
+                                
+                                <div class="form-group{{ $errors->has('startPWM') ? ' has-error' : '' }}">
+                                    <label for="startPWM" class="col-md-4 control-label">Slip PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="latest_PWM" type="text" class="form-control" disabled="disabled" name="latest_PWM" value="{{ $machine->latest_PWM }}"   autofocus>
+                                        <input id="startPWM" type="text" class="form-control" disabled="disabled" name="latest_PWM" value="{{ $machine->startPWM }}"   autofocus>
 
-                                        @if ($errors->has('latest_PWM'))
+                                        @if ($errors->has('startPWM'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('latest_PWM') }}</strong>
+                                            <strong>{{ $errors->first('startPWM') }}</strong>
                                         </span>
                                         @endif
                                     </div>

@@ -570,10 +570,10 @@ class MachineManagementController extends Controller {
             return redirect()->intended('/machine-management');
         }
 
-        $machine_types = MachineType::all();
-        $machine_models = MachineModel::all();
-        $sites = Site::all();
-        $themes = Theme::all();
+        $machine_types = MachineType::orderBy('machine_type', 'ASC')->get();
+        $machine_models = MachineModel::orderBy('machine_model', 'ASC')->get();
+        $sites = Site::orderBy('site_name', 'ASC')->get();
+        $themes = Theme::orderBy('theme', 'ASC')->get();
 
         return view('machines-mgmt/edit', ['machine' => $machine, 'machine_types' => $machine_types,
                             'machine_models' => $machine_models, 'sites' => $sites, 'themes' => $themes])
@@ -913,7 +913,7 @@ class MachineManagementController extends Controller {
     return "[". $graphdataExcessWinResultwithDate . "]";
     }
     
-    public function ownedwin($id){
+    public function owedwin($id){
         
    $userall = WinLogs::select('created_at','owedWin')->where('machine_id','=', $id)->get();
    
