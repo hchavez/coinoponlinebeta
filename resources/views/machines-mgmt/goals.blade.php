@@ -70,18 +70,20 @@
                         </div> 
 
                     <div class="row">
-                        <div class="col-md-4">
-                            <form role="form" method="GET" action="#">
-                                <div class="input-group input-daterange">
-                                <input type="hidden" name="logtype" value="errorlogs">
-                                <input type="hidden" name="id" value="{{ $machine->id }}">
-                                <input type="text" id="min-date" name="startdate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-                                <div class="input-group-addon">to</div>
-                                <input type="text" id="max-date" name="enddate" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">  
-                                <button type="submit" class="btn btn-primary">Search</button> 
-                                </div>
+                        <div class="col-md-6">
+                            <form role="form" method="GET" class="error-list-form" id="formSearch">
+                            <div class="ky-columns" style="width:40%;" >
+                                <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
+                            </div>                            
                             </form>
-                        </div>
+                           <!--div class="input-group input-daterange">
+
+                            <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+                            <div class="input-group-addon">to</div>
+                            <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
+                           
+                          </div-->
+                        </div> 
                        
                         <br><br>
                         <div class="col-sm-12">
@@ -89,7 +91,7 @@
                                 <thead>
                                     <tr role="row">
                                         
-                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">DateLog</th>
+                                        <th style="width:15% !important;" width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">DateLog</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">testPlay</th>
                                         <th width="2%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">playIndex</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">pkPWM</th>
@@ -119,5 +121,21 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>
+$(document).ready(function(){
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', '?goals'); form.submit();
+    });
+});
+</script>
 @endsection

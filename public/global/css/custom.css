@@ -188,6 +188,10 @@ table.dataTable td:nth-child(8){
 }
 
 /*logs*/
+#winlogs, #winlogs th,
+.table-bordered, .table-bordered th{
+    text-align: center;
+}
 #klogs_wrapper .dt-buttons,
 #winlogs_wrapper .dt-buttons,
 #moneyapi_wrapper .dt-buttons,
@@ -217,9 +221,9 @@ table.dataTable td:nth-child(8){
 #prize_wrapper #s2id_filter3,#prize_wrapper #s2id_filter4{width:12%;}
 
 /*themes page*/
-#theme_wrapper #s2id_filter1{width:12%;}#theme_wrapper #s2id_filter2{width:35%;}
-#theme_wrapper #s2id_filter3{width:6%;}#theme_wrapper #s2id_filter4{width:14.5%;}
-#theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:16%;}
+#theme_wrapper #s2id_filter1{width:11.5%;}#theme_wrapper #s2id_filter2{width:35.5%;}
+#theme_wrapper #s2id_filter3{width:7%;}#theme_wrapper #s2id_filter4{width:13%;}
+#theme_wrapper #s2id_filter5{width:7%;}#theme_wrapper #s2id_filter6{width:17%;}
 #s2id_filter7{width: 9%;}
 /*machine error reports*/
 #boxesCount h1{margin:0;}

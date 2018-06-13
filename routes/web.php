@@ -43,26 +43,10 @@ Route::get('/jsonusers', function(){
    $userall = User::paginate(2);
    return new UserCollection($userall);
 });
-
-Route::get('/errorapi/{id}', function($id){
-   $userall = Errorlogs::where('machine_id','=', $id)->limit(25000)->get();
-   return new UserCollection($userall);
-});
-
-Route::get('/winapi/{id}', function($id){
-   $userall = WinLogs::where('machine_id','=', $id)->limit(25000)->get();
-   return new UserCollection($userall);
-});
-
-Route::get('/moneyapi/{id}', function($id){
-   $userall = MoneyLogs::where('machine_id','=', $id)->limit(25000)->get();
-   return new UserCollection($userall);
-});
-
-Route::get('/goalsapi/{id}', function($id){
-   $userall = GoalsLogs::where('machine_id','=', $id)->limit(25000)->get();
-   return new UserCollection($userall);
-});
+Route::get('/errorapi/{id}', 'MachineManagementController@errorapi');
+Route::get('/winapi/{id}', 'MachineManagementController@winapi');
+Route::get('/moneyapi/{id}', 'MachineManagementController@moneyapi');
+Route::get('/goalsapi/{id}', 'MachineManagementController@goalsapi');
 
 /***********************************Graph Result API********************************************/
 

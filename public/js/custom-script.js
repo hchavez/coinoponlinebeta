@@ -80,27 +80,21 @@ $(document).ready(function(){
     //var base_url = 'http://localhost/coinoponlinebeta/public/';
     var base_url = 'https://www.ascentri.com/';
     
-    //var base_urllink = window.location.origin;
-                                    
-   //if (base_urllink == "http://localhost"){
-   //var base_url = "http://localhost/coinoponlinebeta/public/";
-     //   }else{
-       //    var base_url = "https://www.ascentri.com/";
-   //}
-                                    
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
-    
+    var complete_url = window.location.href;
     var pathname = window.location.pathname; // Returns path only
     var parts = pathname.split('/');
     var currentID = parts.pop() || parts.pop();  // handle potential trailing slash
     
+    var urlFilter = new URL(complete_url);
+    var filter = urlFilter.searchParams.get("dateRange");
+    var input = (filter!=null)? '?dateRange='+filter : '' ;
     
-    //console.log(searchDate);
     $('#klogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
-        ajax: base_url+'errorapi/'+currentID,    
+        ajax: base_url+'errorapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excel',
@@ -109,12 +103,15 @@ $(document).ready(function(){
             }],
         deferRender:    true,       
         order: [[3,'desc']],
+        pageLength: 25,
+        scrollY: '400px',
+        scrollCollapse: true,
         columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
     }); 
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
-        ajax: base_url+'winapi/'+currentID,    
+        ajax: base_url+'winapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excel',
@@ -123,13 +120,16 @@ $(document).ready(function(){
             }],
         deferRender:    true, 
         order: [[3,'desc']],
+        pageLength: 25,
+        scrollY: '400px',
+        scrollCollapse: true,
         columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
     $('#moneyapi').dataTable({  
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
-        ajax: base_url+'moneyapi/'+currentID,
+        ajax: base_url+'moneyapi/'+currentID+input,
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excel',
@@ -137,7 +137,10 @@ $(document).ready(function(){
                 filename: 'moneylogs'
             }],
         deferRender:    true,   
-        order: [[3,'desc']],
+        order: [[0,'desc']],
+        pageLength: 25,
+        scrollY: '400px',
+        scrollCollapse: true,
         columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
             {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},{'data': 'ttlMoneyIn'},{'data': 'credits'}]       
   
@@ -145,7 +148,7 @@ $(document).ready(function(){
     $('#goalsapi').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
-        ajax: base_url+'goalsapi/'+currentID,    
+        ajax: base_url+'goalsapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excel',
@@ -153,7 +156,10 @@ $(document).ready(function(){
                 filename: 'goalslog'
             }],
         deferRender:    true,       
-        order: [[3,'desc']],
+        order: [[0,'desc']],
+        pageLength: 25,
+        scrollY: '400px',
+        scrollCollapse: true,
         columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt'},{'data': 'retPWM'},
             {'data': 'retVolt'},{'data': 'slipPWM'},{'data': 'slipVolt'},{'data': 'voltDecRetPercentage'},
             {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'}]       

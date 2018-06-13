@@ -68,14 +68,19 @@
 
                     <div class="row">
                         
-                        <div class="col-md-4">
-                           <div class="input-group input-daterange">
+                        <div class="col-md-6">
+                            <form role="form" method="GET" class="error-list-form" id="formSearch">
+                            <div class="ky-columns" style="width:40%;" >
+                                <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
+                            </div>                            
+                            </form>
+                           <!--div class="input-group input-daterange">
 
                             <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
                             <div class="input-group-addon">to</div>
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
                            
-                          </div>
+                          </div-->
                         </div>
                      
                         <br><br>
@@ -106,6 +111,22 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script>
+$(document).ready(function(){
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', '?error'); form.submit();
+    });
+});
+</script>
 @endsection
 
