@@ -85,8 +85,10 @@
                     <div class="panel-heading">
                         <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Version - {{ $machine->version }} 
                         <a href="#">                        
-                        <button class="delete-modal btn btn-danger" data-id="{{$machine->id}}" data-content="{{$machine->id}}">
+                            <?php if($machine->category != "cardreader"){ ?>
+                            <button class="delete-modal btn btn-danger" data-id="{{$machine->id}}" data-content="{{$machine->id}}">
                                         <span class="glyphicon glyphicon-trash"></span> TEST GO!</button>
+                            <?php } ?>
                         </a>
                         </h3>
                         
@@ -242,7 +244,9 @@
                                 </script>
                                 
                                  <div class="col-xl-12">
+                                    <?php if($machine->category != "cardreader"){ ?>
                                     <div id="containercompare" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+                                    <?php } ?>
                                 </div>
                                 
                                 
@@ -367,9 +371,9 @@
                                 <div class="col-xl-12">
                                     
                                    
-                                   
+                                     <?php if($machine->category != "cardreader"){ ?>
                                     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
+                                     <?php } ?>
 <!--                                    <div id="containervoltage" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
 
                                 </div>
@@ -474,7 +478,8 @@
                 </div>
                 <!-- End Widget Jvmap -->
             </div>
-
+            
+            <?php if($machine->category != "cardreader"){ ?>
             <div class="col-xxl-4 col-lg-6">
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
@@ -665,7 +670,7 @@
                 </div>
                 <!-- End Example Panel With Heading -->
             </div>
-
+            <?php } ?>
 
 
         </div>
