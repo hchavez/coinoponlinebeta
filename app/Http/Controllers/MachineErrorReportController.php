@@ -160,7 +160,8 @@ class MachineErrorReportController extends Controller
             ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
             ->leftJoin('users','users.id','=','errorlogs_history.user_id')            
             ->where('errorlogs.status','=','2')
-            ->where('machine_id','!=','28');
+            ->where('machine_id','!=','28')
+            ->where('machine_id','!=','35');
         
         $dateOccur = Input::get('dates');
         $dateResolve = Input::get('dateResolve');

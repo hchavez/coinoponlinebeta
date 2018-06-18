@@ -140,9 +140,14 @@ $(document).ready(function(){
         order: [[0,'desc']],
         pageLength: 25,
         scrollY: '400px',
-        scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
-            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},{'data': 'ttlMoneyIn'},{'data': 'credits'}]       
+        scrollCollapse: true,        
+        columns:[{'data': 'created_at'},{
+                'data': 'coinIn', 
+                render: function ( data, type, row ) {
+                return '$ '+ Number(data).toFixed(2); }},{'data': 'ttlCoinIn',render: function ( data, type, row ) {
+                return '$ '+ Number(data).toFixed(2); }},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
+                {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},
+                {'data': 'ttlMoneyIn',render: function ( data, type, row ) {return '$ '+ Number(data).toFixed(2); }},{'data': 'credits'}]       
   
     });    
     $('#goalsapi').dataTable({
@@ -160,9 +165,12 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt'},{'data': 'retPWM'},
-            {'data': 'retVolt'},{'data': 'slipPWM'},{'data': 'slipVolt'},{'data': 'voltDecRetPercentage'},
-            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'}]       
+        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt',render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }},{'data': 'retPWM'}, {'data': 'retVolt',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'slipPWM'},{'data': 'slipVolt'},
+            {'data': 'voltDecRetPercentage', render: function ( data, type, row ) { return Number(data).toFixed(2); }},
+            {'data': 'plusPickUp',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt', render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }},{'data': 'incVoltage', render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'decVoltage', render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }}]       
     });
     
     //excel button append

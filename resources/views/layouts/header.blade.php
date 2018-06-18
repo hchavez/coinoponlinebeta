@@ -376,14 +376,14 @@
                                                     <span class="site-menu-title">Machine Error Reports</span>
                                                 </a>
                                             </li>
-                                            <li class="site-menu-item">
+                                            <!--li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('financial-reports') }}">
                                                     <span class="site-menu-title">Financial Reports</span>
                                                 </a>
-                                            </li>  
+                                            </li-->  
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('financial-reports-graph') }}">
-                                                    <span class="site-menu-title">Financial Reports Graph</span>
+                                                    <span class="site-menu-title">Financial Reports</span>
                                                 </a>
                                             </li>
                                         </ul>
