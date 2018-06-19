@@ -136,7 +136,7 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
+        columns:[{'data': 'created_at'},{'data': 'type'},{'data': 'error'},{'data': 'status'}]
     }); 
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
@@ -168,7 +168,7 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
+        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
     $('#moneyapi').dataTable({  

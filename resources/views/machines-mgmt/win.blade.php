@@ -80,16 +80,16 @@
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
                            
                           </div-->
+                           <?php echo $today = date("d"); ?>
                         </div>                        
                         <br><br>
                         <div class="col-sm-12">
                             <table id="winlogs" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">                                       
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>                                        
+                                        <th style="width:15% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>                                       
                                         <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>
-                                        <th style="width:15% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>                                        
                                         <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >totalWon</th>
                                         <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Game Counter</th>
                                         <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >owedWin</th>
