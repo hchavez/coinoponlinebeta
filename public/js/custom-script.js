@@ -97,9 +97,24 @@ $(document).ready(function(){
         ajax: base_url+'errorapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'errorlogs'
+                filename: 'errorlogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,       
         order: [[3,'desc']],
@@ -114,9 +129,24 @@ $(document).ready(function(){
         ajax: base_url+'winapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'winlogs'
+                filename: 'winlogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true, 
         order: [[3,'desc']],
@@ -132,9 +162,24 @@ $(document).ready(function(){
         ajax: base_url+'moneyapi/'+currentID+input,
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'moneylogs'
+                filename: 'moneylogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,   
         order: [[0,'desc']],
@@ -156,9 +201,24 @@ $(document).ready(function(){
         ajax: base_url+'goalsapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'goalslog'
+                filename: 'goalslog',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,       
         order: [[0,'desc']],
@@ -184,3 +244,16 @@ $(document).ready(function(){
 
 });
 
+function createCellPos( n ){
+    var ordA = 'A'.charCodeAt(0);
+    var ordZ = 'Z'.charCodeAt(0);
+    var len = ordZ - ordA + 1;
+    var s = "";
+ 
+    while( n >= 0 ) {
+        s = String.fromCharCode(n % len + ordA) + s;
+        n = Math.floor(n / len) - 1;
+    }
+ 
+    return s;
+}
