@@ -12,11 +12,11 @@
 
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     
-                    <div class="row">
+                    <!--div class="row">
                         <div class="col-md-12 text-right">
                             <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                         </div>
-                    </div>
+                    </div-->
                     <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

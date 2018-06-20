@@ -81,8 +81,7 @@
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
                            
                           </div-->
-                        </div>
-                     
+                        </div>                        
                         <br><br>
                         <div class="col-sm-12">
                             
@@ -90,10 +89,9 @@
                             <!--table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%"-->
                                 <thead>
                                     <tr role="row">                                      
-                                        <th width="5%"  tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >ID</th>
+                                        <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>
-                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
+                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>

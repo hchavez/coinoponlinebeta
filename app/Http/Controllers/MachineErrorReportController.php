@@ -135,12 +135,10 @@ class MachineErrorReportController extends Controller
         return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
         
     }  
-
-    public function historyLogs(){
-
-    }
-    
+   
     public function history(){
+        $today = date("Y-m-d H:i:s");
+        $days_ago = date('Y-m-d', strtotime('-15 days', strtotime($today))); 
         
         $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
@@ -158,9 +156,9 @@ class MachineErrorReportController extends Controller
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')   
             ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
-            ->leftJoin('users','users.id','=','errorlogs_history.user_id')            
-            ->where('errorlogs.status','=','2')
-            ->where('machine_id','!=','28');
+            ->leftJoin('users','users.id','=','errorlogs_history.user_id')  
+            ->whereBetween('errorlogs_history.created_at', [$days_ago,$today])
+            ->where('errorlogs.status','=','2');
         
         $dateOccur = Input::get('dates');
         $dateResolve = Input::get('dateResolve');
@@ -231,8 +229,7 @@ class MachineErrorReportController extends Controller
             ->select('errorlogs_list.*') 
             ->orderBy('created_at','desc')
             ->get();
-       
-         
+                
         $machineModel = MachineModel::orderBy('created_at', 'asc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
         $machineType = MachineType::orderBy('created_at', 'asc')->get();
@@ -240,12 +237,7 @@ class MachineErrorReportController extends Controller
         $filterData = array('machine_model' => Input::get('machine_model'),'machine_type' => Input::get('machine_type'),'machine_site' => Input::get('machine_site'),
             'error_msg' => Input::get('error_msg'),'machine_site' => Input::get('machine_site'),'startdate' => $from,'enddate' => $to,'startdateresolve' => $resolvefrom,'enddateresolve' => $resolveto);
         
-        $totalStatus = array('error'=>$this->totalError('1'), 'warning'=>$this->totalWarning('1'), 'notice'=>$this->totalNotice('1'));
-        $offlineLists = $this->offlineMachineLists(); 
-        $onlineLists = $this->onlineMachineLists();
-        $totalLists = $this->totalMachineLists();
-
-        return view('machine-error-reports/history', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData, 'total'=>$totalStatus, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists]);
+        return view('machine-error-reports/history', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData]);
         
     }
     

@@ -541,9 +541,12 @@ class MachineManagementController extends Controller {
         return view('machines-mgmt/goals', ['machine' => $machine, 'errorlogs' => $errorlogs, 'moneylogs' => $moneylogs, 'winlogs' => $winlogs, 'goalslogs' => $goalslogs]);
     }
        
-    public function errorapi($id){
-        $today = date("Y-m-d H:i:s");
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));        
+    public function errorapi($id){        
+        $date = new DateTime('+1 day');
+        $today = $date->format('Y-m-d H:i:s');
+        //$today = date("Y-m-d H:i:s");
+        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
+        
         $dateRange = Input::get('dateRange');
         
         if($dateRange != ''):
@@ -554,7 +557,9 @@ class MachineManagementController extends Controller {
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-                $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+                $day = $explode_to[0] + 1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
+                
             endif;
             
             $userall = Errorlogs::where('machine_id','=', $id)
@@ -573,7 +578,9 @@ class MachineManagementController extends Controller {
     }
     
     public function moneyapi($id){
-        $today = date("Y-m-d H:i:s");
+        $date = new DateTime('+1 day');
+        $today = $date->format('Y-m-d H:i:s');
+        //$today = date("Y-m-d H:i:s");
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));        
         $dateRange = Input::get('dateRange');
         
@@ -585,7 +592,8 @@ class MachineManagementController extends Controller {
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-                $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+                $day = $explode_to[0] + 1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
             endif;
             
             $userall = MoneyLogs::where('machine_id','=', $id)
@@ -604,7 +612,9 @@ class MachineManagementController extends Controller {
     }
     
     public function winapi($id){
-        $today = date("Y-m-d H:i:s");
+        $date = new DateTime('+1 day');
+        $today = $date->format('Y-m-d H:i:s');
+        //$today = date("Y-m-d H:i:s");
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));        
         $dateRange = Input::get('dateRange');
         
@@ -616,7 +626,8 @@ class MachineManagementController extends Controller {
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-                $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+                $day = $explode_to[0] + 1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
             endif;
             
             $userall = WinLogs::where('machine_id','=', $id)
@@ -635,7 +646,9 @@ class MachineManagementController extends Controller {
     }
     
     public function goalsapi($id){
-        $today = date("Y-m-d H:i:s");
+        $date = new DateTime('+1 day');
+        $today = $date->format('Y-m-d H:i:s');
+        $date_today = date("d");
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));        
         $dateRange = Input::get('dateRange');
         
@@ -646,8 +659,9 @@ class MachineManagementController extends Controller {
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
-                $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-                $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+                $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);              
+                $day = $explode_to[0] + 1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
             endif;
             
             $userall = GoalsLogs::where('machine_id','=', $id)

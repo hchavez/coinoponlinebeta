@@ -24,9 +24,24 @@ $(document).ready(function(){
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'coinopsoftware'
+                filename: 'Coinopsoftware',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         scrollY: '450px',
         paging: true,
@@ -97,16 +112,31 @@ $(document).ready(function(){
         ajax: base_url+'errorapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'errorlogs'
+                filename: 'errorlogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,       
-        order: [[3,'desc']],
+        order: [[1,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'id'},{'data': 'type'},{'data': 'error'},{'data': 'created_at'},{'data': 'status'}]
+        columns:[{'data': 'created_at'},{'data': 'type'},{'data': 'error'},{'data': 'status'}]
     }); 
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
@@ -114,16 +144,31 @@ $(document).ready(function(){
         ajax: base_url+'winapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'winlogs'
+                filename: 'winlogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true, 
         order: [[3,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'id'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'created_at'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
+        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
     $('#moneyapi').dataTable({  
@@ -132,17 +177,37 @@ $(document).ready(function(){
         ajax: base_url+'moneyapi/'+currentID+input,
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'moneylogs'
+                filename: 'moneylogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,   
         order: [[0,'desc']],
         pageLength: 25,
         scrollY: '400px',
-        scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'coinIn'},{'data': 'ttlCoinIn'},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
-            {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},{'data': 'ttlMoneyIn'},{'data': 'credits'}]       
+        scrollCollapse: true,        
+        columns:[{'data': 'created_at'},{
+                'data': 'coinIn', 
+                render: function ( data, type, row ) {
+                return '$ '+ Number(data).toFixed(2); }},{'data': 'ttlCoinIn',render: function ( data, type, row ) {
+                return '$ '+ Number(data).toFixed(2); }},{'data': 'billIn'},{'data': 'ttlBillIn'},{'data': 'swipeIn'},{'data': 'type'},
+                {'data': 'payment_result'},{'data': 'decline_reason'},{'data': 'cardType'},{'data': 'tCardData'},{'data': 'payment_span'},{'data': 'reference'},
+                {'data': 'ttlMoneyIn',render: function ( data, type, row ) {return '$ '+ Number(data).toFixed(2); }},{'data': 'credits'}]       
   
     });    
     $('#goalsapi').dataTable({
@@ -151,18 +216,36 @@ $(document).ready(function(){
         ajax: base_url+'goalsapi/'+currentID+input,    
         dom: 'Bfrtip',
         buttons: [{
-                extend: 'excel',
+                extend: 'excelHtml5',
                 title: '',
-                filename: 'goalslog'
+                filename: 'goalslog',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
             }],
         deferRender:    true,       
         order: [[0,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt'},{'data': 'retPWM'},
-            {'data': 'retVolt'},{'data': 'slipPWM'},{'data': 'slipVolt'},{'data': 'voltDecRetPercentage'},
-            {'data': 'plusPickUp'},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt'},{'data': 'incVoltage'},{'data': 'decVoltage'}]       
+        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt',render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }},{'data': 'retPWM'}, {'data': 'retVolt',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'slipPWM'},{'data': 'slipVolt'},
+            {'data': 'voltDecRetPercentage', render: function ( data, type, row ) { return Number(data).toFixed(2); }},
+            {'data': 'plusPickUp',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt', render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }},{'data': 'incVoltage', render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'decVoltage', render: function ( data, type, row ) {
+                return Number(data).toFixed(2); }}]       
     });
     
     //excel button append
@@ -176,3 +259,16 @@ $(document).ready(function(){
 
 });
 
+function createCellPos( n ){
+    var ordA = 'A'.charCodeAt(0);
+    var ordZ = 'Z'.charCodeAt(0);
+    var len = ordZ - ordA + 1;
+    var s = "";
+ 
+    while( n >= 0 ) {
+        s = String.fromCharCode(n % len + ordA) + s;
+        n = Math.floor(n / len) - 1;
+    }
+ 
+    return s;
+}
