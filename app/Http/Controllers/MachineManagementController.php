@@ -1089,6 +1089,53 @@ class MachineManagementController extends Controller {
     return "[". $graphdataWinResultwithDate . "]";
     }
     
+    public function machinegraphdata($id){
+        
+      $graphdataWinResultwithDate = null;
+      
+      
+//       $userallwinresult = DB::table('winlogs')
+//                        ->select('winlogs.created_at as created_at', 'winlogs.winResult as winResult'
+//                                , 'winlogs.excessWin as excessWin', 'winlogs.owedWin as owedWin'
+//                                , 'goalslogs.slipVolt as slipVolt', 'goalslogs.dropVolt as dropVolt', 'goalslogs.retVolt as retVolt')
+//                        ->leftJoin('goalslogs', 'winlogs.playIndex', '=', 'goalslogs.playIndex')
+//                        ->where('winlogs.machine_id','=', $id)->where('goalslogs.startEndFlag','=','2')
+//                        ->orderBy('winlogs.created_at','desc')->get(); 
+
+        
+     if ($userallwinresult->count() > 0) {
+        
+            foreach ($userallwinresult as $temp) {
+                $tempwinResult = 0;
+            
+                $asdate = strtotime($temp->created_at) * 1000;
+                $aswiresult = $temp->winResult;
+                $asowedWin = $temp->owedWin;
+                $asexcessWin = $temp->excessWin;
+                $asslipVolt = $temp->slipVolt;
+                $asdropVolt = $temp->dropVolt;
+                $asretVolt = $temp->retVolt;
+                 
+                if ($aswiresult == "won") {
+                    $tempwinResult = 10 * 1;
+                } else {
+                    $tempwinResult = 0 * 1;
+                }
+
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult .",". $asowedWin .",". $asexcessWin .",". $asslipVolt .",". $asdropVolt .",". $asretVolt  ."]";
+                //$graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult .",". $asowedWin .",". $asexcessWin ."]";
+                
+            }
+            $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
+
+
+         }else{
+             $graphdataWinResultwithDate = null;
+         }
+         
+    return "[". $graphdataWinResultwithDate . "]";
+    }
+    
 
     public function dailyCoin($id){
         $georgieCoin = $this->queryLogs('coinIn',$id);

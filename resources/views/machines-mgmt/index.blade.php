@@ -57,7 +57,7 @@
                                     <td>{{ $machine->route }} </td>
                                     <td> {{ $machine->area }}</td>
                                     <td>{{ $machine->comments }} - {{ $machine->version }}</td>                                    
-                                    <td> {{ $machine->total_money }} </td>
+                                    <td> {{ number_format($machine->total_money ,2) }} </td>
                                     <td> {{ $machine->total_toys_win }} </td>                                   
                                     <td> {{ $machine->stock_left }} </td>
                                     <td> {{ $machine->slip_volt }} </td>

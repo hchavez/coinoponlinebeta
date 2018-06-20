@@ -267,6 +267,7 @@ Route::get('dailyCard/{id}', 'MachineManagementController@dailyCard');
 Route::get('winresult/{id}', 'MachineManagementController@winresult');
 Route::get('owedwin/{id}', 'MachineManagementController@owedwin');
 Route::get('excesswin/{id}', 'MachineManagementController@excesswin');
+Route::get('machinegraphdata/{id}', 'MachineManagementController@machinegraphdata');
 
 Route::resource('machine-reports', 'MachineReportsController');
 

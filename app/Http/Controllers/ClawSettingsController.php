@@ -97,8 +97,8 @@ class ClawSettingsController extends Controller {
     public function update(Request $request, $id) {
 
         $input = [
-            'max_voltage' => $request['max_voltage'],
-            'min_voltage' => $request['min_voltage'],
+            //'max_voltage' => $request['max_voltage'],
+            //'min_voltage' => $request['min_voltage'],
             'max_PWM' => $request['max_PWM'],
             'min_PWM' => $request['min_PWM'],
             'voltDecRetPercentage' => $request['voltDecRetPercentage'],
