@@ -132,7 +132,7 @@ $(document).ready(function(){
                 }
             }],
         deferRender:    true,       
-        order: [[3,'desc']],
+        order: [[1,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,

@@ -80,7 +80,7 @@
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
                            
                           </div-->
-                           <?php echo $today = date("d"); ?>
+                           
                         </div>                        
                         <br><br>
                         <div class="col-sm-12">
