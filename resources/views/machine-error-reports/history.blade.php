@@ -15,8 +15,7 @@
                 <div class="row">           
                     <div class="col-md-6">                        
                         <div id="filter_display">   
-                            <div class="bootstrap-tagsinput">
-                                    
+                            <div class="bootstrap-tagsinput">                                    
                                     <?php if($filterData['startdate'] !=''): ?>
                                         <span class="tag badge badge-default">Date Occur: {{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
                                     <?php endif; ?>
@@ -37,8 +36,7 @@
                                     <?php endif; ?>     
                                     <?php if($filterData['machine_site'] !=''): ?>
                                         <span class="tag badge badge-default">{{ $filterData['machine_site'] }}</span>
-                                    <?php endif; ?> 
-                               
+                                    <?php endif; ?>                                
                             </div>                            
                         </div>
                     </div>                   
@@ -227,151 +225,6 @@
     <!-- End Second Row -->
 
 </div>
-
-
-@foreach ($machinelogs as $machinelog)
-<div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        Modal content
-        <form action="{{ URL::to('MachineErrorReportController/update_error_status') }}" method="post" id="status-update" >   
-        <meta id="token" name="token" content="{ { csrf_token() } }">     
-        {{ csrf_field() }}   
-        <input type="hidden" name="errorid" value="{{ $machinelog->error_id }} ">
-                            
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                
-                <h4 class="modal-title">Error Type: 
-                <div id="md-msg"></div>
-                
-                @if ($machinelog->errortype == "1")
-                   <span class="badge badge-danger">Needs Immediate Attention!</span> 
-                @endif
-                
-                @if ($machinelog->errortype == "2")
-                <span class="badge badge-warning">Warning!</span>
-                @endif
-                
-                @if ($machinelog->errortype == "3")
-                   <span class="badge badge-info">Notice!</span> 
-                @endif
-
-                                                        
-                
-                </h4>
-            </div>
-            <div class="modal-body">
-                <p><strong>Error Message: <?php $errorstring = str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
-                <p>Name and Serial No:  {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </p> 
-                <p>Machine Type:  {{ $machinelog->machine_type}} </p>
-                 <p>Machine Model: {{ $machinelog->machine_model}} </p>
-                 <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
-                 <p>  <input type="checkbox" id="error-resolve" name="resolve" value="2" > Resolve</p>
-            </div>
-            <div class="modal-footer">
-                 <input class="btn btn-primary" type="submit" value="Update" />
-                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-            </div>
-            
-        </div>
-    </form>
-    </div>
-</div>
-@endforeach
-
-
-<!-- Modal -->
-<div class="modal fade example-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Offline Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
-            <tbody>
-              @foreach ($offlineList as $lists)                      
-                <tr>                            
-                    <td><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
-<!-- Modal -->
-<div class="modal fade online-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
-            <tbody>
-              @foreach ($onlineLists as $lists)                      
-                <tr>                            
-                    <td><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
-<!-- Modal -->
-<div class="modal fade total-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Route</th></tr></thead>
-            <tbody>
-              @foreach ($totalLists as $lists)                      
-                <tr>                            
-                    <td>
-                        <?php if($lists->status =='1'){ ?>
-                        <i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
-                        <?php }else{ ?>
-                        <i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
-                        <?php } ?>
-                    </td> 
-                    <td>{{ $lists->state }}</td>
-                    <td>{{ $lists->machine_model }}</td>
-                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->machine_serial_no }}</a></td>
-                    <td>{{ $lists->route }}</td>                                 
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
 
 
 
