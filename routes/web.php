@@ -419,5 +419,6 @@ Route::get('cardReaderLogs', 'FinancialReportsGraphController@cardReaderLogs');
 Route::get('coin', 'FinancialReportsGraphController@coin');
 Route::get('bill', 'FinancialReportsGraphController@bill');
 Route::get('card', 'FinancialReportsGraphController@card');
+Route::get('total', 'FinancialReportsGraphController@total');
 
 Route::resource('machine-reports', 'MachineReportsController');

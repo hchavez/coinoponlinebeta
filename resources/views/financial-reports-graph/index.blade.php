@@ -61,11 +61,10 @@
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 <script>   
-//var base_urllink = window.location.origin;
-//if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
-//else{var base_url = "https://www.ascentri.com/";}
-//console.log(base_urllink);
-
+var base_urllink = window.location.origin;
+if (base_urllink = "http://localhost"){ var base_url = "http://localhost/coinoponlinebeta/public/"; }
+else{var base_url = "https://www.ascentri.com/";}
+console.log(base_urllink);
 
 var seriesOptions = [], seriesCounter = 0, names = ['coin','bill','card'];
 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
@@ -99,23 +98,24 @@ function createChart() {
                 }
             }
         },
-        tooltip: {            
+        tooltip: {              
+            formatter: function() {
+                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+                var millis = new Date(this.x);
+                var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
+                var tooltip='<b>Date: '+theDate+'<b><br/>';
+                $.each(this.points,function(i,point){
+                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                });
+                tooltip+='<b>Total: '+this.points[0].total;
         
+                return tooltip;
+            }  
+           
         },
         series: seriesOptions
     });
 }
-   
-     var base_urllink = window.location.origin;
-          console.log(base_urllink);
-                   
-                                    if (String(base_urllink) === "http://localhost"){
-                                        var base_url = "http://localhost/coinoponlinebeta/public/";
-                                             console.log(base_url);
-                                    }else{
-                                        var base_url = "https://www.ascentri.com/";
-                                        console.log(base_url);
-                                    }
                                     
 $.each(names, function (i, name) {
     $.getJSON(base_url +  name , function (data) {        
@@ -155,30 +155,24 @@ function georgeCreateChart() {
                 }
             }
         },
-        //tooltip: {            
-          //  changeDecimals: 2,
-          //  valueDecimals: 2,
-            //shared: true,
-            //useHTML: true,
-            //headerFormat: '<small>{point.key}</small><table>',
-            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
-            //footerFormat: '</table>'
-        //},
+        tooltip: {            
+            formatter: function() {
+                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+                var millis = new Date(this.x);
+                var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
+                var tooltip='<b>Date: '+theDate+'<b><br/>';
+                $.each(this.points,function(i,point){
+                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                });
+                tooltip+='<b>Total: '+this.points[0].total;
+        
+                return tooltip;
+            }  
+        },
         series: georgeSeriesOptions
     });
 }
-
-        var base_urllink = window.location.origin;
-          console.log(base_urllink);
-                   
-                                    if (String(base_urllink) === "http://localhost"){
-                                        var base_url = "http://localhost/coinoponlinebeta/public/";
-                                             console.log(base_url);
-                                    }else{
-                                        var base_url = "https://www.ascentri.com/";
-                                        console.log(base_url);
-                                    }
-                                    
+                                  
 $.each(georgeNnames, function (i, name) {
     $.getJSON(base_url +  name , function (data) {  
         georgeSeriesOptions[i] = { type: 'column', name: name, data: data };       
@@ -217,30 +211,24 @@ function cardCreateChart() {
                 }
             }
         },
-//        tooltip: {            
-//            changeDecimals: 2,
-//            valueDecimals: 2,
-            //shared: true,
-            //useHTML: true,
-            //headerFormat: '<small>{point.key}</small><table>',
-            //pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
-            //footerFormat: '</table>'
-      //  },
+        tooltip: {            
+            formatter: function() {
+                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+                var millis = new Date(this.x);
+                var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
+                var tooltip='<b>Date: '+theDate+'<b><br/>';
+                $.each(this.points,function(i,point){
+                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                });
+                tooltip+='<b>Total: '+this.points[0].total;
+        
+                return tooltip;
+            } 
+        },
         series: cardSeriesOptions
     });
 }
-
-     var base_urllink = window.location.origin;
-          console.log(base_urllink);
-                   
-                                    if (String(base_urllink) === "http://localhost"){
-                                        var base_url = "http://localhost/coinoponlinebeta/public/";
-                                             console.log(base_url);
-                                    }else{
-                                        var base_url = "https://www.ascentri.com/";
-                                        console.log(base_url);
-                                    }
-                                    
+                                  
 $.each(cardNnames, function (i, name) {
     $.getJSON(base_url +  name , function (data) {  
         cardSeriesOptions[i] = { type: 'column', name: name, data: data };       

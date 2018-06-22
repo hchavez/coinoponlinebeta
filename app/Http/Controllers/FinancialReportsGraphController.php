@@ -62,7 +62,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($georgieCoin as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                    
                 $coin = ($value->coinIn == '')? '0' : $value->coinIn;
-                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+                $financialGraph[] = "[". $asdate .",". round($coin,2) ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -77,7 +77,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($bill as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                         
                 $billIn = ($value->billIn == '')? '0' : $value->billIn;
-                $financialGraph[] = "[". $asdate .",". $billIn ."]";  
+                $financialGraph[] = "[". $asdate .",". round($billIn,2) ."]";  
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -92,7 +92,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($swipe as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                     
-                $financialGraph[] = "[". $asdate .",". $swipeIn ."]";  
+                $financialGraph[] = "[". $asdate .",". round($swipeIn,2) ."]";  
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -107,7 +107,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($swipe as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $ttlMoneyIn = ($value->ttlMoneyIn == '')? '0' : $value->ttlMoneyIn;                     
-                $financialGraph[] = "[". $asdate .",". $ttlMoneyIn ."]";  
+                $financialGraph[] = "[". $asdate .",". round($ttlMoneyIn,2) ."]";  
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -139,7 +139,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($georgieCoin as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $coin = $value->coinIn;                
-                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+                $financialGraph[] = "[". $asdate .",". round($coin,2) ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -153,7 +153,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($georgieBill as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $billIn = $value->billIn;                
-                $financialGraph[] = "[". $asdate .",". $billIn ."]";    
+                $financialGraph[] = "[". $asdate .",". round($billIn,2) ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -167,7 +167,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($georgieCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                
                 $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                
-                $financialGraph[] = "[". $asdate .",". $swipeIn ."]";    
+                $financialGraph[] = "[". $asdate .",". round($swipeIn,2) ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -182,7 +182,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                
                 $coin = ($value->coinIn == '')? '0' : $value->coinIn; 
-                $financialGraph[] = "[". $asdate .",". $coin ."]";    
+                $financialGraph[] = "[". $asdate .",". round($coin,2) ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
         }else{
@@ -196,7 +196,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                        
                 $bill = ($value->billIn == '')? '0' : $value->billIn;
-                $financialGraph[] = "[". $asdate .",". $bill ."]";    
+                $financialGraph[] = "[". $asdate .",". round($bill,2) ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
         }else{
@@ -210,7 +210,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                                
                 $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
-                $financialGraph[] = "[". $asdate .",". $swipe ."]";    
+                $financialGraph[] = "[". $asdate .",". round($swipe,2) ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
         }else{
