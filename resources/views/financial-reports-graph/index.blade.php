@@ -71,13 +71,10 @@ var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCo
 var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
 
 function createChart() {
-    Highcharts.stockChart('container', {    
-        chart: { height: 500 },
+    Highcharts.stockChart('container', {           
         title: { text: 'George system and Card reader' },        
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
-        yAxis: { 
-            min: -10, 
-            max: 1200, 
+        yAxis: {             
             tickInterval: 100,
             title: { text: 'Revenue'},
             plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
@@ -99,8 +96,7 @@ function createChart() {
             }
         },
         tooltip: {              
-            formatter: function() {
-                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+            formatter: function() {                                
                 var millis = new Date(this.x);
                 var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
@@ -128,13 +124,10 @@ $.each(names, function (i, name) {
 
 //Georgie only
 function georgeCreateChart() {
-    Highcharts.stockChart('createGeorge', {  
-        chart: { height: 500 },
+    Highcharts.stockChart('createGeorge', {          
         title: { text: 'George system' },        
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
-        yAxis: { 
-            min: -10, 
-            max: 700, 
+        yAxis: {        
             tickInterval: 10,
             title: { text: 'Revenue'},
             plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
@@ -156,8 +149,7 @@ function georgeCreateChart() {
             }
         },
         tooltip: {            
-            formatter: function() {
-                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+            formatter: function() {                         
                 var millis = new Date(this.x);
                 var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
@@ -184,13 +176,10 @@ $.each(georgeNnames, function (i, name) {
 
 //Card reader
 function cardCreateChart() {
-    Highcharts.stockChart('cardReader', {   
-        chart: { height: 500 },
+    Highcharts.stockChart('cardReader', { 
         title: { text: 'Card Reader' },        
         rangeSelector: { buttons: [{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
-        yAxis: { 
-            min: -10, 
-            max: 700, 
+        yAxis: {             
             tickInterval: 10,
             title: { text: 'Revenue'},
             plotLines: [{ value: 100, width: 1, color: '#333333', zIndex: 3 }]
@@ -212,8 +201,7 @@ function cardCreateChart() {
             }
         },
         tooltip: {            
-            formatter: function() {
-                //var tooltip='<b>Date '+this.x+'<b><br/>';                
+            formatter: function() {                             
                 var millis = new Date(this.x);
                 var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
