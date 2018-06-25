@@ -236,11 +236,17 @@ table.dataTable td:nth-child(8){
 #filter_display .tag span{ padding: 0 0 0 8px; cursor:pointer;}
 .error-list-form .ky-columns{display:inline-block; }
 .col_date{width:9%; padding-left: 0;}
+.ky_date{width:10%;}
 .col_model{width:9%;}
+.ky_model{width:12.5%;}
 .col_type{width:9%;}
+.ky_type{width:10.5%;}
 .col_serial{width:15%;}
+.ky_serial{width:13%;}
 .col_error{width:19%;}
+.ky_error{width:18%;}
 .col_site{width:21%;}
+.ky_site{width:25.5%;}
 .col_empty{width:1%;}
 .col_ins {width:6%;}
 .clearFilterOption{

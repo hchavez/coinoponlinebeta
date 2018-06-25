@@ -158,11 +158,11 @@
                           </div>
                            <div class="example">   
                             <form role="form" method="GET" class="error-list-form" id="formFilter">
-                                <div class="col_empty ky-columns"></div>
-                                <div class="col_date ky-columns">
+                                <div style="width:1.5%;" class="col_empty ky-columns"></div>
+                                <div class="col_date ky-columns ky_date">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left">     
                                 </div>
-                                <div class="col_model ky-columns">
+                                <div class="col_model ky-columns ky_model">
                                     <select id="m_model" class="form-control" name="machine_model">
                                         <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
@@ -175,7 +175,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col_type ky-columns">
+                                <div class="col_type ky-columns ky_type">
                                     <select id="m_type" class="form-control" name="machine_type">
                                         <option selected="selected" disabled="" value="B" name="machine_type">Machine Type</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
@@ -188,13 +188,13 @@
                                         @endforeach                                                                                        
                                     </select>
                                 </div>
-                                <div class="col_serial ky-columns">
+                                <div class="col_serial ky-columns ky_serial">
                                     <select id="e_serial" class="form-control" disabled="">
                                         <option selected="" disabled=""></option>
                                         <option disabled="">Name & Serial No</option>
                                     </select>
                                 </div>
-                                <div class="col_error ky-columns">
+                                <div class="col_error ky-columns ky_error">
                                     <select id="e_msg" class="form-control" name="error_msg">
                                         <option selected="selected" disabled=""><b>Error Message</b></option>  
                                         <option value="" class="clearFilterOption">------Filter All------</option>
@@ -203,7 +203,7 @@
                                         <option value="1" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '1')? 'selected' : ''; endif; ?> >Needs Immediate Attention</option>
                                     </select>
                                 </div>
-                                <div class="col_site ky-columns">
+                                <div class="col_site ky-columns ky_site">
                                     <select id="site" class="form-control" name="machine_site">
                                         <option selected="selected" disabled="" value="C">Site</option>
                                         <option value="" class="clearFilterOption">------Filter All------</option>
@@ -223,14 +223,14 @@
                             <table class="table table-hover" id="machineErrorReport">                                    
                                 <thead>
                                     <tr role="row">                                                
-                                        <th id="" class="col_empty"></th>
-                                        <th style="width:11.2%;" class="col_date">Date Time</th>
-                                        <th style="width:9.2%;" class="col_model">Machine Model</th>                                                
-                                        <th style="width:9.2%;" class="col_type">Machine Type</th>
-                                        <th style="width:16.3%;" class="col_serial">Name & Serial No</th>
-                                        <th id="" class="col_error">Error Message</th>
-                                        <th id="" class="col_site">Site</th>
-                                        <th id="" class="">Instances</th>
+                                        <th style="width:1%;" class="col_empty"></th>
+                                        <th style="width:6.5%;" class="col_date">Date Time</th>
+                                        <th style="width:8.2%;" class="col_model">Machine Model</th>                                                
+                                        <th style="width:7%;" class="col_type">Machine Type</th>
+                                        <th style="width:8.3%;" class="col_serial">Name & Serial No</th>
+                                        <th style="width:12%" class="col_error">Error Message</th>
+                                        <th style="width:16.52%" class="col_site">Site</th>
+                                        <th style="width:5%;" class="">Instances</th>
                                        </tr> 
                                 </thead> 
                                     
