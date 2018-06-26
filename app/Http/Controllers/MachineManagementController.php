@@ -14,6 +14,7 @@ use App\Errorlogs;
 use App\GoalsLogs;
 use App\WinLogs;
 use App\MoneyLogs;
+use App\GraphLogs;
 use App\MachineType;
 use App\MachineModel;
 use App\MachineSettings;
@@ -1106,42 +1107,34 @@ class MachineManagementController extends Controller {
     public function machinegraphdata($id){
         
       $graphdataWinResultwithDate = null;
-      
-      
-//       $userallwinresult = DB::table('winlogs')
-//                        ->select('winlogs.created_at as created_at', 'winlogs.winResult as winResult'
-//                                , 'winlogs.excessWin as excessWin', 'winlogs.owedWin as owedWin'
-//                                , 'goalslogs.slipVolt as slipVolt', 'goalslogs.dropVolt as dropVolt', 'goalslogs.retVolt as retVolt')
-//                        ->leftJoin('goalslogs', 'winlogs.playIndex', '=', 'goalslogs.playIndex')
-//                        ->where('winlogs.machine_id','=', $id)->where('goalslogs.startEndFlag','=','2')
-//                        ->orderBy('winlogs.created_at','desc')->get(); 
 
+       
+       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->get();
+          
+     if ($userallgoalsresult->count() > 0) {
         
-     if ($userallwinresult->count() > 0) {
-        
-            foreach ($userallwinresult as $temp) {
-                $tempwinResult = 0;
-            
-                $asdate = strtotime($temp->created_at) * 1000;
+            foreach ($userallgoalsresult as $temp) {
+
+                              
+                $asdate = strtotime($temp['date_created']) * 1000;
                 $aswiresult = $temp->winResult;
-                $asowedWin = $temp->owedWin;
-                $asexcessWin = $temp->excessWin;
-                $asslipVolt = $temp->slipVolt;
-                $asdropVolt = $temp->dropVolt;
-                $asretVolt = $temp->retVolt;
-                 
+       
                 if ($aswiresult == "won") {
-                    $tempwinResult = 10 * 1;
+                    $tempwinResult = 5 * 1;
                 } else {
                     $tempwinResult = 0 * 1;
                 }
+                
+                $asowedWin = $temp->owedWin * -1;
+                $asexcessWin = $temp->excessWin;
+                $asslipVolt = $temp->slipVolt;
+                $asdropVolt = $temp->dropVolt;
+                $aspkVolt = $temp->pkVolt;
 
-                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult .",". $asowedWin .",". $asexcessWin .",". $asslipVolt .",". $asdropVolt .",". $asretVolt  ."]";
-                //$graphdataWinResultwithDateresult[] = "[". $asdate .",". $tempwinResult .",". $asowedWin .",". $asexcessWin ."]";
+                $graphdataWinResultwithDateresult[] = "[". $asdate .",". $asslipVolt .",". $asdropVolt .",". $aspkVolt .",". $tempwinResult .",". $asowedWin .",". $asexcessWin  ."]";
                 
             }
             $graphdataWinResultwithDate = join($graphdataWinResultwithDateresult, ",");
-
 
          }else{
              $graphdataWinResultwithDate = null;

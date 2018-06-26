@@ -88,16 +88,16 @@
                                 <thead>
                                     <tr role="row">                                       
                                         <th style="width:15% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>                                       
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >testPlay</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >winResult</th>                                        
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >totalWon</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >TestPlay</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >WinResult</th>                                        
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >TotalWon</th>
                                         <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Game Counter</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >owedWin</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >excessWin</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockLeft</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockRemoved</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >stockAdded</th>
-                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Price Settings</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Owed Win</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Excess Win</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Stock Left</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Stock Removed</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Stock Added</th>
+                                        <th style="width:7% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Prize Settings</th>
                                         <th style="width:5% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
                                     </tr>
                                 </thead>
