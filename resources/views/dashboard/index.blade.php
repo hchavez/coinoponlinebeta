@@ -5,42 +5,122 @@
 <meta http-equiv="refresh" content="300" >
 <div class="row">
         
-    <!--end here -->
     <div class="col-xl-6 col-lg-12">
-        <!-- Card -->
-        <div class="card-group">
-          <div class="card card-block p-0">
-            <div class="counter counter-md vertical-align bg-white h-300">
-              <div class="counter-icon p-30 green-600" style="position:absolute;top:0;left:0;">
-                <i class="icon wb-stats-bars" aria-hidden="true"></i>
+            <div class="row">
+              <div class="col-lg-6">
+                <!-- Card -->
+                <div class="card card-block p-30">
+                  <div class="counter counter-md text-left">
+                    <div class="counter-label text-uppercase mb-5">Income Note</div>
+                    <div class="counter-number-group mb-10">
+                      <span class="counter-number"><?php echo $total['note']; ?></span>
+                    </div>
+                    <div class="counter-label">
+                      <div class="progress progress-xs mb-10">
+                        <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
+                          <span class="sr-only">70.3%</span>
+                        </div>
+                      </div>
+                      <div class="counter counter-sm text-left">
+                        <div class="counter-number-group">
+                          <span class="counter-icon blue-600 mr-5"><i class="icon wb-calendar"></i></span>
+                          <span class="counter-number"></span>
+                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
+                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card -->
               </div>
-              <div class="counter-number-group font-size-30 vertical-align-middle">
-                
-                <span class="counter-number">{{ $numMachine }}</span>
-                <span class="counter-number-related"></span>
-                <div class="font-size-20 mt-3">Number of Machines</div>
-                <div class="font-size-10 mt-3"><a href="{{ url('system-management/machine-type') }}">View Machines</a></div>
+
+              <div class="col-lg-6">
+                <!-- Card -->
+                <div class="card card-block p-30">
+                  <div class="counter counter-md text-left">
+                    <div class="counter-label text-uppercase mb-5">Income Tap</div>
+                    <div class="counter-number-group mb-10">
+                      <span class="counter-number"><?php echo $total['tap']; ?></span>
+                    </div>
+                    <div class="counter-label">
+                      <div class="progress progress-xs mb-5">
+                        <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
+                          <span class="sr-only">20.3%</span>
+                        </div>
+                      </div>
+                      <div class="counter counter-sm text-left">
+                        <div class="counter-number-group">
+                          <span class="counter-icon red-600 mr-5"><i class="icon wb-calendar"></i></span>
+                          <span class="counter-number"></span>
+                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
+                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+
+              <div class="col-lg-6">
+                <!-- Card -->
+                <div class="card card-block p-30">
+                  <div class="counter counter-md text-left">
+                    <div class="counter-label text-uppercase mb-5">Number of Machines</div>
+                    <div class="counter-number-group mb-10">
+                      <span class="counter-number">{{ $numMachine }}</span>
+                    </div>
+                    <div class="counter-label">
+                      <div class="progress progress-xs mb-5">
+                        <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
+                          <span class="sr-only">20.3%</span>
+                        </div>
+                      </div>
+                      <div class="counter counter-sm text-left">
+                        <div class="counter-number-group">
+                          <span class="counter-icon green-600 mr-5"><i class="icon wb-calendar"></i></span>
+                          <span class="counter-number"></span>
+                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
+                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+
+              <div class="col-lg-6">
+                <!-- Card -->
+                <div class="card card-block p-30">
+                  <div class="counter counter-md text-left">
+                    <div class="counter-label text-uppercase mb-5">Income Coin</div>
+                    <div class="counter-number-group mb-10">
+                      <span class="counter-number"><?php echo $total['coin']; ?></span>
+                    </div>
+                    <div class="counter-label">
+                      <div class="progress progress-xs mb-5">
+                        <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
+                          <span class="sr-only">20.3%</span>
+                        </div>
+                      </div>
+                      <div class="counter counter-sm text-left">
+                        <div class="counter-number-group">
+                          <span class="counter-icon orange-600 mr-5"><i class="icon wb-calendar"></i></span>
+                          <span class="counter-number"></span>
+                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
+                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card -->
               </div>
             </div>
           </div>
-          <div class="card card-block p-0">
-            <div class="counter counter-md vertical-align bg-blue-700 white p-30 h-300">
-              <div class="counter-icon p-30 white-600" style="position:absolute;top:0;left:0;">
-                <i class="icon wb-stats-bars" aria-hidden="true"></i>
-              </div>
-              <div class="counter-number-group font-size-30 vertical-align-middle white">
-                
-                <span class="counter-number"><?php echo $total['coin']; ?></span>
-                <span class="counter-number-related"></span>
-                <div class="font-size-20 mt-3">Income Coin</div>
-                <div class="font-size-10 mt-3"><?php echo date('F'); ?> 2018</div>
-                <div class="font-size-10 mt-3"><a href="" class="white">View Report</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Card -->
-    </div>
+    
     <div class="col-xl-6 col-lg-12 masonry-item">
             <!-- Panel Projects -->
             <div class="panel" id="projects">
@@ -223,124 +303,7 @@
     <!-- End Second Row -->
 
 </div>
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-            <div class="row">
-              <div class="col-lg-3">
-                <!-- Card -->
-                <div class="card card-block p-30">
-                  <div class="counter counter-md text-left">
-                    <div class="counter-label text-uppercase mb-5">Income Note</div>
-                    <div class="counter-number-group mb-10">
-                      <span class="counter-number"><?php echo $total['note']; ?></span>
-                    </div>
-                    <div class="counter-label">
-                      <div class="progress progress-xs mb-10">
-                        <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
-                          <span class="sr-only">70.3%</span>
-                        </div>
-                      </div>
-                      <div class="counter counter-sm text-left">
-                        <div class="counter-number-group">
-                          <span class="counter-icon blue-600 mr-5"><i class="icon wb-calendar"></i></span>
-                          <span class="counter-number"></span>
-                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
 
-              <div class="col-lg-3">
-                <!-- Card -->
-                <div class="card card-block p-30">
-                  <div class="counter counter-md text-left">
-                    <div class="counter-label text-uppercase mb-5">Income Tap</div>
-                    <div class="counter-number-group mb-10">
-                      <span class="counter-number"><?php echo $total['tap']; ?></span>
-                    </div>
-                    <div class="counter-label">
-                      <div class="progress progress-xs mb-5">
-                        <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
-                          <span class="sr-only">20.3%</span>
-                        </div>
-                      </div>
-                      <div class="counter counter-sm text-left">
-                        <div class="counter-number-group">
-                          <span class="counter-icon red-600 mr-5"><i class="icon wb-calendar"></i></span>
-                          <span class="counter-number"></span>
-                          <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-
-              <div class="col-lg-3">
-                <!-- Card -->
-                <div class="card card-block p-30">
-                  <div class="counter counter-md text-left">
-                    <div class="counter-label text-uppercase mb-5">Title Income</div>
-                    <div class="counter-number-group mb-10">
-                      <span class="counter-number">2,381</span>
-                    </div>
-                    <div class="counter-label">
-                      <div class="progress progress-xs mb-5">
-                        <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
-                          <span class="sr-only">20.3%</span>
-                        </div>
-                      </div>
-                      <div class="counter counter-sm text-left">
-                        <div class="counter-number-group">
-                          <span class="counter-icon green-600 mr-5"><i class="icon wb-calendar"></i></span>
-                          <span class="counter-number"></span>
-                          <span class="counter-number-related">January - May 2018</span>
-                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-
-              <div class="col-lg-3">
-                <!-- Card -->
-                <div class="card card-block p-30">
-                  <div class="counter counter-md text-left">
-                    <div class="counter-label text-uppercase mb-5">Number of Text</div>
-                    <div class="counter-number-group mb-10">
-                      <span class="counter-number">2,381</span>
-                    </div>
-                    <div class="counter-label">
-                      <div class="progress progress-xs mb-5">
-                        <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="20.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar">
-                          <span class="sr-only">20.3%</span>
-                        </div>
-                      </div>
-                      <div class="counter counter-sm text-left">
-                        <div class="counter-number-group">
-                          <span class="counter-icon orange-600 mr-5"><i class="icon wb-calendar"></i></span>
-                          <span class="counter-number"></span>
-                          <span class="counter-number-related">January - May 2018</span>
-                          <span class="counter-number-related text-right"><a href="">View Report</a></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-            </div>
-          </div>
-    
-</div>
 
 @foreach ($machinelogs as $machinelog)
 
