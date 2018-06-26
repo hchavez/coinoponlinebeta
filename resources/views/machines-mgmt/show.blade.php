@@ -481,8 +481,20 @@
                                     
                                     
                                  $(document).ready(function (){
+                                     
+                                     var id = {{ $machine->id }};
+                                     var name = "machinegraphdata";
+                                     var base_urllink = window.location.origin;
 
-                                    $.getJSON('http://localhost/coinoponlinebeta/public/machinegraphdata/41', function (data) {
+                                        if (base_urllink == "http://localhost"){
+                                            var base_url = "http://localhost/coinoponlinebeta/public/";
+                                        }else{
+                                            var base_url = "https://www.ascentri.com/";
+                                        }
+                                        
+                                        
+                                        
+                                    $.getJSON(base_url + name + '/' + id,  function (data) {
 
                                             // split the data set into ohlc and volume
                                             var winresult = [], asowedWin = [], asexcessWin  = [],
