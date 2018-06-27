@@ -9,11 +9,12 @@
     <div class="panel-body">
         
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
-<!--            <div id="byDate">
-                <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-                    <input type="text" name="datePicker" id="datePicker" class="form-control pull-left" placeholder="Filter By Date">
-                </form>
-            </div>-->
+            <form role="form" method="GET" class="error-list-form" id="formSearch">
+                <div class="ky-columns" style="width:15%;" >
+                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
+                </div>                            
+            </form>
+            <br>
             <div class="row"><div class="col-sm-12 longFilter" style="padding:0;">     
                      
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
@@ -86,20 +87,21 @@
 <script>    
 $(document).ready(function() {   
     /*Resolve*/
-    $('input[name="datePicker"]').daterangepicker({
+    $('input[name="dateRange"]').daterangepicker({
         autoUpdateInput: false,
         locale: {
             cancelLabel: 'Clear'
         }
     });
-    $('input[name="datePicker"]').on('apply.daterangepicker', function(ev, picker) {
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
     });
-    $('input[name="datePicker"]').on('cancel.daterangepicker', function(ev, picker) {
+    $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
     });
+    
 });
 </script>
 
