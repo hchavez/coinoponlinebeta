@@ -190,8 +190,15 @@
                                     }else{
                                         var base_url = "https://www.ascentri.com/";
                                     }
-                                    
-                                var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['dailyCoin','dailyBill','dailyCard'];
+                                var category = '{{ $machine->category }}';  
+                                var georgeSeriesOptions = [], georgeSeriesCounter = 0; 
+                                
+                                if(category == 'cardreader'){
+                                     var georgeNnames = ['dailyCard'];
+                                }else{
+                                     var georgeNnames = ['dailyCoin','dailyBill','dailyCard'];  
+                                }
+                                
                                 var id = {{ $machine->id }};  
                            
                                 function georgeCreateChart() {
@@ -463,18 +470,16 @@
                                 </script>
 
                             </div>
-                            
-                            
-                            
+
                             
                             <!--------------------NEW MERGE GRAPH ON WIN AND GOALS LOGS----------------->
                             
                             <div class="row row-lg">
                                 
                                 <div class="col-xl-12">
-                                  
+                                   <?php if($machine->category != "cardreader"){ ?>
                                     <div id="containermergegraph" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
-                                    
+                                   <?php } ?>
                                 </div>
 
                                 <script type="text/javascript">
