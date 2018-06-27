@@ -8,7 +8,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Update user</h3>
 
-                <div class="page-header-actions">
+                <!--div class="page-header-actions">
                   <a href="{{ url('profile') }}"><button type="button" class="btn btn-sm btn-icon btn-inverse btn-round" data-toggle="tooltip" data-original-title="User Lists">
                     <i class="icon wb-refresh" aria-hidden="true"></i>
                   </button></a>
@@ -19,7 +19,7 @@
                   <button type="button" class="btn btn-sm btn-icon btn-inverse btn-round" data-toggle="tooltip" data-original-title="User Roles">
                     <i class="icon wb-settings" aria-hidden="true"></i>
                   </button>
-                </div>
+                </div-->
             </div>
             
             <div class="panel-body">               
@@ -59,7 +59,7 @@
                   <div class="form-group row">
                     <label class="col-md-3 form-control-label">Email</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" name="email" value="{{ $email }}"/>
+                        <input type="text" class="form-control" name="email" value="{{ $email }}" disabled=""/>
                     </div>
                     <div class="col-md-3"></div>
                   </div>                 

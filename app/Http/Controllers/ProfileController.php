@@ -36,7 +36,11 @@ class ProfileController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        $profile = DB::Table('users')->get();        
+        $profile = DB::Table('users')->get();  
+        
+        $users = User::get();       
+        $currerntUserRole = Auth::User()->id; 
+        $usertype = $this->user_type($currerntUserRole);
         
         $fname = Auth::user()->firstname;
         $lname = Auth::user()->lastname;
@@ -44,16 +48,31 @@ class ProfileController extends Controller
         $email = Auth::user()->email;
         $id = Auth::user()->id;     
         
-        $jsonurl = "http://localhost/coinoponlinebeta/public/jsonusers";
+        $jsonurl = $this->url_path() . "/jsonusers";
         $json = file_get_contents($jsonurl,0,null,null);
         $json_output = json_decode($json);
         $newarray = json_decode(json_encode($json_output), True);
         $data = array(
             'users' => $newarray['data'],
         );
-        return view('profile/index', $data, ['users' => $profile, 'user_id' => $id, 'user_role' => $role, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
+        return view('profile/index', $data, ['users' => $profile, 'user_id' => $id, 'currentRole' => $usertype, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
-
+    
+    public function user_type($id){
+        $urole = ''; $color = '';
+        if($id == '0'){ $urole = 'Super Admin'; $color = 'danger';}
+        if($id == '1'){ $urole = 'Admin'; $color = 'warning';}
+        if($id == '2'){ $urole = 'AMF Admin'; $color = 'info';}
+        if($id == '3'){ $urole = 'Manager'; $color = 'success';}
+        if($id == '4'){ $urole = 'Operator'; $color = 'primary';}
+        if($id == '5'){ $urole = 'Service'; $color = 'dark';}
+        return $urole;
+    }
+    
+    public function url_path(){
+        return $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";        
+    }
+    
     public function edit($id)
     {        
         $role = Auth::user()->role;

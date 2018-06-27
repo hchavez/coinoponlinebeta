@@ -28,7 +28,7 @@
                           <th>Email</th><td>{{ $email }}</td>
                         </tr>
                         <tr>
-                          <th>Role</th><td>{{ $user_role }}</td>
+                          <th>Role</th><td><?php echo $currentRole; ?></td>
                         </tr>          
                       </table>  
                         <!--a href="{{ route('profile.edit', ['id' => $user_id]) }}"><button type="submit" class="btn btn-primary">Update</button></a-->
