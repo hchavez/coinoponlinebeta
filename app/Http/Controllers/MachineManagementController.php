@@ -1032,9 +1032,10 @@ class MachineManagementController extends Controller {
     public function queryLogs($type,$id){
 
         $queryMachine = DB::table('moneylogs')
-                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
-                     ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>', $type)
+                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' '))
+                     ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>=', $type)
                      ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
+    
         return $queryMachine;
     }
     
@@ -1163,6 +1164,7 @@ class MachineManagementController extends Controller {
                 $coin = $value->coinIn;                
                 $financialGraph[] = "[". $asdate .",". $coin ."]";    
             }
+            $financialGraph[] = "[". strtotime(now()) * 1000 .",". 0 ."]";  
             $financialGraphDate = join($financialGraph, ',');
         }else{
              $financialGraphDate = null;
@@ -1177,6 +1179,7 @@ class MachineManagementController extends Controller {
                 $billIn = $value->billIn;                
                 $financialGraph[] = "[". $asdate .",". $billIn ."]";    
             }
+            $financialGraph[] = "[". strtotime(now()) * 1000 .",". 0 ."]";  
             $financialGraphDate = join($financialGraph, ',');
         }else{
              $financialGraphDate = null;
@@ -1186,11 +1189,13 @@ class MachineManagementController extends Controller {
     public function dailyCard($id){
         $georgieCard = $this->queryLogs('swipeIn',$id);
         if ($georgieCard->count() > 0) {
-            foreach ($georgieCard as $value) { 
+            foreach ($georgieCard as $value) {
                 $asdate = strtotime($value->created_at) * 1000;                
-                $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                
+                $swipeIn = ($value->swipeIn == null)? '0' : $value->swipeIn;  
+                //$swipeIn = $value->swipeIn; 
                 $financialGraph[] = "[". $asdate .",". $swipeIn ."]";    
             }
+            $financialGraph[] = "[". strtotime(now()) * 1000 .",". '0' ."]";  
             $financialGraphDate = join($financialGraph, ',');
         }else{
              $financialGraphDate = null;
