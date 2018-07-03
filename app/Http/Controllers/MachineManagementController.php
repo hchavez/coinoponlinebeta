@@ -51,10 +51,7 @@ class MachineManagementController extends Controller {
      */
     public function index() 
     {
-        $data = Input::all();
-        $startnewformat = date("Y-m-d", strtotime(Input::get('datefrom')) );     
-        $endnewformat = date("Y-m-d", strtotime(Input::get('dateto')) );
-        
+        $data = Input::all();        
         if ( !$data ) :
             $from = $to = '';  
             $machines = DB::table('machines')
@@ -76,41 +73,43 @@ class MachineManagementController extends Controller {
             $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
         else:   
             $dateRange = Input::get('dateRange');
+            $today = date('m/d/Y');
             $from = $to = ''; 
+            if(!empty($dateRange)):
+                $dateRange = Input::get('dateRange');
+            else:
+                $dateRange = $today.' - '.$today;
+            endif;
             $explode = explode('-',$dateRange);            
             $explode_from = explode('/',$explode[0]);
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
             $plusoneday = $explode_to[1]+ 1;
-            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);            
             
-            $machines = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
-                                , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
-                                , 'machine_reports.slip_volt as slip_volt', 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
-                                , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
-                                , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
-                                , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
-                        ->where('machines.status','<>', '1111')
-                        ->whereBetween('machine_reports.last_played', [$from, $to]);  
-            
-            /*$machines2 = DB::table('machine_reports')
-                        ->select(DB::raw('*'), DB::raw('sum(total_money) as total'))
-                        ->groupBy(DB::raw('machine_id') )
-                        ->get();
-            print_r($machines2);*/
+            $machines = DB::table("machines")
+                            ->select(DB::raw("machines.*, machines.id as machine_id, round(sum(total_money),2) as total_money, machine_models.machine_model as machine_model, machines.category as category, 
+                                machine_types.machine_type as machine_type,machines.ip_address as ip_address, round(sum(total_toys_win),2) as total_toys_win,
+                                round(sum(stock_left),2) as stock_left,machine_reports.slip_volt as slip_volt, machine_reports.pkup_volt as pkup_volt,
+                                machine_reports.date_created as date_created,machine_reports.ret_volt as ret_volt,machine_reports.owed_win as owed_win,
+                                machine_reports.excess_win as excess_win,machine_reports.last_visit as last_visit,machine_reports.last_played as last_played,
+                                route.route as route,area.area as area,sites.state as state,sites.site_name as site"))
+                            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                            ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                            ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                            ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
+                            ->where('machines.status','<>', '1111')
+                            ->whereBetween('machine_reports.last_played', [$from, $to])
+                            ->groupBy(DB::raw("machine_id,machine_model,category,machine_type,ip_address,total_toys_win,stock_left,slip_volt,pkup_volt,date_created,
+                                ret_volt,owed_win,excess_win,last_visit,last_played,route,area,state,site"));              
+           
         endif;
         
         $machines = $machines->orderBy('machine_reports.last_played','desc')->get()->toArray();  
        
-        return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'machines' => $machines]);
+        return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'machines' => $machines,'data'=>$data]);
         
     }     
     
