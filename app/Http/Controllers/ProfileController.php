@@ -48,13 +48,15 @@ class ProfileController extends Controller
         $email = Auth::user()->email;
         $id = Auth::user()->id;     
         
-        $jsonurl = $this->url_path() . "/jsonusers";
+        $jsonurl = url('/') . "/jsonusers";
         $json = file_get_contents($jsonurl,0,null,null);
         $json_output = json_decode($json);
         $newarray = json_decode(json_encode($json_output), True);
         $data = array(
             'users' => $newarray['data'],
         );
+        
+        //echo url('/');
         return view('profile/index', $data, ['users' => $profile, 'user_id' => $id, 'currentRole' => $usertype, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
     }
     
@@ -68,11 +70,7 @@ class ProfileController extends Controller
         if($id == '5'){ $urole = 'Service'; $color = 'dark';}
         return $urole;
     }
-    
-    public function url_path(){
-        return $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";        
-    }
-    
+        
     public function edit($id)
     {        
         $role = Auth::user()->role;
