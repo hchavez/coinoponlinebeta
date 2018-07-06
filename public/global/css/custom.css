@@ -265,3 +265,10 @@ table.dataTable td:nth-child(8){
     padding-right: 0 !important;
 }
 table.dataTable td, table.dataTable th{padding: 5px;}
+/*group persmission*/
+.checkbox-custom input[type=radio]:checked+input[type=hidden]+label::before, 
+.checkbox-custom input[type=radio]:checked+label::before, 
+.checkbox-custom input[type=checkbox]:checked+input[type=hidden]+label::before, 
+.checkbox-custom input[type=checkbox]:checked+label::before{
+    border-width:0px !important;
+}
