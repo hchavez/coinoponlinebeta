@@ -47,7 +47,7 @@ class GroupPermissionController extends Controller
                 })->orderBy('date_updated','desc');
                 
         else:
-            $model = Input::get();           
+            $model = array('user_group'=>'0');           
             $app_object = $app_object->where(function($query) use ($model){                    
                     $query->where('group_permission.user_groups', '=', '0');               
                 })->orderBy('date_updated','desc'); 
@@ -55,7 +55,7 @@ class GroupPermissionController extends Controller
         
         $app_object = $app_object->get();
         //print_r($app_object);
-        return view('group-permission/index',['app_object' => $app_object, 'user_group' => $user_group, 'getData' => $data]);
+        return view('group-permission/index',['app_object' => $app_object, 'user_group' => $user_group, 'getData' => $model]);
         
     }
 
