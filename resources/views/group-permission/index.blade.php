@@ -55,12 +55,16 @@
                                             </tfoot-->
                                             <tbody>
                                                 @foreach ($app_object as $object)  
+                                                <?php if($object->read_all_access): ?>
+                                                    <input type="hidden" value="{{ $object->gp_id }}" name="gp_id">
+                                                <?php endif; ?>
+                                                
                                                 <tr role="row" class="odd">
                                                     <td class="sorting_1  text-left" tabindex="0">{{ $object->app_object_type }}</td>
                                                     <td class="text-left">{{ $object->sec_type }}</td>
                                                     <td>                                                          
                                                         <div class="checkbox-custom checkbox-primary">
-                                                            <input type="checkbox" name="read_all_access_{{ $object->obj_id }}" <?php echo ($object->read_all_access)? 'checked': ''; ?> >
+                                                            <input type="checkbox" name="read_all_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->read_all_access }}" <?php echo ($object->read_all_access)? 'checked': ''; ?> >
                                                           <label></label> 
                                                         </div>                                                        
                                                     </td>
@@ -118,7 +122,7 @@
 <!-- Add new modal -->
     <div class="modal fade" id="exampleFormModal" aria-hidden="false" aria-labelledby="exampleFormModalLabel" role="dialog" tabindex="-1">
       <div class="modal-dialog modal-simple">
-        <form class="modal-content">
+        <form role="form" method="GET" class="modal-content" id="addGroupModal">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
@@ -128,13 +132,13 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-xl-12 form-group">
-                <input type="text" class="form-control" name="firstName" placeholder="Group Name">
+                <input type="text" class="form-control" name="groupName" placeholder="Group Name">
               </div>              
               <div class="col-xl-12 form-group">
-                <textarea class="form-control" rows="5" placeholder="Description"></textarea>
+                <textarea class="form-control" rows="5" name="groupDesc" placeholder="Description"></textarea>
               </div>
               <div class="col-md-12 float-right">
-                <button class="btn btn-primary btn-outline" data-dismiss="modal" type="button">Add Group</button>
+                <button class="btn btn-primary btn-outline" data-dismiss="modal" type="button" id="addGroupButton">Add Group</button>
               </div>
             </div>
           </div>
@@ -179,7 +183,9 @@
 <script>
 $(document).ready(function() {
     $("#savePermission").click(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/'); form.submit(); });  
-    $("#userGroup").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/'); form.submit(); });  
+    $("#userGroup").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/'); form.submit(); }); 
+    
+    $("#addGroupButton").click(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/add'); form.submit(); }); 
     
 });
 </script>
