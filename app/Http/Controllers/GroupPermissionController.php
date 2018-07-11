@@ -62,29 +62,97 @@ class GroupPermissionController extends Controller
         
     }
     
-    public function edit($data,$request){
-      
-        $var = 'kim';       
-        $read_all_access = $request->input('read_all_access');     
+    public function edit($data,$request){      
+             
+        $read_all_access = $request->input('read_all_access');
+        $add_new_access = $request->input('add_new_access');
+        $edit_all_access = $request->input('edit_all_access');
+        $read_access = $request->input('read_access');
+        $edit_access = $request->input('edit_access');
+        $delete_access = $request->input('delete_access');
         $update = DB::table('group_permission');
         
-        if ( !empty($read_all_access) ) :
-            
+        if ( !empty($read_all_access) ) : 
             foreach($read_all_access as $key => $value):
-                $explode = explode('-',$value);
-                //echo $explode[0].' : '.$explode[1].'<br>';
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['read_all_access' => '0']);               
+            endforeach;  
+            foreach($read_all_access as $key => $value):
+                $explode = explode('-',$value);     
                 $update = $update->where(function($query) use ($explode){ 
-                        $query->where('application_object', $explode[0])  
-                              ->where('id', $explode[1])                           
-                              ->update(['read_all_access' => '1']);           
-                })->orderBy('id','asc');
-            endforeach;
-             
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['read_all_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
+        endif;
+        
+        if ( !empty($add_new_access) ) : 
+            foreach($add_new_access as $key => $value):
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['add_new_access' => '0']);               
+            endforeach;  
+            foreach($add_new_access as $key => $value):
+                $explode = explode('-',$value);     
+                $update = $update->where(function($query) use ($explode){ 
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['add_new_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
+        endif;
+        
+        if ( !empty($edit_all_access) ) : 
+            foreach($edit_all_access as $key => $value):
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['edit_all_access' => '0']);               
+            endforeach;  
+            foreach($edit_all_access as $key => $value):
+                $explode = explode('-',$value);     
+                $update = $update->where(function($query) use ($explode){ 
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['edit_all_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
+        endif;
+        
+        if ( !empty($read_access) ) : 
+            foreach($read_access as $key => $value):
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['read_access' => '0']);               
+            endforeach;  
+            foreach($read_access as $key => $value):
+                $explode = explode('-',$value);     
+                $update = $update->where(function($query) use ($explode){ 
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['read_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
+        endif;
+        
+        if ( !empty($edit_access) ) : 
+            foreach($edit_access as $key => $value):
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['edit_access' => '0']);               
+            endforeach;  
+            foreach($edit_access as $key => $value):
+                $explode = explode('-',$value);     
+                $update = $update->where(function($query) use ($explode){ 
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['edit_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
+        endif;
+        
+        if ( !empty($delete_access) ) : 
+            foreach($delete_access as $key => $value):
+                $explode = explode('-',$value);                  
+                $update_z = DB::table('group_permission')->where('id','!=', $explode[1])->where('user_groups', $explode[2])->update(['delete_access' => '0']);               
+            endforeach;  
+            foreach($delete_access as $key => $value):
+                $explode = explode('-',$value);     
+                $update = $update->where(function($query) use ($explode){ 
+                   $query->where('application_object', $explode[0])->where('id', $explode[1])->update(['delete_access' => '1']);           
+                })->orderBy('id','asc');                         
+            endforeach; 
         endif;
         
         $update = $update->get();
                    
-        return $var;
+        return $update;
     }
 
     public function add(){

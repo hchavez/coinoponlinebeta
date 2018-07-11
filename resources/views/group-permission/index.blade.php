@@ -42,17 +42,7 @@
                                                   <th class="sorting">Edit Access</th>
                                                   <th class="sorting">Delete Access</th>
                                                </tr>
-                                            </thead>
-                                            <!--tfoot>
-                                               <tr>
-                                                  <th rowspan="1" colspan="1">Name</th>
-                                                  <th rowspan="1" colspan="1">Position</th>
-                                                  <th rowspan="1" colspan="1">Office</th>
-                                                  <th rowspan="1" colspan="1">Age</th>
-                                                  <th rowspan="1" colspan="1">Date</th>
-                                                  <th rowspan="1" colspan="1">Salary</th>
-                                               </tr>
-                                            </tfoot-->
+                                            </thead>                                            
                                             <tbody>
                                                 @foreach ($app_object as $object)  
                                                 <?php if($object->read_all_access): ?>
@@ -64,37 +54,37 @@
                                                     <td class="text-left">{{ $object->sec_type }}</td>
                                                     <td>                                                          
                                                         <div class="checkbox-custom checkbox-primary">
-                                                            <input type="checkbox" name="read_all_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->read_all_access }}" <?php echo ($object->read_all_access)? 'checked': ''; ?> >
+                                                            <input type="checkbox" name="read_all_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->read_all_access)? 'checked': ''; ?> >
                                                           <label></label> 
                                                         </div>                                                        
                                                     </td>
                                                     <td>
                                                         <div class="checkbox-custom checkbox-primary">
-                                                          <input type="checkbox" name="add_new_access_{{ $object->obj_id }}" <?php echo ($object->add_new_access)? 'checked': ''; ?>>
+                                                          <input type="checkbox" name="add_new_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->add_new_access)? 'checked': ''; ?>>
                                                           <label></label>
                                                         </div>  
                                                     </td>
                                                     <td>
                                                         <div class="checkbox-custom checkbox-primary">
-                                                          <input type="checkbox" name="edit_all_access_{{ $object->obj_id }}" <?php echo ($object->edit_all_access)? 'checked': ''; ?>>
+                                                          <input type="checkbox" name="edit_all_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->edit_all_access)? 'checked': ''; ?>>
                                                           <label></label>
                                                         </div>  
                                                     </td>
                                                     <td>
                                                         <div class="checkbox-custom checkbox-primary">
-                                                          <input type="checkbox" name="read_access_{{ $object->obj_id }}" <?php echo ($object->read_access)? 'checked': ''; ?>>
+                                                          <input type="checkbox" name="read_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->read_access)? 'checked': ''; ?>>
                                                           <label></label>
                                                         </div>  
                                                     </td>
                                                     <td>
                                                         <div class="checkbox-custom checkbox-primary">
-                                                          <input type="checkbox" name="edit_access_{{ $object->obj_id }}" <?php echo ($object->edit_access)? 'checked': ''; ?>>
+                                                          <input type="checkbox" name="edit_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->edit_access)? 'checked': ''; ?>>
                                                           <label></label>
                                                         </div>  
                                                     </td>
                                                     <td>
                                                         <div class="checkbox-custom checkbox-primary">
-                                                          <input type="checkbox" name="delete_access_{{ $object->obj_id }}" <?php echo ($object->delete_access)? 'checked': ''; ?>>
+                                                          <input type="checkbox" name="delete_access[]" value="{{ $object->obj_id }}-{{ $object->gp_id }}-{{ $object->user_groups }}" <?php echo ($object->delete_access)? 'checked': ''; ?>>
                                                           <label></label>
                                                         </div>  
                                                     </td>
@@ -185,8 +175,7 @@ $(document).ready(function() {
     $("#savePermission").click(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/'); form.submit(); });  
     $("#userGroup").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/'); form.submit(); }); 
     
-    $("#addGroupButton").click(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/add'); form.submit(); }); 
-    
+    $("#addGroupButton").click(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'group-permission/add'); form.submit(); });     
 });
 </script>
 
