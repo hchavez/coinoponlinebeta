@@ -31,7 +31,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        
         $currerntUserRole = Auth::User()->id;
+        $role = \AppHelper::getRole($currerntUserRole);
+        
+        $permission = \AppHelper::userPermission(Auth::User()->id,'1');      
+        $isReadAll = \AppHelper::isReadAll($permission);
+               
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
