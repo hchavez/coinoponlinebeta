@@ -97,7 +97,13 @@
                                                 <span class="counter-icon blue-600 mr-5"><i class="icon wb-wrench"></i></span>                                                                                   
                                                 <span class="counter-number-related text-right"><a href="{{ url('repair-type') }}">Repair Type</a></span>
                                               </div>
-                                        </div>                                        
+                                        </div> 
+                                         <div class="counter counter-sm text-left">
+                                              <div class="counter-number-group">
+                                                <span class="counter-icon blue-600 mr-5"><i class="icon wb-wrench"></i></span>                                                                                   
+                                                <span class="counter-number-related text-right"><a href="{{ url('theme-lists') }}">Themes</a></span>
+                                              </div>
+                                        </div>
                                     </div>
                                     
                                 </div>

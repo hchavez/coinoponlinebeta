@@ -604,7 +604,8 @@
                                             ],
 
                                                 tooltip: {
-                                                    split: true
+                                                    split: true,
+                                                    valueDecimals: 2,
                                                 },
 
                                                 series: [{

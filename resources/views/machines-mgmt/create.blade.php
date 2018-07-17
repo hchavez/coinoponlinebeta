@@ -23,10 +23,10 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Machine Type: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="machine_type" id="machine_type"  required>
+                                        <select class="selectpicker form-control" name="machine_type" id="machine_type" data-live-search="true"> 
                                             <option value="">-- Select Machine Type --</option>
                                             @foreach ($machine_types as $mtype)
-                                            <option value="{{$mtype->id}}"> {{$mtype->machine_type}} </option>
+                                            <option value="{{$mtype->id}}" data-tokens="{{$mtype->machine_type}}"> {{$mtype->machine_type}} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -37,7 +37,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Machine Model: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="machine_model" id="machine_model"  required>
+                                        <select class="form-control selectpicker" name="machine_model" id="machine_model" data-live-search="true" >
                                             <option value="">-- Select Machine Type --</option>
                                        
                                         </select>
@@ -49,24 +49,26 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Site: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="site" required>
+                                        <select class="form-control selectpicker" name="site" id="site" data-live-search="true">
                                             <option value="">-- Select Site --</option>
                                             @foreach ($sites as $site)
-                                            <option value="{{$site->id}}">{{$site->site_name}}</option>
+                                            <option value="{{$site->id}}" data-tokens="{{$site->site_name}}">{{$site->site_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             
+                           
+                            
                              <div class="form-group">
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Theme: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="site" required>
+                                        <select class="form-control selectpicker" name="theme" id="theme" data-live-search="true" >
                                             <option value="">-- Select Theme --</option>
                                             @foreach ($themes as $theme)
-                                            <option value="{{$theme->id}}">{{$theme->theme}}</option>
+                                            <option value="{{$theme->id}}" data-tokens="{{$theme->theme}}">{{$theme->theme}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -77,9 +79,8 @@
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">Category: </label>
                                     <div class="col-md-9">
-                                        <select class="form-control" name="category" required>
+                                         <select class="form-control selectpicker" name="category" id="category" data-live-search="true" required>
                                             <option value="">-- Select Category --</option>
-                                            
                                             <option value="cardreader">cardreader</option>
                                             <option value="george system">george systems</option>
                                             <option value="george system and cardreader">both</option>

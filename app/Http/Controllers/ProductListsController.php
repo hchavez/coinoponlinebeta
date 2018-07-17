@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Theme;
 use App\ThemeList;
+use App\ProductList;
 
-class ThemeController extends Controller
+class ProductListsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,9 +26,8 @@ class ThemeController extends Controller
      */
     public function index()
     {
-       $themes = Theme::orderBy('theme', 'asc')->get();
-       $themelists = ThemeList::orderBy('theme_name')->get();
-       return view('themes/index', ['themes' => $themes,'themelists' => $themelists]);
+       $productlists = ProductList::orderBy('product_name', 'asc')->get();
+       return view('product-lists/index', ['productlists' => $productlists]);
     }
 
     /**
@@ -38,8 +37,9 @@ class ThemeController extends Controller
      */
     public function create()
     {
-        $states = Theme::all();
-        return view('themes/create', ['states' => $states]);
+        $productlists = ProductList::all();
+        $productlist = ProductList::orderBy('product_name')->get();
+        return view('product-lists/create', ['productlists' => $productlists,'productlist' => $productlist]);
     }
 
     /**
@@ -50,12 +50,14 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
-        Theme::findOrFail($request['state_id']);
+        ProductList::findOrFail($request['id']);
         $this->validateInput($request);
-         theme::create([
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
+         ProductList::create([
+            'product_name' => $request['product_name'],
+            'product_code' => $request['product_code'],
+            'status' => '1',
         ]);
+                                
 
         return redirect()->intended('themes');
     }
@@ -79,14 +81,14 @@ class ThemeController extends Controller
      */
     public function edit($id)
     {
-        $theme = Theme::find($id);
+        $productlist = ProductList::find($id);
         // Redirect to theme list if updating theme wasn't existed
         if ($theme == null || count($theme) == 0) {
-            return redirect()->intended('themes');
+            return redirect()->intended('product-lists');
         }
 
-        $states = Theme::all();
-        return view('themes/edit', ['theme' => $theme, 'states' => $states]);
+        $states = ProductList::all();
+        return view('product-lists/edit', ['productlist' => $productlist]);
     }
 
     /**
@@ -98,18 +100,18 @@ class ThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $theme = Theme::findOrFail($id);
-         $this->validate($request, [
-        'name' => 'required|max:60'
-        ]);
+        $productlist = ProductList::findOrFail($id);
+         $this->validate($request, ['theme_name' => 'required']);
         $input = [
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
+            'product_name' => $request['product_name'],
+            'product_code' => $request['product_code'],
+            'updated_at' => now(),
+            'status' => '1',
         ];
-        Theme::where('id', $id)
+        ProductList::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('themes');
+        return redirect()->intended('product-lists');
     }
 
     /**
@@ -120,8 +122,8 @@ class ThemeController extends Controller
      */
     public function destroy($id)
     {
-        Theme::where('id', $id)->delete();
-         return redirect()->intended('themes');
+        ProductList::where('id', $id)->delete();
+         return redirect()->intended('product-lists');
     }
 
     /**
@@ -132,15 +134,15 @@ class ThemeController extends Controller
      */
     public function search(Request $request) {
         $constraints = [
-            'name' => $request['name']
+            'name' => $request['product_name']
             ];
 
        $cities = $this->doSearchingQuery($constraints);
-       return view('themes/index', ['cities' => $cities, 'searchingVals' => $constraints]);
+       return view('product-lists/index', ['cities' => $cities, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = Theme::query();
+        $query = ProductList::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {

@@ -114,12 +114,12 @@ class MachineManagementController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $cities = City::all();
-        $states = State::all();
-        $machine_types = MachineType::all();
-        $machine_models = MachineModel::all();
-        $sites = Site::all();
-        $themes = Theme::all();
+        $cities = City::orderBy('name')->get();
+        $states = State::orderBy('name')->get();
+        $machine_types = MachineType::orderBy('machine_type')->get();
+        $machine_models = MachineModel::orderBy('machine_model')->get();
+        $sites = Site::orderBy('site_name')->get();
+        $themes = Theme::orderBy('theme')->get();
 
         return view('machines-mgmt/create', ['machine_types' => $machine_types, 'themes' => $themes, 'machine_models' => $machine_models, 'sites' => $sites, 'cities' => $cities, 'states' => $states]);
     }
@@ -142,6 +142,7 @@ class MachineManagementController extends Controller {
             'machine_type_id' => $request['machine_type'],
             'machine_model_id' => $request['machine_model'],
             'machine_serial_no' => $request['serial_no'],
+            'machine_theme_id' => $request['theme'],
             'site_id' => $request['site'],
             'category' => $request['category'],
             'purchase_amount' => $request['purchase_amount'],
@@ -435,8 +436,12 @@ class MachineManagementController extends Controller {
         $totalBill = $this->getTotal('billIn',$id);
         $totalSwipe = $this->getTotal('swipeIn',$id);
   
-        return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 'claw_settings' => $claw_settings, 'game_settings' => $game_settings,
-            'machine_accounts' => $machine_accounts, 'product_def' => $product_def, 'cash_boxes' => $cash_boxes,
+        return view('machines-mgmt/show', ['machine' => $machine, 'machine_settings' => $machine_settings, 
+            'claw_settings' => $claw_settings, 
+            'game_settings' => $game_settings,
+            'machine_accounts' => $machine_accounts, 
+            'product_def' => $product_def, 
+            'cash_boxes' => $cash_boxes,
             'graphdataWinResult' => $graphdataWinResult,
             'graphdataExcessWinResult' => $graphdataExcessWinResult,
             'graphdataOwnedWinResult' => $graphdataOwnedWinResult,
@@ -1110,7 +1115,7 @@ class MachineManagementController extends Controller {
       $graphdataWinResultwithDate = null;
 
        
-       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->get();
+       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
           
      if ($userallgoalsresult->count() > 0) {
         
@@ -1126,12 +1131,12 @@ class MachineManagementController extends Controller {
                     $tempwinResult = 0 * 1;
                 }
                 
-                $asowedWin = $temp->owedWin * -1;
-                $asexcessWin = $temp->excessWin;
-                $asslipVolt = $temp->slipVolt;
-                $asdropVolt = $temp->dropVolt;
-                $aspkVolt = $temp->pkVolt;
-
+                $asowedWin = round($temp->owedWin * -1,2);
+                $asexcessWin = round($temp->excessWin,2);
+                $asslipVolt = round($temp->slipVolt,2);
+                $asdropVolt = round($temp->dropVolt,2);
+                $aspkVolt = round($temp->pkVol,2);
+             
                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $asslipVolt .",". $asdropVolt .",". $aspkVolt .",". $tempwinResult .",". $asowedWin .",". $asexcessWin  ."]";
                 
             }

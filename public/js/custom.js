@@ -10,7 +10,7 @@ $( document ).ready(function() {
 
         $('select[name="machine_type"]').on('change', function() {
             var machinetype_id = $(this).val();
-            console.log(machinetype_id);
+           
             if(machinetype_id) {
                 $.ajax({
                     url: 'https://www.ascentri.com/machine-management/ajax_getmachinemodel/'+machinetype_id,
@@ -20,11 +20,11 @@ $( document ).ready(function() {
 
                         $('select[name="machine_model"]').empty();
                         $.each(data, function(key, value) {
-                            console.log(value);
+           
                             $('select[name="machine_model"]').append('<option value="'+ value.id +'">'+ value.machine_model +'</option>');
                         });
 
-                         console.log('this value here...');
+                       
                     }
                 });
             }else{

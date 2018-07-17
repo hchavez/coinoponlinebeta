@@ -48,7 +48,7 @@
                             </thead>
                             <tbody>
                             @foreach ($machines as $machine)                            
-                                <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
+                                <tr class="clickable-row <?php if($machine->status == "0") {?> bg-danger <?php } ?>" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Theme;
 use App\ThemeList;
+use App\ProductList;
 
-class ThemeController extends Controller
+class ThemeListsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,9 +26,8 @@ class ThemeController extends Controller
      */
     public function index()
     {
-       $themes = Theme::orderBy('theme', 'asc')->get();
-       $themelists = ThemeList::orderBy('theme_name')->get();
-       return view('themes/index', ['themes' => $themes,'themelists' => $themelists]);
+       $themelists = ThemeList::orderBy('theme_name', 'asc')->get();
+       return view('theme-lists/index', ['themelists' => $themelists]);
     }
 
     /**
@@ -38,8 +37,9 @@ class ThemeController extends Controller
      */
     public function create()
     {
-        $states = Theme::all();
-        return view('themes/create', ['states' => $states]);
+        $themelists = ThemeList::all();
+        $productlist = ProductList::orderBy('product_name')->get();
+        return view('theme-lists/create', ['themelists' => $themelists,'productlist' => $productlist]);
     }
 
     /**
@@ -50,14 +50,26 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
-        Theme::findOrFail($request['state_id']);
-        $this->validateInput($request);
-         theme::create([
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
-        ]);
 
-        return redirect()->intended('themes');
+         ThemeList::create([
+            'theme_name' => $request['theme_name'],
+            'avgWeight' => $request['avgWeight'],
+             'slipVoltage' => $request['slipVoltage'],
+             'pkVoltage' => $request['pkVoltage'],
+             'retVoltage' => $request['retVoltage'],
+             'slipPWM' => $request['slipPWM'],
+             'pkupPWM' => $request['pkupPWM'],
+             'retPWM' => $request['retPWM'],
+             'diffPickRetPWM' => $request['diffPickRetPWM'],
+             'totalToyPurchaseCost' => $request['totalToyPurchaseCost'],
+             'playsPerWin' => $request['playsPerWin'],
+             'stockLeft' => $request['stockLeft'],
+             'productCode' => $request['productCode'],
+              'status' => '1',
+        ]);
+                                
+
+        return redirect()->intended('theme-lists');
     }
 
     /**
@@ -79,14 +91,14 @@ class ThemeController extends Controller
      */
     public function edit($id)
     {
-        $theme = Theme::find($id);
+        $theme = ThemeList::find($id);
         // Redirect to theme list if updating theme wasn't existed
         if ($theme == null || count($theme) == 0) {
-            return redirect()->intended('themes');
+            return redirect()->intended('theme-lists');
         }
 
-        $states = Theme::all();
-        return view('themes/edit', ['theme' => $theme, 'states' => $states]);
+        $themelists = ThemeList::all();
+        return view('theme-lists/edit', ['themelists' => $themelists]);
     }
 
     /**
@@ -98,18 +110,28 @@ class ThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $theme = Theme::findOrFail($id);
-         $this->validate($request, [
-        'name' => 'required|max:60'
-        ]);
+        $theme = ThemeList::findOrFail($id);
+         //$this->validate($request, ['theme_name' => 'required']);
         $input = [
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
+             'theme_name' => $request['theme_name'],
+            'avgWeight' => $request['avgWeight'],
+             'slipVoltage' => $request['slipVoltage'],
+             'pkVoltage' => $request['pkVoltage'],
+             'retVoltage' => $request['retVoltage'],
+             'slipPWM' => $request['slipPWM'],
+             'pkupPWM' => $request['pkupPWM'],
+             'retPWM' => $request['retPWM'],
+             'diffPickRetPWM' => $request['diffPickRetPWM'],
+             'totalToyPurchaseCost' => $request['totalToyPurchaseCost'],
+             'playsPerWin' => $request['playsPerWin'],
+             'stockLeft' => $request['stockLeft'],
+             'productCode' => $request['productCode'],
+              'status' => '1',
         ];
-        Theme::where('id', $id)
+        ThemeList::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('themes');
+        return redirect()->intended('theme-lists');
     }
 
     /**
@@ -120,8 +142,8 @@ class ThemeController extends Controller
      */
     public function destroy($id)
     {
-        Theme::where('id', $id)->delete();
-         return redirect()->intended('themes');
+        ThemeList::where('id', $id)->delete();
+         return redirect()->intended('theme-lists');
     }
 
     /**
@@ -132,15 +154,15 @@ class ThemeController extends Controller
      */
     public function search(Request $request) {
         $constraints = [
-            'name' => $request['name']
+            'name' => $request['theme_name']
             ];
 
        $cities = $this->doSearchingQuery($constraints);
-       return view('themes/index', ['cities' => $cities, 'searchingVals' => $constraints]);
+       return view('theme-lists/index', ['cities' => $cities, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = Theme::query();
+        $query = ThemeList::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {
