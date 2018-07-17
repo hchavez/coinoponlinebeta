@@ -428,3 +428,6 @@ Route::get('card', 'FinancialReportsGraphController@card');
 Route::get('total', 'FinancialReportsGraphController@total');
 
 Route::resource('machine-reports', 'MachineReportsController');
+
+Route::resource('group-permission', 'GroupPermissionController');
+Route::get('/add', 'GroupPermissionController@add');

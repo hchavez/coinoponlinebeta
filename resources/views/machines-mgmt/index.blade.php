@@ -12,7 +12,8 @@
             <form role="form" method="GET" class="error-list-form" id="formSearch">
                 <div class="ky-columns" style="width:15%;" >
                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
-                </div>                            
+                </div>    
+                <?php echo (!empty($data['dateRange']))? '<code>Filtered Date: '.$data['dateRange'].'</code>' : ''; ?>               
             </form>
             <br>
             <div class="row"><div class="col-sm-12 longFilter" style="padding:0;">     
@@ -48,7 +49,11 @@
                             </thead>
                             <tbody>
                             @foreach ($machines as $machine)                            
+<<<<<<< HEAD
                                 <tr class="clickable-row <?php if($machine->status == "0") {?> bg-danger <?php } ?>" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
+=======
+                                <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}">
+>>>>>>> c99596f5bdace2fc39214c1d4fc37ded4048e33c
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>

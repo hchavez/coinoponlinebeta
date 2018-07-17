@@ -34,28 +34,11 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $role = Auth::user()->role;
-        $profile = DB::Table('users')->get();  
-        
-        $users = User::get();       
-        $currerntUserRole = Auth::User()->id; 
-        $usertype = $this->user_type($currerntUserRole);
-        
-        $fname = Auth::user()->firstname;
-        $lname = Auth::user()->lastname;
-        $username = Auth::user()->username;
-        $email = Auth::user()->email;
-        $id = Auth::user()->id;     
-        
-        $jsonurl = $this->url_path() . "/jsonusers";
-        $json = file_get_contents($jsonurl,0,null,null);
-        $json_output = json_decode($json);
-        $newarray = json_decode(json_encode($json_output), True);
-        $data = array(
-            'users' => $newarray['data'],
-        );
-        return view('profile/index', $data, ['users' => $profile, 'user_id' => $id, 'currentRole' => $usertype, 'fname' => $fname, 'lname' => $lname, 'username' => $username, 'email' => $email ]);
+    {        
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);   
+       
+        return view('profile/index', ['userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
     }
     
     public function user_type($id){
@@ -68,11 +51,7 @@ class ProfileController extends Controller
         if($id == '5'){ $urole = 'Service'; $color = 'dark';}
         return $urole;
     }
-    
-    public function url_path(){
-        return $actual_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";        
-    }
-    
+        
     public function edit($id)
     {        
         $role = Auth::user()->role;
