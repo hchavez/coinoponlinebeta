@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AppHelper
 {
-    public static function currentUser(){
-        $currerntUserRole = Auth::User()->id;
-        return $currerntUserRole;
+    public static function currentUser(){        
+       // $userDetails = User::select('users.*')->where('id',Auth::User()->id)->get()->toArray();        
+        $userDetails = User::select('users.*', 'users.id as userID', 'users_role.*')
+                ->leftJoin('users_role', 'users.id', '=', 'users_role.user_role')
+                ->where('users.id',Auth::User()->id)->get()->toArray();
+        return $userDetails;
     }
     
     public static function getRole($id){

@@ -35,7 +35,10 @@ class DashboardController extends Controller
         $currerntUserRole = Auth::User()->id;
         $role = \AppHelper::getRole($currerntUserRole);
         
-        $permission = \AppHelper::userPermission(Auth::User()->id,'1');      
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);   
+        
+        $permission = \AppHelper::userPermission(Auth::User()->id,'2');      
         $isReadAll = \AppHelper::isReadAll($permission);
                
         $machinelogs = DB::table('machines')
@@ -89,7 +92,11 @@ class DashboardController extends Controller
             'tap' => number_format($incomeTap)
         );
                 
-        return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$currerntUserRole ]);
+        if($isReadAll):
+            return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$currerntUserRole ]);
+        else:
+            return view('profile/index', ['userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
+        endif;
         
     }
        
