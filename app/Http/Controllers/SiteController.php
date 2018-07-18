@@ -28,20 +28,39 @@ class SiteController extends Controller
      */
     public function index()
     {
-        //$sites = Site::paginate(20);
-            $currerntUserRole = Auth::User()->id;
-            $sites = DB::table('sites')
-//                ->select('sites.*')
-                ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
-                ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
-                ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
-                ->orderBy('sites.site_name', 'asc')->get();
-                    
-        return view('site/index', ['sites' => $sites,'userRole' =>$currerntUserRole]);
+        $var = $this->permission();        
+        $sites = DB::table('sites')
+            ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
+            ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+            ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+            ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
+            ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
+            ->orderBy('sites.site_name', 'asc')->get();
+        
+        if($var['permit']['readAll']):
+            return view('site/index', ['sites' => $sites,'userRole' =>$var['userRole'][0]['user_id']]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
 
+    public function permission()
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id,'17');      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission)
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -49,8 +68,13 @@ class SiteController extends Controller
      */
     public function create()
     {
+        $var = $this->permission();
         $states = State::all();
-        return view('site/create', ['states' => $states]);
+        if($var['permit']['addAll']):
+            return view('site/create', ['states' => $states]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'],'userDetails' => $var['userDetails'],'user_id' => $var['userDetails'][0]['id'],'userGroup' => $var['userRole'][0]['users_group']]);
+        endif;
     }
 
     /**

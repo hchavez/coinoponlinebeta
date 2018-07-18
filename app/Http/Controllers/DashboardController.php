@@ -30,17 +30,17 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-        $currerntUserRole = Auth::User()->id;
-        $role = \AppHelper::getRole($currerntUserRole);
-        
+    {        
+        //echo $currerntUserRole = Auth::User()->id;       
         $userDetails = \AppHelper::currentUser();     
-        $userRole = \AppHelper::getRole($userDetails[0]['userID']);   
-        
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
         $permission = \AppHelper::userPermission(Auth::User()->id,'2');      
-        $isReadAll = \AppHelper::isReadAll($permission);
-               
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission)
+        );
+                       
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
                     'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
@@ -92,10 +92,10 @@ class DashboardController extends Controller
             'tap' => number_format($incomeTap)
         );
                 
-        if($isReadAll):
-            return view('dashboard/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$currerntUserRole ]);
+        if($permit['readAll']):
+            return view('dashboard/index', ['permit' => $permit, 'machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$userRole[0]['user_id'] ]);
         else:
-            return view('profile/index', ['userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
+            return view('profile/index', ['permit' => $permit, 'userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
         endif;
         
     }

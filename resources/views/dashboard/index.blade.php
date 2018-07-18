@@ -165,7 +165,8 @@
                               <span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span>
                             </td>
                             <td class="hidden-sm-down">
-                              <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
+                                
+                              <strong><?php if($permit['editAll']){ ?><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;"><?php } ?>
 
                                   @if ($machinelog->errortype == '2') 
                                   <span class="badge badge-warning">Warning!</span> 
@@ -174,11 +175,11 @@
                                   @endif
 
                                   @if ($machinelog->errortype == '1') 
-                                  <span class="badge badge-danger blink_me" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="blink_me" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
+                                  <span class="badge badge-danger" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
                                   @else
                                   <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                   @endif
-                                   </a></strong>
+                                   <?php if($permit['editAll']){ ?><?php } ?></a></strong>
                             </td>
                             <td class="hidden-sm-down">
                             @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else
@@ -233,74 +234,8 @@
               </div><!--table responsive end-->
             </div>
             <!-- End Panel Projects -->
-          </div>
+          </div>   
     
-    
-    <!-- First Row -->
-   <!--div class="col-xl-3 col-md-6 info-panel">
-        <div class="card card-shadow">
-            <div class="card-block bg-white p-20">
-                <button type="button" class="btn btn-floating btn-sm btn-warning">
-                    <i class="icon wb-shopping-cart"></i>
-                </button>
-                <span class="ml-15 font-weight-400">TOTAL PLAY</span>
-                <div class="content-text text-center mb-0">
-                    <i class="text-danger icon wb-triangle-up font-size-20">
-                    </i>
-                    <span class="font-size-40 font-weight-100">399</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6 info-panel">
-        <div class="card card-shadow">
-            <div class="card-block bg-white p-20">
-                <button type="button" class="btn btn-floating btn-sm btn-danger">
-                    <i class="icon fa-dollar"></i>
-                </button>
-                <span class="ml-15 font-weight-400">TOTAL MONEY</span>
-                <div class="content-text text-center mb-0">
-                    <i class="text-success icon wb-triangle-down font-size-20">
-                    </i>
-                    <span class="font-size-40 font-weight-100">$18,628</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6 info-panel">
-        <div class="card card-shadow">
-            <div class="card-block bg-white p-20">
-                <button type="button" class="btn btn-floating btn-sm btn-success">
-                    <i class="icon wb-eye"></i>
-                </button>
-                <span class="ml-15 font-weight-400">TOTAL WIN</span>
-                <div class="content-text text-center mb-0">
-                    <i class="text-danger icon wb-triangle-up font-size-20">
-                    </i>
-                    <span class="font-size-40 font-weight-100">23,456</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-md-6 info-panel">
-        <div class="card card-shadow">
-            <div class="card-block bg-white p-20">
-                <button type="button" class="btn btn-floating btn-sm btn-primary">
-                    <i class="icon wb-user"></i>
-                </button>
-                <span class="ml-15 font-weight-400">TOTAL GOAL</span>
-                <div class="content-text text-center mb-0">
-                    <i class="text-danger icon wb-triangle-up font-size-20">
-                    </i>
-                    <span class="font-size-40 font-weight-100">4,367</span>
-                </div>
-            </div>
-        </div>
-    </div--> 
-    <!-- End First Row -->
-    <!-- second Row -->
-    
-    <!-- End Second Row -->
 
 </div>
 
