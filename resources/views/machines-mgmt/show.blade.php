@@ -83,11 +83,14 @@
                 <!-- Panel Projects -->
                 <div class="panel" id="projects">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i>  </a>  Machine Version - {{ $machine->version }} 
+                        <h3 class="panel-title">
+                            <?php if($permit['editAll']): ?><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i> <?php endif; ?>  </a>  Machine Version - {{ $machine->version }} 
                         <a href="#">                        
                             <?php if($machine->category != "cardreader"){ ?>
-                            <button class="delete-modal btn btn-danger" data-id="{{$machine->id}}" data-content="{{$machine->id}}">
+                                <?php if($permit['editAll']): ?>
+                                    <button class="delete-modal btn btn-danger" data-id="{{$machine->id}}" data-content="{{$machine->id}}">
                                         <span class="glyphicon glyphicon-trash"></span> TEST GO!</button>
+                                <?php endif; ?>
                             <?php } ?>
                         </a>
                         </h3>
@@ -690,7 +693,8 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('claw-settings.edit', ['id' => $claw_settings->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Claw</h3> 
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('claw-settings.edit', ['id' => $claw_settings->machine_id]) }}"> <i class="icon wb-edit" ></i><?php endif; ?>  </a> Claw</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -732,7 +736,8 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('machine-settings.edit', ['id' => $machine_settings->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Machine</h3> 
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('machine-settings.edit', ['id' => $machine_settings->machine_id]) }}"> <i class="icon wb-edit" ></i><?php endif; ?>  </a> Machine</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -759,7 +764,8 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('game-settings.edit', ['id' => $game_settings->machine_id]) }}" > <i class="icon wb-edit" ></i>  </a> Game</h3> 
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('game-settings.edit', ['id' => $game_settings->machine_id]) }}" > <i class="icon wb-edit" ></i> <?php endif; ?> </a> Game</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -793,7 +799,8 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('machine-accounts.edit', ['id' => $machine_accounts->machine_id]) }}"> <i class="icon wb-edit" ></i>  </a> Accounts</h3> 
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('machine-accounts.edit', ['id' => $machine_accounts->machine_id]) }}"> <i class="icon wb-edit" ></i><?php endif; ?>  </a> Accounts</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
@@ -817,8 +824,9 @@
                 <!-- Example Panel With Heading -->
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> <a href="{{ route('cash-boxes.edit', ['id' => $cash_boxes->machine_id]) }}"> 
-                              <i class="icon wb-edit" aria-hidden="true"></i>  </a>Cash Boxes
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('cash-boxes.edit', ['id' => $cash_boxes->machine_id]) }}"> 
+                              <i class="icon wb-edit" aria-hidden="true"></i> <?php endif; ?>  </a>Cash Boxes
                         </h3> 
                     </div>
                     <div class="panel-body">
@@ -851,7 +859,8 @@
                 <div class="panel panel-bordered">
                     <div class="panel-heading">
                         
-                        <h3 class="panel-title"> <a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon wb-edit" aria-hidden="true"></i> </a>Product Definations</h3> 
+                        <h3 class="panel-title"> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon wb-edit" aria-hidden="true"></i> <?php endif; ?> </a>Product Definations</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
