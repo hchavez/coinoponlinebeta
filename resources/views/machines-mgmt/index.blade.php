@@ -49,11 +49,11 @@
                             </thead>
                             <tbody>
                             @foreach ($machines as $machine)                            
-<<<<<<< HEAD
-                                <tr class="clickable-row <?php if($machine->status == "0") {?> bg-danger <?php } ?>" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
-=======
+
+<!--                                <tr class="clickable-row <?php //if($machine->status == "0") {?> bg-danger <?php// } ?>" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">-->
+
                                 <tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}">
->>>>>>> c99596f5bdace2fc39214c1d4fc37ded4048e33c
+
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>
