@@ -52,7 +52,7 @@ class MachineManagementController extends Controller {
      */
     public function index() 
     {
-        $var = $this->permission();        
+        $var = $this->permission('7');        
         $data = Input::all();        
         if ( !$data ) :
             $from = $to = '';  
@@ -126,11 +126,11 @@ class MachineManagementController extends Controller {
         // $reservations = Reservation::whereBetween('reservation_from', [$from, $to])->get();
     }
     
-    public function permission()
+    public function permission($id)
     {                
         $userDetails = \AppHelper::currentUser();     
         $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
-        $permission = \AppHelper::userPermission(Auth::User()->id,'7');      
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
         $permit = array(
             'readAll' => \AppHelper::isReadAll($permission),
             'addAll' => \AppHelper::isAddAll($permission),
@@ -522,27 +522,64 @@ class MachineManagementController extends Controller {
     
     
     public function error($id) {
-                                         
-        $machine = $this->machinelogs($id);         
-        return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
+        $var = $this->permission('5');                                    
+        $machine = $this->machinelogs($id);  
+        
+        if($var['permit']['readAll']):
+            return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
+        
     }     
 
     public function win($id) {
-        
+        $var = $this->permission('5');
         $machine = $this->machinelogs($id);  
-        return view('machines-mgmt/win', ['machine' => $machine]);
+        
+        if($var['permit']['readAll']):
+            return view('machines-mgmt/win', ['machine' => $machine]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
 
     public function money($id) {        
-        
+        $var = $this->permission('5');
         $machine = $this->machinelogs($id);         
-        return view('machines-mgmt/money', ['id'=>$id, 'machine' => $machine]);
+        
+        if($var['permit']['readAll']):
+            return view('machines-mgmt/money', ['id'=>$id, 'machine' => $machine]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }   
 
     public function goals($id) {
-        
+        $var = $this->permission('5');
         $machine = $this->machinelogs($id);         
-        return view('machines-mgmt/goals', ['id'=>$id, 'machine' => $machine]);
+        
+        if($var['permit']['readAll']):
+            return view('machines-mgmt/goals', ['id'=>$id, 'machine' => $machine]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
     
     public function machinelogs($id){
@@ -737,7 +774,7 @@ class MachineManagementController extends Controller {
     public function edit($id) {
 
         //Get machine information
-
+        $var = $this->permission();
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no'
                                 , 'machine_models.machine_model as machine_model'
@@ -761,10 +798,19 @@ class MachineManagementController extends Controller {
         $machine_models = MachineModel::orderBy('machine_model', 'ASC')->get();
         $sites = Site::orderBy('site_name', 'ASC')->get();
         $themes = Theme::orderBy('theme', 'ASC')->get();
-
-        return view('machines-mgmt/edit', ['machine' => $machine, 'machine_types' => $machine_types,
+        
+        if($var['permit']['read']):
+            return view('machines-mgmt/edit', ['machine' => $machine, 'machine_types' => $machine_types,
                             'machine_models' => $machine_models, 'sites' => $sites, 'themes' => $themes])
                         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
+        
     }
 
     /**
