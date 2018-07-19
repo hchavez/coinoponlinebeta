@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Prize;
 use App\State;
+use Illuminate\Support\Facades\Auth;
 
 class PrizeController extends Controller
 {
@@ -26,8 +27,18 @@ class PrizeController extends Controller
      */
     public function index()
     {
+        $var = $this->permission();
         $prizes = Prize::orderBy('prize_name', 'asc')->get();
-        return view('prize/index', ['prizes' => $prizes]);
+        
+        if($var['permit']['readAll']):
+            return view('prize/index', ['prizes' => $prizes]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
 
     /**
@@ -39,6 +50,20 @@ class PrizeController extends Controller
     {
         $states = State::all();
         return view('prize/create', ['states' => $states]);
+    }
+    
+    public function permission()
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id,'18');      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission)
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
     }
 
     /**
