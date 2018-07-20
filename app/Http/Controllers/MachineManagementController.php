@@ -159,6 +159,7 @@ class MachineManagementController extends Controller {
             'sold_amount' => $request['sold_amount'],
             'sale_date' => $request['sold_date'],
             'version' => $request['version'],
+            'teamviewer' => $request['teamviewer'],
             'status' => '1'
         ]);
 
@@ -774,7 +775,8 @@ class MachineManagementController extends Controller {
             'machine_description' => $request['description'],
             'comments' => $request['comments'],
             'version' => $request['version'],
-             'status' => $request['status']
+             'status' => $request['status'],
+             'teamviewer' => $request['teamviewer']
         ];
 
         if (Machine::where('id', $id)->update($input)) {
@@ -1122,7 +1124,6 @@ class MachineManagementController extends Controller {
     public function machinegraphdata($id){
         
       $graphdataWinResultwithDate = null;
-
        
        $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
           
@@ -1130,7 +1131,6 @@ class MachineManagementController extends Controller {
         
             foreach ($userallgoalsresult as $temp) {
 
-                              
                 $asdate = strtotime($temp['date_created']) * 1000;
                 $aswiresult = $temp->winResult;
        
@@ -1140,11 +1140,11 @@ class MachineManagementController extends Controller {
                     $tempwinResult = 0 * 1;
                 }
                 
-                $asowedWin = round($temp->owedWin * -1,2);
-                $asexcessWin = round($temp->excessWin,2);
-                $asslipVolt = round($temp->slipVolt,2);
-                $asdropVolt = round($temp->dropVolt,2);
-                $aspkVolt = round($temp->pkVol,2);
+                $asowedWin = $temp->owedWin * -1;
+                $asexcessWin = $temp->excessWin;
+                $asslipVolt = $temp->slipVolt;
+                $asdropVolt = $temp->dropVolt;
+                $aspkVolt = $temp->pkVolt;
              
                 $graphdataWinResultwithDateresult[] = "[". $asdate .",". $asslipVolt .",". $asdropVolt .",". $aspkVolt .",". $tempwinResult .",". $asowedWin .",". $asexcessWin  ."]";
                 
@@ -1155,7 +1155,7 @@ class MachineManagementController extends Controller {
              $graphdataWinResultwithDate = null;
          }
          
-    return "[". $graphdataWinResultwithDate . "]";
+        return "[". $graphdataWinResultwithDate . "]";
     }
     
 

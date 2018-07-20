@@ -277,8 +277,8 @@ Route::post('dashboard/update_error_status', 'DashboardController@update_error_s
 Route::resource('theme-lists', 'ThemeListsController');
 Route::post('theme-lists/search', 'ThemeListsController@search')->name('theme-lists.search');
 
-Route::resource('product-lists', 'ProductListsController');
-Route::post('product-lists/search', 'ProductListsController@search')->name('product-lists.search');
+Route::resource('toy-lists', 'ToyListsController');
+Route::post('toy-lists/search', 'ToyListsController@search')->name('toy-lists.search');
 
 Route::resource('machine-settings', 'MachineSettingsController');
 Route::post('machine-settings/search', 'MachineSettingsController@search')->name('machine-settings.search');

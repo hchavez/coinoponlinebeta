@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ThemeList;
-use App\ProductList;
+use App\ToyList;
 
-class ProductListsController extends Controller
+class ToyListsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,8 +26,8 @@ class ProductListsController extends Controller
      */
     public function index()
     {
-       $productlists = ProductList::orderBy('product_name', 'asc')->get();
-       return view('product-lists/index', ['productlists' => $productlists]);
+       $toylists = ToyList::orderBy('toy_name', 'asc')->get();
+       return view('toy-lists/index', ['toylists' => $toylists]);
     }
 
     /**
@@ -37,9 +37,8 @@ class ProductListsController extends Controller
      */
     public function create()
     {
-        $productlists = ProductList::all();
-        $productlist = ProductList::orderBy('product_name')->get();
-        return view('product-lists/create', ['productlists' => $productlists,'productlist' => $productlist]);
+        $toylist = ToyList::orderBy('toy_name')->get();
+        return view('toy-lists/create', ['toylists' => $toylist]);
     }
 
     /**
@@ -50,16 +49,15 @@ class ProductListsController extends Controller
      */
     public function store(Request $request)
     {
-        ProductList::findOrFail($request['id']);
-        $this->validateInput($request);
-         ProductList::create([
-            'product_name' => $request['product_name'],
-            'product_code' => $request['product_code'],
+ 
+         ToyList::create([
+            'toy_name' => $request['toy_name'],
+            'toy_code' => $request['toy_code'],
             'status' => '1',
         ]);
                                 
 
-        return redirect()->intended('themes');
+        return redirect()->intended('toy-lists');
     }
 
     /**
@@ -81,14 +79,14 @@ class ProductListsController extends Controller
      */
     public function edit($id)
     {
-        $productlist = ProductList::find($id);
+        $toylist = ToyList::find($id);
         // Redirect to theme list if updating theme wasn't existed
         if ($theme == null || count($theme) == 0) {
-            return redirect()->intended('product-lists');
+            return redirect()->intended('toy-lists');
         }
 
-        $states = ProductList::all();
-        return view('product-lists/edit', ['productlist' => $productlist]);
+        $states = ToyList::all();
+        return view('toy-lists/edit', ['toylist' => $toylist]);
     }
 
     /**
@@ -100,18 +98,18 @@ class ProductListsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $productlist = ProductList::findOrFail($id);
-         $this->validate($request, ['theme_name' => 'required']);
+        $toylist = ToyList::findOrFail($id);
+    
         $input = [
-            'product_name' => $request['product_name'],
-            'product_code' => $request['product_code'],
+            'toy_name' => $request['toy_name'],
+            'toy_code' => $request['toy_code'],
             'updated_at' => now(),
             'status' => '1',
         ];
-        ProductList::where('id', $id)
+        ToyList::where('id', $id)
             ->update($input);
         
-        return redirect()->intended('product-lists');
+        return redirect()->intended('toy-lists');
     }
 
     /**
@@ -122,8 +120,8 @@ class ProductListsController extends Controller
      */
     public function destroy($id)
     {
-        ProductList::where('id', $id)->delete();
-         return redirect()->intended('product-lists');
+        ToyList::where('id', $id)->delete();
+         return redirect()->intended('toy-lists');
     }
 
     /**
@@ -134,15 +132,15 @@ class ProductListsController extends Controller
      */
     public function search(Request $request) {
         $constraints = [
-            'name' => $request['product_name']
+            'name' => $request['toy_name']
             ];
 
        $cities = $this->doSearchingQuery($constraints);
-       return view('product-lists/index', ['cities' => $cities, 'searchingVals' => $constraints]);
+       return view('toy-lists/index', ['cities' => $cities, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = ProductList::query();
+        $query = ToyList::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {

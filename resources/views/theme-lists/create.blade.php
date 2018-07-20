@@ -166,7 +166,7 @@
 
                                         <div class="form-group">
                                             <div class="form-group row">
-                                                <label class="col-md-6 form-control-label">retPWM: </label>
+                                                <label class="col-md-6 form-control-label">Product Code: </label>
                                                 <div class="col-md-6">
                                                   <select class="selectpicker form-control" name="productCode" id="productCode" data-live-search="true"> 
                                                             @foreach ($productlist as $productlist)
