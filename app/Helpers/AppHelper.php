@@ -78,5 +78,23 @@ class AppHelper
         return $access;
     }
         
+    public static function objectId($url){       
+        $uri_parts = explode('/', $url);
+        $uri_tail = end($uri_parts);
+        
+        if($uri_tail == 'site'): $id = '17';
+        elseif($uri_tail == 'dashboard'): $id = '2';
+        elseif($uri_tail == 'machine-management'): $id = '7';
+        elseif($uri_tail == 'prizes'): $id = '18';
+        elseif($uri_tail == 'themes'): $id = '19';
+        elseif($uri_tail == 'machine-error-reports'): $id = '15';
+        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
+        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
+        elseif($uri_tail == 'admin-panel'): $id = '13';
+        else: $id ='0';
+        endif;
+
+        return $id;         
+    }
 }
 

@@ -33,7 +33,9 @@ class MachineErrorReportController extends Controller
      */
     public function index(Request $request)
     {               
-        $var = $this->permission('15'); 
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID); 
         $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',

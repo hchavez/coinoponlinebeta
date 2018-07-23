@@ -28,6 +28,9 @@ class SiteController extends Controller
      */
     public function index()
     {
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url); 
+        //echo $end = end(explode('/', $url));
         $var = $this->permission();        
         $sites = DB::table('sites')
             ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')

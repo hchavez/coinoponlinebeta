@@ -27,6 +27,8 @@ class ThemeController extends Controller
      */
     public function index()
     {
+        $url = url()->current();
+        $path = \AppHelper::objectId($url); 
         $var = $this->permission();
         $themes = Theme::orderBy('theme', 'asc')->get();
         $themelists = ThemeList::orderBy('theme_name')->get();
