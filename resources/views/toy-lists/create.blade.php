@@ -7,29 +7,29 @@
         <div class="panel">             
              <div class="panel form-icons">
                 <div class="panel-heading">
-                  <h3 class="panel-title">Add Product Form</h3>
+                  <h3 class="panel-title">Add Toy Form</h3>
                 </div>
                  
-               <form class="form-horizontal" role="form" method="POST" action="{{ route('product-lists.store') }}" enctype="multipart/form-data">
+               <form class="form-horizontal" role="form" method="POST" action="{{ route('toy-lists.store') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="panel-body container-fluid">
                   <div class="row">
                     <div class="col-md-6 col-lg-3">
                       <div class="example-warp">
-                          <label class=" form-control-label">Product Name </label>
+                          <label class=" form-control-label">Toy Name </label>
                         <div class="example">
                           <div class="input-group">
-                            <input id="product_name" type="text" class="form-control" name="product_name" value="{{ old('product_name') }}">
+                            <input id="toy_name" type="text" class="form-control" name="toy_name" value="{{ old('toy_name') }}">
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                       <div class="example-warp">
-                          <label class=" form-control-label">Product Code </label>
+                          <label class=" form-control-label">Toy Code </label>
                         <div class="example">
                           <div class="input-group">
-                            <input id="product_code" type="text" class="form-control" name="product_code" value="{{ old('product_code') }}">
+                            <input id="toy_code" type="text" class="form-control" name="toy_code" value="{{ old('toy_code') }}">
                           </div>
                         </div>
                       </div>
@@ -41,7 +41,7 @@
                 
                   <center>
                     <button type="submit" class="btn btn-primary">
-                        Add New Product
+                        Add New Toy
                     </button></center>
 
 

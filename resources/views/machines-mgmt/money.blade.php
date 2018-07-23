@@ -52,15 +52,15 @@
                                     <label class="col-sm-12 control-label">Theme: {{ $machine->theme }}</label>
                                 </div>
                             </div>
-                            
-                             <div class="col-md-6">
+           
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label"> IP Address: {{ $machine->ip_address }}</label>
+                                    <label class="col-sm-12 control-label">Comments: {{ $machine->machine_comments }}  </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">Comments: {{ $machine->machine_comments }}  </label>
+                                    <label class="col-sm-12 control-label"> Teamviewer: {{ $machine->teamviewer }}</label>
                                 </div>
                             </div>
                         

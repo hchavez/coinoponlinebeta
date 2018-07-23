@@ -125,14 +125,14 @@
                                     </div>
                                     
 
-                                    <div class="form-group row{{ $errors->has('ip_address') ? ' has-error' : '' }}">
-                                        <label class="col-md-3 form-control-label">IP Address</label>
+                                    <div class="form-group row{{ $errors->has('teamviewer') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Teamviewer ID</label>
                                         <div class="col-md-9">
-                                            <input id="ip_address" type="text" class="form-control" name="ip_address" value="{{ $machine->ip_address }}" required>
+                                            <input id="teamviewer" type="text" class="form-control" name="teamviewer" value="{{ $machine->teamviewer }}" required>
 
-                                            @if ($errors->has('ip_address'))
+                                            @if ($errors->has('teamviewer'))
                                             <span class="help-block">
-                                                <strong>{{ $errors->first('ip_address') }}</strong>
+                                                <strong>{{ $errors->first('teamviewer') }}</strong>
                                             </span>
                                             @endif
                                         </div>

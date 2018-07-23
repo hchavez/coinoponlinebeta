@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\ThemeList;
-use App\ProductList;
+use App\ToyList;
 
 class ThemeListsController extends Controller
 {
@@ -26,8 +26,9 @@ class ThemeListsController extends Controller
      */
     public function index()
     {
+        $toylist = ToyList::orderBy('toy_name')->get();
        $themelists = ThemeList::orderBy('theme_name', 'asc')->get();
-       return view('theme-lists/index', ['themelists' => $themelists]);
+       return view('theme-lists/index', ['themelists' => $themelists,'toylist' => $toylist]);
     }
 
     /**
@@ -38,8 +39,8 @@ class ThemeListsController extends Controller
     public function create()
     {
         $themelists = ThemeList::all();
-        $productlist = ProductList::orderBy('product_name')->get();
-        return view('theme-lists/create', ['themelists' => $themelists,'productlist' => $productlist]);
+        $toylist = ToyList::orderBy('toy_name')->get();
+        return view('theme-lists/create', ['themelists' => $themelists,'toylist' => $toylist]);
     }
 
     /**

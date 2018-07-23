@@ -121,15 +121,30 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label">IP Address: </label>
                                     <div class="col-md-9">
-                                        <input id="ipaddress" type="text" class="form-control" name="ipaddress" value="{{ old('ipaddress') }}" required>
+                                        <input id="ipaddress" type="text" class="form-control" name="ipaddress" value="{{ old('ipaddress') }}">
 
                                         @if ($errors->has('ipaddress'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('ipaddress') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>-->
+                            
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Teamviewer ID: </label>
+                                    <div class="col-md-9">
+                                        <input id="teamviewer" type="text" class="form-control" name="teamviewer" value="{{ old('teamviewer') }}">
+
+                                        @if ($errors->has('teamviewer'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('teamviewer') }}</strong>
                                         </span>
                                         @endif
                                     </div>

@@ -16,6 +16,9 @@
                         <a class="list-group-item {{ Route::current()->getName() == 'theme-lists.index' ? 'list-group-item-action active' : '' }}" href="{{ url('theme-lists') }}">
                             <i class="icon wb-folder" aria-hidden="true"></i>Themes
                         </a>
+                        <a class="list-group-item {{ Route::current()->getName() == 'toy-lists.index' ? 'list-group-item-action active' : '' }}" href="{{ url('toy-lists') }}">
+                            <i class="icon wb-folder" aria-hidden="true"></i>Toys
+                        </a>
                         <a class="list-group-item {{ Route::current()->getName() == 'key.index' ? 'list-group-item-action active' : '' }}" href="{{ url('key') }}">
                             <i class="icon wb-folder" aria-hidden="true"></i>Key
                         </a>

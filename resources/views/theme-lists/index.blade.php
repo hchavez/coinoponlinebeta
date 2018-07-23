@@ -42,9 +42,11 @@
                         </thead>
                                 <tbody>
 
-                                     @foreach ($themelists as $theme)
+                              @foreach ($themelists as $theme)
                             <tr role="row">
-                                <td> {{ $theme->theme_name  }} </td>
+                                   <strong><td><a href="#" data-toggle="modal" data-target="#myModal{{$theme->id}}" style="text-decoration: none;">
+                                 {{ $theme->theme_name  }} 
+                                  </a></td></strong>
                                 <td> {{ $theme->avgWeight  }} </td>
                                 <td> {{ $theme->slipVoltage  }}</td>
                                 <td> {{ $theme->pkVoltage  }}</td>
@@ -94,6 +96,206 @@
         </div>
     </div>
 </div>
+
+
+
+@foreach ($themelists as $theme)
+<div id="myModal{{$theme->id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <form action="{{ URL::to('theme-lists/update') }}" method="post" id="status-update" >   
+       
+        <meta id="token" name="token" content="{ { csrf_token() } }">     
+        {{ csrf_field() }}   
+        <input type="hidden" name="themeid" value="{{ $theme->id }} ">
+        
+                            
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+            </div>
+            <div class="modal-body">
+                <div class="row row-lg">
+                                 <div class="col-md-12 col-lg-4">
+                                    <!-- Example Horizontal Form -->
+                                    <div class="example-wrap">
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">Theme Name: </label>
+                                                <div class="col-md-6">
+                                                     <input id="theme_name" type="text" class="form-control" name="theme_name" value="{{ $theme->theme_name }}"  style="margin-top: -10px !important;" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">Avg Weight: </label>
+                                                <div class="col-md-6">
+                                                    <input id="avgWeight" type="text" class="form-control" name="avgWeight" value="{{ $theme->avgWeight }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">slipVoltage: </label>
+                                                <div class="col-md-6">
+                                                  <input id="slipVoltage" type="text" class="form-control" name="slipVoltage" value="{{ $theme->slipVoltage }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                         <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">pkVoltage: </label>
+                                                <div class="col-md-6">
+                                                   <input id="pkVoltage" type="text" class="form-control" name="pkVoltage" value="{{ $theme->pkVoltage }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">retVoltage: </label>
+                                                <div class="col-md-6">
+                                                     <input id="retVoltage" type="text" class="form-control" name="retVoltage" value="{{ $theme->retVoltage }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <!-- End Example Horizontal Form -->
+                                </div>
+                                
+
+                                <div class="col-md-12 col-lg-4">
+                                    <!-- Example Horizontal Form -->
+                                    <div class="example-wrap">
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">slipPWM: </label>
+                                                <div class="col-md-6">
+                                                   <input id="slipPWM" type="text" class="form-control" name="slipPWM" value="{{ $theme->slipPWM }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">pkupPWM: </label>
+                                                <div class="col-md-6">
+                                                     <input id="pkupPWM" type="text" class="form-control" name="pkupPWM" value="{{ $theme->pkupPWM }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">retPWM: </label>
+                                                <div class="col-md-6">
+                                                  <input id="retPWM" type="text" class="form-control" name="retPWM" value="{{ $theme->retPWM }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                         <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">diffPickRetPWM: </label>
+                                                <div class="col-md-6">
+                                                    <input id="diffPickRetPWM" type="text" class="form-control" name="diffPickRetPWM" value="{{ $theme->diffPickRetPWM }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                   
+
+
+
+                                    </div>
+                                    <!-- End Example Horizontal Form -->
+                                </div>
+
+
+
+                                <div class="col-md-12 col-lg-4">
+
+                                    <!-- Example Horizontal Form -->
+                                    <div class="example-wrap">  
+
+                                           <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">totalToyPurchaseCost: </label>
+                                                <div class="col-md-6">
+                                                    <input id="totalToyPurchaseCost" type="text" class="form-control" name="totalToyPurchaseCost" value="{{ $theme->totalToyPurchaseCost }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">playsPerWin: </label>
+                                                <div class="col-md-6">
+                                                   <input id="playsPerWin" type="text" class="form-control" name="playsPerWin" value="{{ $theme->playsPerWin }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                          <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">stockLeft: </label>
+                                                <div class="col-md-6">
+                                                    <input id="stockLeft" type="text" class="form-control" name="stockLeft" value="{{ $theme->stockLeft }}"  required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group row">
+                                                <label class="col-md-6 form-control-label">Product Code: </label>
+                                                <div class="col-md-6">
+                                                  <select class="selectpicker form-control" name="productCode" id="productCode" data-live-search="true"> 
+                                                          
+                                                             @foreach ($toylist as $toy)
+                                                            <option {{ $theme->productCode == $toy->id ? 'selected' : ''}} value="{{$toy->id}}">{{ $toy->toy_name }}</option>
+                                                            @endforeach
+                                                
+                                                </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </div>
+            </div>
+            <div class="modal-footer">
+                 <input class="btn btn-primary" type="submit" value="Update" />
+                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+            </div>
+            
+        </div>
+    </form>
+    </div>
+</div>
+@endforeach
+
+
 
 @endsection
 

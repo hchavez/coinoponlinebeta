@@ -6,7 +6,7 @@
     <div class="page-content">
         <div class="panel">
             <div class="panel-heading">
-                <h3 class="panel-title">Update Product</h3>
+                <h3 class="panel-title">Update Toy</h3>
             </div>
             <div class="panel-body">
 
@@ -14,30 +14,30 @@
                  
 
                     <div class="row"><div class="col-sm-12">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('product-lists.update', ['id' => $route->id]) }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('toy-lists.update', ['id' => $route->id]) }}">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class="form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('toy_name') ? ' has-error' : '' }}">
 
                             <div class="col-md-6">
-                                <input id="product_name" type="text" class="form-control" name="product_name" value="{{ $productlist->product_name }}" >
+                                <input id="toy_name" type="text" class="form-control" name="toy_name" value="{{ $toylist->toy_name }}" >
 
-                                @if ($errors->has('product_name'))
+                                @if ($errors->has('toy_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('product_name') }}</strong>
+                                        <strong>{{ $errors->first('toy_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
                         
-                         <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
+                         <div class="form-group{{ $errors->has('toy_code') ? ' has-error' : '' }}">
 
                             <div class="col-md-6">
-                                <input id="product_code" type="text" class="form-control" name="product_code" value="{{ $productlist->product_code }}" >
+                                <input id="toy_code" type="text" class="form-control" name="toy_code" value="{{ $toylist->toy_code }}" >
 
-                                @if ($errors->has('product_code'))
+                                @if ($errors->has('toy_code'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('product_code') }}</strong>
+                                        <strong>{{ $errors->first('toy_code') }}</strong>
                                     </span>
                                 @endif
                             </div>
