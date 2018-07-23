@@ -20,13 +20,40 @@ class FinancialReportsGraphController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {                            
+    {                   
+        $var = $this->permission('14');
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');
         $totalSwipe = $this->getTotal('swipeIn');
       
-        return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]);        
+             
+        if($var['permit']['read']):
+            return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]); 
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }   
+    
+    public function permission($id)
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission),
+            'read' => \AppHelper::isRead($permission),
+            'edit' => \AppHelper::isEdit($permission),
+            'delete' => \AppHelper::isDelete($permission),
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
+    }
     
     public function getTotal($type){
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));        

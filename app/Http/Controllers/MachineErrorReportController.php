@@ -33,6 +33,7 @@ class MachineErrorReportController extends Controller
      */
     public function index(Request $request)
     {               
+        $var = $this->permission('15'); 
         $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
@@ -132,9 +133,36 @@ class MachineErrorReportController extends Controller
         $online = count($onlineLists);
         $offline = count($offlineLists);
         $ttlMachines = $online + $offline; 
-        return view('machine-error-reports/index', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
+        
+        
+        if($var['permit']['readAll']):
+            return view('machine-error-reports/index', ['machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
         
     }  
+    
+    public function permission($id)
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission),
+            'read' => \AppHelper::isRead($permission),
+            'edit' => \AppHelper::isEdit($permission),
+            'delete' => \AppHelper::isDelete($permission),
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
+    }
    
     public function history(){
         $today = date("Y-m-d H:i:s");

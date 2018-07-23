@@ -13,7 +13,7 @@
               </div>
               <div class="counter counter-sm text-left">
                 <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".online-modal-lg" data-toggle="modal">Machine Online</a></span>          </div>
+                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".online-modal-lg" data-toggle="modal"><?php endif; ?>Machine Online<?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@
               </div>
               <div class="counter counter-sm text-left">
                 <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".example-modal-lg" data-toggle="modal">Machine Offline </a></span>          </div>
+                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".example-modal-lg" data-toggle="modal"><?php endif; ?>Machine Offline <?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
               </div>
               <div class="counter counter-sm text-left">
                 <div class="counter-number-group"><span class="counter-icon blue-600 mr-5"><i class="wb-stats-bars"></i></span>
-                    <span class="counter-number-related"><a href="" data-target=".total-modal-lg" data-toggle="modal">Total Machines</a></span>          </div>
+                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".total-modal-lg" data-toggle="modal"><?php endif; ?>Total Machines<?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
               </div>
             </div>
           </div>
@@ -249,8 +249,10 @@
                                         <td>{{ $machinelog->machine_type}}</td>
                                         <td class="hidden-sm-down"><span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span></td>
                                         <td class="hidden-sm-down">
-                                            <strong><a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
-
+                                            <strong>
+                                            <?php if($permit['editAll']): ?>    
+                                            <a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
+                                            <?php endif; ?>
                                             @if ($machinelog->errortype == '2') 
                                             <span class="badge badge-warning">Warning!</span> 
                                             @endif @if ($machinelog->errortype == '3')
@@ -262,7 +264,7 @@
                                             @else
                                             <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                             @endif
-                                             </a></strong>
+                                            <?php if($permit['editAll']): ?>  </a><?php endif; ?></strong>
                                         </td>
                                         <td class="hidden-sm-down">
                                             @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else

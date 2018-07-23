@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Theme;
 use App\ThemeList;
+use Illuminate\Support\Facades\Auth;
 
 class ThemeController extends Controller
 {
@@ -26,9 +27,19 @@ class ThemeController extends Controller
      */
     public function index()
     {
-       $themes = Theme::orderBy('theme', 'asc')->get();
-       $themelists = ThemeList::orderBy('theme_name')->get();
-       return view('themes/index', ['themes' => $themes,'themelists' => $themelists]);
+        $var = $this->permission();
+        $themes = Theme::orderBy('theme', 'asc')->get();
+        $themelists = ThemeList::orderBy('theme_name')->get();
+        
+        if($var['permit']['readAll']):
+            return view('themes/index', ['themes' => $themes,'themelists' => $themelists]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
 
     /**
@@ -40,6 +51,20 @@ class ThemeController extends Controller
     {
         $states = Theme::all();
         return view('themes/create', ['states' => $states]);
+    }
+    
+    public function permission()
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id,'19');      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission)
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
     }
 
     /**

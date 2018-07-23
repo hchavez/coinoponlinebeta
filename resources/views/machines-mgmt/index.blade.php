@@ -49,10 +49,7 @@
                             </thead>
                             <tbody>
                             @foreach ($machines as $machine)                            
-
-                                <tr class="clickable-row <?php if($machine->status == "0") { ?> bg-danger <?php } ?>" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->id]) }}">
-
-                                <!--<tr class="clickable-row" role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}">-->
+                            <tr <?php echo ($permit['readAll'])? 'class="clickable-row"' : ''; ?> role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}"  <?php if($machine->status == '0') { ?> style="background-color: #FF6666; color:  #fff;" <?php } ?>>
 
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
