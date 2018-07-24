@@ -31,10 +31,12 @@ class DashboardController extends Controller
      */
     public function index()
     {        
-        //echo $currerntUserRole = Auth::User()->id;       
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);      
+        
         $userDetails = \AppHelper::currentUser();     
         $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
-        $permission = \AppHelper::userPermission(Auth::User()->id,'2');      
+        $permission = \AppHelper::userPermission(Auth::User()->id, $objectID);      
         $permit = array(
             'readAll' => \AppHelper::isReadAll($permission),
             'addAll' => \AppHelper::isAddAll($permission),

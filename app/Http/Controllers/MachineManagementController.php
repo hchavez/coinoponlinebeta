@@ -52,6 +52,8 @@ class MachineManagementController extends Controller {
      */
     public function index() 
     {
+        $url = url()->current();
+        $path = \AppHelper::objectId($url);
         $var = $this->permission('7');        
         $data = Input::all();        
         if ( !$data ) :
@@ -293,6 +295,7 @@ class MachineManagementController extends Controller {
     public function show($id) {
 
         //Get machine information
+
         $var = $this->permission('7');
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'

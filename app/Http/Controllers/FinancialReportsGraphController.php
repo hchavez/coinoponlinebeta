@@ -20,7 +20,9 @@ class FinancialReportsGraphController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {                   
+    {                 
+        $url = url()->current();
+        $path = \AppHelper::objectId($url); 
         $var = $this->permission('14');
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');

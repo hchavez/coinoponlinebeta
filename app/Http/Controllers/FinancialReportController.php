@@ -32,8 +32,9 @@ class FinancialReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {               
-                
+    {       
+        $url = url()->current();
+        $path = \AppHelper::objectId($url); 
         $dateRange = Input::get('dateFilter');
         
         $from = date("Y-m-d H:i:s",strtotime("-3 month"));

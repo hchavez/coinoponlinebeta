@@ -25,6 +25,8 @@ class AdminPanelController extends Controller
      */
     public function index()
     {
+        $url = url()->current();
+        $path = \AppHelper::objectId($url); 
         $var = $this->permission('13');  
         
         if($var['permit']['read']):
