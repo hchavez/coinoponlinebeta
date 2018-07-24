@@ -475,10 +475,7 @@
                                             // create the chart
                                             Highcharts.stockChart('containermergegraph', {
 
-                                                rangeSelector: {
-                                                            selected: 4
-                                                },
-                                                
+                                            rangeSelector: { buttons: [{type: 'month',count: 1,text: '1m'},{type: 'month',count: 3,text: '3m'},{type: 'month',count: 6,text: '6m'},{type: 'ytd',count: 1,text: 'YTD'},{type: 'year',count: 1,text: '1y'},{type: 'all',text: 'All'}],selected: 4},
                                                  plotOptions: {
                                                         series: {
                                                             showInNavigator: true,
@@ -513,19 +510,11 @@
                                             ],
 //
                                                 tooltip: {
-                                                   // split: true,
+                                                    split: true,
                                                     //valueDecimals: 2,
                                                 },
 
-//                                                tooltip: {            
-//                                                  //  changeDecimals: 2,
-//                                                    valueDecimals: 2,
-//                                                    shared: true,
-//                                                    useHTML: true,
-//                                                    headerFormat: '<small>{point.key}</small><table>',
-//                                                    pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' + '<td style="text-align: right"><b>{point.y} </b></td></tr>',
-//                                                    footerFormat: '</table>'
-//                                                },
+//                                          
 
                                                 series: [{
                                                     type: 'spline', name: 'SlipVolt', data: slipVolt,

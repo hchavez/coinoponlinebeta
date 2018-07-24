@@ -1206,7 +1206,7 @@ class MachineManagementController extends Controller {
         
       $graphdataWinResultwithDate = null;
      
-       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->orderBy('date_created', 'desc')->get();
+       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
           
      if ($userallgoalsresult->count() > 0) {
         
