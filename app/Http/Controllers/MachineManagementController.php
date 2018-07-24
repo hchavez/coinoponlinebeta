@@ -173,7 +173,7 @@ class MachineManagementController extends Controller {
 
         Machine::create([
             'database_id' => '1',
-            'ip_address' => $request['ipaddress'],
+            //'ip_address' => $request['ipaddress'],
             'machine_description' => $request['description'],
             'comments' => $request['comments'],
             'machine_type_id' => $request['machine_type'],
@@ -1064,7 +1064,7 @@ class MachineManagementController extends Controller {
             'machine_model' => 'required',
             'site' => 'required',
             'serial_no' => 'required',
-            'ipaddress' => 'required'
+            'teamviewer' => 'required'
         ]);
     }
 
