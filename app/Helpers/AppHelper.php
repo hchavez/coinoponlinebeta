@@ -101,6 +101,8 @@ class AppHelper
         elseif($uri_tail == 'claw-settings'): $id = '6';
         elseif($uri_tail == 'game-settings'): $id = '8';
         elseif($uri_tail == 'machine-accounts'): $id = '9';
+        elseif($uri_tail == 'cash-boxes'): $id = '10';
+        elseif($uri_tail == 'product-definitions'): $id = '11';
         else: $id ='0';
         endif;        
         

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\ProductDefinitions;
 use Session;
 use URL;
@@ -84,16 +85,28 @@ class ProductDefinitionsController extends Controller
      */
     public function edit($id)
     {
-          $machine_prod_def = DB::table('product_definitions')
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID); 
+        
+        $machine_prod_def = DB::table('product_definitions')
                          ->select('product_definitions.*','machine_id as id')
                         ->where('machine_id', $id)->first();
 
         if ($machine_prod_def == null || count($machine_prod_def) == 0) {
             return redirect()->intended('/product-definitions');
         }
-
-        return view('product-definitions/edit', ['machine' => $machine_prod_def])
+        
+        if($var['permit']['read']):
+            return view('product-definitions/edit', ['permit' => $var['permit'], 'machine' => $machine_prod_def])
                ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
                                 
     }
 
@@ -168,4 +181,22 @@ class ProductDefinitionsController extends Controller
         'name' => 'required|max:60|unique:site'
     ]);
     }
+    
+    public function permission($id)
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission),
+            'read' => \AppHelper::isRead($permission),
+            'edit' => \AppHelper::isEdit($permission),
+            'delete' => \AppHelper::isDelete($permission),
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
+    }
+    
 }

@@ -39,7 +39,7 @@
                                     <label for="coin1_total_in" class="col-md-4 control-label">Coin1 Total In</label>
 
                                     <div class="col-md-6">
-                                        <input id="coin1_total_in" type="text" class="form-control" name="coin1_total_in" value="{{ $machine->coin1_total_in }}" required autofocus>
+                                        <input id="coin1_total_in" type="text" class="form-control" name="coin1_total_in" value="{{ $machine->coin1_total_in }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('coin1_total_in'))
                                         <span class="help-block">
@@ -56,7 +56,7 @@
                                     <label for="coin2_total_in" class="col-md-4 control-label">Coin2 Total In</label>
 
                                     <div class="col-md-6">
-                                        <input id="coin2_total_in" type="text" class="form-control" name="coin2_total_in" value="{{ $machine->coin2_total_in }}" required>
+                                        <input id="coin2_total_in" type="text" class="form-control" name="coin2_total_in" value="{{ $machine->coin2_total_in }}" required <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('coin2_total_in'))
                                         <span class="help-block">
@@ -70,7 +70,7 @@
                                     <label for="coin3_total_in" class="col-md-4 control-label">Coin3 Total In</label>
 
                                     <div class="col-md-6">
-                                        <input id="coin3_total_in" type="text" class="form-control" name="coin3_total_in" value="{{ $machine->coin3_total_in }}" required>
+                                        <input id="coin3_total_in" type="text" class="form-control" name="coin3_total_in" value="{{ $machine->coin3_total_in }}" required <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('coin3_total_in'))
                                         <span class="help-block">
@@ -84,7 +84,7 @@
                                     <label for="coin4_total_in" class="col-md-4 control-label">Coin4 Total In</label>
 
                                     <div class="col-md-6">
-                                        <input id="coin4_total_in" type="text" class="form-control" name="coin4_total_in" value="{{ $machine->coin4_total_in }}" required>
+                                        <input id="coin4_total_in" type="text" class="form-control" name="coin4_total_in" value="{{ $machine->coin4_total_in }}" required <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('coin4_total_in'))
                                         <span class="help-block">
@@ -167,7 +167,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                             Update Cash Boxes
                                         </button>
                                     </div>
