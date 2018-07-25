@@ -98,6 +98,7 @@ class AppHelper
         elseif($uri_tail == 'financial-reports-graph'): $id = '14';
         elseif($uri_tail == 'admin-panel'): $id = '13';
         elseif($uri_tail == 'machine-settings'): $id = '20';
+        elseif($uri_tail == 'claw-settings'): $id = '6';
         else: $id ='0';
         endif;        
         
