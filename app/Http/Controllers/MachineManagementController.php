@@ -53,8 +53,8 @@ class MachineManagementController extends Controller {
     public function index() 
     {
         $url = url()->current();
-        $path = \AppHelper::objectId($url);
-        $var = $this->permission('7');        
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);        
         $data = Input::all();        
         if ( !$data ) :
             $from = $to = '';  
@@ -295,11 +295,9 @@ class MachineManagementController extends Controller {
     public function show($id) {
 
         //Get machine information
-<<<<<<< HEAD
-        $var = $this->permission('');
-=======
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
         $var = $this->permission('7');
->>>>>>> a0f7114fbadcb76fb2ca2455f22ee43d43791e23
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
@@ -529,6 +527,9 @@ class MachineManagementController extends Controller {
     
     
     public function error($id) {
+        
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
         $var = $this->permission('5');                                    
         $machine = $this->machinelogs($id);  
         
