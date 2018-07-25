@@ -39,7 +39,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Play Index</label>
 
                                     <div class="col-md-6">
-                                        <input id="playIndex" type="text" class="form-control" name="playIndex" value="{{ $machine->playIndex }}" required autofocus>
+                                        <input id="playIndex" type="text" class="form-control" name="playIndex" value="{{ $machine->playIndex }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('playIndex'))
                                         <span class="help-block">
@@ -54,7 +54,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Owed Win</label>
 
                                     <div class="col-md-6">
-                                        <input id="owedWin" type="text" class="form-control" name="owedWin" value="{{ $machine->owedWin }}" required autofocus>
+                                        <input id="owedWin" type="text" class="form-control" name="owedWin" value="{{ $machine->owedWin }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('owedWin'))
                                         <span class="help-block">
@@ -68,7 +68,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Excess Win</label>
 
                                     <div class="col-md-6">
-                                        <input id="excessWin" type="text" class="form-control" name="excessWin" value="{{ $machine->excessWin }}" required autofocus>
+                                        <input id="excessWin" type="text" class="form-control" name="excessWin" value="{{ $machine->excessWin }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>> 
 
                                         @if ($errors->has('excessWin'))
                                         <span class="help-block">
@@ -82,7 +82,7 @@
                                     <label for="xTime" class="col-md-4 control-label">gameLeft</label>
 
                                     <div class="col-md-6">
-                                        <input id="gameLeft" type="text" class="form-control" name="gameLeft" value="{{ $machine->gameLeft }}" required autofocus>
+                                        <input id="gameLeft" type="text" class="form-control" name="gameLeft" value="{{ $machine->gameLeft }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('gameLeft'))
                                         <span class="help-block">
@@ -96,7 +96,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Game Time</label>
 
                                     <div class="col-md-6">
-                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus>
+                                        <input id="gameTime" type="text" class="form-control" name="gameTime" value="{{ $machine->gameTime }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('gameTime'))
                                         <span class="help-block">
@@ -211,7 +211,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                             Update Game Settings
                                         </button>
                                     </div>
