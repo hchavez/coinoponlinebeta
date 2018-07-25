@@ -1,6 +1,5 @@
 @extends('layouts.appmachine-left-template')
 @section('content')
-
 <div class="page-main">
 
     <div class="page-content">
@@ -41,7 +40,7 @@
                                     <label for="xSpeed" class="col-md-4 control-label">xSpeed</label>
 
                                     <div class="col-md-6">
-                                        <input id="xSpeed" type="text" class="form-control" name="xSpeed" value="{{ $machine->xSpeed }}" required>
+                                        <input id="xSpeed" type="text" class="form-control" name="xSpeed" value="{{ $machine->xSpeed }}" required <?php echo ($permit['edit']!=1)? 'disabled': ''; ?> >
 
                                         @if ($errors->has('xSpeed'))
                                         <span class="help-block">
@@ -55,7 +54,7 @@
                                     <label for="lastname" class="col-md-4 control-label">ySpeed</label>
 
                                     <div class="col-md-6">
-                                        <input id="ySpeed" type="text" class="form-control" name="ySpeed" value="{{ $machine->ySpeed }}" required>
+                                        <input id="ySpeed" type="text" class="form-control" name="ySpeed" value="{{ $machine->ySpeed }}" required <?php echo ($permit['edit']!=1)? 'disabled': ''; ?> >
 
                                         @if ($errors->has('ySpeed'))
                                         <span class="help-block">
@@ -71,7 +70,7 @@
                                     <label for="zSpeed" class="col-md-4 control-label">zSpeed</label>
 
                                     <div class="col-md-6">
-                                        <input id="zSpeed" type="text" class="form-control" name="zSpeed" value="{{ $machine->zSpeed }}" required>
+                                        <input id="zSpeed" type="text" class="form-control" name="zSpeed" value="{{ $machine->zSpeed }}" required <?php echo ($permit['edit']!=1)? 'disabled': ''; ?> >
 
                                         @if ($errors->has('zSpeed'))
                                         <span class="help-block">
@@ -83,7 +82,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled': ''; ?> >
                                             Update Machine Settings
                                         </button>
                                     </div>

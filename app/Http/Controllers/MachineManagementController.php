@@ -173,7 +173,7 @@ class MachineManagementController extends Controller {
 
         Machine::create([
             'database_id' => '1',
-            'ip_address' => $request['ipaddress'],
+            //'ip_address' => $request['ipaddress'],
             'machine_description' => $request['description'],
             'comments' => $request['comments'],
             'machine_type_id' => $request['machine_type'],
@@ -295,8 +295,10 @@ class MachineManagementController extends Controller {
     public function show($id) {
 
         //Get machine information
+
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
+
         $var = $this->permission('7');
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
@@ -530,7 +532,7 @@ class MachineManagementController extends Controller {
         
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
-        $var = $this->permission('5');                                    
+        $var = $this->permission($objectID);                                    
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
@@ -546,7 +548,9 @@ class MachineManagementController extends Controller {
     }     
 
     public function win($id) {
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
@@ -561,7 +565,9 @@ class MachineManagementController extends Controller {
     }
 
     public function money($id) {        
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);         
         
         if($var['permit']['readAll']):
@@ -576,7 +582,9 @@ class MachineManagementController extends Controller {
     }   
 
     public function goals($id) {
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);         
         
         if($var['permit']['readAll']):
@@ -1068,7 +1076,7 @@ class MachineManagementController extends Controller {
             'machine_model' => 'required',
             'site' => 'required',
             'serial_no' => 'required',
-            'ipaddress' => 'required'
+            'teamviewer' => 'required'
         ]);
     }
 
@@ -1213,7 +1221,7 @@ class MachineManagementController extends Controller {
         
       $graphdataWinResultwithDate = null;
      
-       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->orderBy('date_created', 'desc')->get();
+       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
           
      if ($userallgoalsresult->count() > 0) {
         

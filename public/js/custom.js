@@ -2,6 +2,14 @@
 // A $( document ).ready() block.
 $( document ).ready(function() {
     
+    var base_urllink = window.location.origin;
+
+    if (base_urllink == "http://localhost"){
+         var base_url = "http://localhost/coinoponlinebeta/public/machine-management/ajax_getmachinemodel/";
+       }else{
+        var base_url = "https://www.ascentri.com/machine-management/ajax_getmachinemodel/";
+    }
+    
     $.ajaxSetup({
         headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -13,7 +21,7 @@ $( document ).ready(function() {
            
             if(machinetype_id) {
                 $.ajax({
-                    url: 'https://www.ascentri.com/machine-management/ajax_getmachinemodel/'+machinetype_id,
+                    url: base_url+machinetype_id,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {                     
