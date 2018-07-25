@@ -40,7 +40,7 @@
                                     <label for="xTime" class="col-md-4 control-label">ipAdd</label>
 
                                     <div class="col-md-6">
-                                        <input id="ipAdd" type="text" class="form-control" name="ipAdd" value="{{ $machine->ipAdd }}" required autofocus>
+                                        <input id="ipAdd" type="text" class="form-control" name="ipAdd" value="{{ $machine->ipAdd }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('ipAdd'))
                                         <span class="help-block">
@@ -54,7 +54,7 @@
                                     <label for="xTime" class="col-md-4 control-label">total dollar in</label>
 
                                     <div class="col-md-6">
-                                        <input id="total_dollar_in" type="text" class="form-control" name="total_dollar_in" value="{{ $machine->total_dollar_in }}" required autofocus>
+                                        <input id="total_dollar_in" type="text" class="form-control" name="total_dollar_in" value="{{ $machine->total_dollar_in }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('total_dollar_in'))
                                         <span class="help-block">
@@ -68,7 +68,7 @@
                                     <label for="xTime" class="col-md-4 control-label">total won</label>
 
                                     <div class="col-md-6">
-                                        <input id="total_won" type="text" class="form-control" name="total_won" value="{{ $machine->total_won }}" required autofocus>
+                                        <input id="total_won" type="text" class="form-control" name="total_won" value="{{ $machine->total_won }}" required autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('total_won'))
                                         <span class="help-block">
@@ -81,7 +81,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                             Update Machine Account
                                         </button>
                                     </div>
