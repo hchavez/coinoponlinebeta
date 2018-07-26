@@ -1,4 +1,4 @@
-@extends('layouts.app-left-template')
+@extends('layouts.app-template')
 @section('content')
 
 <div class="page-main">
@@ -16,10 +16,10 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
             <div class="panel-body">
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row">
-                        <div class="col-sm-12"> 
+                        <div class="col-sm-6"> 
                             <h4 class="example-title">User Details</h4>                               
                             <div class="example table-responsive">
-                              <table class="table">                                    
+                              <table class="table table-bordered text-left">                                    
                                 <tbody>
                                     @foreach ($users as $user)   
                                     <?php //print_r($user); ?>
@@ -33,22 +33,24 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                               </table>                                
                             </div>                             
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="panel">            
-            <div class="panel-body">
-                <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-                    <div class="row">
-                        <div class="col-sm-7"> 
+                        
+                        <div class="col-sm-6">                             
+                            <a href="{{ url('user-mgmt') }}">
+                                <button type="button" class="btn btn-sm btn-icon btn-inverse btn-round" style="float: right;" data-toggle="tooltip" data-original-title="All Users">
+                                    <i class="icon wb-list-bulleted" aria-hidden="true"></i>
+                                </button>          
+                            </a>
+                            <a href="{{ url('') }}">
+                                <button type="button" class="btn btn-sm btn-icon btn-inverse btn-round" style="float: right;" data-toggle="tooltip" data-original-title="Edit User">
+                                    <i class="icon wb-edit" aria-hidden="true"></i>
+                                </button>          
+                            </a>
                             <div id="success_msg">
                                 @if(session()->has('message'))
                                     <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                                 @endif
                             </div>
-                            <h4 class="example-title">Update user role</h4>
+                            <h4 class="example-title">Update user role</h4>                            
                             <p>Select user role</p>
                             <div class="example table-responsive">
                                 <form role="form" method="GET" action="{{ url('set_permission') }}">
@@ -65,7 +67,7 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                                     <button type="submit" class="btn btn-block btn-primary">Update</button>
                                     </div>
                                 </form>
-                            </div>                             
+                            </div> 
                         </div>
                     </div>
                 </div>
