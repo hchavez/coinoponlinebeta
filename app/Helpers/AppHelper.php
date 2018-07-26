@@ -94,8 +94,7 @@ class AppHelper
         elseif($uri_tail == 'prizes'): $id = '18';
         elseif($uri_tail == 'themes'): $id = '19';
         elseif($uri_tail == 'machine-error-reports'): $id = '15';
-        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
-        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
+        elseif($uri_tail == 'financial-reports-graph'): $id = '14';       
         elseif($uri_tail == 'admin-panel'): $id = '13';
         elseif($uri_tail == 'machine-settings'): $id = '20';
         elseif($uri_tail == 'claw-settings'): $id = '6';
