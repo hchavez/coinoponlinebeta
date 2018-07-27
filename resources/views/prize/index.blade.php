@@ -41,6 +41,7 @@
 </div>
 <style>
 .select2-container{width:100% !important;}
+.select2-container .select2-choice > .select2-chosen{color:#333 !important;}
 </style>
 <script>
 $(document).ready(function() {

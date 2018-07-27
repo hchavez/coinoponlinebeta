@@ -38,7 +38,12 @@ class UserManagementController extends Controller
     {
         $users = User::get();       
         $currerntUserRole = Auth::User()->id;
-        return view('users-mgmt/index', ['users' => $users,'userRole' =>$currerntUserRole]);
+        $get_user = DB::table('users')
+                    ->select('users.*','users.id as userID', 'users_role.*')
+                    ->leftJoin('users_role', 'users.id', '=', 'users_role.user_id') 
+                    ->get(); 
+           
+        return view('users-mgmt/index', ['users' => $users,'userRole' =>$currerntUserRole,'getUser' => $get_user]);
     }
 
     /**
@@ -78,8 +83,7 @@ class UserManagementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        
+    {       
         $users = DB::table('users')->where('id', '=', $id)->get();
         $usersGroup = DB::table('users_group')->get();
         $usersRole = DB::table('users_role')->where('user_id', '=', $id)->first();
@@ -92,9 +96,10 @@ class UserManagementController extends Controller
                             , 'log_activities.ip as ip', 'log_activities.agent as agent', 'log_activities.updated_at as updated_at')
                     ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id')                                        
                     ->where('log_activities.user_id', $id);  
-        $act = $get_user->latest('log_activities.updated_at')->get();       
+        $act = $get_user->latest('log_activities.updated_at')->get(); 
+        $status = \AppHelper::getRole($id);  
         
-        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'group'=>$usersGroup, 'currentRole'=>$usersRole]);
+        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'group'=>$usersGroup, 'currentRole'=>$usersRole, 'status' => $status]);
     }
     
     public function set_permission(Request $request)
@@ -102,6 +107,17 @@ class UserManagementController extends Controller
         $id = Input::get('user_id');
         $input = [
             'user_role' => Input::get('user_role')            
+        ];
+        if (UsersRole::where('user_id', $id)->update($input)) {
+            return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));
+        }
+    }
+    
+    public function update_status(Request $request)
+    {        
+        $id = Input::get('user_id');
+        $input = [
+            'status' => Input::get('status')            
         ];
         if (UsersRole::where('user_id', $id)->update($input)) {
             return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));

@@ -82,7 +82,8 @@ class RegisterController extends Controller
                 'user_role' => '5',
                 'created_at' => $today,
                 'updated_at' => $today,
-                'updated_by' => '0'
+                'updated_by' => '0',
+                'status' => '1'
             ]);
         endif;
         

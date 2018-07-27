@@ -236,6 +236,7 @@ Route::post('user-management/search', 'UserManagementController@search')->name('
 Route::resource('user-mgmt', 'UserManagementController');
 Route::get('user-mgmt/show/{id}', 'UserManagementController@show');
 Route::get('set_permission', 'UserManagementController@set_permission');
+Route::get('update_status', 'UserManagementController@update_status');
 
 Route::resource('employee-management', 'EmployeeManagementController');
 Route::post('employee-management/search', 'EmployeeManagementController@search')->name('employee-management.search');

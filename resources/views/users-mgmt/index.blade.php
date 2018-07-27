@@ -23,19 +23,21 @@
                                 <th>Email</th>                              
                                 <th>Date Created</th>
                                 <th>Last Login</th>
+                                <th>Status</th>
                                 <th>View</th>
                             </tr>
                         </thead>
                         <tbody>                           
-                            @foreach ($users as $user)
+                            @foreach ($getUser as $user)
                                 <tr role="row">
                                   <td style="width:20%;text-transform: capitalize;">{{ $user->firstname }} {{ $user->lastname }}</td>
                                   <td style="width:20%;">{{ $user->username }}</td>
                                   <td style="width:20%;">{{ $user->email }}</td>                              
                                   <td style="width:20%;">{{ $user->created_at }}</td>
                                   <td style="width:20%;">{{ $user->updated_at }}</td> 
+                                  <td style="width:20%;"><?php echo ($user->status=='1')? 'Active' : 'Disabled'; ?></td>
                                   <td style="width:20%;">
-                                    <a href="{{ route('user-mgmt.show', ['id' => $user->id]) }}">
+                                    <a href="{{ route('user-mgmt.show', ['id' => $user->userID]) }}">
                                         <div class="float-left">
                                             <button type="button" class="btn btn-primary btn-sm ladda-button" data-style="slide-right" data-plugin="ladda">
                                               <span class="ladda-label">View<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
@@ -65,6 +67,7 @@
 </div>
 <style>
 .select2-container{width:100% !important;}
+.select2-container .select2-choice > .select2-chosen{color:#333 !important;}
 </style>
 <script>
 $(document).ready(function() {
@@ -93,7 +96,7 @@ $(document).ready(function() {
     
     //Filter customization   
     $('#userDiv select').each(function(i) {
-        var label = ['Name', 'Username', 'Email', 'Date Created', 'Last Login', 'View'];
+        var label = ['Name', 'Username', 'Email', 'Date Created', 'Last Login','Status', 'View'];
         $(this).attr('id', 'filter'+(i+1));        
         $("#filter" + (i+1)).select2({
             placeholder: label[i]
