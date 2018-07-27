@@ -281,7 +281,7 @@
                                                  array_push($countarray, $count); 
                                                  ?>
                                             <?php }
-                                                endforeach;?>
+                                                endforeach; ?>
                                                  <span class="text-muted"><?php echo sizeof($countarray);?></span>
                                         </td>
                                     </tr>

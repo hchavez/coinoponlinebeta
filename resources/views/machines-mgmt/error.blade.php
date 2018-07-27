@@ -92,7 +92,7 @@
                                         <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
                                         <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
                                         <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Status</th>
+                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Instances</th>
                                     </tr>
                                 </thead>
                                 

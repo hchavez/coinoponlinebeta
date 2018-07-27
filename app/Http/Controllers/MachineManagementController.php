@@ -75,7 +75,7 @@ class MachineManagementController extends Controller {
                             ->where('machines.status','<>', '1111');
                         
             $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
-        else:   
+        else:  
             $dateRange = Input::get('dateRange');
             $today = date('m/d/Y');
             $from = $to = ''; 
@@ -1209,8 +1209,7 @@ class MachineManagementController extends Controller {
         
       $graphdataWinResultwithDate = null;
      
-       $userallgoalsresult = GraphLogs::select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
-          
+       $userallgoalsresult = GraphLogs::orderBy('date_created')->select('machine_id','winResult','owedWin','excessWin','dropVolt','slipVolt','pkVolt','retVolt','counter','date_created')->where('machine_id','=', $id)->where('testPlay', 'play')->get();
      if ($userallgoalsresult->count() > 0) {
         
             foreach ($userallgoalsresult as $temp) {
