@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>                           
                             @foreach ($getUser as $user)
-                                <tr role="row">
+                                <tr role="row" style="color:<?php echo ($user->status!='1')? '#ffc2c2' : 'none'; ?>">
                                   <td style="width:20%;text-transform: capitalize;">{{ $user->firstname }} {{ $user->lastname }}</td>
                                   <td style="width:20%;">{{ $user->username }}</td>
                                   <td style="width:20%;">{{ $user->email }}</td>                              
