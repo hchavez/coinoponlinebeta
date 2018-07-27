@@ -333,7 +333,7 @@
 
 
                                             yAxis: {
-                                                     min: -10,
+                                                     min: -20,
                                                      max: 50,
                                                      tickInterval: 5,
                                                      title: {
@@ -490,7 +490,7 @@
                                                 },
 
                                                 yAxis: [{
-                                                        min: -10,
+                                                        min: -20,
                                                      max: 40,
                                                      tickInterval: 5,
                                                     labels: {
