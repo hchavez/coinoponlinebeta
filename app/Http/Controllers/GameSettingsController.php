@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\GameSettings;
 use Session;    
 use URL;
@@ -79,16 +80,28 @@ class GameSettingsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);  
+        
         $game_settings = DB::table('game_settings')
                         ->select('game_settings.*','machine_id as id')
                         ->where('machine_id', $id)->first();
-
         
         if ($game_settings == null || count($game_settings) == 0) {
             return redirect()->intended('/game-settings');
         }
-         return view('game-settings/edit', ['machine' => $game_settings])
+         
+        if($var['permit']['read']):
+            return view('game-settings/edit', ['permit' => $var['permit'], 'machine' => $game_settings])
                         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
          
     }
 
@@ -165,6 +178,23 @@ class GameSettingsController extends Controller {
             'ySpeed' => 'required|numeric',
             'zSpeed' => 'required|numeric'
         ]);
+    }
+    
+    public function permission($id)
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission),
+            'read' => \AppHelper::isRead($permission),
+            'edit' => \AppHelper::isEdit($permission),
+            'delete' => \AppHelper::isDelete($permission),
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
     }
 
 }

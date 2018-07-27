@@ -8,15 +8,15 @@
     <div class="panel-body"> 
       <div id="prize_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
             <div class="row">
-                <div class="col-md-12 text-left">
+                <!--div class="col-md-12 text-left">
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
-                </div>
+                </div-->
                 <div class="col-sm-12">
                     <div id="filterDiv" class="machine-custom-width"><br/></div>
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
+                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="prizeDiv" role="grid" aria-describedby="exampleTableSearch_info" >
                        
                         <thead>
-                            <tr role="row">
+                            <tr role="row"  style="border-top: 1px solid #e4eaec;">
                                 <th>Prize Code</th>	
                                 <th>Prize Name</th>	
                                 <th>Cost</th>	
@@ -30,8 +30,6 @@
                                 <td> {{ $prize->cost  }}</td>
                                 <?php if($prize->active == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
                                 <td> <?php echo $active; ?> </td>
-                              
-                          
                             </tr>
                             @endforeach
                         </tbody>                        
@@ -41,5 +39,49 @@
         </div>
     </div>
 </div>
+<style>
+.select2-container{width:100% !important;}
+.select2-container .select2-choice > .select2-chosen{color:#333 !important;}
+</style>
+<script>
+$(document).ready(function() {
+    $('#prizeDiv').DataTable( {
+        pageLength: 20,
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5'],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.header()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    });
+    
+    //Filter customization   
+    $('#prizeDiv select').each(function(i) {
+        var label = ['Prize Code', 'Prize Name', 'Cost', 'Active'];
+        $(this).attr('id', 'filter'+(i+1));        
+        $("#filter" + (i+1)).select2({
+            placeholder: label[i]
+        });        
+    });  
+   
+});
+</script>
+
 @endsection
 

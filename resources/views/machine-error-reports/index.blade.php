@@ -313,6 +313,7 @@
                         </div>              
                         <!-- End Example Table-section -->
                     </div>
+                    <?php //print_r($machinelogss); ?>
                     <div class="col-sm-12">
                         <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
                             {{ $machinelogs->links() }}

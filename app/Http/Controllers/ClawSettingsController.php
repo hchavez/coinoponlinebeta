@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\ClawSettings;
 use Session;    
 use URL;
@@ -74,7 +75,10 @@ class ClawSettingsController extends Controller {
      */
     public function edit($id) {
         //$machine = DB::table('claw_settings')->where('machine_id', $id)->first();
-
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);    
+        
         $machine = DB::table('claw_settings')
                         ->select('claw_settings.*', 'machine_id as id')
                         ->where('machine_id', $id)->first();
@@ -82,9 +86,17 @@ class ClawSettingsController extends Controller {
         if ($machine == null || count($machine) == 0) {
             return redirect()->intended('/claw-settings');
         }
-
-        return view('claw-settings/edit', ['machine' => $machine])
+        
+        if($var['permit']['read']):
+            return view('claw-settings/edit', ['permit' => $var['permit'],'machine' => $machine])
                         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
     }
 
     /**
@@ -168,6 +180,23 @@ class ClawSettingsController extends Controller {
         $this->validate($request, [
             'name' => 'required|max:60|unique:site'
         ]);
+    }
+    
+    public function permission($id)
+    {                
+        $userDetails = \AppHelper::currentUser();     
+        $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
+        $permission = \AppHelper::userPermission(Auth::User()->id, $id);      
+        $permit = array(
+            'readAll' => \AppHelper::isReadAll($permission),
+            'addAll' => \AppHelper::isAddAll($permission),
+            'editAll' => \AppHelper::isEditAll($permission),
+            'read' => \AppHelper::isRead($permission),
+            'edit' => \AppHelper::isEdit($permission),
+            'delete' => \AppHelper::isDelete($permission),
+        );        
+        $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
+        return $permitDetails;
     }
 
 }

@@ -53,8 +53,8 @@ class MachineManagementController extends Controller {
     public function index() 
     {
         $url = url()->current();
-        $path = \AppHelper::objectId($url);
-        $var = $this->permission('7');        
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);        
         $data = Input::all();        
         if ( !$data ) :
             $from = $to = '';  
@@ -296,6 +296,9 @@ class MachineManagementController extends Controller {
 
         //Get machine information
 
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+
         $var = $this->permission('7');
         $machine = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no', 'machine_models.machine_model as machine_model'
@@ -526,7 +529,10 @@ class MachineManagementController extends Controller {
     
     
     public function error($id) {
-        $var = $this->permission('5');                                    
+        
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);                                    
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
@@ -542,7 +548,9 @@ class MachineManagementController extends Controller {
     }     
 
     public function win($id) {
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
@@ -557,7 +565,9 @@ class MachineManagementController extends Controller {
     }
 
     public function money($id) {        
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);         
         
         if($var['permit']['readAll']):
@@ -572,7 +582,9 @@ class MachineManagementController extends Controller {
     }   
 
     public function goals($id) {
-        $var = $this->permission('5');
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);
         $machine = $this->machinelogs($id);         
         
         if($var['permit']['readAll']):

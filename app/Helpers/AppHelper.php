@@ -79,21 +79,37 @@ class AppHelper
     }
         
     public static function objectId($url){       
-        $uri_parts = explode('/', $url);
+        $uri_parts = explode('/', $url);        
         $uri_tail = end($uri_parts);
-        
+                
+        if(count($uri_parts) >= 6):   
+            $uri_tail = $uri_parts[5];
+        else:
+            $uri_tail = end($uri_parts);
+        endif;
+               
         if($uri_tail == 'site'): $id = '17';
         elseif($uri_tail == 'dashboard'): $id = '2';
-        elseif($uri_tail == 'machine-management'): $id = '7';
+        elseif($uri_tail == 'machine-management'): $id = '7';        
         elseif($uri_tail == 'prizes'): $id = '18';
         elseif($uri_tail == 'themes'): $id = '19';
         elseif($uri_tail == 'machine-error-reports'): $id = '15';
-        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
-        elseif($uri_tail == 'financial-reports-graph'): $id = '14';
+        elseif($uri_tail == 'financial-reports-graph'): $id = '14';       
         elseif($uri_tail == 'admin-panel'): $id = '13';
+        elseif($uri_tail == 'machine-settings'): $id = '20';
+        elseif($uri_tail == 'claw-settings'): $id = '6';
+        elseif($uri_tail == 'game-settings'): $id = '8';
+        elseif($uri_tail == 'machine-accounts'): $id = '9';
+        elseif($uri_tail == 'cash-boxes'): $id = '10';
+        elseif($uri_tail == 'product-definitions'): $id = '11';
         else: $id ='0';
+        endif;        
+        
+        $mlogs = (count($uri_parts) > 6)?  $uri_parts[6] : '';        
+        if($mlogs == 'error' || $mlogs == 'money' || $mlogs == 'win' || $mlogs == 'goals'): 
+            $id = '5';
         endif;
-
+                
         return $id;         
     }
 }

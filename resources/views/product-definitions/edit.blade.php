@@ -39,7 +39,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Coin Per Play</label>
 
                                     <div class="col-md-6">
-                                        <input id="coinPerPlay" type="text" class="form-control" name="coinPerPlay" value="{{ $machine->coinPerPlay }}"  autofocus>
+                                        <input id="coinPerPlay" type="text" class="form-control" name="coinPerPlay" value="{{ $machine->coinPerPlay }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('coinPerPlay'))
                                         <span class="help-block">
@@ -55,7 +55,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Stock Left</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockLeft" type="text" class="form-control" name="stockLeft" value="{{ $machine->stockLeft }}"  autofocus>
+                                        <input id="stockLeft" type="text" class="form-control" name="stockLeft" value="{{ $machine->stockLeft }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('stockLeft'))
                                         <span class="help-block">
@@ -69,7 +69,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Stock Added</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockAdded" type="text" class="form-control" name="stockAdded" value="{{ $machine->stockAdded }}"  autofocus>
+                                        <input id="stockAdded" type="text" class="form-control" name="stockAdded" value="{{ $machine->stockAdded }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('stockAdded'))
                                         <span class="help-block">
@@ -83,7 +83,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Stock Removed</label>
 
                                     <div class="col-md-6">
-                                        <input id="stockRemoved" type="text" class="form-control" name="stockRemoved" value="{{ $machine->stockRemoved }}"  autofocus>
+                                        <input id="stockRemoved" type="text" class="form-control" name="stockRemoved" value="{{ $machine->stockRemoved }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('stockRemoved'))
                                         <span class="help-block">
@@ -97,7 +97,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Total Toy Purchase Cost </label>
 
                                     <div class="col-md-6">
-                                        <input id="ttlPurCost" type="text" class="form-control" name="ttlPurCost" value="{{ $machine->ttlPurCost }}"  autofocus>
+                                        <input id="ttlPurCost" type="text" class="form-control" name="ttlPurCost" value="{{ $machine->ttlPurCost }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('ttlPurCost'))
                                         <span class="help-block">
@@ -123,7 +123,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                             Update Product Diff
                                         </button>
                                     </div>

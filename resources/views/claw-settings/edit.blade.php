@@ -68,7 +68,7 @@
                                     <label for="max_PWM" class="col-md-4 control-label">Max PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="max_PWM" type="text" class="form-control" name="max_PWM" value="{{ $machine->max_PWM }}"   autofocus>
+                                        <input id="max_PWM" type="text" class="form-control" name="max_PWM" value="{{ $machine->max_PWM }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?> >
 
                                         @if ($errors->has('max_PWM'))
                                         <span class="help-block">
@@ -82,7 +82,7 @@
                                     <label for="min_PWM" class="col-md-4 control-label">Min PWM</label>
 
                                     <div class="col-md-6">
-                                        <input id="min_PWM" type="text" class="form-control" name="min_PWM" value="{{ $machine->min_PWM }}"   autofocus>
+                                        <input id="min_PWM" type="text" class="form-control" name="min_PWM" value="{{ $machine->min_PWM }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('min_PWM'))
                                         <span class="help-block">
@@ -95,7 +95,7 @@
                                     <label for="voltDecRetPercentage" class="col-md-4 control-label">Retaining Add-On Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="voltDecRetPercentage" type="text" class="form-control" name="voltDecRetPercentage" value="{{ $machine->voltDecRetPercentage }}"   autofocus>
+                                        <input id="voltDecRetPercentage" type="text" class="form-control" name="voltDecRetPercentage" value="{{ $machine->voltDecRetPercentage }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('voltDecRetPercentage'))
                                         <span class="help-block">
@@ -109,7 +109,7 @@
                                     <label for="plusPick" class="col-md-4 control-label">Pick Up Add-On Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="plusPick" type="text" class="form-control" name="plusPick" value="{{ $machine->plusPick }}"   autofocus>
+                                        <input id="plusPick" type="text" class="form-control" name="plusPick" value="{{ $machine->plusPick }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('plusPick'))
                                         <span class="help-block">
@@ -139,7 +139,7 @@
                                     <label for="incVolt" class="col-md-4 control-label">Inc Volt</label>
 
                                     <div class="col-md-6">
-                                        <input id="incVolt" type="text" class="form-control" name="incVolt" value="{{ $machine->incVolt }}"   autofocus>
+                                        <input id="incVolt" type="text" class="form-control" name="incVolt" value="{{ $machine->incVolt }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('incVolt'))
                                         <span class="help-block">
@@ -151,7 +151,7 @@
                                 <div class="form-group{{ $errors->has('decVolt') ? ' has-error' : '' }}">
                                     <label for="decVolt" class="col-md-4 control-label">Dec Volt</label>
                                     <div class="col-md-6">
-                                        <input id="decVolt" type="text" class="form-control" name="decVolt" value="{{ $machine->decVolt }}"   autofocus>
+                                        <input id="decVolt" type="text" class="form-control" name="decVolt" value="{{ $machine->decVolt }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                         @if ($errors->has('decVolt'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('decVolt') }}</strong>
@@ -175,7 +175,7 @@
                                 <div class="form-group{{ $errors->has('voltSupply ') ? ' has-error' : '' }}">
                                     <label for="incVolt" class="col-md-4 control-label">Volt Supply </label>
                                     <div class="col-md-6">
-                                        <input id="voltSupply" type="text" class="form-control" name="voltSupply" value="{{ $machine->voltSupply  }}"  autofocus>
+                                        <input id="voltSupply" type="text" class="form-control" name="voltSupply" value="{{ $machine->voltSupply  }}"  autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                         @if ($errors->has('voltSupply '))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('voltSupply ') }}</strong>
@@ -186,7 +186,7 @@
                                 <div class="form-group{{ $errors->has('insuffVoltInc') ? ' has-error' : '' }}">
                                     <label for="insuffVoltInc" class="col-md-4 control-label">Insufficient Volt Inc </label>
                                     <div class="col-md-6">
-                                        <input id="insuffVoltInc" type="text" class="form-control" name="insuffVoltInc" value="{{ $machine->insuffVoltInc }}"   autofocus>
+                                        <input id="insuffVoltInc" type="text" class="form-control" name="insuffVoltInc" value="{{ $machine->insuffVoltInc }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                         @if ($errors->has('insuffVoltInc'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('insuffVoltInc') }}</strong>
@@ -198,7 +198,7 @@
                                     <label for="voltReso" class="col-md-4 control-label">Volt Reso </label>
 
                                     <div class="col-md-6">
-                                        <input id="voltReso" type="text" class="form-control" name="voltReso" value="{{ $machine->voltReso }}"   autofocus>
+                                        <input id="voltReso" type="text" class="form-control" name="voltReso" value="{{ $machine->voltReso }}"   autofocus <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
 
                                         @if ($errors->has('voltReso'))
                                         <span class="help-block">
@@ -291,7 +291,7 @@
                                 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" <?php echo ($permit['edit']!=1)? 'disabled' : ''; ?>>
                                             Update Claw Settings
                                         </button>
                                     </div>
