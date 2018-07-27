@@ -17,7 +17,7 @@
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="userDiv" role="grid" aria-describedby="exampleTableSearch_info" >
                         
                         <thead>
-                            <tr role="row">
+                            <tr role="row"  style="border-top: 1px solid #e4eaec;">
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>Email</th>                              
@@ -91,14 +91,13 @@ $(document).ready(function() {
         }
     });
     
-    //Filter customization
-   
+    //Filter customization   
     $('#userDiv select').each(function(i) {
-        //var label = ['Name', 'Username', 'Email', 'Date Created', 'Last Login', 'View'];
-        $(this).attr('id', 'filter'+(i+1));
+        var label = ['Name', 'Username', 'Email', 'Date Created', 'Last Login', 'View'];
+        $(this).attr('id', 'filter'+(i+1));        
         $("#filter" + (i+1)).select2({
-            placeholder: "Select"
-        });         
+            placeholder: label[i]
+        });        
     });  
    
 });

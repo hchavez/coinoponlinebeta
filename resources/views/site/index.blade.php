@@ -9,15 +9,15 @@
         <div id="site_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
             <div class="row">
                
-                <div class="col-md-12 text-left">
+                <!--div class="col-md-12 text-left">
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
-                </div>
+                </div-->
                     
                 <div class="col-sm-12">                    
                     <div id="filterDiv"><br/></div>
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" >
+                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="siteDiv" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>
-                            <tr role="row">
+                            <tr role="row" style="border-top: 1px solid #e4eaec;">
                                 <th>Route</th>	
                                 <th>Area</th>	
                                 <th>SiteType</th>	
@@ -27,8 +27,10 @@
                                 <th>Street</th>
                                 <th>Suburb</th>
                                 <th>City</th>
+                            </tr>                            
                         </thead>
                         <tbody>                           
+                            
                             @foreach ($sites as $site)
                             <tr role="row">
                                 <td> {{ $site->route_name  }} </td>
@@ -39,8 +41,7 @@
                                 <td> {{ $site->site_name }} </td>
                                 <td> {{ $site->street }} </td>
                                 <td> {{ $site->suburb }} </td>   
-                                <td> {{ $site->city }} </td>
-                          
+                                <td> {{ $site->city }} </td>                          
                             </tr>
                             @endforeach
                         </tbody>
@@ -51,5 +52,48 @@
         </div>
     </div>
 </div>
+<style>
+.select2-container{width:100% !important;}
+</style>
+<script>
+$(document).ready(function() {
+    $('#siteDiv').DataTable( {
+        pageLength: 20,
+        dom: 'Bfrtip',
+        buttons: ['excelHtml5'],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.header()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+    });
+    
+    //Filter customization   
+    $('#siteDiv select').each(function(i) {
+        var label = ['Route', 'Area', 'SiteType', 'SiteGroup', 'State', 'Site','Street','Suburb','City'];
+        $(this).attr('id', 'filter'+(i+1));        
+        $("#filter" + (i+1)).select2({
+            placeholder: label[i]
+        });        
+    });  
+   
+});
+</script>
+
 @endsection
 
