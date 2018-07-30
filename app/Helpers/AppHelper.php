@@ -84,7 +84,7 @@ class AppHelper
         //print_r($uri_parts);        
         
         
-        if(count($uri_parts) >= 4):   
+        if(count($uri_parts) > 3):   
             $uri_tail = $uri_parts[3];        
         else:
             $uri_tail = end($uri_parts);
