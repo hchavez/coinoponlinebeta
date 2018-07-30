@@ -81,7 +81,7 @@ class AppHelper
     public static function objectId($url){       
         $uri_parts = explode('/', $url);        
         $uri_tail = end($uri_parts);
-        print_r($uri_parts);        
+        //print_r($uri_parts);        
         if(count($uri_parts) >= 6):   
             $uri_tail = $uri_parts[5];
         else:
