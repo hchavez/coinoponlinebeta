@@ -82,15 +82,14 @@ class AppHelper
         $uri_parts = explode('/', $url);        
         $uri_tail = end($uri_parts);
         //print_r($uri_parts);        
-        if(count($uri_parts) >= 6):   
-            $uri_tail = $uri_parts[5];
-        elseif(count($uri_parts) >= 4):
-            $uri_tail = $uri_parts[3];
+        
+        
+        if(count($uri_parts) >= 4):   
+            $uri_tail = $uri_parts[3];        
         else:
             $uri_tail = end($uri_parts);
-        endif;
-        
-        
+        endif;        
+
                
         if($uri_tail == 'site'): $id = '17';
         elseif($uri_tail == 'dashboard'): $id = '2';
