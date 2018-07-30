@@ -81,13 +81,22 @@ class AppHelper
     public static function objectId($url){       
         $uri_parts = explode('/', $url);        
         $uri_tail = end($uri_parts);
-        //print_r($uri_parts);        
-        if(count($uri_parts) >= 3):   
-            $uri_tail = $uri_parts[3];
+        
+        if( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ):
+            $parts = '6';
+            $part2 = '5';
+        else:
+            $parts = '3';
+            $part2 = '3';
+        endif;
+               
+        if(count($uri_parts) >= $parts):   
+            $uri_tail = $uri_parts[$part2];
         else:
             $uri_tail = end($uri_parts);
         endif;
-               
+        
+        
                
         if($uri_tail == 'site'): $id = '17';
         elseif($uri_tail == 'dashboard'): $id = '2';
@@ -106,7 +115,7 @@ class AppHelper
         else: $id ='0';
         endif;        
         
-        $mlogs = (count($uri_parts) > 3)?  $uri_parts[3] : $uri_parts[4];        
+        $mlogs = (count($uri_parts) > $parts)?  $uri_parts[$parts] : $uri_parts[4];        
         if($mlogs == 'error' || $mlogs == 'money' || $mlogs == 'win' || $mlogs == 'goals'): 
             $id = '5';       
         endif;
