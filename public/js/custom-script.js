@@ -23,6 +23,7 @@ $(document).ready(function(){
     //filter table
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
+        order: [[ 8, "desc" ]],
         buttons: [{
                 extend: 'excelHtml5',
                 title: '',
