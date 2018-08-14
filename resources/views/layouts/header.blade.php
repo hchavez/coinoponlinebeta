@@ -376,11 +376,11 @@
                                                     <span class="site-menu-title">Machine Error Reports</span>
                                                 </a>
                                             </li>
-                                            <!--li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('financial-reports') }}">
-                                                    <span class="site-menu-title">Financial Reports</span>
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="{{ url('machine-error-reports/advam-watchlist') }}">
+                                                    <span class="site-menu-title">Advam Watchlist</span>
                                                 </a>
-                                            </li-->  
+                                            </li>
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('financial-reports-graph') }}">
                                                     <span class="site-menu-title">Financial Reports</span>
