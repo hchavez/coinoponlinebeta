@@ -378,7 +378,7 @@
                                             </li>
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('machine-error-reports/advam-watchlist') }}">
-                                                    <span class="site-menu-title">Advam Watchlist</span>
+                                                    <span class="site-menu-title">Advam Watchlists</span>
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">
