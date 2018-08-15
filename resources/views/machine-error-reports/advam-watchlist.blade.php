@@ -172,7 +172,7 @@
                                         <th style="width:8.3%;" class="col_serial">Name & Serial No</th>
                                         <th style="width:12%" class="col_error">Error Message</th>
                                         <th style="width:16.52%" class="col_site">Site</th>
-                                        <th style="width:5%;" class="">Instances</th>
+                                        <th style="width:5%;" class=""></th>
                                        </tr> 
                                 </thead> 
                                     
@@ -180,11 +180,11 @@
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
                                         <td class="text-center">
-                                            <?php foreach ($machinelogsgroup as $machineloggroup):
-                                                if ($machinelog->error == $machineloggroup->error){  ?>
-                                                <i class="table-section-arrow"></i>
-                                            <?php break; }
-                                            endforeach; ?>
+                                            <?php //foreach ($machinelogsgroup as $machineloggroup):
+                                                //if ($machinelog->error == $machineloggroup->error){  ?>
+                                                <!--<i class="table-section-arrow"></i>-->
+                                            <?php //break; }
+//                                            endforeach; ?>
                                         </td>
                                         <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
                                         <td class="font-weight-medium">{{ $machinelog->machine_model}}</td>
@@ -216,12 +216,12 @@
                                                  ?>
                                             <?php }
                                                 endforeach; ?>
-                                                 <span class="text-muted"><?php echo sizeof($countarray);?></span>
+                                            <span class="text-muted"><?php //echo sizeof($countarray);?></span>
                                         </td>
                                     </tr>
                                 </tbody>
 
-                                <tbody> 
+                                    <tbody> 
                                      @foreach ($machinelogsgroup as $machineloggroup)
                                         @if ($machineloggroup->error == $machinelog->error)
                                           <tr>
