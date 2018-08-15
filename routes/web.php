@@ -272,6 +272,7 @@ Route::get('machinegraphdata/{id}', 'MachineManagementController@machinegraphdat
 
 Route::resource('machine-reports', 'MachineReportsController');
 
+
 /**********************************************************************************/
 Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
     
@@ -408,6 +409,8 @@ Route::get('messages/log', 'MessagesController@log');
 Route::resource('machine-error-reports', 'MachineErrorReportController');
 Route::get('history', 'MachineErrorReportController@history');
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
+Route::get('errorLogsByID', 'MachineErrorReportController@errorLogsByID');
+Route::get('getErrorLogs', 'MachineErrorReportController@getErrorLogs');
 
 Route::resource('financial-reports', 'FinancialReportController');
 Route::resource('financial-reports-graph', 'FinancialReportsGraphController');

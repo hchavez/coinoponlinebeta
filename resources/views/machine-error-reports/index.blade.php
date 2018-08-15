@@ -90,7 +90,7 @@
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
-                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Attention</span> </a>         </div>
+                <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-minus-circle"></i></span><a id="errorTypeFilter" href="{{ url('machine-error-reports?error_msg=1') }}"><span class="counter-number-related">Attention</span> </a>         </div>
               </div>
             </div>
           </div>
@@ -157,7 +157,7 @@
                               @endif
                           </div>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter">
+                            <form role="form" method="GET" class="error-list-form" id="formFilter" style="border-top: 1px solid #e4eaec;padding:0.5em 0;">
                                 <div style="width:1.5%;" class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns ky_date">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left">     
@@ -220,7 +220,7 @@
                                 
                                 
                            </form>
-                            <table class="table table-hover" id="machineErrorReport">                                    
+                            <table class="table table-hover" id="machineErrorReport" style="border-top: 1px solid #e4eaec;">                                    
                                 <thead>
                                     <tr role="row">                                                
                                         <th style="width:1%;" class="col_empty"></th>
@@ -314,10 +314,30 @@
                         <!-- End Example Table-section -->
                     </div>
                     <?php //print_r($machinelogss); ?>
-                    <div class="col-sm-12">
+                    <div class="col-sm-12">                                     
                         <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                            {{ $machinelogs->links() }}
-                        </div>                            
+                            @if ($machinelogs->lastPage() > 1)
+                                <?php
+                                    $start = $machinelogs->currentPage() - 3; // show 3 pagination links before current
+                                    $end = $machinelogs->currentPage() + 3; // show 3 pagination links after current
+                                    if($start < 1) $start = 1; // reset start to 1
+                                    if($end >= $machinelogs->lastPage() ) $end = $machinelogs->lastPage(); // reset end to last page
+                                    $con = (isset($_GET['error_msg']))? '?error_msg='.$_GET['error_msg'].'&' : '?';                                    
+                                    $url = ( $_SERVER['REMOTE_ADDR']== '::1')? 'http://localhost/coinoponlinebeta/public/' : 'https://www.ascentri.com/';
+                                ?>
+                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == 1) ? ' disabled' : '' }}" href="{{ $machinelogs->url(1) }}"><span>«</span></a>
+                                @if($start>1)
+                                    <a class="btn btn-xs" href="{{ $machinelogs->url(1) }}">{{1}}</a> ...
+                                @endif
+                                @for ($i = $start; $i <= $end; $i++)
+                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $i) ? ' active' : '' }}" href="<?php echo $url.'machine-error-reports'.$con.'page='; ?>{{$i}}">{{$i}}</a>
+                                @endfor
+                                @if($end<$machinelogs->lastPage())
+                                   ... <a class="btn btn-xs" href="<?php echo $url.'machine-error-reports'.$con.'page='.$machinelogs->lastPage(); ?>">{{$machinelogs->lastPage()}}</a>
+                                @endif
+                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $machinelogs->lastPage()) ? ' disabled' : '' }}" href="{{ $machinelogs->url($machinelogs->currentPage()+1) }}"><span>»</span></a>
+                            @endif
+                        </div>   <br>                         
                     </div>
                 </div>
                 <!-- End Team Total Completed -->
@@ -526,7 +546,7 @@ $(document).ready(function() {
     $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
-    });
+    });  
     
     $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
     $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   

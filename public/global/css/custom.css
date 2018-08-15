@@ -133,12 +133,12 @@ table.dataTable td {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
-table.dataTable th:nth-child(5),
+/*table.dataTable th:nth-child(5),
 table.dataTable td:nth-child(5),
 table.dataTable th:nth-child(8),
 table.dataTable td:nth-child(8){
     width:7%;
-}
+}*/
 .table-bordered{
     margin:0;
 }
