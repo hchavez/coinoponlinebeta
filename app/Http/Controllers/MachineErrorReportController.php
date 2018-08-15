@@ -147,7 +147,7 @@ class MachineErrorReportController extends Controller
             );
         endif;
         
-    }  
+    }
     
     public function permission($id)
     {                
@@ -392,6 +392,144 @@ class MachineErrorReportController extends Controller
         endif;       
         
     }
+    
+     /**
+     * Show Advam error watchlist page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    public function advam_watchlist()
+     {               
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID); 
+        $currerntUserRole = Auth::User()->id;
+        
+        $machinelogsadvam = DB::table('machines')
+            ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
+                    'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
+                    'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
+                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
+                    'machines.comments as comments','errorlogs.log_id as log_id',
+                    'errorlogs.error as error','errorlogs.type as errortype',
+                    'errorlogs.created_at as date_created','errorlogs.id as error_id')
+            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+            ->leftJoin('state', 'sites.state', '=', 'state.id')
+            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit']);
+            
+        
+        
+        $dateRange = Input::get('dateRange');
+        
+        $from = $to = '';        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);            
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $plusoneday = $explode_to[1]+ 1;
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);   
+            
+             $machinelogsadvam = $machinelogsadvam->whereBetween('errorlogs.created_at', [$from, $to]);
+        else:
+            $machinelogsadvam = $machinelogsadvam->whereDate('errorlogs.created_at', '=', Carbon::today());
+        endif;
+        
+        if(!empty(Input::get())):
+            $model = Input::get('machine_model');
+            $type = Input::get('machine_type');
+            $error_msg = Input::get('error_msg');
+            $machine_site = Input::get('machine_site');
+            $startdate = Input::get('startdate');
+            $enddate = Input::get('enddate');
+            if($model):
+                $machinelogsadvam = $machinelogsadvam->where(function($query) use ($model){                    
+                    $query->where('machine_models.machine_model', '=', $model);               
+                })->orderBy('date_created','desc');            
+            endif;
+            
+            if($type):
+                $machinelogsadvam = $machinelogsadvam->where(function($query) use ($type){                    
+                    $query->where('machine_types.machine_type', '=', $type);               
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            if($error_msg):
+                $machinelogsadvam = $machinelogsadvam->where(function($query) use ($error_msg){                    
+                    $query->where('type', '=', $error_msg);               
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            if($machine_site):
+                $machinelogsadvam = $machinelogsadvam->where(function($query) use ($machine_site){                    
+                    $query->where('site_name', '=', $machine_site);               
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            if($enddate):
+                $machinelogsadvam = $machinelogsadvam->where(function($query) use ($from,$to){                    
+                    $query->whereBetween('errorlogs_history.created_at', [$from, $to]);          
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            
+        endif;
+                
+        $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.type','asc')->paginate(30);
+        
+        //$machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.type','asc')->toSql();
+     
+        
+        $machinelogsgroup =  DB::table('errorlogs_list')
+            ->select('errorlogs_list.*')            
+            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
+            ->orderBy('type','asc')
+            ->get();
+         
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+        $machineType = MachineType::orderBy('created_at', 'desc')->get();
+                
+        $filterData = array(            
+            'machine_model' => Input::get('machine_model'),
+            'machine_type' => Input::get('machine_type'),
+            'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),
+            'machine_site' => Input::get('machine_site'),
+            'startdate' => $from,
+            'enddate' => $to
+        );
+         
+        //$online = DB::table('machines')->where('status','=', '1')->count('status');         
+        //$offline = DB::table('machines')->where('status','=', '0')->count('status'); 
+        $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
+        //$ttlMachines = 1 + $offline; 
+        
+        $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
+        $offlineLists = $this->offlineMachineLists(); 
+        $onlineLists = $this->onlineMachineLists();
+        $totalLists = $this->totalMachineLists();
+        $online = count($onlineLists);
+        $offline = count($offlineLists);
+        $ttlMachines = $online + $offline; 
+        
+
+        if($var['permit']['readAll']):
+            return view('machine-error-reports/advam-watchlist', ['machinelogs' => $machinelogsadvam, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;
+        
+    }
+   
     
     /**
      * Show the form for creating a new resource.

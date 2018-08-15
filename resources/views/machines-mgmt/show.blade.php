@@ -12,7 +12,7 @@
                 <div class="panel" id="projects">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            <?php if($permit['editAll']): ?><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i> <?php endif; ?>  </a>  Machine Version - {{ $machine->version }} 
+                            <?php if($permit['editAll']): ?><a href="{{ route('machine-management.edit', ['id' => $machine->id]) }}"> <i class="icon wb-edit" ></i> <?php endif; ?>  </a> {{ $machine->machine_description }} - Version - {{ $machine->version }}  
                         <a href="#">                        
                             <?php if($machine->category != "cardreader"){ ?>
                                 <?php if($permit['editAll']): ?>
