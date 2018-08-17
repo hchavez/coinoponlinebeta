@@ -22,6 +22,7 @@ use App\Site;
 use App\ErrorlogsHistory;
 use Carbon\Carbon;
 use Input;
+use App\Http\Resources\UserCollection;
 
 
 class MachineErrorReportController extends Controller
@@ -400,7 +401,7 @@ class MachineErrorReportController extends Controller
      */
     
     public function advam_watchlist()
-     {               
+    {     
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
         $var = $this->permission($objectID); 
@@ -504,11 +505,8 @@ class MachineErrorReportController extends Controller
             'enddate' => $to
         );
          
-        //$online = DB::table('machines')->where('status','=', '1')->count('status');         
-        //$offline = DB::table('machines')->where('status','=', '0')->count('status'); 
+
         $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
-        //$ttlMachines = 1 + $offline; 
-        
         $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
         $offlineLists = $this->offlineMachineLists(); 
         $onlineLists = $this->onlineMachineLists();
@@ -530,6 +528,100 @@ class MachineErrorReportController extends Controller
         
     }
    
+      /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function advam() 
+    {
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID);  
+        $currerntUserRole = Auth::User()->id;
+        $data = Input::all();     
+       
+        
+        if ( !$data ) :
+            $from = $to = '';  
+            $machines = DB::table('machines')
+                            ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
+                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                    , 'route.route as route', 'sites.state as state', 'sites.site_name as site')
+                            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                           ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                            ->leftJoin('route', 'sites.route_id', '=', 'route.id') 
+                            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit']);
+                        
+            $machines = $machines->whereDate('errorlogs.created_at', '=', Carbon::today()->toDateString());
+        else:  
+            $dateRange = Input::get('dateRange');
+            $today = date('m/d/Y');
+            $from = $to = ''; 
+            if(!empty($dateRange)):
+                $dateRange = Input::get('dateRange');
+            else:
+                $dateRange = $today.' - '.$today;
+            endif;
+            $explode = explode('-',$dateRange);            
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+            $plusoneday = $explode_to[1]+ 1;
+            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);            
+            
+            $machines = DB::table("machines")
+                            ->select(DB::raw("machines.*, machines.id as machine_id, round(sum(total_money),2) as total_money, machine_models.machine_model as machine_model, machines.category as category, 
+                                machine_types.machine_type as machine_type,machines.ip_address as ip_address, round(sum(total_toys_win),2) as total_toys_win,
+                                route.route as route,sites.state as state,sites.site_name as site"))
+                            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                            ->leftJoin('route', 'sites.route_id', '=', 'route.id') 
+                            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit'])
+                            ->whereBetween('errorlogs.created_at', [$from, $to]);
+//                            ->groupBy(DB::raw("machine_id,machine_model,category,machine_type,ip_address,total_toys_win,stock_left,slip_volt,pkup_volt,date_created,
+//                                ret_volt,owed_win,excess_win,last_visit,last_played,route,area,state,site"));              
+           
+        endif;
+        
+        $machines = $machines->orderBy('errorlogs.created_at','desc')->get();  
+        
+        //var_dump($machines); exit();
+        
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+        $machineType = MachineType::orderBy('created_at', 'desc')->get();
+        
+            $machinelogsgroup =  DB::table('errorlogs_list')
+            ->select('errorlogs_list.*')            
+            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
+            ->orderBy('type','asc')
+            ->get();
+            
+                $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
+        $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
+        $offlineLists = $this->offlineMachineLists(); 
+        $onlineLists = $this->onlineMachineLists();
+        $totalLists = $this->totalMachineLists();
+        $online = count($onlineLists);
+        $offline = count($offlineLists);
+        $ttlMachines = $online + $offline; 
+        
+
+//        if($var['permit']['readAll']):
+            return view('machine-error-reports/advam', ['machines' => $machines, 'data'=>$data, 'start' => $from,'end' => $to, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
+//        else:
+//            return view('profile/index', ['permit' => $var['permit'], 
+//                'userDetails' => $var['userDetails'], 
+//                'user_id' => $var['userDetails'][0]['id'], 
+//                'userGroup' => $var['userRole'][0]['users_group']]
+//            );
+//        endif;
+    }    
     
     /**
      * Show the form for creating a new resource.

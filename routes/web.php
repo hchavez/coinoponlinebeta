@@ -405,6 +405,7 @@ Route::get('logActivity', 'ActivityController@logActivity');
 Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
 
+Route::get('machine-error-reports/advam', 'MachineErrorReportController@advam');
 Route::get('machine-error-reports/advam-watchlist', 'MachineErrorReportController@advam_watchlist');
 Route::resource('machine-error-reports', 'MachineErrorReportController');
 Route::get('history', 'MachineErrorReportController@history');
