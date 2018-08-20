@@ -434,10 +434,18 @@ class MachineErrorReportController extends Controller
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
             $plusoneday = $explode_to[1]+ 1;
             $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$plusoneday);   
-            
+       
              $machinelogsadvam = $machinelogsadvam->whereBetween('errorlogs.created_at', [$from, $to]);
+            $machinelogsgroup =  DB::table('errorlogs_list')->select('*')->whereBetween('created_at',[$from, $to])->orderBy('created_at','asc')->get();
+           
         else:
-            $machinelogsadvam = $machinelogsadvam->whereDate('errorlogs.created_at', '=', Carbon::today());
+             $today = date('Y-m-d');
+             $to = date('Y-m-d', strtotime('+1 day', strtotime($today)));
+            $from = date('Y-m-d', strtotime('-1 day', strtotime($today)));
+
+            $machinelogsadvam = $machinelogsadvam->whereBetween('errorlogs.created_at', [$from, $to]);
+             $machinelogsgroup =  DB::table('errorlogs_list')->select('*')->whereBetween('created_at', [$from, $to])->orderBy('created_at','asc')->get();
+                    
         endif;
         
         if(!empty(Input::get())):
@@ -480,16 +488,7 @@ class MachineErrorReportController extends Controller
             
         endif;
                 
-        $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.type','asc')->paginate(30);
-        
-        //$machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.type','asc')->toSql();
-     
-        
-        $machinelogsgroup =  DB::table('errorlogs_list')
-            ->select('errorlogs_list.*')            
-            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
-            ->orderBy('type','asc')
-            ->get();
+        $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.created_at','asc')->paginate(30);
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
@@ -610,17 +609,9 @@ class MachineErrorReportController extends Controller
         $online = count($onlineLists);
         $offline = count($offlineLists);
         $ttlMachines = $online + $offline; 
-        
 
-//        if($var['permit']['readAll']):
             return view('machine-error-reports/advam', ['machines' => $machines, 'data'=>$data, 'start' => $from,'end' => $to, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
-//        else:
-//            return view('profile/index', ['permit' => $var['permit'], 
-//                'userDetails' => $var['userDetails'], 
-//                'user_id' => $var['userDetails'][0]['id'], 
-//                'userGroup' => $var['userRole'][0]['users_group']]
-//            );
-//        endif;
+
     }    
     
     /**

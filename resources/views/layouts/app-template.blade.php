@@ -113,7 +113,7 @@ Breakpoints();
         <script src="{{asset('js/custom.js')}}"></script>
         <script src="{{asset('js/custom-script.js')}}"></script>
         <script src="{{asset('js/Config.js')}}"></script>
-        
+
         
         <!-- Scripts -->
         <script src="{{ asset("/global/js/State.js") }}"></script>
@@ -160,8 +160,7 @@ Breakpoints();
         <script src="{{ asset("/assets/examples/js/advanced/bootbox-sweetalert.js") }}"></script>
 
         <!--AngularJS-->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.12/angular.min.js"></script>
-
+        <script src="{{asset('js/table2excel.js')}}"></script>
         
          
         <!--CustomStyle-->

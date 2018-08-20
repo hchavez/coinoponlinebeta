@@ -289,7 +289,7 @@
 
                                 <tbody> 
                                      @foreach ($machinelogsgroup as $machineloggroup)
-                                        @if ($machineloggroup->error == $machinelog->error)
+                                        @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id)
                                           <tr>
                                               <td> &nbsp;</td>
                                               <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td> 

@@ -121,7 +121,7 @@
                     </div>
                 </div>
           
-            <div class="row" ng-app="machineApp" ng-controller="machineController">   
+            <div class="row">   
                 <!-- Team Total Completed -->
                 <div class="col-xxl-12">
                     <div id="teamCompletedWidget" class="card card-shadow example-responsive">                       
@@ -138,7 +138,7 @@
                             <form role="form" method="GET" class="error-list-form" id="formFilter">
                                 <div style="width:1.5%;" class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns ky_date"> 
-                                    <!--<input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Date Filter">-->     
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Date Filter">     
                                 </div>
                                 <div class="col_model ky-columns ky_model">
                                
@@ -153,16 +153,15 @@
                               
                                 </div>
                              
-<!--                                <div class="col_ins ky-columns">  <a href="{{ url('history') }}">
-                        <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
-                            <span class="ladda-label">Export to Excel<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
-                            <span class="ladda-spinner"></span>
-                        </button>
-                        </a></div>-->
+                                <div class="col_ins ky-columns">  
+         
+                                <button class="btn btn-success" id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
+                                </div>
                                 
                                 
                            </form>
-                            <table class="table table-hover" id="machineErrorReport">                                    
+                               <iframe id="txtArea1" style="display:none"></iframe>
+                            <table class="table table-hover" id="machineErrorReportWatchlist">                                    
                                 <thead>
                                     <tr role="row">                                                
                                         <th style="width:1%;" class="col_empty"></th>
@@ -172,19 +171,19 @@
                                         <th style="width:8.3%;" class="col_serial">Name & Serial No</th>
                                         <th style="width:12%" class="col_error">Error Message</th>
                                         <th style="width:16.52%" class="col_site">Site</th>
-                                        <th style="width:5%;" class=""></th>
+                                        <th style="width:5%;" class="">Instances</th>
                                        </tr> 
                                 </thead> 
                                     
                                 @foreach ($machinelogs as $machinelog)
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
-                                        <td class="text-center">
-                                            <?php //foreach ($machinelogsgroup as $machineloggroup):
-                                                //if ($machinelog->error == $machineloggroup->error){  ?>
-                                                <!--<i class="table-section-arrow"></i>-->
-                                            <?php //break; }
-//                                            endforeach; ?>
+                                         <td class="text-center">
+                                            <?php foreach ($machinelogsgroup as $machineloggroup):
+                                                if ($machinelog->error == $machineloggroup->error){  ?>
+                                                <i class="table-section-arrow"></i>
+                                            <?php break; }
+                                            endforeach; ?>
                                         </td>
                                         <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
                                         <td class="font-weight-medium">{{ $machinelog->machine_model}}</td>
@@ -208,29 +207,38 @@
                                             <?php
                                             $countarray = array();
                                             $temp=0;
+                                            $datemachineloggroup = date('Y-m-d', strtotime($machineloggroup->created_at));
+                                            $datemachinelog = date('Y-m-d', strtotime($machinelog->created_at));
+                                            $datereg = date('d/m/Y h:i A', strtotime($machinelog->date_created));
                                             foreach ($machinelogsgroup as $machineloggroup):
-                                                   if ($machineloggroup->error == $machinelog->error){ ?>
+                                                   if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){ ?>
                                                  <?php 
                                                  $count = 1;
                                                  array_push($countarray, $count); 
                                                  ?>
                                             <?php }
                                                 endforeach; ?>
-                                            <span class="text-muted"><?php //echo sizeof($countarray);?></span>
+                                            <span class="text-muted"><?php echo sizeof($countarray);?></span>
                                         </td>
                                     </tr>
                                 </tbody>
 
                                     <tbody> 
                                      @foreach ($machinelogsgroup as $machineloggroup)
-                                        @if ($machineloggroup->error == $machinelog->error)
+                                     <?php
+                                     $datereg = date('d/m/Y h:i A', strtotime($machinelog->date_created));
+                                     $datemachineloggroup = date('Y-m-d', strtotime($machineloggroup->created_at));
+                                      $datemachinelog = date('Y-m-d', strtotime($machinelog->created_at));
+                                 
+                                     ?>
+                                     
+                                         @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id )
                                           <tr>
                                               <td> &nbsp;</td>
-                                              <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td> 
+                                              <td class="text-left">{{ date('d/m/Y h:i:s A', strtotime($machineloggroup->created_at))}}</td> 
                                               <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
                                               <td>
-                                                 
-                                                  <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
+                                                  <?php $errorstring = str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
                                               </td>
                                               <td class="hidden-sm-down"></td>
                                               <td class="hidden-sm-down">&nbsp;</td>
@@ -416,7 +424,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>    
-$(document).ready(function() {   
+$(document).ready(function() {
    
     $("#status-update").submit(function(e) {
         e.preventDefault();
@@ -471,8 +479,56 @@ $(document).ready(function() {
     $("#e_msg").select2();
     $("#site").select2();
     
+    
+
+    
 });
 
+
+    $("#export").click(function(){
+        alert('ksdjflakjdfkj');
+	  $("#machineErrorReportWatchlist").table2excel({
+	    // exclude CSS class
+	    //exclude: ".noExl",
+	    name: "Worksheet Name",
+	    filename: "Advam-Watchlist" //do not include extension
+	  });
+    });
+        
+
+function fnExcelReport()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('machineErrorReportWatchlist'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"advam-watchlist.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+}
 
 </script>
 
