@@ -546,7 +546,7 @@ $(document).ready(function() {
     $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
-    });  
+    });     
     
     $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
     $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
@@ -560,7 +560,6 @@ $(document).ready(function() {
     $("#site").select2();
     
 });
-
 
 </script>
 
