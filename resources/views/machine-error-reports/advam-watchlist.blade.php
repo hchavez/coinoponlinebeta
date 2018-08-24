@@ -155,7 +155,7 @@
                              
                                 <div class="col_ins ky-columns">  
          
-                                <button class="btn btn-success" id="btnExport" onclick="fnExcelReport();"> EXPORT </button>
+<!--                                <button class="btn btn-success" id="btnExport" onclick="fnExcelReport();"> EXPORT </button>-->
                                 </div>
                                 
                                 
@@ -486,7 +486,7 @@ $(document).ready(function() {
 
 
     $("#export").click(function(){
-        alert('ksdjflakjdfkj');
+       
 	  $("#machineErrorReportWatchlist").table2excel({
 	    // exclude CSS class
 	    //exclude: ".noExl",
@@ -522,7 +522,7 @@ function fnExcelReport()
         txtArea1.document.write(tab_text);
         txtArea1.document.close();
         txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"advam-watchlist.xls");
+        sa=txtArea1.document.execCommand("SaveAs",true,"advam-watchlist.xlsx");
     }  
     else                 //other browser not tested on IE 11
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  

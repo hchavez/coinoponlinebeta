@@ -65,6 +65,33 @@ class Handler extends ExceptionHandler
 
             return redirect('login');
         }
+        
+        
+        
+//        if($this->isHttpException($e))
+//        {
+//            switch ($e->getStatusCode()) 
+//                {
+//                // not found
+//                case 404:
+//                return redirect()->guest('login');
+//                break;
+//
+//                // internal error
+//                case '500':
+//                return redirect()->guest('login');
+//                break;
+//
+//                default:
+//                    return $this->renderHttpException($e);
+//                break;
+//            }
+//        }
+//        else
+//        {
+//                return parent::render($request, $e);
+//        }
+        
 
         return parent::render($request, $e);
     }
