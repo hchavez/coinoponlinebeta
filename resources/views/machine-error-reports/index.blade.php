@@ -503,6 +503,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<style>
+.dt-button.buttons-excel{margin: 1em 2em 0 0;}
+.dt-buttons{position:static !important;}
+.ladda-button, .dt-buttons{display:inline-block;vertical-align: top;}
+.ladda-button{margin-top:10px;}
+</style>
 <script>    
 $(document).ready(function() {   
 
@@ -558,6 +564,17 @@ $(document).ready(function() {
     $("#m_type").select2();
     $("#e_msg").select2();
     $("#site").select2();
+    
+    $('#machineErrorReport').dataTable({
+        searching:false,
+        paging:false,
+        info:false,
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5'
+            }]
+    });
+    $('.dt-buttons').insertBefore('.ladda-button');
     
 });
 
