@@ -212,7 +212,7 @@
                                     <div class="col-md-2" style="display:inline-block;">
                                         <div class="counter counter-sm text-left">
                                               <div class="counter-number-group">
-                                                <span class="counter-icon blue-600 mr-5"><i class="icon wb-user"></i></span>                                                                                   
+                                                <span class="counter-icon blue-600 mr-5"><i class="icon wb-menu"></i></span>                                                                                   
                                                 <span class="counter-number-related text-right"><a href="{{ url('user-mgmt') }}">User List</a></span>
                                               </div>
                                         </div>
@@ -227,8 +227,15 @@
                                                 <span class="counter-icon blue-600 mr-5"><i class="icon wb-lock"></i></span>                                                                                   
                                                 <span class="counter-number-related text-right"><a href="{{ url('group-permission') }}">Security Permission</a></span>
                                               </div>
-                                        </div>
-                                        
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-md-2" style="display:inline-block;vertical-align: top;">
+                                        <div class="counter counter-sm text-left">
+                                              <div class="counter-number-group">
+                                                <span class="counter-icon blue-600 mr-5"><i class="icon wb-user"></i></span>                                                                                   
+                                                <span class="counter-number-related text-right"><a href="{{ url('user-mgmt/create') }}">Add New User</a></span>
+                                              </div>
+                                        </div>                                        
                                     </div>
                                                                        
                                     
