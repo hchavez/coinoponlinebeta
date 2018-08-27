@@ -134,6 +134,10 @@
                     </div>                   
                     <div class="col-md-3"></div>
                     <div class="col-md-3 text-right" style="padding-right:3em;"> 
+                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
+                            <span class="ladda-label">Export</span>                            
+                        </button>
+                        
                         <a href="{{ url('history') }}">
                         <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
                             <span class="ladda-label">View History<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
@@ -220,6 +224,7 @@
                                 
                                 
                            </form>
+                               
                             <table class="table table-hover" id="machineErrorReport" style="border-top: 1px solid #e4eaec;">                                    
                                 <thead>
                                     <tr role="row">                                                
@@ -503,6 +508,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{{ asset("/js/export-table.js") }}"></script>
 <style>
 .dt-button.buttons-excel{margin: 1em 2em 0 0;}
 .dt-buttons{position:static !important;}
@@ -511,6 +517,13 @@
 </style>
 <script>    
 $(document).ready(function() {   
+    $("#export").click(function(){
+        $("#machineErrorReport").table2excel({
+          exclude: ".noExl",
+          name: "Worksheet Name",
+          filename: "SomeFile" //do not include extension
+        }); 
+    });    
 
     $("#status-update").submit(function(e) {
         e.preventDefault();
@@ -565,7 +578,7 @@ $(document).ready(function() {
     $("#e_msg").select2();
     $("#site").select2();
     
-    $('#machineErrorReport').dataTable({
+    /*$('#machineErrorReport').dataTable({
         searching:false,
         paging:false,
         info:false,
@@ -574,7 +587,7 @@ $(document).ready(function() {
                 extend: 'excelHtml5'
             }]
     });
-    $('.dt-buttons').insertBefore('.ladda-button');
+    $('.dt-buttons').insertBefore('.ladda-button');*/
     
 });
 
