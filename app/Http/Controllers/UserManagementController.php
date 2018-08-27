@@ -55,7 +55,7 @@ class UserManagementController extends Controller
     {        
         $usersGroup = DB::table('users_group')->get();
         $usersRole = DB::table('users_role')->where('user_id', '=', Auth::User()->id)->first();
-        return view('users-mgmt/create', ['group' =>$usersGroup,'currentRole' => $usersRole]);
+        return view('users-mgmt/create', ['group' =>$usersGroup,'currentRole' => $usersRole,'success'=>'2']);
     }
 
     /**
@@ -65,17 +65,36 @@ class UserManagementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validateInput($request);
-         User::create([
-            'username' => $request['username'],
-            'email' => $request['email'],
-            'password' => bcrypt($request['password']),
-            'firstname' => $request['firstname'],
-            'lastname' => $request['lastname']
+    {       
+        //$all = Input::all();
+        $status = 0;
+        $usersGroup = DB::table('users_group')->get();
+        $usersRole = DB::table('users_role')->where('user_id', '=', Auth::User()->id)->first();
+        $insert = User::create([
+            'firstname' => Input::get('firstName'),
+            'lastname' => Input::get('lastName'),
+            'username' => Input::get('username'),
+            'email' => Input::get('email'),
+            'password' => bcrypt(Input::get('row_password')),
         ]);
-
-        return redirect()->intended('/user-management');
+        
+        $user = User::whereEmail(Input::get('email'))->first();       
+        $today = date("Y-m-d H:i:s");
+        
+        if($insert):
+            UsersRole::create([
+                'user_id' => $user->id,
+                'user_role' => Input::get('user_role'),
+                'created_at' => $today,
+                'updated_at' => $today,
+                'updated_by' => '0',
+                'status' => Input::get('status')
+            ]);
+        
+        $status = 1;
+        endif;
+     
+        return view('users-mgmt/create', ['success' => $status,'group' =>$usersGroup,'currentRole' => $usersRole]);
     }
 
     /**

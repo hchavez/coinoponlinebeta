@@ -233,8 +233,10 @@ Route::resource('profile', 'ProfileController');
 //Route::get('profile', 'ProfileController@index'); 
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
+Route::get('user-mgmt/store', 'UserManagementController@store');
 Route::resource('user-mgmt', 'UserManagementController');
 Route::get('user-mgmt/show/{id}', 'UserManagementController@show');
+
 Route::get('set_permission', 'UserManagementController@set_permission');
 Route::get('update_status', 'UserManagementController@update_status');
 

@@ -11,19 +11,34 @@
             <div class="panel-body">
                 
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                    <?php if($success==1): ?>
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        SUCCESS : User account has been added. Go to <a href="{{ url('user-mgmt') }}">list of users</a>.
+                    </div>
+                    <?php elseif($success==0): ?>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        DANGER : Adding User account has failed
+                    </div>
+                    <?php else: endif; ?>
                     <div class="row">
-                        <form name="myform" method="post" action="" style="width:100%;">
+                        <form name="myform" method="get" action="{{ url('user-mgmt/store') }}" style="width:100%;">
                         <input type="hidden" name="length" value="10">
                         <div class="col-sm-6">
                             
                             <div class="form-group">
                                 <div class="input-group input-group-icon">
-                                  <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                                  <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group input-group-icon">
-                                  <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -31,7 +46,7 @@
                                   <span class="input-group-addon">
                                     <span class="icon wb-user" aria-hidden="true"></span>
                                   </span>
-                                  <input type="text" class="form-control" placeholder="Username">
+                                  <input type="text" class="form-control" placeholder="Username" name="username">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -39,14 +54,14 @@
                                   <span class="input-group-addon">
                                     <span class="icon wb-envelope" aria-hidden="true"></span>
                                   </span>
-                                  <input type="text" class="form-control" placeholder="Email">
+                                  <input type="text" class="form-control" placeholder="Email" name="email">
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <div class="input-group">
-                                  <input type="text" class="form-control" name="row_password" placeholder="Password">
+                                    <input type="text" class="form-control" name="row_password" placeholder="Password">
                                   <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default btn-outline" onClick="generate();">Generate Password</button>
+                                    <button type="button" class="btn btn-primary" onClick="generate();">Generate Password</button>
                                   </span>
                                 </div>
                             </div>                            
@@ -64,19 +79,19 @@
                             <div class="form-group" style="width:20%;">
                                 <div class="input-group">
                                     <div class="radio-custom radio-primary">
-                                        <input type="radio" id="inputEnable" name="inputEnable" checked>
+                                        <input type="radio" id="inputEnable" name="status" value="1" checked>
                                         <label for="inputRadiosUnchecked">Enable</label>
                                     </div>
                                 </div>
                                 <div class="input-group">
                                     <div class="radio-custom radio-primary">
-                                        <input type="radio" id="inputPending" name="inputPending">
+                                        <input type="radio" id="inputPending" name="status" value="2">
                                         <label for="inputRadiosUnchecked">Pending</label>
                                     </div>
                                 </div>
                                 <div class="input-group">
                                     <div class="radio-custom radio-primary">
-                                        <input type="radio" id="inputDisable" name="inputDisable">
+                                        <input type="radio" id="inputDisable" name="status" value="0">
                                         <label for="inputRadiosUnchecked">Disable</label>
                                     </div>
                                 </div>
@@ -85,7 +100,7 @@
                         <div class="col-sm-12">
                             <div class="form-group" style="width:15%;">
                                 <div class="input-group">
-                                  <button type="button" class="btn btn-block btn-primary">Save New User</button>
+                                  <button type="submit" class="btn btn-block btn-primary">Save New User</button>
                                 </div>
                             </div>
                         </div>
