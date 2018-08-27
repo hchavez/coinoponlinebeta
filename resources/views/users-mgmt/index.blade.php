@@ -4,6 +4,7 @@
 <div class="panel">
     <header class="panel-heading">
         <h3 class="panel-title">Manage Users</h3>
+        
     </header>
     <div class="panel-body">
         <div id="site_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
@@ -12,7 +13,8 @@
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                 </div-->
                     
-                <div class="col-sm-12">                    
+                <div class="col-sm-12">       
+                    <a href="{{ route('user-mgmt.create') }}"><button type="button" class="btn btn-default" style="float:right;"><i class="icon wb-plus" aria-hidden="true"></i> Add New User</button></a>
                     <div id="filterDiv"><br/></div>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="userDiv" role="grid" aria-describedby="exampleTableSearch_info" >
                         

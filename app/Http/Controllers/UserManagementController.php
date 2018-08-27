@@ -52,8 +52,10 @@ class UserManagementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('users-mgmt/create');
+    {        
+        $usersGroup = DB::table('users_group')->get();
+        $usersRole = DB::table('users_role')->where('user_id', '=', Auth::User()->id)->first();
+        return view('users-mgmt/create', ['group' =>$usersGroup,'currentRole' => $usersRole]);
     }
 
     /**
