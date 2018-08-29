@@ -59,7 +59,7 @@
                             </div> 
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="row_password" placeholder="Password">
+                                    <input type="text" class="form-control" name="row_password" placeholder="Password" readonly>
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-primary" onClick="generate();">Generate Password</button>
                                   </span>

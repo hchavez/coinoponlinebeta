@@ -8,12 +8,12 @@
     
     <div class="panel-body">
         
-                        <?php if (Session::has('success')): ?>
-                            <div class="alert  <?php echo Session::get('alert-class', ''); ?>">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <?php echo Session::get('success', ''); ?> 
-                            </div>
-                        <?php endif; ?>
+        <?php if (Session::has('success')): ?>
+            <div class="alert  <?php echo Session::get('alert-class', ''); ?>">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo Session::get('success', ''); ?> 
+            </div>
+        <?php endif; ?>
         
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             <form role="form" method="GET" class="error-list-form" id="formSearch">

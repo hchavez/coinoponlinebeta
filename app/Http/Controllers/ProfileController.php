@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $userDetails = \AppHelper::currentUser();     
         $userRole = \AppHelper::getRole($userDetails[0]['userID']);   
        
-        return view('profile/index', ['userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
+        return view('profile/index', ['userDetails' => $userDetails, 'user_id' => Auth::user()->id, 'userGroup' => $userRole[0]['users_group']]);
     }
     
     public function user_type($id){
@@ -53,13 +53,14 @@ class ProfileController extends Controller
     }
         
     public function edit($id)
-    {        
-        $role = Auth::user()->role;
-        $get_user = DB::Table('users')->where('id', $id)->first();
+    {                
+        $get_user = DB::table('users')
+                    ->select('users.*','users.id as userID', 'users_role.*')
+                    ->leftJoin('users_role', 'users.id', '=', 'users_role.user_id') 
+                    ->where('users.id','=', $id)
+                    ->get()->toArray();
         
-        
-        return view('profile/edit', ['id' => $get_user->id ,'user_role' => $role,'username' => $get_user->username, 'firstname' => $get_user->firstname,
-        'lastname' => $get_user->lastname, 'email' => $get_user->email, 'user_id'=>$id])
+        return view('profile/edit', ['userDetails' => $get_user, 'user_id'=> Auth::user()->id ])
         ->with('myreferrer', Session::get('myreferrer', URL::previous()));
     }
 

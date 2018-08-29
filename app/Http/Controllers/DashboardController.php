@@ -35,8 +35,10 @@ class DashboardController extends Controller
     
     public function index()
     {        
+        $usersRole = DB::table('users_role')->where('user_id', '=', Auth::User()->id)->first();       
+        
         $url = url()->current();
-        $objectID = \AppHelper::objectId($url);      
+        $objectID = \AppHelper::objectId($url);     
         
         $userDetails = \AppHelper::currentUser();     
         $userRole = \AppHelper::getRole($userDetails[0]['userID']);  
@@ -97,12 +99,18 @@ class DashboardController extends Controller
             'coin' => number_format($incomeCoin),
             'tap' => number_format($incomeTap)
         );
-                
-        if($permit['readAll']):
-            return view('dashboard/index', ['permit' => $permit, 'machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$userRole[0]['user_id'] ]);
+        
+        if($usersRole->status):
+            if($permit['readAll']):
+                return view('dashboard/index', ['permit' => $permit, 'machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup, 'numMachine'=>$numMachine,'online'=>$online,'offline'=>$offline, 'logs'=>$act ,'total'=>$total,'userRole' =>$userRole[0]['user_id'] ]);
+            else:
+                return view('profile/index', ['permit' => $permit, 'userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
+            endif;
         else:
-            return view('profile/index', ['permit' => $permit, 'userDetails' => $userDetails, 'user_id' => $userDetails[0]['id'], 'userGroup' => $userRole[0]['users_group']]);
+            Auth::logout();
+            return view('auth/login');
         endif;
+        
         
     }
        

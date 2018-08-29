@@ -52,29 +52,29 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('state', 'sites.state', '=', 'state.id')          
-                    ->where('errorlogs.status','!=','2')
-                    ->whereDate('errorlogs.created_at', '=', Carbon::today())
-                    ->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
-                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));
+                    ->where('errorlogs.status','!=','2');
         
         
-        $dateRange = Input::get('dateRange');
+        $dateRange = Input::get('dateRange');        
         $from = $to = '';        
+        
         if($dateRange !=''):
             $explode = explode('-',$dateRange);
             $explode_from = explode('/',$explode[0]);
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
+            //$to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);            
+           
+            //$from = date('Y-m-d', strtotime('-1 day', strtotime($explode[0])));
+            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
         endif;
         
-        if(!empty(Input::get())):
+        if(!empty(Input::get())):            
             $model = Input::get('machine_model');
             $type = Input::get('machine_type');
             $error_msg = Input::get('error_msg');
-            $machine_site = Input::get('machine_site');
-            $startdate = Input::get('startdate');
-            $enddate = Input::get('enddate');
+            $machine_site = Input::get('machine_site'); 
+            
             if($model):
                 $machinelogs = $machinelogs->where(function($query) use ($model){                    
                     $query->where('machine_models.machine_model', '=', $model);               
@@ -97,14 +97,23 @@ class MachineErrorReportController extends Controller
                 $machinelogs = $machinelogs->where(function($query) use ($machine_site){                    
                     $query->where('site_name', '=', $machine_site);               
                 })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($enddate):
-                $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                    $query->whereBetween('errorlogs_history.created_at', [$from, $to]);          
-                })->orderBy('date_created','desc');            
-            endif; 
+            endif;            
+             
         endif;
+        
+        $dateCheck = Input::get('dateRange');
+        if(!empty($dateCheck)):            
+            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
+            })->orderBy('errorlogs.created_at','desc'); 
+        else:
+            $machinelogs = $machinelogs->where(function($query){                    
+                $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
+            }); 
+        endif;
+        
+        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
+                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
         $machinelogs = $machinelogs->orderBy('errorlogs.type','asc')->paginate(15);
         $machinelogsgroup =  DB::table('errorlogs_list')
