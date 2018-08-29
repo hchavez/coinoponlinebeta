@@ -1,6 +1,8 @@
-@extends('layouts.app-template')
+@extends('layouts.app-left-template')
 @section('content')
+<div class="page-main">
 
+    <div class="page-content">
 <div class="panel">
     <header class="panel-heading">
         <h3 class="panel-title">Manage Users</h3>
@@ -67,6 +69,7 @@
         </div>
     </div>
 </div>
+    </div></div>
 <style>
 .select2-container{width:100% !important;}
 .select2-container .select2-choice > .select2-chosen{color:#333 !important;}

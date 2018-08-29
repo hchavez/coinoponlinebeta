@@ -8,10 +8,12 @@
                 <h3 class="panel-title">Group Permission</h3>
             </div>
             <div class="panel-body">
+                
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                     <div class="row"> 
                         
                         <div class="col-md-12">
+                            
                             <form role="form" method="GET" class="error-list-form" id="groupPermission" method="GET" action="{{ route('group-permission.index') }}">
                                 <div class="form-group row">
                                     <label class="col-md-1 col-form-label">User Groups: </label>
@@ -23,11 +25,11 @@
                                             @endforeach 
                                         </select> <br><br>
                                     </div>
-                                    <label class="col-md-6 col-form-label"></label>
+                                    <label class="col-md-5 col-form-label"></label>
                                     <label class="col-md-1 col-form-label">
                                         <button type="button" class="btn btn-raised btn-success btn-block" data-target="#exampleFormModal" data-toggle="modal" type="button">ADD GROUP</button></label>
                                     <label class="col-md-1 col-form-label"><button type="button" class="btn btn-raised btn-info btn-block" data-target="#exampleFormModalEdit" data-toggle="modal" type="button">EDIT GROUP</button></label>
-                                    
+                                    <label class="col-md-1 col-form-label"><a href="{{ url('user-mgmt') }}"><button type="button" class="btn btn-default"><i class="icon wb-list-bulleted" aria-hidden="true"></i>User Lists</button></a></label>
                                     
                                     <div class="col-md-12">
                                         <table class="table table-bordered table-hover table-striped" cellspacing="0" id="exampleAddRow">
