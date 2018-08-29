@@ -2,7 +2,7 @@
 @section('content')
 <!-- Page -->
 
-<meta http-equiv="refresh" content="300" >
+
 <div class="row">
         
     <div class="col-xl-6 col-lg-12">

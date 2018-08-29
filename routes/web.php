@@ -219,7 +219,6 @@ Route::get('/retvolt/{id}', function($id){
 
 /***********************************Graph Result API********************************************/
 
-
 Route::get('logdata/{id}', 'MachineManagementController@logdata');
 
 Route::get('exportcsv/{data}', 'MachineManagementController@exportcsv');

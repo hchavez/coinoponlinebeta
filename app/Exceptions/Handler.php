@@ -5,15 +5,15 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-class Handler extends ExceptionHandler
-{
+class Handler extends ExceptionHandler {
+
     /**
      * A list of the exception types that are not reported.
      *
      * @var array
      */
     protected $dontReport = [
-        //
+            //
     ];
 
     /**
@@ -34,8 +34,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
-    {
+    public function report(Exception $exception) {
         parent::report($exception);
     }
 
@@ -50,50 +49,24 @@ class Handler extends ExceptionHandler
 //    {
 //        return parent::render($request, $exception);
 //    }
-    
-    public function render($request, Exception $e)
-    {
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+
+    public function render($request, Exception $e) {
+
+        if ($e instanceof NotFoundHttpException) {
+             return redirect('dashboard');
         }
 
-        if ($e instanceof \Illuminate\Session\TokenMismatchException) {    
+        if ($e instanceof ModelNotFoundException) {
+             return redirect('dashboard');
+        }
 
-          // flash your message
-
-            \Session::flash('flash_message_important', 'Sorry, your session seems to have expired. Please try again.'); 
-
+        if ($e instanceof \Illuminate\Session\TokenMismatchException) {
+            \Session::flash('flash_message_important', 'Sorry, your session seems to have expired. Please try again.');
             return redirect('login');
         }
-        
-        
-        
-//        if($this->isHttpException($e))
-//        {
-//            switch ($e->getStatusCode()) 
-//                {
-//                // not found
-//                case 404:
-//                return redirect()->guest('login');
-//                break;
-//
-//                // internal error
-//                case '500':
-//                return redirect()->guest('login');
-//                break;
-//
-//                default:
-//                    return $this->renderHttpException($e);
-//                break;
-//            }
-//        }
-//        else
-//        {
-//                return parent::render($request, $e);
-//        }
-        
 
-        return parent::render($request, $e);
+         return parent::render($request, $e);
+          // return redirect('login');
     }
-    
+
 }

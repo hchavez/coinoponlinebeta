@@ -1,7 +1,7 @@
 @extends('layouts.app-template')
 @section('content')
 <!-- Page -->
-<meta http-equiv="refresh" content="300" >
+<meta http-equiv="refresh" content="900" >
 <div class="row" id="boxesCount">   
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
