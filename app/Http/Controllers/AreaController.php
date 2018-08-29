@@ -29,7 +29,9 @@ class AreaController extends Controller
     public function index()
     {
         $area = Area::get();
-        return view('area/index', ['area' => $area]);
+        $mng_agent = DB::table('managing_agents')->select('managing_agents.*')->get(); 
+       
+        return view('area/index', ['area' => $area, 'mng_agents' => $mng_agent]);
         
     }
 
