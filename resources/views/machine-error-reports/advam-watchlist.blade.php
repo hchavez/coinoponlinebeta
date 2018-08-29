@@ -152,10 +152,17 @@
                                 <div class="col_error ky-columns ky_error">
                               
                                 </div>
-                             
+                             <div class="col_error ky-columns ">
+                              
+                                </div>
+                                
                                 <div class="col_ins ky-columns">  
          
-<!--                                <button class="btn btn-success" id="btnExport" onclick="fnExcelReport();"> EXPORT </button>-->
+                            
+                                <button type="button" id="btnExport" onclick="fnExcelReport();" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
+                                <span class="ladda-label">Export</span>                            
+                            </button>
+                        
                                 </div>
                                 
                                 

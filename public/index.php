@@ -49,6 +49,11 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 |
 */
 
+error_reporting(E_ALL);
+ini_set('error_reporting', E_ALL);
+ini_set("display_errors", 1);
+
+
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(

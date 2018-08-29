@@ -502,8 +502,9 @@ class MachineErrorReportController extends Controller
             
             
         endif;
-                
-        $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.created_at','asc')->paginate(30);
+        
+        $machinelogsadvam = $machinelogsadvam->where('machines.status','1');
+        $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.created_at','asc')->paginate(20);
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
