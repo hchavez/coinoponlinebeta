@@ -52,7 +52,8 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('state', 'sites.state', '=', 'state.id')          
-                    ->where('errorlogs.status','!=','2');
+                    ->where('errorlogs.status','!=','2')
+                    ->where('machines.status','=','1');
         
         
         $dateRange = Input::get('dateRange');        
