@@ -8,6 +8,7 @@ use App\City;
 use App\Route;
 use App\MachineType;
 use App\MachineModel;
+use Input;
 
 class RouteController extends Controller
 {
@@ -29,7 +30,7 @@ class RouteController extends Controller
     public function index()
     {
          $routes = Route::get();
-        return view('route/index', ['routes' => $routes]);
+        return view('route/index', ['routes' => $routes,'success' => '2']);
         
     }
 
@@ -58,6 +59,38 @@ class RouteController extends Controller
         ]);
 
         return redirect()->intended('system-management/route');
+    }
+    
+    public function store_route(Request $request)
+    {
+        $route = Input::get('route');      
+        $route_id = Input::get('route_id');
+        $today = date("Y-m-d H:i:s");
+        
+        if(!empty($route)):
+            if($route_id!=''):            
+                $input = [
+                    'route' => $route,
+                ];
+                $query = Route::where('id', $route_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = Route::create([           
+                    'database_id' => '2',
+                    'route' => $route,
+                    'last_modified' => $today
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = Route::all();
+   
+        return view('route/index',['routes' => $getAll,'success'=>$status]);
+       
     }
 
     /**
