@@ -314,6 +314,7 @@ Route::get('route/store_route', 'RouteController@store_route');
 Route::resource('route', 'RouteController');
 Route::post('route/search', 'RouteController@search')->name('route.search');
 
+Route::get('site-type/store_sitetype', 'SiteTypeController@store_sitetype');
 Route::resource('site-type', 'SiteTypeController');
 Route::post('site-type/search', 'SiteTypeController@search')->name('site-type.search');
 
