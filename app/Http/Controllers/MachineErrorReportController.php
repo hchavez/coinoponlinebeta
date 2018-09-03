@@ -25,7 +25,6 @@ use Input;
 use App\Http\Resources\UserCollection;
 
 
-
 class MachineErrorReportController extends Controller
 {
     /**
