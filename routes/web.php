@@ -346,6 +346,7 @@ Route::post('system-management/state/search', 'StateController@search')->name('s
 Route::resource('system-management/city', 'CityController');
 Route::post('system-management/city/search', 'CityController@search')->name('city.search');
 
+Route::get('machine-type/store_machineType', 'MachineTypeController@store_machineType');
 Route::resource('machine-type', 'MachineTypeController');
 Route::post('machine-type/search', 'MachineTypeController@search')->name('machine-type.search');
 
