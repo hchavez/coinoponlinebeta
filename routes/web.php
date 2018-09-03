@@ -438,3 +438,9 @@ Route::resource('machine-reports', 'MachineReportsController');
 
 Route::resource('group-permission', 'GroupPermissionController');
 Route::get('/add', 'GroupPermissionController@add');
+
+Route::get('laravel-version', function()
+{
+$laravel = app();
+return "Your Laravel version is ".$laravel::VERSION;
+});

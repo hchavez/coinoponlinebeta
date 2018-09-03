@@ -516,7 +516,7 @@
 .ladda-button{margin-top:10px;}
 </style>
 <script>    
-$(document).ready(function() {   
+$(document).ready(function() {
     $("#export").click(function(){
         $("#machineErrorReport").table2excel({
           exclude: ".noExl",

@@ -159,7 +159,7 @@
                                 <div class="col_ins ky-columns">  
          
                             
-                                <button type="button" id="btnExport" onclick="fnExcelReport();" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
+                                <button type="button" id="export" onclick="fnExcelReport();" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                                 <span class="ladda-label">Export</span>                            
                             </button>
                         
@@ -430,8 +430,18 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{{ asset("/js/export-table.js") }}"></script>
 <script>    
 $(document).ready(function() {
+    
+    $("#export").click(function(){
+        $("#machineErrorReport").table2excel({
+          exclude: ".noExl",
+          name: "Worksheet Name",
+          filename: "SomeFile" //do not include extension
+        }); 
+    });    
+    
    
     $("#status-update").submit(function(e) {
         e.preventDefault();
