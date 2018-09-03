@@ -12,6 +12,7 @@ class SiteGroup extends Model
      * @var string
      */
     protected $table = 'site_groups';
+    public $timestamps = false;
 
 
     /**

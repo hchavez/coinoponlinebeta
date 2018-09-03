@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\City;
 use App\State;
 use App\SiteGroup;
+use Input;
 
 class SiteGroupController extends Controller
 {
@@ -27,8 +28,8 @@ class SiteGroupController extends Controller
      */
     public function index()
     {
-        $sitegroups = SiteGroup::paginate(10);
-        return view('site-group/index', ['sitegroups' => $sitegroups]);
+        $sitegroups = SiteGroup::get();
+        return view('site-group/index', ['sitegroups' => $sitegroups,'success' => '2']);
     }
 
     /**
@@ -58,6 +59,37 @@ class SiteGroupController extends Controller
         return redirect()->intended('system-management/site-group');
     }
     
+    public function store_sitegroup(Request $request)
+    {
+        $site = Input::get('new_sitegroup');      
+        $site_id = Input::get('sitegroup_id');
+        $today = date("Y-m-d H:i:s");
+        
+        if(!empty($site)):
+            if($site_id!=''):            
+                $input = [
+                    'site_group_name' => $site,
+                ];
+                $query = SiteGroup::where('id', $site_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = SiteGroup::create([           
+                    'database_id' => '2',
+                    'site_group_name' => $site,
+                    'last_modified' => $today
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = SiteGroup::all();
+   
+        return view('site-group/index',['sitegroups' => $getAll,'success'=>$status]);
+       
+    }
     
 
     /**

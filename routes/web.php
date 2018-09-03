@@ -318,6 +318,7 @@ Route::get('site-type/store_sitetype', 'SiteTypeController@store_sitetype');
 Route::resource('site-type', 'SiteTypeController');
 Route::post('site-type/search', 'SiteTypeController@search')->name('site-type.search');
 
+Route::get('site-group/store_sitegroup', 'SiteGroupController@store_sitegroup');
 Route::resource('site-group', 'SiteGroupController');
 Route::post('site-group/search', 'SiteGroupController@search')->name('site-group.search');
 
