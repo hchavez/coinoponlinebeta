@@ -12,6 +12,7 @@ class MachineType extends Model
      * @var string
      */
     protected $table = 'machine_types';
+    public $timestamps = false;
 
 
     /**

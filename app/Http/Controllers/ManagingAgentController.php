@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\City;
 use App\Route;
-use App\MachineType;
+use App\ManagingAgent;
 use App\MachineModel;
 
 class ManagingAgentController extends Controller
@@ -28,7 +28,7 @@ class ManagingAgentController extends Controller
      */
     public function index()
     {
-         $agents = Route::paginate(5);
+        $agents = ManagingAgent::paginate(5);
         return view('managing-agent/index', ['agents' => $agents]);
         
     }

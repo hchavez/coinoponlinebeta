@@ -8,6 +8,7 @@ use App\City;
 use App\State;
 use App\MachineType;
 use App\MachineModel;
+use Input;
 
 class MachineTypeController extends Controller
 {
@@ -29,7 +30,7 @@ class MachineTypeController extends Controller
     public function index()
     {
          $types = MachineType::get();
-        return view('machine-type/index', ['types' => $types]);
+        return view('machine-type/index', ['types' => $types,'success'=>'2']);
         
     }
 
@@ -60,6 +61,40 @@ class MachineTypeController extends Controller
 
         return redirect()->intended('machine-type');
     }
+    
+    public function store_machineType(Request $request)
+    {
+        $new_machinetype = Input::get('new_machinetype');      
+        $machinetype_id = Input::get('machinetype_id');
+        $today = date("Y-m-d H:i:s");
+        
+        if(!empty($new_machinetype)):
+            if($machinetype_id!=''):            
+                $input = [
+                    'machine_type' => $new_machinetype,
+                ];
+                $query = MachineType::where('id', $machinetype_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = MachineType::create([           
+                    'database_id' => '2',
+                    'machine_type' => $new_machinetype,
+                    'created_at' => $today
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = MachineType::all();
+   
+        return view('machine-type/index',['types' => $getAll,'success'=>$status]);
+       
+    }
+    
+    
 
     /**
      * Display the specified resource.

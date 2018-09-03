@@ -310,12 +310,15 @@ Route::post('prize/search', 'PrizeController@search')->name('prize.search');
 Route::resource('themes', 'ThemeController');
 Route::post('theme/search', 'ThemeController@search')->name('themes.search');
 
+Route::get('route/store_route', 'RouteController@store_route');
 Route::resource('route', 'RouteController');
 Route::post('route/search', 'RouteController@search')->name('route.search');
 
+Route::get('site-type/store_sitetype', 'SiteTypeController@store_sitetype');
 Route::resource('site-type', 'SiteTypeController');
 Route::post('site-type/search', 'SiteTypeController@search')->name('site-type.search');
 
+Route::get('site-group/store_sitegroup', 'SiteGroupController@store_sitegroup');
 Route::resource('site-group', 'SiteGroupController');
 Route::post('site-group/search', 'SiteGroupController@search')->name('site-group.search');
 
@@ -343,6 +346,7 @@ Route::post('system-management/state/search', 'StateController@search')->name('s
 Route::resource('system-management/city', 'CityController');
 Route::post('system-management/city/search', 'CityController@search')->name('city.search');
 
+Route::get('machine-type/store_machineType', 'MachineTypeController@store_machineType');
 Route::resource('machine-type', 'MachineTypeController');
 Route::post('machine-type/search', 'MachineTypeController@search')->name('machine-type.search');
 

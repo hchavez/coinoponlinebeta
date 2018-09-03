@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SiteType extends Model
+class ManagingAgent extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'site_types';
+    protected $table = 'managing_agents';
     public $timestamps = false;
 
 

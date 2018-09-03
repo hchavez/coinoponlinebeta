@@ -12,6 +12,7 @@ class Route extends Model
      * @var string
      */
     protected $table = 'route';
+    public $timestamps = false;
 
 
     /**

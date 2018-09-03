@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\City;
 use App\State;
 use App\SiteType;
+use Input;
 
 class SiteTypeController extends Controller
 {
@@ -28,7 +29,7 @@ class SiteTypeController extends Controller
     public function index()
     {
         $sitetypes = SiteType::get();
-        return view('site-type/index', ['sitetypes' => $sitetypes]);
+        return view('site-type/index', ['sitetypes' => $sitetypes,'success' => '2']);
     }
 
     /**
@@ -58,7 +59,37 @@ class SiteTypeController extends Controller
         return redirect()->intended('system-management/site-type');
     }
     
-    
+    public function store_sitetype(Request $request)
+    {
+        $site = Input::get('new_sitetype');      
+        $site_id = Input::get('sitetype_id');
+        $today = date("Y-m-d H:i:s");
+        
+        if(!empty($site)):
+            if($site_id!=''):            
+                $input = [
+                    'site_type' => $site,
+                ];
+                $query = SiteType::where('id', $site_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = SiteType::create([           
+                    'database_id' => '2',
+                    'site_type' => $site,
+                    'last_modified' => $today
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = SiteType::all();
+   
+        return view('site-type/index',['sitetypes' => $getAll,'success'=>$status]);
+       
+    }
 
     /**
      * Display the specified resource.
