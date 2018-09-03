@@ -350,6 +350,7 @@ Route::get('machine-type/store_machineType', 'MachineTypeController@store_machin
 Route::resource('machine-type', 'MachineTypeController');
 Route::post('machine-type/search', 'MachineTypeController@search')->name('machine-type.search');
 
+Route::get('machine-type/store_machineModel', 'MachineModelController@store_machineType');
 Route::resource('machine-model', 'MachineModelController');
 Route::post('machine-model/search', 'MachineModelController@search')->name('machine-model.search');
 

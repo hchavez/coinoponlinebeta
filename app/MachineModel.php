@@ -12,7 +12,7 @@ class MachineModel extends Model
      * @var string
      */
     protected $table = 'machine_models';
-
+    public $timestamps = false;
 
     /**
     * The attributes that aren't mass assignable.

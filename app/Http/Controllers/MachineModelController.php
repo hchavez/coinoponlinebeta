@@ -8,6 +8,7 @@ use App\City;
 use App\State;
 use App\MachineType;
 use App\MachineModel;
+use Input;
 
 class MachineModelController extends Controller
 {
@@ -28,12 +29,12 @@ class MachineModelController extends Controller
      */
     public function index()
     {
-         $models = DB::table('machine_models')
+        $models = DB::table('machine_models')
         ->select('machine_models.*',  'machine_types.machine_type as machine_type')
         ->leftJoin('machine_types', 'machine_models.machine_type_id', '=', 'machine_types.id')
         ->latest('machine_models.created_at')->get();    
-        return view('machine-model/index', ['models' => $models]);
-        
+        $types = MachineType::all();
+        return view('machine-model/index', ['models' => $models, 'types' => $types]);       
            
     }
 
@@ -66,6 +67,38 @@ class MachineModelController extends Controller
         ]);
 
         return redirect()->intended('machine-model');
+    }
+    
+    public function store_machineModel(Request $request)
+    {
+        $new_machinetype = Input::get('new_machinemodel');      
+        $machinetype_id = Input::get('machinemodel_id');
+        $today = date("Y-m-d H:i:s");
+        
+        if(!empty($new_machinetype)):
+            if($machinetype_id!=''):            
+                $input = [
+                    'machine_type' => $new_machinetype,
+                ];
+                $query = MachineType::where('id', $machinetype_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = MachineType::create([           
+                    'database_id' => '2',
+                    'machine_type' => $new_machinetype,
+                    'created_at' => $today
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = MachineType::all();
+   
+        return view('machine-type/index',['types' => $getAll,'success'=>$status]);
+       
     }
 
     /**
@@ -165,6 +198,6 @@ class MachineModelController extends Controller
     private function validateInput($request) {
         $this->validate($request, [
         'title' => 'required|max:60|unique:machine_model'
-    ]);
+        ]);
     }
 }
