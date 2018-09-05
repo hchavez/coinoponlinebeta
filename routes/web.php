@@ -360,6 +360,7 @@ Route::post('key/search', 'KeyController@search')->name('key.search');
 Route::resource('key-location', 'KeyLocationController');
 Route::post('key-location/search', 'KeyLocationController@search')->name('key-location.search');
 
+Route::get('machine-sizes/store_sizes', 'MachineSizesController@store_sizes');
 Route::resource('machine-sizes', 'MachineSizesController');
 Route::post('machine-sizes/search', 'MachineSizesController@search')->name('machine-sizes.search');
 

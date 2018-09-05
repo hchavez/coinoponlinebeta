@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\City;
-use App\State;
+use App\Sizes;
 use App\Site;
+use Input;
 
 class MachineSizesController extends Controller
 {
@@ -27,8 +28,8 @@ class MachineSizesController extends Controller
      */
     public function index()
     {
-        $sites = Site::paginate(10);
-        return view('machine-sizes/index', ['sites' => $sites]);
+        $Size = Sizes::get();
+        return view('machine-sizes/index', ['size' => $Size,'success' => '2']);
     }
 
     /**
@@ -58,6 +59,36 @@ class MachineSizesController extends Controller
         ]);
 
         return redirect()->intended('machine-sizes');
+    }
+    
+    public function store_sizes(Request $request)
+    {
+        $size = Input::get('new_sizes');      
+        $size_id = Input::get('new_id');       
+        
+        if(!empty($size)):
+            if($size_id!=''):            
+                $input = [
+                    'size' => $size,
+                ];
+                $query = Sizes::where('id', $size_id)
+                    ->update($input);
+                $status = ($query)? '1' : '2';
+            else:            
+                $query = Sizes::create([           
+                    'database_id' => '2',
+                    'size' => $size
+                ]);  
+                $status = ($query)? '1' : '2';
+            endif;
+        else:
+            $status = 0;
+        endif;
+        
+        $getAll = Sizes::all();
+   
+        return view('machine-sizes/index',['size' => $getAll,'success'=>$status]);
+       
     }
 
     /**

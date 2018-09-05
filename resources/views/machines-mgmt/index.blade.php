@@ -152,6 +152,7 @@ $(document).ready(function() {
     //Clear filter 
     $('#clear_filter').click(function(){
         $('select').val('').change();
+        $('input').val('').change();
     });
     
     
