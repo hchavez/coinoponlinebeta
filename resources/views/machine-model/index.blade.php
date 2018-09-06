@@ -68,7 +68,7 @@
                                         <td>{{ $model->machine_model_code }}</td>
                                         <td>{{ $model->machine_type }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-outline btn-default edit_me" id="{{ $model->id }}-{{ $model->machine_model }}">
+                                            <button type="button" class="btn btn-outline btn-default edit_me btn-sm" id="{{ $model->id }}-{{ $model->machine_model }}">
                                                 <i class="icon wb-edit" aria-hidden="true"></i>
                                             </button>  
                                         </td>
@@ -86,6 +86,9 @@
         </div>
     </div>
 </div>
+<style>
+.table td, .table th{padding:4px;}
+</style>
 <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
 <script>
 $(document).ready(function(){

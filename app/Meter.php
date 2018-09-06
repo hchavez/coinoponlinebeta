@@ -11,8 +11,8 @@ class Meter extends Model
      *
      * @var string
      */
-    protected $table = 'meters';
-
+    protected $table = 'meter';
+    public $timestamps = false;
 
     /**
     * The attributes that aren't mass assignable.

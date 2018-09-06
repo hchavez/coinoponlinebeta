@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\City;
 use App\State;
-use App\Site;
+use App\Meter;
+use Input;
 
 class MeterController extends Controller
 {
@@ -27,8 +28,8 @@ class MeterController extends Controller
      */
     public function index()
     {
-        $sites = Site::paginate(10);
-        return view('meters/index', ['sites' => $sites]);
+        $meters = Meter::get();        
+        return view('meters/index', ['meters' => $meters]);
     }
 
     /**
@@ -77,16 +78,10 @@ class MeterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $site = site::find($id);
-        // Redirect to site list if updating site wasn't existed
-        if ($site == null || count($site) == 0) {
-            return redirect()->intended('/meters');
-        }
-
-        $states = State::all();
-        return view('meters/edit', ['site' => $site, 'states' => $states]);
+        $data = Input::get('id');
+        return view('meters/edit');
     }
 
     /**

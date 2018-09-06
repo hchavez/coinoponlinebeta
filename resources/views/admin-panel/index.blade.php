@@ -89,7 +89,7 @@
                                         <div class="counter counter-sm text-left">
                                               <div class="counter-number-group">
                                                 <span class="counter-icon blue-600 mr-5"><i class="icon wb-calendar"></i></span>                                                                                   
-                                                <span class="counter-number-related text-right"><a href="">Meters</a></span>
+                                                <span class="counter-number-related text-right"><a href="{{ url('meters') }}">Meters</a></span>
                                               </div>
                                         </div>
                                          <div class="counter counter-sm text-left">

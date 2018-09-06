@@ -80,7 +80,7 @@
         </div>
     </div>
 </div>
-        <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
+<script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
 <script>
 $(document).ready(function(){
     $('#routeTable td div').click(function() { 

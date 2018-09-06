@@ -56,10 +56,10 @@
                                         <td>{{ $type->created_at }}</td>
                                         <td>
                                             <div class="btn-group hidden-sm-down" id="exampleToolbar" role="group">
-                                                <button type="button" class="btn btn-outline btn-default edit_me" id="{{ $type->id }}-{{ $type->machine_type }}">
+                                                <button type="button" class="btn btn-outline btn-default edit_me btn-sm" id="{{ $type->id }}-{{ $type->machine_type }}">
                                                   <i class="icon wb-edit" aria-hidden="true"></i>
                                                 </button>                                                
-                                                <button type="button" class="btn btn-outline btn-default">
+                                                <button type="button" class="btn btn-outline btn-default btn-sm">
                                                   <i class="icon wb-trash" aria-hidden="true"></i>
                                                 </button>
                                             </div>
@@ -78,6 +78,9 @@
         </div>
     </div>
 </div>
+<style>
+.table td, .table th{padding:4px;}
+</style>
 <script src="{{ asset("/global/vendor/jquery/jquery.js") }}"></script>
 <script>
 $(document).ready(function(){
