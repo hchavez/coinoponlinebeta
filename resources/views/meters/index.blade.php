@@ -15,11 +15,11 @@
                         <table class="table table-bordered" id="meters_table">
                             <thead>
                               <tr>
-                                    <th class="text-left">Meter Name</th>
-                                    <th class="text-left">Meter Description</th>
-                                    <th class="text-left">Meter Type</th>             
-                                    <th>Click Value</th> 
-                                    <th disabled>Edit</th> 
+                                <th class="text-left">Meter Name</th>
+                                <th class="text-left">Meter Description</th>
+                                <th class="text-left">Meter Type</th>             
+                                <th>Click Value</th> 
+                                <th disabled>Edit</th> 
                               </tr>
                             </thead>
                             <tbody>
@@ -42,8 +42,8 @@
                                     <td class="text-left">{{ $data->meterdescription }}</td>
                                     <td class="text-left"><?php echo $meter_type; ?></td>
                                     <td>{{ $data->clickvalue }}</td>
-                                    <!--td><a href="{{ url('meters/edit') }}?id={{ $data->id }}">EDIT</a></td-->
-                                    <td><a href="#">EDIT</a></td>
+                                    <td><a href="{{ url('meters/edit') }}?id={{ $data->id }}">EDIT</a></td>
+                                    <!--td><a href="#">EDIT</a></td-->
                                 </tr>
                                 @endforeach
                             </tbody>

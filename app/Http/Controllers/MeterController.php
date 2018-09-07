@@ -81,7 +81,15 @@ class MeterController extends Controller
     public function edit()
     {
         $data = Input::get('id');
-        return view('meters/edit');
+        $query = DB::table('meter')->where('id', $data)->first();
+       
+        /*$input = [
+                    'route' => $route,
+                ];
+        $query = Meter::where('id', $route_id)
+            ->update($input);*/
+        //$status = ($query)? '1' : '2';
+        return view('meters/edit', ['data' => $query]);
     }
 
     /**
