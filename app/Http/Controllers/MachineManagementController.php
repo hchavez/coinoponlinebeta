@@ -530,13 +530,130 @@ class MachineManagementController extends Controller {
     
     public function error($id) {
         
-        $url = url()->current();
+        /*$url = url()->current();
         $objectID = \AppHelper::objectId($url);
         $var = $this->permission($objectID);                                    
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
             return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
+        else:
+            return view('profile/index', ['permit' => $var['permit'], 
+                'userDetails' => $var['userDetails'], 
+                'user_id' => $var['userDetails'][0]['id'], 
+                'userGroup' => $var['userRole'][0]['users_group']]
+            );
+        endif;*/
+        
+        $url = url()->current();
+        $objectID = \AppHelper::objectId($url);
+        $var = $this->permission($objectID); 
+        $currerntUserRole = Auth::User()->id;
+        
+        $machine = $this->machinelogs($id); 
+        
+        $machinelogs = DB::table('machines')
+                     ->select(DB::raw(' machines.*, DATE(errorlogs.created_at) as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
+                             . 'sites.street as street, sites.suburb as suburb, state.state_code as statecode, machine_models.machine_model as machine_model,'
+                             . 'machine_types.machine_type as machine_type, machines.machine_serial_no as serial_no, machines.id as machine_id, machines.comments as comments,'
+                             . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('state', 'sites.state', '=', 'state.id')          
+                    ->where('errorlogs.status','!=','2')
+                    ->where('machines.status','=','1')
+                    ->where('errorlogs.machine_id' ,'=', $id);
+        
+        
+        $dateRange = Input::get('dateRange');        
+        $from = $to = '';        
+        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);           
+            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
+        endif;
+        
+        if(!empty(Input::get())):            
+            $model = Input::get('machine_model');
+            $type = Input::get('machine_type');
+            $error_msg = Input::get('error_msg');
+            $machine_site = Input::get('machine_site'); 
+            
+            if($model):
+                $machinelogs = $machinelogs->where(function($query) use ($model){                    
+                    $query->where('machine_models.machine_model', '=', $model);               
+                })->orderBy('date_created','desc');            
+            endif;
+            
+            if($type):
+                $machinelogs = $machinelogs->where(function($query) use ($type){                    
+                    $query->where('machine_types.machine_type', '=', $type);               
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            if($error_msg):
+                $machinelogs = $machinelogs->where(function($query) use ($error_msg){                    
+                    $query->where('type', '=', $error_msg);               
+                })->orderBy('date_created','desc');            
+            endif; 
+            
+            if($machine_site):
+                $machinelogs = $machinelogs->where(function($query) use ($machine_site){                    
+                    $query->where('site_name', '=', $machine_site);               
+                })->orderBy('date_created','desc');            
+            endif;            
+             
+        endif;
+        
+        $dateCheck = Input::get('dateRange');
+        $date = new DateTime();        
+        $today = $date->format('Y-m-d H:i:s');
+        $newdate = strtotime ( '-2 day' , strtotime ( $today ) ) ;
+        
+        if(!empty($dateCheck)):            
+            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
+            })->orderBy('errorlogs.created_at','desc'); 
+        else:
+            $machinelogs = $machinelogs->where(function($query) use ($newdate, $today){                    
+                //$query->whereDate('errorlogs.created_at', '=', Carbon::today());  
+                $query->whereBetween('errorlogs.created_at', [$newdate, $today]);      
+            }); 
+        endif;
+        
+        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
+                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
+                
+        $machinelogs = $machinelogs->orderBy('errorlogs.type','asc')->paginate(15);
+        $machinelogsgroup =  DB::table('errorlogs_list')
+            ->select('errorlogs_list.*')            
+            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
+            ->orderBy('type','asc')
+            ->get();
+         
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+        $machineType = MachineType::orderBy('created_at', 'desc')->get();
+                
+        $filterData = array(            
+            'machine_model' => Input::get('machine_model'),
+            'machine_type' => Input::get('machine_type'),
+            'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),
+            'machine_site' => Input::get('machine_site'),
+            'startdate' => $from,
+            'enddate' => $to
+        );
+                
+        $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
+       
+        if($var['permit']['readAll']):
+            return view('machines-mgmt/error', ['machine' => $machine,'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'wh'=>$wh, 'userID'=>$currerntUserRole]);
         else:
             return view('profile/index', ['permit' => $var['permit'], 
                 'userDetails' => $var['userDetails'], 

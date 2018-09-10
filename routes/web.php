@@ -373,7 +373,9 @@ Route::post('machinemodel-checklist/search', 'MachineModelCheckListController@se
 Route::resource('repair-type', 'RepairTypeController');
 Route::post('repair-type/search', 'RepairTypeController@search')->name('repair-type.search');
 
+Route::get('meters/update', 'MeterController@update');
 Route::get('meters/edit', 'MeterController@edit');
+
 Route::resource('meters', 'MeterController');
 Route::post('meters/search', 'MeterController@search')->name('meters.search');
 

@@ -23,7 +23,7 @@
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Meter Type: </label>                               
                                 <div class="col-md-7">
-                                    <select class="form-control">
+                                    <select class="form-control" name="meterTypeId">
                                         <option name="meterType" value="1" <?php echo ($data->MeterTypeID=='1')? 'selected' : ''; ?> >Money-Cash</option>
                                         <option name="meterType" value="2" <?php echo ($data->MeterTypeID=='2')? 'selected' : ''; ?> >Test Goes</option>
                                         <option name="meterType" value="3" <?php echo ($data->MeterTypeID=='3')? 'selected' : ''; ?> >Product Out</option>

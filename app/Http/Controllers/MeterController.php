@@ -80,15 +80,9 @@ class MeterController extends Controller
      */
     public function edit()
     {
-        $data = Input::get('id');
-        $query = DB::table('meter')->where('id', $data)->first();
+        $id = Input::get('id');
+        $query = DB::table('meter')->where('id', $id)->first();       
        
-        /*$input = [
-                    'route' => $route,
-                ];
-        $query = Meter::where('id', $route_id)
-            ->update($input);*/
-        //$status = ($query)? '1' : '2';
         return view('meters/edit', ['data' => $query]);
     }
 
@@ -99,20 +93,9 @@ class MeterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
-        $site = City::findOrFail($id);
-         $this->validate($request, [
-        'name' => 'required|max:60'
-        ]);
-        $input = [
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
-        ];
-        City::where('id', $id)
-            ->update($input);
-        
-        return redirect()->intended('meters');
+        echo 'test';
     }
 
     /**
