@@ -240,6 +240,7 @@
                                 </thead> 
                                     
                                 @foreach ($machinelogs as $machinelog)
+                                <?php $countarray = null; ?>
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
                                         <td class="text-center">
@@ -278,9 +279,11 @@
                                         <td class="hidden-sm-down">
                                             <?php
                                             $countarray = array();
-                                            $temp=0;
+                                            $machineloggroup = null;
+                                            $count=0;
                                             foreach ($machinelogsgroup as $machineloggroup):
-                                                   if ($machineloggroup->error == $machinelog->error){ ?>
+                                                
+                                                   if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){ ?>
                                                  <?php 
                                                  $count = 1;
                                                  array_push($countarray, $count); 
