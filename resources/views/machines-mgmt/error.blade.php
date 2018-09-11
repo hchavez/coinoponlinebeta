@@ -148,14 +148,13 @@
                               @endif
                           </div>
                            <div class="example">                               
-                               
+                              
                             <table class="table table-hover" id="machineErrorReport" style="border-top: 1px solid #e4eaec;">                                    
                                 <thead>
                                     <tr role="row">                                                
                                         <th style="width:1%;" class="col_empty"></th>
                                         <th style="width:6.5%;" class="col_date">Date Time</th>                                        
-                                        <th style="width:12%" class="col_error">Error Message</th>
-                                        <th style="width:16.52%" class="col_site">Site</th>
+                                        <th style="width:12%" class="col_error">Error Message</th>                                        
                                         <th style="width:5%;" class="">Instances</th>
                                     </tr> 
                                 </thead> 
@@ -174,7 +173,7 @@
                                         <td class="hidden-sm-down">
                                             <strong>
                                             <?php if($permit['editAll']): ?>    
-                                            <a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
+                                            
                                             <?php endif; ?>
                                             @if ($machinelog->errortype == '2') 
                                             <span class="badge badge-warning">Warning!</span> 
@@ -187,12 +186,8 @@
                                             @else
                                             <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                             @endif
-                                            <?php if($permit['editAll']): ?>  </a><?php endif; ?></strong>
-                                        </td>
-                                        <td class="hidden-sm-down">
-                                            @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else
-                                             {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
-                                        </td>
+                                            <?php if($permit['editAll']): ?>  <?php endif; ?></strong>
+                                        </td>                                        
                                         <td class="hidden-sm-down">
                                             <?php
                                             $countarray = array();
@@ -215,16 +210,14 @@
                                         @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id)
                                           <tr>
                                               <td> &nbsp;</td>
-                                              <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td> 
-                                              <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
+                                              <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td>                                               
                                               <td>
                                                   @if ($machineloggroup->type == '1') 
                                                   <span class="badge badge-danger" > Needs Immediate Attention! </span>
                                                   @endif
                                                   <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
                                               </td>
-                                              <td class="hidden-sm-down"></td>
-                                              <td class="hidden-sm-down">&nbsp;</td>
+                                              <td class="hidden-sm-down"></td>                                              
                                           </tr>
                                         @endif
                                      @endforeach
@@ -239,6 +232,7 @@
                     <?php //print_r($machinelogss); ?>
                     <div class="col-sm-12">                                     
                         <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
+                            <?php //print_r($machinelogs->currentPage()); ?>
                             @if ($machinelogs->lastPage() > 1)
                                 <?php
                                     $start = $machinelogs->currentPage() - 3; // show 3 pagination links before current
@@ -253,10 +247,10 @@
                                     <a class="btn btn-xs" href="{{ $machinelogs->url(1) }}">{{1}}</a> ...
                                 @endif
                                 @for ($i = $start; $i <= $end; $i++)
-                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $i) ? ' active' : '' }}" href="<?php echo $url.'machine-error-reports'.$con.'page='; ?>{{$i}}">{{$i}}</a>
+                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $i) ? ' active' : '' }}" href="<?php echo $url.'machine-management/error/'.$getID.$con.'page='; ?>{{$i}}">{{$i}}</a>
                                 @endfor
                                 @if($end<$machinelogs->lastPage())
-                                   ... <a class="btn btn-xs" href="<?php echo $url.'machine-error-reports'.$con.'page='.$machinelogs->lastPage(); ?>">{{$machinelogs->lastPage()}}</a>
+                                   ... <a class="btn btn-xs" href="<?php echo $url.'machine-management/error/'.$getID.$con.'page='.$machinelogs->lastPage(); ?>">{{$machinelogs->lastPage()}}</a>
                                 @endif
                                 <a class="btn btn-xs {{ ($machinelogs->currentPage() == $machinelogs->lastPage()) ? ' disabled' : '' }}" href="{{ $machinelogs->url($machinelogs->currentPage()+1) }}"><span>»</span></a>
                             @endif
@@ -291,22 +285,35 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script>
-$(document).ready(function(){
-    $('input[name="dateRange"]').daterangepicker({
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
+<script src="{{ asset("/js/export-table.js") }}"></script>
+<style>
+.dt-button.buttons-excel{margin: 1em 2em 0 0;}
+.dt-buttons{position:static !important;}
+.ladda-button, .dt-buttons{display:inline-block;vertical-align: top;}
+.ladda-button{margin-top:10px;}
+</style>
+<script>    
+$(document).ready(function() {
+    $("#export").click(function(){
+        $("#machineErrorReport").table2excel({
+          exclude: ".noExl",
+          name: "Worksheet Name",
+          filename: "SomeFile" //do not include extension
+        }); 
+    });   
+    //show sub error
+    $( "#machineErrorReport tbody.table-section" ).each(function( index ) {        
+        $(this).click(function(){
+            $(this).toggleClass("active");
+        });
     });
-    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        var select = $(this), form = select.closest('form'); form.attr('action', '?error'); form.submit();
-    });
+       
 });
+
 </script>
 @endsection
 

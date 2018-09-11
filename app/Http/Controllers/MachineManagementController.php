@@ -553,7 +553,7 @@ class MachineManagementController extends Controller {
         $machine = $this->machinelogs($id); 
         
         $machinelogs = DB::table('machines')
-                     ->select(DB::raw(' machines.*, DATE(errorlogs.created_at) as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
+                     ->select(DB::raw(' machines.*, errorlogs.created_at as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
                              . 'sites.street as street, sites.suburb as suburb, state.state_code as statecode, machine_models.machine_model as machine_model,'
                              . 'machine_types.machine_type as machine_type, machines.machine_serial_no as serial_no, machines.id as machine_id, machines.comments as comments,'
                              . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
@@ -613,7 +613,7 @@ class MachineManagementController extends Controller {
         $dateCheck = Input::get('dateRange');
         $date = new DateTime();        
         $today = $date->format('Y-m-d H:i:s');
-        $newdate = strtotime ( '-2 day' , strtotime ( $today ) ) ;
+        $newdate = strtotime ( '-1 day' , strtotime ( $today ) ) ;
         
         if(!empty($dateCheck)):            
             $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
@@ -629,11 +629,13 @@ class MachineManagementController extends Controller {
         $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
-        $machinelogs = $machinelogs->orderBy('errorlogs.type','asc')->paginate(15);
+        $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
         $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*')            
+            ->where('errorlogs_list.machine_id' ,'=', $id)
             ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
-            ->orderBy('type','asc')
+            //->whereBetween('errorlogs_list.created_at', [$newdate, $today])
+            ->orderBy('errorlogs_list.created_at','desc')
             ->get();
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
@@ -653,7 +655,7 @@ class MachineManagementController extends Controller {
         $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
        
         if($var['permit']['readAll']):
-            return view('machines-mgmt/error', ['machine' => $machine,'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'wh'=>$wh, 'userID'=>$currerntUserRole]);
+            return view('machines-mgmt/error', ['machine' => $machine,'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'wh'=>$wh, 'userID'=>$currerntUserRole,'getID'=>$id]);
         else:
             return view('profile/index', ['permit' => $var['permit'], 
                 'userDetails' => $var['userDetails'], 
