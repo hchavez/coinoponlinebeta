@@ -633,8 +633,6 @@ class MachineManagementController extends Controller {
         $machinelogsgroup =  DB::table('errorlogs_list')
             ->select('errorlogs_list.*')            
             ->where('errorlogs_list.machine_id' ,'=', $id)
-            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
-            //->whereBetween('errorlogs_list.created_at', [$newdate, $today])
             ->orderBy('errorlogs_list.created_at','desc')
             ->get();
          
