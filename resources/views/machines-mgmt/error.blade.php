@@ -169,9 +169,7 @@
                                             <?php break; }
                                             endforeach; ?>
                                         </td>
-                                        <td class="text-left"> 
-                                            <?php $datefirst = date("Y-m-d", $machinelog->date_created); ?>
-                                            {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
+                                        <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
                                         <td class="hidden-sm-down">
                                             <strong>
                                             <?php if($permit['editAll']): ?>    
@@ -195,7 +193,7 @@
                                             $countarray = array();
                                             $temp=0;
                                             foreach ($machinelogsgroup as $machineloggroup):
-                                                if ($machinelog->error == $machineloggroup->error  && $machinelog->machine_id == $machineloggroup->machine_id ){ ?>
+                                                if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){ ?>
                                                  <?php 
                                                  $count = 1;
                                                  array_push($countarray, $count); 
@@ -207,10 +205,9 @@
                                     </tr>
                                 </tbody>
 
-                                <tbody>  
+                                <tbody> 
                                      @foreach ($machinelogsgroup as $machineloggroup)
-                                     <?php $datesub =  date("Y-m-d", $machineloggroup->created_at); ?>
-                                        @if ($machinelog->error == $machineloggroup->error && $datefirst == $datesub)
+                                        @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id)
                                           <tr>
                                               <td> &nbsp;</td>
                                               <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td>                                               
@@ -218,7 +215,7 @@
                                                   @if ($machineloggroup->type == '1') 
                                                   <span class="badge badge-danger" > Needs Immediate Attention! </span>
                                                   @endif
-                                                  <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring.'--'.$datesub;?>
+                                                  <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
                                               </td>
                                               <td class="hidden-sm-down"></td>                                              
                                           </tr>
