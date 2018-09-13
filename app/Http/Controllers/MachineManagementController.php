@@ -553,7 +553,7 @@ class MachineManagementController extends Controller {
         $machine = $this->machinelogs($id); 
         
         $machinelogs = DB::table('machines')
-                     ->select(DB::raw(' machines.*, errorlogs.created_at as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
+                     ->select(DB::raw(' machines.*, DATE(errorlogs.created_at) as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
                              . 'sites.street as street, sites.suburb as suburb, state.state_code as statecode, machine_models.machine_model as machine_model,'
                              . 'machine_types.machine_type as machine_type, machines.machine_serial_no as serial_no, machines.id as machine_id, machines.comments as comments,'
                              . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
@@ -574,7 +574,7 @@ class MachineManagementController extends Controller {
             $explode = explode('-',$dateRange);
             $explode_from = explode('/',$explode[0]);
             $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);           
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
             $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
         endif;
         
@@ -621,8 +621,8 @@ class MachineManagementController extends Controller {
             })->orderBy('errorlogs.created_at','desc'); 
         else:
             $machinelogs = $machinelogs->where(function($query) use ($newdate, $today){                    
-                //$query->whereDate('errorlogs.created_at', '=', Carbon::today());  
-                $query->whereBetween('errorlogs.created_at', [$newdate, $today]);      
+                $query->whereDate('errorlogs.created_at', '=', Carbon::today());  
+                //$query->whereBetween('errorlogs.created_at', [$newdate, $today]);      
             }); 
         endif;
         
@@ -630,11 +630,19 @@ class MachineManagementController extends Controller {
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
         $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
-        $machinelogsgroup =  DB::table('errorlogs_list')
-            ->select('errorlogs_list.*')            
-            ->where('errorlogs_list.machine_id' ,'=', $id)
-            ->orderBy('errorlogs_list.created_at','desc')
-            ->get();
+        $machinelogsgroup =  DB::table('errorlogs_list')->select('errorlogs_list.*');
+        
+        if(!empty($dateCheck)):            
+            $machinelogsgroup = $machinelogsgroup->where(function($query) use ($from,$to){                    
+                $query->whereBetween('errorlogs_list.created_at', [$from, $to]);          
+            })->orderBy('errorlogs_list.created_at','desc'); 
+        else:
+            $machinelogsgroup = $machinelogsgroup->where(function($query){                    
+                $query->whereDate('errorlogs_list.created_at', '=', Carbon::today());                 
+            }); 
+        endif;
+        
+        $machinelogsgroup =  $machinelogsgroup->orderBy('type','asc')->get();
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
@@ -648,9 +656,9 @@ class MachineManagementController extends Controller {
             'machine_site' => Input::get('machine_site'),
             'startdate' => $from,
             'enddate' => $to
-        );
-                
-        $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
+        );         
+        
+        $wh = DB::table('machines')->where('status','=', '3')->count('status');         
        
         if($var['permit']['readAll']):
             return view('machines-mgmt/error', ['machine' => $machine,'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'wh'=>$wh, 'userID'=>$currerntUserRole,'getID'=>$id]);

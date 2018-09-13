@@ -79,11 +79,11 @@
             
                     <div class="row">
                         
-                        <div class="col-md-6">
-                            <form role="form" method="GET" class="error-list-form" id="formSearch">
-                            <div class="ky-columns" style="width:40%;" >
-                                <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
-                            </div>                            
+                        <div class="col-md-6">                            
+                            <form role="form" method="GET" action="{{ url('machine-management/error') }}/{{ $getID }}" class="error-list-form" id="formSearch">
+                                <div class="ky-columns" style="width:40%;" >     
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">     
+                                </div>                            
                             </form>
                            <!--div class="input-group input-daterange">
 
@@ -160,11 +160,13 @@
                                 </thead> 
                                     
                                 @foreach ($machinelogs as $machinelog)
+                                
                                 <tbody class="table-section" data-plugin="tableSection" >
                                     <tr>
                                         <td class="text-center">
                                             <?php foreach ($machinelogsgroup as $machineloggroup):
-                                                if ($machinelog->error == $machineloggroup->error){  ?>
+                                                if ($machinelog->error == $machineloggroup->error){  
+                                                //if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){?>
                                                 <i class="table-section-arrow"></i>
                                             <?php break; }
                                             endforeach; ?>
@@ -172,9 +174,7 @@
                                         <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
                                         <td class="hidden-sm-down">
                                             <strong>
-                                            <?php if($permit['editAll']): ?>    
                                             
-                                            <?php endif; ?>
                                             @if ($machinelog->errortype == '2') 
                                             <span class="badge badge-warning">Warning!</span> 
                                             @endif @if ($machinelog->errortype == '3')
@@ -186,14 +186,19 @@
                                             @else
                                             <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
                                             @endif
-                                            <?php if($permit['editAll']): ?>  <?php endif; ?></strong>
+                                            </strong>
                                         </td>                                        
                                         <td class="hidden-sm-down">
                                             <?php
                                             $countarray = array();
-                                            $temp=0;
+                                            $machineloggroup = null;
+                                            $count=0;
                                             foreach ($machinelogsgroup as $machineloggroup):
-                                                if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){ ?>
+                                                $log_date = date('d/m/Y', strtotime($machineloggroup->created_at));
+                                                $group_date = date('d/m/Y', strtotime($machinelog->date_created));
+                                                //echo $log_date.'-'.$group_date.'<br>';
+                                        
+                                                 if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id && $log_date == $group_date){ ?>
                                                  <?php 
                                                  $count = 1;
                                                  array_push($countarray, $count); 
@@ -205,9 +210,14 @@
                                     </tr>
                                 </tbody>
 
-                                <tbody> 
+                                <tbody>                                     
                                      @foreach ($machinelogsgroup as $machineloggroup)
-                                        @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id)
+                                        <?php 
+                                        $log_date = date('d/m/Y', strtotime($machineloggroup->created_at));
+                                        $group_date = date('d/m/Y', strtotime($machinelog->date_created));
+                                        //echo $log_date.'-'.$group_date.'<br>';
+                                        ?>
+                                        <?php if($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id && $log_date == $group_date): ?>
                                           <tr>
                                               <td> &nbsp;</td>
                                               <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td>                                               
@@ -215,11 +225,12 @@
                                                   @if ($machineloggroup->type == '1') 
                                                   <span class="badge badge-danger" > Needs Immediate Attention! </span>
                                                   @endif
-                                                  <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
+                                                  <?php $errorstring =str_replace(",","",$machineloggroup->error); echo $errorstring;?>
                                               </td>
                                               <td class="hidden-sm-down"></td>                                              
                                           </tr>
-                                        @endif
+                                        <?php endif; ?>
+                                       
                                      @endforeach
                                 </tbody>
                                 @endforeach
@@ -310,6 +321,17 @@ $(document).ready(function() {
         $(this).click(function(){
             $(this).toggleClass("active");
         });
+    });
+    //Machine error report filter
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });    
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form');  form.submit();
     });
        
 });
