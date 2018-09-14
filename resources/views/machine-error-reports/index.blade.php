@@ -137,7 +137,7 @@
                         <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                             <span class="ladda-label">Export</span>                            
                         </button>
-                        
+                        <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
                         <a href="{{ url('history') }}">
                         <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
                             <span class="ladda-label">View History<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
@@ -164,7 +164,7 @@
                             <form role="form" method="GET" class="error-list-form" id="formFilter" style="border-top: 1px solid #e4eaec;padding:0.5em 0;">
                                 <div style="width:1.5%;" class="col_empty ky-columns"></div>
                                 <div class="col_date ky-columns ky_date">
-                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left">     
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" autocomplete="off">     
                                 </div>
                                 <div class="col_model ky-columns ky_model">
                                     <select id="m_model" class="form-control" name="machine_model">
@@ -506,7 +506,9 @@
   </div>
 </div>
 <!-- End Modal -->
+<?php
 
+?>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -523,8 +525,8 @@ $(document).ready(function() {
     $("#export").click(function(){
         $("#machineErrorReport").table2excel({
           exclude: ".noExl",
-          name: "Worksheet Name",
-          filename: "SomeFile" //do not include extension
+          name: "Machine Error Report",
+          filename: "MachineErrorReport" //do not include extension
         }); 
     });    
 
@@ -591,6 +593,9 @@ $(document).ready(function() {
             }]
     });
     $('.dt-buttons').insertBefore('.ladda-button');*/
+    $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
+    });
     
 });
 

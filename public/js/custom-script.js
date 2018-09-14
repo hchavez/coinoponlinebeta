@@ -23,7 +23,6 @@ $(document).ready(function(){
     //filter table
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
-        order: [[ 8, "desc" ]],
         buttons: [{
                 extend: 'excelHtml5',
                 title: '',
@@ -93,8 +92,8 @@ $(document).ready(function(){
     $('#dashboard_sort_filter input').addClass('form-control');       
             
     //Display machine list from json query result
-    //var base_url = 'http://localhost/coinoponlinebeta/public/';
-    var base_url = 'https://www.ascentri.com/';
+    var base_url = 'http://localhost/coinoponlinebeta/public/';
+    //var base_url = 'https://www.ascentri.com/';
     
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     

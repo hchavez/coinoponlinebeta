@@ -80,7 +80,7 @@
                     <div class="row">
                         
                         <div class="col-md-6">                            
-                            <form role="form" method="GET" action="{{ url('machine-management/error') }}/{{ $getID }}" class="error-list-form" id="formSearch">
+                            <form role="form" method="GET" action="{{ url('machine-management/error') }}/{{ $getID }}" class="error-list-form" id="formSearch" autocomplete="off">
                                 <div class="ky-columns" style="width:40%;" >     
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">     
                                 </div>                            

@@ -18,7 +18,7 @@
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">     
             <form role="form" method="GET" class="error-list-form" id="formSearch">
                 <div class="ky-columns" style="width:15%;" >
-                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
+                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date" autocomplete="off">  
                 </div>    
                 <?php echo (!empty($data['dateRange']))? '<code>Filtered Date: '.$data['dateRange'].'</code>' : ''; ?>               
             </form>
@@ -26,7 +26,7 @@
             <div class="row"><div class="col-sm-12 longFilter" style="padding:0;"> 
 <!--                <div class="col-md-12 text-right"><button type="button" class="btn btn-danger" id="clear_filter">Clear Filter</button></div>
                 <div class="col-sm-12 longFilter" style="padding:0;">  -->
-                    <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
+                    <button type="button" id="clearFilter" class="btn btn-danger"  value="0">Clear Filter</button>
                     <button type="button" class="btn btn-outline btn-info"  id="filterBy">Filter By</button>              
                     <div id="filterDiv"></div>                        
                         <table class="display table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="dashboard_sort" role="grid" aria-describedby="exampleTableSearch_info" cellspacing="0" width="100%">
@@ -96,6 +96,7 @@
 .select2-container .select2-choice > .select2-chosen{color:#333 !important;}
 div.dataTables_wrapper div.dataTables_filter { text-align: left !important; } */
 </style>
+
 <script>    
 //$(document).ready(function() {
 //    $('#machine_list_table').DataTable( {
@@ -156,6 +157,30 @@ div.dataTables_wrapper div.dataTables_filter { text-align: left !important; } */
 //    $('#machine_list_table_wrapper .buttons-excel').css('float','inherit');
 //    $('#machine_list_table_wrapper .buttons-excel').insertAfter('#machine_list_table_filter label');
 //});
+$(document).ready(function(){
+     $('input[name="dateRange"]').daterangepicker({
+       autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
+    });
+    $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
+    });
+    
+    $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
+    });
+});
+/*function clearFields(){
+    $("input[type=text], textarea").val("");
+    $("input[type=text], textarea").val("");
+}*/
 </script>
 
 @endsection
