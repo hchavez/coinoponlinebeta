@@ -43,7 +43,7 @@ class MachineErrorReportController extends Controller
         $var = $this->permission($objectID); 
         $currerntUserRole = Auth::User()->id;
         $machinelogs = DB::table('machines')
-                     ->select(DB::raw(' machines.*, DATE(errorlogs.created_at) as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
+                     ->select(DB::raw(' machines.*, errorlogs.created_at as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
                              . 'sites.street as street, sites.suburb as suburb, state.state_code as statecode, machine_models.machine_model as machine_model,'
                              . 'machine_types.machine_type as machine_type, machines.machine_serial_no as serial_no, machines.id as machine_id, machines.comments as comments,'
                              . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
