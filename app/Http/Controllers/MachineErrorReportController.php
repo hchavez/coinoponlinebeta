@@ -445,15 +445,14 @@ class MachineErrorReportController extends Controller
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')
-            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit']);
+            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit', 'Machine Offline','Machine Online']);
             
-        
         
         $dateRange = Input::get('dateRange');
         
         $from = $to = '';        
         if($dateRange !=''):
-            $explode = explode('-',$dateRange);            
+            $explode = explode('-',$dateRange);
             $explode_from = explode('/',$explode[0]);
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
@@ -513,7 +512,7 @@ class MachineErrorReportController extends Controller
             
         endif;
         
-        $machinelogsadvam = $machinelogsadvam->where('machines.status','1');
+        //$machinelogsadvam = $machinelogsadvam->where('machines.status','0');
         $machinelogsadvam = $machinelogsadvam->orderBy('errorlogs.created_at','asc')->paginate(20);
          
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
