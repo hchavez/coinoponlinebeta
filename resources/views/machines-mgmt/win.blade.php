@@ -71,7 +71,7 @@
                         <div class="col-md-6">
                             <form role="form" method="GET" class="error-list-form" id="formSearch">
                             <div class="ky-columns" style="width:40%;" >
-                                <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">  
+                                <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date" autocomplete="off">  
                             </div>                            
                             </form>
                            <!--div class="input-group input-daterange">
