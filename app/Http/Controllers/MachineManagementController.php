@@ -111,7 +111,7 @@ class MachineManagementController extends Controller {
            
         endif;
         
-        $machines = $machines->orderBy('machine_reports.last_played','desc')->get()->toArray();  
+        $machines = $machines->orderBy('machines.status','desc')->get()->toArray();  
                
         if($var['permit']['read']):
             return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'permit' => $var['permit'], 'machines' => $machines,'data'=>$data]);
@@ -563,7 +563,7 @@ class MachineManagementController extends Controller {
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('state', 'sites.state', '=', 'state.id')          
                     ->where('errorlogs.status','!=','2')
-                    ->where('machines.status','=','1')
+                    //->where('machines.status','=','1')
                     ->where('errorlogs.machine_id' ,'=', $id);
         
         
