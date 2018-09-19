@@ -26,7 +26,7 @@
                           <span class="counter-icon blue-600 mr-5"><i class="icon wb-calendar"></i></span>
                           <span class="counter-number"></span>
                           <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <!--span class="counter-number-related text-right"><a href="">View Report</a></span-->
+                          <span class="counter-number-related text-right"><a href="{{ url('underconstruction') }}">View Report</a></span>
                         </div>
                       </div>
                     </div>
@@ -54,7 +54,7 @@
                           <span class="counter-icon red-600 mr-5"><i class="icon wb-calendar"></i></span>
                           <span class="counter-number"></span>
                           <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <!--span class="counter-number-related text-right"><a href="">View Report</a></span-->
+                          <span class="counter-number-related text-right"><a href="{{ url('underconstruction') }}">View Report</a></span>
                         </div>
                       </div>
                     </div>
@@ -82,7 +82,7 @@
                           <span class="counter-icon green-600 mr-5"><i class="icon wb-calendar"></i></span>
                           <span class="counter-number"></span>
                           <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <!--span class="counter-number-related text-right"><a href="">View Report</a></span-->
+                          <span class="counter-number-related text-right"><a href="{{ url('underconstruction') }}">View Report</a></span>
                         </div>
                       </div>
                     </div>
@@ -110,7 +110,7 @@
                           <span class="counter-icon orange-600 mr-5"><i class="icon wb-calendar"></i></span>
                           <span class="counter-number"></span>
                           <span class="counter-number-related"><?php echo date('F'); ?> 2018</span>
-                          <!--span class="counter-number-related text-right"><a href="">View Report</a></span-->
+                          <span class="counter-number-related text-right"><a href="{{ url('underconstruction') }}">View Report</a></span>
                         </div>
                       </div>
                     </div>

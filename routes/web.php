@@ -229,7 +229,8 @@ Route::get('machineApp', 'DashboardController@index');
 Route::resource('dashboard', 'DashboardController');
 // Route::get('/system-management/{option}', 'SystemMgmtController@index');
 Route::resource('profile', 'ProfileController');
-//Route::get('profile', 'ProfileController@index'); 
+
+Route::resource('underconstruction', 'UnderConstructionController');
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::get('user-mgmt/store', 'UserManagementController@store');
