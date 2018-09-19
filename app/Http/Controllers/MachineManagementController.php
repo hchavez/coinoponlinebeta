@@ -626,7 +626,7 @@ class MachineManagementController extends Controller {
             }); 
         endif;
         
-        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
+        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
         $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);

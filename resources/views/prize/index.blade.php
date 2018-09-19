@@ -12,7 +12,7 @@
                     <button type="submit" id="clearFilter" class="btn btn-danger">Clear Filter</button>
                 </div-->
                 <div class="col-sm-12">
-                    <div id="filterDiv" class="machine-custom-width"><br/></div>
+                    <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
                     <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="prizeDiv" role="grid" aria-describedby="exampleTableSearch_info" >
                        
                         <thead>
@@ -79,6 +79,10 @@ $(document).ready(function() {
             placeholder: label[i]
         });        
     });  
+    
+    $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
+    });
    
 });
 </script>
