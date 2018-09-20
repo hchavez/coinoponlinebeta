@@ -37,7 +37,7 @@ class MachineErrorReportController extends Controller
     }
     
     public function index(Request $request)
-    {      
+    {
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
         $var = $this->permission($objectID); 
@@ -51,10 +51,10 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                     ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                    ->leftJoin('state', 'sites.state', '=', 'state.id')          
-                    ->where('errorlogs.status','!=','2')
-                    ->where('machines.status','=','1');
-        
+                    ->leftJoin('state', 'sites.state', '=', 'state.id')      
+                    ->where('machines.status','!=','1111')
+                    ->where('errorlogs.status','!=','2');
+       
         
         $dateRange = Input::get('dateRange');        
         $from = $to = '';        
@@ -150,6 +150,7 @@ class MachineErrorReportController extends Controller
         $offline = count($offlineLists);
         $ttlMachines = $online + $offline; 
         
+        //var_dump($machinelogs); exit();
         
         if($var['permit']['readAll']):
             return view('machine-error-reports/index', ['machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
@@ -445,7 +446,7 @@ class MachineErrorReportController extends Controller
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')
-            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit', 'Machine Offline','Machine Online']);
+            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit','authorization_not_attempted', 'Machine Offline','Machine Online']);
             
         
         $dateRange = Input::get('dateRange');
@@ -508,7 +509,6 @@ class MachineErrorReportController extends Controller
                     $query->whereBetween('errorlogs_history.created_at', [$from, $to]);          
                 })->orderBy('date_created','desc');            
             endif; 
-            
             
         endif;
         
