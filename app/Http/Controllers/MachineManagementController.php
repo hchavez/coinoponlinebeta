@@ -679,7 +679,7 @@ class MachineManagementController extends Controller {
         $machine = $this->machinelogs($id);  
         
         if($var['permit']['readAll']):
-            return view('machines-mgmt/win', ['machine' => $machine]);
+            return view('machines-mgmt/win', ['id'=>$id,'machine' => $machine]);
         else:
             return view('profile/index', ['permit' => $var['permit'], 
                 'userDetails' => $var['userDetails'], 

@@ -88,6 +88,9 @@
                        
                         <br><br>
                         <div class="col-sm-12">
+                            <a href="{{ url('machine-management/goals') }}/{{ $id }}">
+                                <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
+                            </a>
                             <table id="goalsapi" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                                 <thead>
                                     <tr role="row">

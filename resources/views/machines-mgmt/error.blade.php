@@ -79,7 +79,7 @@
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
             
                     <div class="row">
-                        
+                        <?php //echo $getID; ?>
                         <div class="col-md-6">                            
                             <form role="form" method="GET" action="{{ url('machine-management/error') }}/{{ $getID }}" class="error-list-form" id="formSearch" autocomplete="off">
                                 <div class="ky-columns" style="width:40%;" >     
@@ -136,7 +136,9 @@
                                             </button>-->
                                             <button type="button" id="export" onclick="fnExcelReport();" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                                                     <span class="ladda-label">Export</span> &nbsp;&nbsp;
-                                            <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
+                                            <a href="{{ url('machine-management/error') }}/{{ $getID }}">
+                                                <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -339,24 +341,9 @@ $(document).ready(function() {
     $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         var select = $(this), form = select.closest('form');  form.submit();
-    }); 
-        
-    $('input[name="dateRange"]').on('#clearFilter', function(ev, picker) {
-        var d = new Date();
-        var month = d.getMonth()+1;
-        var day = d.getDate();
-
-        var output = day + '/' +
-            ((''+month).length<2 ? '0' : '') + month + '/' +
-            ((''+day).length<2 ? '0' : '') + d.getFullYear();
-        var the_date = output+'-'+output;
-        console.log(the_date);
-        //$('#dateRange').val(the_date).trigger('change');
-
-        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        var select = $(the_date), form = select.closest('form');  form.submit();
     });
-   
+
+       
 });
 
 
