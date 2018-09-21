@@ -309,6 +309,7 @@ Route::get('prize_api', 'PrizeController@prize_api');
 Route::resource('prizes', 'PrizeController');
 Route::post('prize/search', 'PrizeController@search')->name('prize.search');
 
+Route::get('theme_api', 'ThemeController@theme_api');
 Route::resource('themes', 'ThemeController');
 Route::post('theme/search', 'ThemeController@search')->name('themes.search');
 

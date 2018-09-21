@@ -63,6 +63,7 @@ $(document).ready(function() {
     
     $('#siteDivtable').dataTable({     
         pageLength: 20,
+        paging:false,
         ajax: url,    
         dom: 'Bfrtip',
         buttons: [{

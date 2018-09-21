@@ -43,6 +43,13 @@ class ThemeController extends Controller
             );
         endif;
     }
+    
+    public function theme_api()
+    {
+        $themes = Theme::orderBy('theme', 'desc')->get();
+        $data = array('data' => $themes);
+        return $data;
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -28,20 +28,8 @@
                                 <th>Active</th>
                                 
                         </thead>
-                           <tbody>
-                            @foreach ($themes as $theme)
-                            <tr role="row">
-                                <td> {{ $theme->product_code  }} </td>
-                                <td> {{ $theme->theme  }} </td>
-                                <td> {{ $theme->cost  }}</td>
-                                <td> {{ $theme->prize_setting  }}</td>
-                                <td> {{ $theme->min_expected_doll_per_win  }}</td>
-                                <td> {{ $theme->max_expected_doll_per_win  }}</td>
-                                <?php if($theme->active == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
-                                <td> <?php echo $active; ?> </td>
-
-                            </tr>
-                            @endforeach
+                        <tbody>
+                           
                         </tbody>                        
                        
                     
@@ -64,10 +52,53 @@
 </style>
 <script>
 $(document).ready(function() {
-    $('#themesDiv').DataTable( {
+    //Filter customization 
+    var origin   = window.location.origin;   // Returns base URL   
+    if(origin=='http://localhost' || origin=='::1' || origin=="127.0.0.1"){
+        var url = 'http://localhost/coinoponlinebeta/public/theme_api';
+    }else{
+        var url = 'https://www.ascentri.com/theme_api';
+    }
+    setTimeout(function(){
+        $('.table select').each(function(i) {
+            var label = ['Prize Code', 'Theme', 'Cost', 'Prize Setting', 'Min Exp $perwin', 'Max Exp $perwin', 'Active'];
+            $(this).attr('id', 'filter'+(i+1));        
+            $("#filter" + (i+1)).select2({
+                placeholder: label[i]
+            });        
+        });  
+        $( '.table tbody tr td:nth-child(7)' ).each(function( index ) {  
+            var current = $(this).html();
+            if(current=='0'){ $(this).html('NO'); }
+            else{ $(this).html('YES'); }
+        }); 
+      }, 2000);
+    
+    $('#themesDiv').dataTable({     
         pageLength: 20,
+        paging:false,
+        ajax: url,    
         dom: 'Bfrtip',
-        buttons: ['excelHtml5'],
+        buttons: [{
+            extend: 'excelHtml5',
+            title: '',
+            filename: 'themes',
+            customize: function( xlsx ) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var lastCol = sheet.getElementsByTagName('col').length - 1;
+                var colRange = createCellPos( lastCol ) + '1';                
+                var afSerializer = new XMLSerializer();
+                var xmlString = afSerializer.serializeToString(sheet);
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                var filterAttr = xmlDoc.createAttribute('ref');
+                filterAttr.value = 'A1:' + colRange;
+                xlsxFilter.setAttributeNode(filterAttr);
+                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                $('row c', sheet).attr( 's', '51' );
+            }
+        }],
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -87,18 +118,16 @@ $(document).ready(function() {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-        }
-    });
-    
-    //Filter customization   
-    $('#themesDiv select').each(function(i) {
-        var label = ['Prize Code', 'Theme', 'Cost', 'Prize Setting','Min Exp $perwin','Max Exp $perwin','Active'];
-        $(this).attr('id', 'filter'+(i+1));        
-        $("#filter" + (i+1)).select2({
-            placeholder: label[i]
-        });        
-    });  
-   
+        },
+        deferRender:    true,       
+        order: [[5,'desc']],
+        scrollY: '400px',
+        scrollCollapse: true,
+        columns:[{'data': 'product_code'},{'data': 'theme'},{'data': 'cost'},
+                {'data': 'prize_setting'},{'data': 'min_expected_doll_per_win'},
+                {'data': 'max_expected_doll_per_win'},{'data': 'active'}]
+    });    
+           
     $('#clearFilter').click(function(){ 
         $('select').val($(this).data('val')).trigger('change');
     });
