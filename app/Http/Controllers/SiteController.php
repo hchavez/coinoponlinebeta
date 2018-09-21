@@ -29,19 +29,11 @@ class SiteController extends Controller
     public function index()
     {
         $url = url()->current();
-        $objectID = \AppHelper::objectId($url); 
-        //echo $end = end(explode('/', $url));
+        $objectID = \AppHelper::objectId($url);         
         $var = $this->permission();        
-        $sites = DB::table('sites')
-            ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
-            ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-            ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-            ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
-            ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
-            ->orderBy('sites.site_name', 'asc')->get();
-        
+               
         if($var['permit']['readAll']):
-            return view('site/index', ['sites' => $sites,'userRole' =>$var['userRole'][0]['user_id']]);
+            return view('site/index', ['userRole' =>$var['userRole'][0]['user_id']]);
         else:
             return view('profile/index', ['permit' => $var['permit'], 
                 'userDetails' => $var['userDetails'], 
@@ -49,6 +41,19 @@ class SiteController extends Controller
                 'userGroup' => $var['userRole'][0]['users_group']]
             );
         endif;
+    }
+    
+    public function site_api()
+    {                   
+        $sites = DB::table('sites')
+            ->select('sites.*','route.route as route_name','area.area as area','site_types.site_type as site_type','site_groups.site_group_name as site_group')
+            ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+            ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+            ->leftJoin('site_types', 'sites.site_type_id', '=', 'site_types.id')
+            ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
+            ->orderBy('sites.site_name', 'asc')->get();
+        $data = array('data' => $sites);
+        return $data;
     }
 
     public function permission()

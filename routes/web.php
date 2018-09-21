@@ -326,6 +326,7 @@ Route::post('site-group/search', 'SiteGroupController@search')->name('site-group
 Route::resource('managing-agent', 'ManagingAgentController');
 Route::post('managing-agent/search', 'ManagingAgentController@search')->name('managing-agent.search');
 
+Route::get('site_api', 'SiteController@site_api');
 Route::resource('site', 'SiteController');
 Route::post('site/search', 'SiteController@search')->name('site.search');
 

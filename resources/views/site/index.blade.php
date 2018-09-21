@@ -15,7 +15,7 @@
                     
                 <div class="col-sm-12">                    
                     <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
-                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="siteDiv" role="grid" aria-describedby="exampleTableSearch_info" >
+                    <table class="table table-hover dataTable table-striped w-full dtr-inline table-responsive" id="siteDivtable" role="grid" aria-describedby="exampleTableSearch_info" >
                         <thead>
                             <tr role="row" style="border-top: 1px solid #e4eaec;">
                                 <th>Route</th>	
@@ -31,21 +31,8 @@
                         </thead>
                         <tbody>                           
                             
-                            @foreach ($sites as $site)
-                            <tr role="row">
-                                <td> {{ $site->route_name  }} </td>
-                                <td> {{ $site->area  }} </td>
-                                <td> {{ $site->site_type  }}</td>
-                                <td> {{ $site->site_group  }} </td>
-                                <td> {{ $site->state }} </td>
-                                <td> {{ $site->site_name }} </td>
-                                <td> {{ $site->street }} </td>
-                                <td> {{ $site->suburb }} </td>   
-                                <td> {{ $site->city }} </td>                          
-                            </tr>
-                            @endforeach
                         </tbody>
-                        
+                        <tfoot></tfoot>
                     </table>
                 </div></div>
             
@@ -53,15 +40,45 @@
     </div>
 </div>
 <style>
-.select2-container{width:100% !important;}
-.select2-container .select2-choice > .select2-chosen{color:#333 !important;}
+.select2-container{ width: 100% !important; }
 </style>
 <script>
 $(document).ready(function() {
-    $('#siteDiv').DataTable( {
+    //Filter customization   
+    setTimeout(function(){
+        $('.table select').each(function(i) {
+            var label = ['Route', 'Area', 'SiteType', 'SiteGroup', 'State', 'Site','Street','Suburb','City'];
+            $(this).attr('id', 'filter'+(i+1));        
+            $("#filter" + (i+1)).select2({
+                placeholder: label[i]
+            });        
+        });
+      }, 2000);
+    
+    $('#siteDivtable').dataTable({     
         pageLength: 20,
+        ajax: 'http://localhost/coinoponlinebeta/public/site_api',    
         dom: 'Bfrtip',
-        buttons: ['excelHtml5'],
+        buttons: [{
+            extend: 'excelHtml5',
+            title: '',
+            filename: 'sites',
+            customize: function( xlsx ) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var lastCol = sheet.getElementsByTagName('col').length - 1;
+                var colRange = createCellPos( lastCol ) + '1';                
+                var afSerializer = new XMLSerializer();
+                var xmlString = afSerializer.serializeToString(sheet);
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                var filterAttr = xmlDoc.createAttribute('ref');
+                filterAttr.value = 'A1:' + colRange;
+                xlsxFilter.setAttributeNode(filterAttr);
+                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                $('row c', sheet).attr( 's', '51' );
+            }
+        }],
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -81,18 +98,14 @@ $(document).ready(function() {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-        }
+        },
+        deferRender:    true,       
+        order: [[1,'desc']],
+        scrollY: '400px',
+        scrollCollapse: true,
+        columns:[{'data': 'route_name'},{'data': 'area'},{'data': 'site_type'},{'data': 'site_group'},{'data': 'state'},{'data': 'site_name'},{'data': 'street'},{'data': 'suburb'},{'data': 'city'}]
     });
-    
-    //Filter customization   
-    $('#siteDiv select').each(function(i) {
-        var label = ['Route', 'Area', 'SiteType', 'SiteGroup', 'State', 'Site','Street','Suburb','City'];
-        $(this).attr('id', 'filter'+(i+1));        
-        $("#filter" + (i+1)).select2({
-            placeholder: label[i]
-        });        
-    });  
-    
+           
     $('#clearFilter').click(function(){ 
         $('select').val($(this).data('val')).trigger('change');
     });
