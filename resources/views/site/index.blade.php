@@ -44,7 +44,13 @@
 </style>
 <script>
 $(document).ready(function() {
-    //Filter customization   
+    //Filter customization 
+    var origin   = window.location.origin;   // Returns base URL   
+    if(origin=='http://localhost' || origin=='::1' || origin=="127.0.0.1"){
+        var url = 'http://localhost/coinoponlinebeta/public/site_api';
+    }else{
+        var url = 'https://www.ascentri.com/site_api';
+    }
     setTimeout(function(){
         $('.table select').each(function(i) {
             var label = ['Route', 'Area', 'SiteType', 'SiteGroup', 'State', 'Site','Street','Suburb','City'];
@@ -57,7 +63,7 @@ $(document).ready(function() {
     
     $('#siteDivtable').dataTable({     
         pageLength: 20,
-        ajax: 'http://localhost/coinoponlinebeta/public/site_api',    
+        ajax: url,    
         dom: 'Bfrtip',
         buttons: [{
             extend: 'excelHtml5',

@@ -43,6 +43,12 @@ class PrizeController extends Controller
         endif;
     }
 
+    public function prize_api()
+    {
+        $prizes = Prize::orderBy('prize_name', 'asc')->get();
+        $data = array('data' => $prizes);
+        return $data;
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -23,16 +23,9 @@
                                 <th>Active</th>	
                         </thead>
                         <tbody>
-                            @foreach ($prizes as $prize)
-                            <tr role="row">
-                                <td> {{ $prize->prize_code  }} </td>
-                                <td> {{ $prize->prize_name  }} </td>
-                                <td> {{ $prize->cost  }}</td>
-                                <?php if($prize->active == '1') {$active = "Yes"; }else{ $active = "No"; }  ?>
-                                <td> <?php echo $active; ?> </td>
-                            </tr>
-                            @endforeach
-                        </tbody>                        
+                          
+                        </tbody>
+                        <tfoot></tfoot>                        
                     </table>
                 </div></div>    
             
@@ -41,14 +34,57 @@
 </div>
 <style>
 .select2-container{width:100% !important;}
-.select2-container .select2-choice > .select2-chosen{color:#333 !important;}
 </style>
 <script>
 $(document).ready(function() {
-    $('#prizeDiv').DataTable( {
+    //Filter customization 
+    var origin   = window.location.origin;   // Returns base URL   
+    if(origin=='http://localhost' || origin=='::1' || origin=="127.0.0.1"){
+        var url = 'http://localhost/coinoponlinebeta/public/prize_api';
+    }else{
+        var url = 'https://www.ascentri.com/prize_api';
+    }
+    setTimeout(function(){
+        $('.table select').each(function(i) {
+            var label = ['Prize Code', 'Prize Name', 'Cost', 'active'];
+            $(this).attr('id', 'filter'+(i+1));        
+            $("#filter" + (i+1)).select2({
+                placeholder: label[i]
+            });        
+        });
+        
+        $( '.table tbody tr td:nth-child(4)' ).each(function( index ) {  
+            var current = $(this).html();
+            if(current=='0'){ $(this).html('NO'); }
+            else{ $(this).html('YES'); }
+        });        
+        
+      }, 2000);
+    
+    $('#prizeDiv').dataTable({     
         pageLength: 20,
+        ajax: url,    
         dom: 'Bfrtip',
-        buttons: ['excelHtml5'],
+        buttons: [{
+            extend: 'excelHtml5',
+            title: '',
+            filename: 'prize',
+            customize: function( xlsx ) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var lastCol = sheet.getElementsByTagName('col').length - 1;
+                var colRange = createCellPos( lastCol ) + '1';                
+                var afSerializer = new XMLSerializer();
+                var xmlString = afSerializer.serializeToString(sheet);
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                var filterAttr = xmlDoc.createAttribute('ref');
+                filterAttr.value = 'A1:' + colRange;
+                xlsxFilter.setAttributeNode(filterAttr);
+                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                $('row c', sheet).attr( 's', '51' );
+            }
+        }],
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -68,18 +104,14 @@ $(document).ready(function() {
                     select.append( '<option value="'+d+'">'+d+'</option>' )
                 } );
             } );
-        }
+        },
+        deferRender:    true,       
+        order: [[1,'desc']],
+        scrollY: '400px',
+        scrollCollapse: true,
+        columns:[{'data': 'prize_code'},{'data': 'prize_name'},{'data': 'cost'},{'data': 'active'}]
     });
-    
-    //Filter customization   
-    $('#prizeDiv select').each(function(i) {
-        var label = ['Prize Code', 'Prize Name', 'Cost', 'Active'];
-        $(this).attr('id', 'filter'+(i+1));        
-        $("#filter" + (i+1)).select2({
-            placeholder: label[i]
-        });        
-    });  
-    
+           
     $('#clearFilter').click(function(){ 
         $('select').val($(this).data('val')).trigger('change');
     });
