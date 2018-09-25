@@ -170,7 +170,7 @@ class MachineManagementController extends Controller {
     public function store(Request $request) {
 
         $this->validateInput($request);
-
+        
         Machine::create([
             'database_id' => '1',
             //'ip_address' => $request['ipaddress'],
@@ -188,7 +188,8 @@ class MachineManagementController extends Controller {
             'sale_date' => $request['sold_date'],
             'version' => $request['version'],
             'teamviewer' => $request['teamviewer'],
-            'status' => '1'
+            'activation_date' => $request['activation_date'],
+            'status' => '0'
         ]);
 
         $getmachine = Machine::orderBy('created_at', 'desc')->first();
@@ -279,6 +280,10 @@ class MachineManagementController extends Controller {
             'stockRemoved' => '0',
             'status' => '0'
         ]);
+        
+        $currdatei = date('Y-m-d H:i:s');
+        DB::insert('insert into machine_status (machine_id, system, created_at, updated_at,status) values (?, ?, ?, ?, ?)', [$getmachine->id, 'machine to be updated',$currdatei,$currdatei,'0']);
+
 
         Session::flash('message', 'New Machine successfully added!');
         Session::flash('alert-class', 'alert-success');
@@ -984,7 +989,8 @@ class MachineManagementController extends Controller {
      */
     public function update(Request $request, $id) {
         //$this->validateInput($request);
-
+ 
+        
         $input = [
             'machine_type_id' => $request['machine_type'],
             'machine_model_id' => $request['machine_model'],
@@ -996,8 +1002,9 @@ class MachineManagementController extends Controller {
             'machine_description' => $request['description'],
             'comments' => $request['comments'],
             'version' => $request['version'],
-             'status' => $request['status'],
-             'teamviewer' => $request['teamviewer']
+            'status' => $request['status'],
+            'teamviewer' => $request['teamviewer'],
+            'activation_date' => $request['activation_date'],
         ];
 
         if (Machine::where('id', $id)->update($input)) {

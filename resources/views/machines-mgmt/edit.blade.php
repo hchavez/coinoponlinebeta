@@ -124,6 +124,24 @@
                                         </div>
                                     </div>
                                     
+                                     <div class="form-group row{{ $errors->has('activation_date') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Activation Date</label>
+                                        <div class="col-md-9">
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input type="text" name="activation_date" value="{{$machine->activation_date}}" class="form-control" data-plugin="datepicker">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @if ($errors->has('activation_date'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('activation_date') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    </div>
 
                                     <div class="form-group row{{ $errors->has('teamviewer') ? ' has-error' : '' }}">
                                         <label class="col-md-3 form-control-label">Teamviewer ID</label>
@@ -202,6 +220,5 @@
 
     </div>
 </div>
-
 
 @endsection

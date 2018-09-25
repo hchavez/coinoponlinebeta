@@ -151,6 +151,25 @@
                                 </div>
                             </div>
 
+                             <div class="form-group{{ $errors->has('activation_date') ? ' has-error' : '' }}">
+                                <div class="form-group row">
+                                    <label for="activation_date" class="col-md-3 form-control-label">Activation Date: </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="icon wb-calendar" aria-hidden="true"></i>
+                                            </span>
+                                            <input type="text" name="activation_date"  class="form-control" data-plugin="datepicker">
+                                        </div>
+                                        @if ($errors->has('activation_date'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('activation_date') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                         <!-- End Example Horizontal Form -->
