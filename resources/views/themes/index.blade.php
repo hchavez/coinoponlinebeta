@@ -25,8 +25,7 @@
                                 <th>PrizeSetting</th>	
                                 <th>Min Exp $perwin</th>	
                                 <th>Max Exp $perwin</th>
-                                <th>Active</th>
-                                
+                                <th>Active</th>                                
                         </thead>
                         <tbody>
                            
@@ -53,8 +52,8 @@
 <script>
 $(document).ready(function() {
     //Filter customization 
-    var origin   = window.location.origin;   // Returns base URL   
-    if(origin=='http://localhost' || origin=='::1' || origin=="127.0.0.1"){
+    var origin   = window.location.origin;      
+    if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
         var url = 'http://localhost/coinoponlinebeta/public/theme_api';
     }else{
         var url = 'https://www.ascentri.com/theme_api';

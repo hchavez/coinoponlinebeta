@@ -98,65 +98,6 @@ div.dataTables_wrapper div.dataTables_filter { text-align: left !important; } */
 </style>
 
 <script>    
-//$(document).ready(function() {
-//    $('#machine_list_table').DataTable( {
-//        pageLength: 15,
-//        dom: 'Bfrtip',
-//        buttons: ['excelHtml5'],
-//        initComplete: function () {
-//            this.api().columns().every( function () {
-//                var column = this;
-//                var select = $('<select><option value=""></option></select>')
-//                    .appendTo( $(column.header()).empty() )
-//                    .on( 'change', function () {
-//                        var val = $.fn.dataTable.util.escapeRegex(
-//                            $(this).val()
-//                        );
-// 
-//                        column
-//                            .search( val ? '^'+val+'$' : '', true, false )
-//                            .draw();
-//                    } );
-// 
-//                column.data().unique().sort().each( function ( d, j ) {
-//                    select.append( '<option value="'+d+'">'+d+'</option>' )
-//                } );
-//            } );
-//        }
-//    });
-//    //Filter customization   
-//    $('#machine_list_table select').each(function(i) {
-//        var label = ['Category', 'Model', 'Serial No', 'Site', 'State', 'Route','Area','Comments','Total Money','Toys Won','Stock left','Slip Voltage','PK Volt','RET Volt','Owed Win','Excess Win','Activity'];
-//        $(this).attr('id', 'filter'+(i+1));        
-//        $("#filter" + (i+1)).select2({
-//            //placeholder: label[i]
-//        });        
-//    });
-//    //Clear filter 
-//    $('#clear_filter').click(function(){
-//        $('select').val('').change();
-//        $('input').val('').change();
-//    });
-//    
-//    
-//    /*Resolve*/
-//    $('input[name="dateRange"]').daterangepicker({
-//        autoUpdateInput: false,
-//        locale: {
-//            cancelLabel: 'Clear'
-//        }
-//    });
-//    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
-//        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-//        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
-//    });
-//    $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
-//        $(this).val('');
-//        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
-//    });
-//    $('#machine_list_table_wrapper .buttons-excel').css('float','inherit');
-//    $('#machine_list_table_wrapper .buttons-excel').insertAfter('#machine_list_table_filter label');
-//});
 $(document).ready(function(){
      $('input[name="dateRange"]').daterangepicker({
        autoUpdateInput: false,
@@ -177,10 +118,7 @@ $(document).ready(function(){
         $('select').val($(this).data('val')).trigger('change');
     });
 });
-/*function clearFields(){
-    $("input[type=text], textarea").val("");
-    $("input[type=text], textarea").val("");
-}*/
+
 </script>
 
 @endsection

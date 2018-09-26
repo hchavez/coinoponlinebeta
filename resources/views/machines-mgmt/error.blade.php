@@ -133,9 +133,7 @@
                                         <div class="col-md-3 text-right" style="padding-right:3em;"> 
                     <!--                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                                                 <span class="ladda-label">Export</span>                            
-                                            </button>-->
-                                            <button type="button" id="export" onclick="fnExcelReport();" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
-                                                    <span class="ladda-label">Export</span> &nbsp;&nbsp;
+                                            </button>-->                                            
                                             <a href="{{ url('machine-management/error') }}/{{ $getID }}">
                                                 <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
                                             </a>
@@ -157,124 +155,23 @@
                                               </div>
                                                <div class="example">                               
 
-                                                <table class="table table-hover" id="machineErrorReport" style="border-top: 1px solid #e4eaec;">                                    
+                                                <table id="klogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
                                                         <tr role="row">                                                
-                                                            <th style="width:1%;" class="col_empty"></th>
-                                                            <th style="width:6.5%;" class="col_date">Date Time</th>                                        
-                                                            <th style="width:12%" class="col_error">Error Message</th>                                        
-                                                            <th style="width:5%;" class="">Instances</th>
+                                                            <th>Date Time</th>
+                                                            <th>Error Type</th>                                        
+                                                            <th>Error Message</th>                                        
+                                                            <th>Resolve By</th>
                                                         </tr> 
-                                                    </thead> 
-
-                                                    @foreach ($machinelogs as $machinelog)
-
-                                                    <tbody class="table-section" data-plugin="tableSection" >
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                <?php foreach ($machinelogsgroup as $machineloggroup):
-                                                                    if ($machinelog->error == $machineloggroup->error){  
-                                                                    //if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){?>
-                                                                    <i class="table-section-arrow"></i>
-                                                                <?php break; }
-                                                                endforeach; ?>
-                                                            </td>
-                                                            <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
-                                                            <td class="hidden-sm-down">
-                                                                <strong>
-
-                                                                @if ($machinelog->errortype == '2') 
-                                                                <span class="badge badge-warning">Warning!</span> 
-                                                                @endif @if ($machinelog->errortype == '3')
-                                                                <span class="badge badge-info">Notice!</span> 
-                                                                @endif
-
-                                                                @if ($machinelog->errortype == '1') 
-                                                                <span class="badge badge-danger" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
-                                                                @else
-                                                                <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
-                                                                @endif
-                                                                </strong>
-                                                            </td>                                        
-                                                            <td class="hidden-sm-down">
-                                                                <?php
-                                                                $countarray = array();
-                                                                $machineloggroup = null;
-                                                                $count=0;
-                                                                foreach ($machinelogsgroup as $machineloggroup):
-                                                                    $log_date = date('d/m/Y', strtotime($machineloggroup->created_at));
-                                                                    $group_date = date('d/m/Y', strtotime($machinelog->date_created));
-                                                                    //echo $log_date.'-'.$group_date.'<br>';
-
-                                                                     if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id && $log_date == $group_date){ ?>
-                                                                     <?php 
-                                                                     $count = 1;
-                                                                     array_push($countarray, $count); 
-                                                                     ?>
-                                                                <?php }
-                                                                    endforeach; ?>
-                                                                     <span class="text-muted"><?php echo sizeof($countarray);?></span>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-
-                                                    <tbody>                                     
-                                                         @foreach ($machinelogsgroup as $machineloggroup)
-                                                            <?php 
-                                                            $log_date = date('d/m/Y', strtotime($machineloggroup->created_at));
-                                                            $group_date = date('d/m/Y', strtotime($machinelog->date_created));
-                                                            //echo $log_date.'-'.$group_date.'<br>';
-                                                            ?>
-                                                            <?php if($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id && $log_date == $group_date): ?>
-                                                              <tr>
-                                                                  <td> &nbsp;</td>
-                                                                  <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td>                                               
-                                                                  <td>
-                                                                      @if ($machineloggroup->type == '1') 
-                                                                      <span class="badge badge-danger" > Needs Immediate Attention! </span>
-                                                                      @endif
-                                                                      <?php $errorstring =str_replace(",","",$machineloggroup->error); echo $errorstring;?>
-                                                                  </td>
-                                                                  <td class="hidden-sm-down"></td>                                              
-                                                              </tr>
-                                                            <?php endif; ?>
-
-                                                         @endforeach
-                                                    </tbody>
-                                                    @endforeach
+                                                    </thead>                                                     
+                                                    <tbody class="table-section" data-plugin="tableSection" >                                                        
+                                                    </tbody>                                                    
                                                     <tfoot></tfoot>
                                                 </table>
                                               </div>
                                             </div>              
                                             <!-- End Example Table-section -->
-                                        </div>
-                                        <?php //print_r($machinelogss); ?>
-                                        <div class="col-sm-12">                                     
-                                            <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                                                <?php //print_r($machinelogs->currentPage()); ?>
-                                                @if ($machinelogs->lastPage() > 1)
-                                                    <?php
-                                                        $start = $machinelogs->currentPage() - 3; // show 3 pagination links before current
-                                                        $end = $machinelogs->currentPage() + 3; // show 3 pagination links after current
-                                                        if($start < 1) $start = 1; // reset start to 1
-                                                        if($end >= $machinelogs->lastPage() ) $end = $machinelogs->lastPage(); // reset end to last page
-                                                        $con = (isset($_GET['error_msg']))? '?error_msg='.$_GET['error_msg'].'&' : '?';                                    
-                                                        $url = ( $_SERVER['REMOTE_ADDR']== '::1')? 'http://localhost/coinoponlinebeta/public/' : 'https://www.ascentri.com/';
-                                                    ?>
-                                                    <a class="btn btn-xs {{ ($machinelogs->currentPage() == 1) ? ' disabled' : '' }}" href="{{ $machinelogs->url(1) }}"><span>«</span></a>
-                                                    @if($start>1)
-                                                        <a class="btn btn-xs" href="{{ $machinelogs->url(1) }}">{{1}}</a> ...
-                                                    @endif
-                                                    @for ($i = $start; $i <= $end; $i++)
-                                                    <a class="btn btn-xs {{ ($machinelogs->currentPage() == $i) ? ' active' : '' }}" href="<?php echo $url.'machine-management/error/'.$getID.$con.'page='; ?>{{$i}}">{{$i}}</a>
-                                                    @endfor
-                                                    @if($end<$machinelogs->lastPage())
-                                                       ... <a class="btn btn-xs" href="<?php echo $url.'machine-management/error/'.$getID.$con.'page='.$machinelogs->lastPage(); ?>">{{$machinelogs->lastPage()}}</a>
-                                                    @endif
-                                                    <a class="btn btn-xs {{ ($machinelogs->currentPage() == $machinelogs->lastPage()) ? ' disabled' : '' }}" href="{{ $machinelogs->url($machinelogs->currentPage()+1) }}"><span>»</span></a>
-                                                @endif
-                                            </div>   <br>                         
-                                        </div>
+                                        </div>                                        
                                     </div>
                                     <!-- End Team Total Completed -->
                                     <!-- End First Row -->
@@ -318,19 +215,7 @@
 <script>    
     
 $(document).ready(function() {
-//    $("#export").click(function(){
-//        $("#machineErrorReport").table2excel({
-//          exclude: ".noExl",
-//          name: "Worksheet Name",
-//          filename: "SomeFile" //do not include extension
-//        }); 
-//    });   
-    //show sub error
-    $( "#machineErrorReport tbody.table-section" ).each(function( index ) {        
-        $(this).click(function(){
-            $(this).toggleClass("active");
-        });
-    });
+
     //Machine error report filter
     $('input[name="dateRange"]').daterangepicker({
         autoUpdateInput: false,
@@ -345,42 +230,6 @@ $(document).ready(function() {
 
        
 });
-
-
-
-function fnExcelReport()
-{
-    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
-    var textRange; var j=0;
-    tab = document.getElementById('machineErrorReport'); // id of table
-
-    for(j = 0 ; j < tab.rows.length ; j++) 
-    {     
-        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-        //tab_text=tab_text+"</tr>";
-    }
-
-    tab_text=tab_text+"</table>";
-    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
-
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE "); 
-
-    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-    {
-        txtArea1.document.open("txt/html","replace");
-        txtArea1.document.write(tab_text);
-        txtArea1.document.close();
-        txtArea1.focus(); 
-        sa=txtArea1.document.execCommand("SaveAs",true,"machineerrorlogs.xlsx");
-    }  
-    else                 //other browser not tested on IE 11
-        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
-
-    return (sa);
-}
 
 </script>
 @endsection

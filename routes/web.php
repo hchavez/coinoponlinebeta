@@ -243,6 +243,7 @@ Route::get('update_status', 'UserManagementController@update_status');
 Route::resource('employee-management', 'EmployeeManagementController');
 Route::post('employee-management/search', 'EmployeeManagementController@search')->name('employee-management.search');
 
+Route::get('machine_listing_api', 'MachineManagementController@machine_listing_api');
 Route::resource('machine-management', 'MachineManagementController');
 Route::post('machine-management/search', 'MachineManagementController@search')->name('machine-management.search');
 
