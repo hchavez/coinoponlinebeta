@@ -1,2 +1,2 @@
-<div class="site-footer-legal">© 2017 <a href="#">CoinOpSolutions Inc.</a></div>
+<div class="site-footer-legal">© 2018 <a href="#">CoinOpSolutions Inc.</a></div>
 
