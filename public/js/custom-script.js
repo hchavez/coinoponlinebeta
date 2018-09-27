@@ -93,7 +93,14 @@ $(document).ready(function(){
             
     //Display machine list from json query result
     //var base_url = 'http://localhost/coinoponlinebeta/public/';
-    var base_url = 'https://www.ascentri.com/';
+    //var base_url = 'https://www.ascentri.com/';
+    
+    var origin   = window.location.origin;      
+    if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
+        var base_url = 'http://localhost/coinoponlinebeta/public/';
+    }else{
+        var base_url = 'https://www.ascentri.com/';
+    }
     
     var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
     
@@ -143,8 +150,8 @@ $(document).ready(function(){
             'render': function (data, type, row) { 
                 if ( row.resolve_by == '0'){ return 'System';} 
                 else { return ''; }
-            }
-        }]
+            }},
+            {'data': 'resolve_date'}]
     }); 
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },

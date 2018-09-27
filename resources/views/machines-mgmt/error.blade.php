@@ -162,6 +162,7 @@
                                                             <th>Error Type</th>                                        
                                                             <th>Error Message</th>                                        
                                                             <th>Resolve By</th>
+                                                            <th>Resolve Date</th>
                                                         </tr> 
                                                     </thead>                                                     
                                                     <tbody class="table-section" data-plugin="tableSection" >                                                        
