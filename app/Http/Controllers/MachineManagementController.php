@@ -112,6 +112,10 @@ class MachineManagementController extends Controller {
         endif;
         
         $machines = $machines->orderBy('machines.status','desc')->get()->toArray();  
+        
+        $input = ['status' => '1'];
+        if (Machine::where('activation_date','!=', NULL)->update($input)) { }
+        
                
         if($var['permit']['read']):
             return view('machines-mgmt/index', ['start' => $from,'end' => $to, 'permit' => $var['permit'], 'machines' => $machines,'data'=>$data]);
@@ -122,6 +126,8 @@ class MachineManagementController extends Controller {
                 'userGroup' => $var['userRole'][0]['users_group']]
             );
         endif;
+        
+        
     }     
     
     public function date_filter() {
@@ -189,7 +195,7 @@ class MachineManagementController extends Controller {
             'version' => $request['version'],
             'teamviewer' => $request['teamviewer'],
             'activation_date' => $request['activation_date'],
-            'status' => '0'
+            'status' => '3' //1 = online 0 = offline 2 = warehouse 1111 = dummy status
         ]);
 
         $getmachine = Machine::orderBy('created_at', 'desc')->first();

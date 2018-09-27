@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/financial-reports-graph';
 
      /**
      * Determine if the user has too many failed login attempts.
