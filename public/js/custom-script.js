@@ -136,7 +136,15 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'type'},{'data': 'error'},{'data': 'status'}]
+        columns:[{'data': 'created_at'},
+            {'data': 'type'},
+            {'data': 'error'},
+            {'data': 'resolve_by', 
+            'render': function (data, type, row) { 
+                if ( row.resolve_by == '0'){ return 'System';} 
+                else { return ''; }
+            }
+        }]
     }); 
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
