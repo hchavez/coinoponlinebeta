@@ -21,7 +21,7 @@ use App\Http\Resources\UserCollection;
 
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect('financial-reports-graph');
 })->middleware('auth');
 
 Route::get('machine-management/ajax_getmachinemodel/{id}',array('as'=>'machine-management.ajax','uses'=>'MachineManagementController@ajax_getmachinemodel'));
