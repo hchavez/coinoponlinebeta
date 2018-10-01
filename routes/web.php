@@ -421,6 +421,7 @@ Route::get('logActivity', 'ActivityController@logActivity');
 Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
 
+Route::get('error_reports_api', 'MachineErrorReportController@error_reports_api');
 Route::get('machine-error-reports/advam', 'MachineErrorReportController@advam');
 Route::get('machine-error-reports/advam-watchlist', 'MachineErrorReportController@advam_watchlist');
 Route::resource('machine-error-reports', 'MachineErrorReportController');

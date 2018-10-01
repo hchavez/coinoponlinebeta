@@ -105,49 +105,8 @@
                 <h3 class="panel-title">Machine Error Reports</h3>       
             </header>
             
-            <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-                <div class="row">           
-                    <div class="col-md-6">                        
-                        <div id="filter_display">   
-                            <div class="bootstrap-tagsinput">
-                                    <?php if($filterData['startdate'] !=''): ?>
-                                        <span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
-                                    <?php endif; ?>
-                                    <?php if($filterData['machine_model'] !=''): ?>
-                                        <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        
-                                    <?php endif; ?>
-                                    <?php if($filterData['machine_type'] !=''): ?>
-                                        <span class="tag badge badge-default">{{ $filterData['machine_type'] }}</span>                                        
-                                    <?php endif; ?>    
-                                    <?php if($filterData['error_msg'] !=''): 
-                                        if($filterData['error_msg']=='1'){ $error = 'Needs Immediate Attention'; }
-                                        if($filterData['error_msg']=='2'){ $error = 'Warning'; }
-                                        if($filterData['error_msg']=='3'){ $error = 'Notice'; }  ?>
-                                        <span class="tag badge badge-default"><?php echo $error; ?></span>
-                                    <?php endif; ?>     
-                                    <?php if($filterData['machine_site'] !=''): ?>
-                                        <span class="tag badge badge-default">{{ $filterData['machine_site'] }}</span>
-                                    <?php endif; ?> 
-                               
-                            </div>                            
-                        </div>
-                    </div>                   
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3 text-right" style="padding-right:3em;"> 
-                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
-                            <span class="ladda-label">Export</span>                            
-                        </button>
-                        <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
-                        <a href="{{ url('history') }}">
-                        <button type="button" class="btn btn-primary ladda-button" data-style="slide-right" data-plugin="ladda">
-                            <span class="ladda-label">View History<i class="icon wb-arrow-right ml-10" aria-hidden="true"></i></span>
-                            <span class="ladda-spinner"></span>
-                        </button>
-                        </a>
-                    </div>
-                </div>
-            </form>
-            <div class="row" ng-app="machineApp" ng-controller="machineController">   
+            
+            <div class="row" ng-app="machineApp" ng-controller="machineController" style="margin:0;">   
                 <!-- Team Total Completed -->
                 <div class="col-xxl-12">
                     <div id="teamCompletedWidget" class="card card-shadow example-responsive">                       
@@ -161,160 +120,32 @@
                               @endif
                           </div>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter" style="border-top: 1px solid #e4eaec;padding:0.5em 0;">
-                                <div style="width:1.5%;" class="col_empty ky-columns"></div>
+                            <form role="form" method="GET" class="error-list-form" id="formFilter" style="border-top: 1px solid #e4eaec;padding:0.5em 0;">                                
                                 <div class="col_date ky-columns ky_date">
-                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" autocomplete="off">     
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
                                 </div>
-                                <div class="col_model ky-columns ky_model">
-                                    <select id="m_model" class="form-control" name="machine_model">
-                                        <option selected="selected" disabled="" value="A" name="machine_model">Machine Model</option>
-                                        <option value="" class="clearFilterOption">------Filter All------</option>
-                                        @foreach ($model as $machinelog)
-                                        <?php    
-                                        if(!empty($_GET)): $sel = ($filterData['machine_model'] == $machinelog->machine_model)? 'selected' : '';
-                                        else: $sel= ''; endif;
-                                        ?>
-                                        <option value="{{ $machinelog->machine_model}}" <?php echo $sel; ?>>{{ $machinelog->machine_model}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col_type ky-columns ky_type">
-                                    <select id="m_type" class="form-control" name="machine_type">
-                                        <option selected="selected" disabled="" value="B" name="machine_type">Machine Type</option>
-                                        <option value="" class="clearFilterOption">------Filter All------</option>
-                                        @foreach ($machine_type as $machinelog)
-                                        <?php    
-                                        if(!empty($_GET)): $sel = ($filterData['machine_type'] == $machinelog->machine_type)? 'selected' : '';
-                                        else: $sel= ''; endif;
-                                        ?>
-                                        <option value="{{ $machinelog->machine_type}}" <?php echo $sel; ?>>{{ $machinelog->machine_type}}</option>
-                                        @endforeach                                                                                        
-                                    </select>
-                                </div>
-                                <div class="col_serial ky-columns ky_serial">
-                                    <select id="e_serial" class="form-control" disabled="">
-                                        <option selected="" disabled=""></option>
-                                        <option disabled="">Name & Serial No</option>
-                                    </select>
-                                </div>
-                                <div class="col_error ky-columns ky_error">
-                                    <select id="e_msg" class="form-control" name="error_msg">
-                                        <option selected="selected" disabled=""><b>Error Message</b></option>  
-                                        <option value="" class="clearFilterOption">------Filter All------</option>
-                                        <option value="3" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '3')? 'selected' : ''; endif; ?> >Notice</option>
-                                        <option value="2" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '2')? 'selected' : ''; endif; ?> >Warning</option>
-                                        <option value="1" <?php if(!empty($_GET)): echo ($filterData['error_msg'] == '1')? 'selected' : ''; endif; ?> >Needs Immediate Attention</option>
-                                    </select>
-                                </div>
-                                <div class="col_site ky-columns ky_site">
-                                    <select id="site" class="form-control" name="machine_site">
-                                        <option selected="selected" disabled="" value="C">Site</option>
-                                        <option value="" class="clearFilterOption">------Filter All------</option>
-                                        @foreach ($site as $machinelog)
-                                        <?php    
-                                        if(!empty($_GET)): $sel = ($filterData['machine_site'] == $machinelog->site_name)? 'selected' : '';
-                                        else: $sel= ''; endif;
-                                        ?>
-                                        <option value="{{ $machinelog->site_name}}" <?php echo $sel; ?>>{{ $machinelog->site_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col_ins ky-columns"><select id="" class="form-control" name="" disabled=""></select></div>
-                                
-                                
                            </form>
                                
-                            <table class="table table-hover" id="machineErrorReport" style="border-top: 1px solid #e4eaec;">                                    
+                            <table class="table table-hover" id="machineErrorReport">                                    
                                 <thead>
-                                    <tr role="row">                                                
-                                        <th style="width:1%;" class="col_empty"></th>
-                                        <th style="width:6.5%;" class="col_date">Date Time</th>
-                                        <th style="width:8.2%;" class="col_model">Machine Model</th>                                                
-                                        <th style="width:7%;" class="col_type">Machine Type</th>
-                                        <th style="width:8.3%;" class="col_serial">Name & Serial No</th>
-                                        <th style="width:12%" class="col_error">Error Message</th>
-                                        <th style="width:16.52%" class="col_site">Site</th>
-                                        <th style="width:5%;" class="">Instances</th>
+                                    <tr role="row">        
+                                        <th>Date Time</th>
+                                        <th>Machine Model</th>                                                
+                                        <th>Machine Type</th>
+                                        <th>Name & Serial No</th>
+                                        <th>Error Type</th>
+                                        <th>Error Message</th>
+                                        <th>Site</th>
+                                        <th>Resolve By</th>
+                                        <th>Resolve Date</th>
+                                        
                                        </tr> 
                                 </thead> 
-                                    
-                                @foreach ($machinelogs as $machinelog)
-                                <?php $countarray = null; ?>
+                                
                                 <tbody class="table-section" data-plugin="tableSection" >
-                                    <tr>
-                                        <td class="text-center">
-                                            <?php foreach ($machinelogsgroup as $machineloggroup):
-                                                if ($machinelog->error == $machineloggroup->error){  ?>
-                                                <i class="table-section-arrow"></i>
-                                            <?php break; }
-                                            endforeach; ?>
-                                        </td>
-                                        <td class="text-left"> {{ date('d/m/Y h:i A', strtotime($machinelog->date_created))}} </td>
-                                        <td class="font-weight-medium">{{ $machinelog->machine_model}}</td>
-                                        <td>{{ $machinelog->machine_type}}</td>
-                                        <td class="hidden-sm-down"><span class="text-muted"> {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </span></td>
-                                        <td class="hidden-sm-down">
-                                            <strong>
-                                            <?php if($permit['editAll']): ?>    
-                                            <a href="#" data-toggle="modal" data-target="#myModal{{$machinelog->error_id}}" style="text-decoration: none;">
-                                            <?php endif; ?>
-                                            @if ($machinelog->errortype == '2') 
-                                            <span class="badge badge-warning">Warning!</span> 
-                                            @endif @if ($machinelog->errortype == '3')
-                                            <span class="badge badge-info">Notice!</span> 
-                                            @endif
-
-                                            @if ($machinelog->errortype == '1') 
-                                            <span class="badge badge-danger" style="font-size: 13px;"> <strong> Needs Immediate Attention!</strong></span> <span class="" sstyle="font-size: 14px;"tyle="font-size: 13px;"> <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?></span> 
-                                            @else
-                                            <?php $errorstring =str_replace(",","",$machinelog -> error); echo $errorstring;?>
-                                            @endif
-                                            <?php if($permit['editAll']): ?>  </a><?php endif; ?></strong>
-                                        </td>
-                                        <td class="hidden-sm-down">
-                                            @if ($machinelog->errortype == '1') {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @else
-                                             {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} @endif 
-                                        </td>
-                                        <td class="hidden-sm-down">
-                                            <?php
-                                            $countarray = array();
-                                            $machineloggroup = null;
-                                            $count=0;
-                                            foreach ($machinelogsgroup as $machineloggroup):
-                                                
-                                                   if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id ){ ?>
-                                                 <?php 
-                                                 $count = 1;
-                                                 array_push($countarray, $count); 
-                                                 ?>
-                                            <?php }
-                                                endforeach; ?>
-                                                 <span class="text-muted"><?php echo sizeof($countarray);?></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                                <tbody> 
-                                     @foreach ($machinelogsgroup as $machineloggroup)
-                                        @if ($machineloggroup->error == $machinelog->error && $machineloggroup->machine_id == $machinelog->machine_id)
-                                          <tr>
-                                              <td> &nbsp;</td>
-                                              <td class="text-left">{{ date('d/m/Y h:i A', strtotime($machineloggroup->created_at))}}</td> 
-                                              <td> &nbsp;</td> <td> &nbsp;</td> <td> &nbsp;</td>
-                                              <td>
-                                                  @if ($machineloggroup->type == '1') 
-                                                  <span class="badge badge-danger" > Needs Immediate Attention! </span>
-                                                  @endif
-                                                  <?php $errorstring =str_replace(",","",$machineloggroup -> error); echo $errorstring;?>
-                                              </td>
-                                              <td class="hidden-sm-down"></td>
-                                              <td class="hidden-sm-down">&nbsp;</td>
-                                          </tr>
-                                        @endif
-                                     @endforeach
-                                </tbody>
-                                @endforeach
+                                    
+                                </tbody>                              
+                                
                                 <tfoot></tfoot>
                             </table>
                           </div>
@@ -322,31 +153,7 @@
                         <!-- End Example Table-section -->
                     </div>
                     <?php //print_r($machinelogss); ?>
-                    <div class="col-sm-12">                                     
-                        <div class="dataTables_paginate paging_simple_numbers" id="custom_paging">
-                            @if ($machinelogs->lastPage() > 1)
-                                <?php
-                                    $start = $machinelogs->currentPage() - 3; // show 3 pagination links before current
-                                    $end = $machinelogs->currentPage() + 3; // show 3 pagination links after current
-                                    if($start < 1) $start = 1; // reset start to 1
-                                    if($end >= $machinelogs->lastPage() ) $end = $machinelogs->lastPage(); // reset end to last page
-                                    $con = (isset($_GET['error_msg']))? '?error_msg='.$_GET['error_msg'].'&' : '?';                                    
-                                    $url = ( $_SERVER['REMOTE_ADDR']== '::1')? 'http://localhost/coinoponlinebeta/public/' : 'https://www.ascentri.com/';
-                                ?>
-                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == 1) ? ' disabled' : '' }}" href="{{ $machinelogs->url(1) }}"><span>«</span></a>
-                                @if($start>1)
-                                    <a class="btn btn-xs" href="{{ $machinelogs->url(1) }}">{{1}}</a> ...
-                                @endif
-                                @for ($i = $start; $i <= $end; $i++)
-                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $i) ? ' active' : '' }}" href="<?php echo $url.'machine-error-reports'.$con.'page='; ?>{{$i}}">{{$i}}</a>
-                                @endfor
-                                @if($end<$machinelogs->lastPage())
-                                   ... <a class="btn btn-xs" href="<?php echo $url.'machine-error-reports'.$con.'page='.$machinelogs->lastPage(); ?>">{{$machinelogs->lastPage()}}</a>
-                                @endif
-                                <a class="btn btn-xs {{ ($machinelogs->currentPage() == $machinelogs->lastPage()) ? ' disabled' : '' }}" href="{{ $machinelogs->url($machinelogs->currentPage()+1) }}"><span>»</span></a>
-                            @endif
-                        </div>   <br>                         
-                    </div>
+                    
                 </div>
                 <!-- End Team Total Completed -->
                 <!-- End First Row -->
@@ -359,7 +166,7 @@
 </div>
 
 
-@foreach ($machinelogs as $machinelog)
+@foreach ($geterrorID as $machinelog)
 <div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -513,23 +320,107 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script src="{{ asset("/js/export-table.js") }}"></script>
 <style>
-.dt-button.buttons-excel{margin: 1em 2em 0 0;}
-.dt-buttons{position:static !important;}
-.ladda-button, .dt-buttons{display:inline-block;vertical-align: top;}
+.select2-container{width:100% !important;}
+
 .ladda-button{margin-top:10px;}
 </style>
 <script>    
 $(document).ready(function() {
-    $("#export").click(function(){
-        $("#machineErrorReport").table2excel({
-          exclude: ".noExl",
-          name: "Machine Error Report",
-          filename: "MachineErrorReport" //do not include extension
-        }); 
-    });    
-
+    
+    var origin   = window.location.origin;      
+    if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
+        var url = 'http://localhost/coinoponlinebeta/public/error_reports_api';
+    }else{
+        var url = 'https://www.ascentri.com/error_reports_api';
+    }
+    setTimeout(function(){
+        $('.table select').each(function(i) {
+            var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Resolve By','Resolve Date'];
+            $(this).attr('id', 'filter'+(i+1));        
+            $("#filter" + (i+1)).select2({
+                placeholder: label[i]
+            });        
+        });  
+      }, 2000);
+    $('#machineErrorReport').dataTable({     
+        pageLength: 20,
+        paging:true,
+        ajax: url,
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'excelHtml5',
+            title: '',
+            filename: 'MachineErrorReport',
+            customize: function( xlsx ) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var lastCol = sheet.getElementsByTagName('col').length - 1;
+                var colRange = createCellPos( lastCol ) + '1';                
+                var afSerializer = new XMLSerializer();
+                var xmlString = afSerializer.serializeToString(sheet);
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                var filterAttr = xmlDoc.createAttribute('ref');
+                filterAttr.value = 'A1:' + colRange;
+                xlsxFilter.setAttributeNode(filterAttr);
+                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                $('row c', sheet).attr( 's', '51' );
+            }
+        }],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.header()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        },
+        deferRender:    true,  
+        scrollY: '400px',
+        order: [[4,'asc']],
+        scrollCollapse: true,
+        columns:[{'data': 'date_created'},{'data': 'machine_model'},{'data': 'machine_type'},
+                {'data': 'comments', 
+                    'render': function (data, type, row) { 
+                        return row.comments +' '+ row.serial_no;
+                    }
+                },
+                {'data': 'errortype', 
+                    'render': function (data, type, row) { 
+                        if(row.errortype=='1'){ return '<span class="badge badge-danger">Needs Immediate Attention!</span>'; }
+                        else if(row.errortype=='2'){ return '<span class="badge badge-warning">Warning!</span>'; }
+                        else if(row.errortype=='3'){ return '<span class="badge badge-info">Notice!</span>'; }
+                        else{ return 'Warning'; }
+                    }},
+                {'data': 'error',
+                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html('<a href="#" data-toggle="modal" data-target="#myModal'+oData.error_id+'" style="text-decoration: none;">'+oData.error+"</a>");
+                    }
+                },{'data': 'site_name'}
+                ,{'data': 'resolve_by',
+                    'render': function (data, type, row) { 
+                        if(row.resolve_by=='0'){ return 'System'; }
+                        else{ return ''; }
+                    }
+                }
+                ,{'data': 'resolve_date'}]
+    });   
+    
+    
+    //resolve error
     $("#status-update").submit(function(e) {
         e.preventDefault();
 
@@ -556,6 +447,8 @@ $(document).ready(function() {
         }); 
     });
     
+    
+    
     //Machine error report filter
     $('input[name="dateRange"]').daterangepicker({
         autoUpdateInput: false,
@@ -570,32 +463,8 @@ $(document).ready(function() {
     $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
-    });     
+    });   
     
-    $("#m_model").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
-    $("#m_type").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });   
-    $("#e_msg").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
-    $("#site").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });    
-    $("#max-date").change(function(){ var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports/'); form.submit(); });
-    
-    $("#m_model").select2();
-    $("#m_type").select2();
-    $("#e_msg").select2();
-    $("#site").select2();
-    
-    /*$('#machineErrorReport').dataTable({
-        searching:false,
-        paging:false,
-        info:false,
-        dom: 'Bfrtip',
-        buttons: [{
-                extend: 'excelHtml5'
-            }]
-    });
-    $('.dt-buttons').insertBefore('.ladda-button');*/
-    $('#clearFilter').click(function(){ 
-        $('select').val($(this).data('val')).trigger('change');
-    });
     
 });
 

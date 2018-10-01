@@ -52,8 +52,7 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('state', 'sites.state', '=', 'state.id')      
-                    ->where('machines.status','!=','1111')
-                    ->where('errorlogs.status','!=','2');
+                    ->where('machines.status','!=','1111');
        
         
         $dateRange = Input::get('dateRange');        
@@ -151,9 +150,10 @@ class MachineErrorReportController extends Controller
         $ttlMachines = $online + $offline; 
         
         //var_dump($machinelogs); exit();
-        
+        $error_reports_api = $this->error_reports_api();
+         
         if($var['permit']['readAll']):
-            return view('machine-error-reports/index', ['machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
+            return view('machine-error-reports/index', ['geterrorID'=>$error_reports_api['data'],'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
         else:
             return view('profile/index', ['permit' => $var['permit'], 
                 'userDetails' => $var['userDetails'], 
@@ -163,6 +163,32 @@ class MachineErrorReportController extends Controller
         endif;
         
     }
+    
+    public function error_reports_api()
+    {               
+        $machinelogs = DB::table('machines')
+                ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
+                        , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
+                        , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
+                        ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
+                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date')
+                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                ->leftJoin('state', 'sites.state', '=', 'state.id')      
+                ->where('machines.status','!=','1111')    
+                ->where('errorlogs.type','!=','0')
+                ->where('errorlogs.type','!=','4')
+                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
+                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
+           
+        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray();  
+        $data = array('data' => $machinelogs);
+        return $data;
+    }
+    
     
     public function permission($id)
     {                
