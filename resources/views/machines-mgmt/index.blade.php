@@ -49,7 +49,7 @@
                                 <th>RET Volt </th>	
                                 <th>Owed Win </th>	
                                 <th>Excess win  </th>	
-<!--                                <th>Error</th>-->
+                                <th>Status</th>
                                 <th>Activity  </th>	
 <!--                                <th>Sync Status</th>
                                 <th>Active</th>-->
@@ -58,7 +58,7 @@
                             <tbody>
                             @foreach ($machines as $machine)                            
                             <tr <?php echo ($permit['readAll'])? 'class="clickable-row"' : ''; ?> role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}"  <?php if($machine->status == '0') { ?> style="background-color: #FF6666; color:  #fff;" <?php } ?>>
-
+                                <?php $status = ($machine->mstatus=='1')? 'Online' : 'Offline'; ?>
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>
@@ -76,6 +76,7 @@
                                     <td>{{ $machine->ret_volt }}</td>
                                     <td>{{ $machine->owed_win }}</td>
                                     <td>{{ $machine->excess_win }}</td>    
+                                    <td><?php echo $status; ?></td>
                                     <td>{{date('d/m/Y h:i A', strtotime($machine->last_played))}}</td>
                                 </tr>                            
                             @endforeach 
