@@ -44,6 +44,7 @@ $(document).ready(function(){
                 }
             }],
         scrollY: '450px',
+        order: [[8,'desc']],
         paging: true,
         autoFill: true,     
         pageLength: 100,        
