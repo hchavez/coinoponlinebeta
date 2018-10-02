@@ -32,7 +32,7 @@ class FinancialReportsGraphController extends Controller
         $totalCoin = $this->getTotal('coinIn');
         $totalBill = $this->getTotal('billIn');
         $totalSwipe = $this->getTotal('swipeIn');
-      
+        //print_r($totalSwipe);
              
         if($var['permit']['read']):
             return view('financial-reports-graph/index', ['coin' => $totalCoin,'bill'=>$totalBill,'card'=>$totalSwipe]); 
@@ -65,6 +65,7 @@ class FinancialReportsGraphController extends Controller
     public function getTotal($type){
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));        
         $today = date("Y-m-d");
+        $month = date("Y-m");
         $yesterday = date('Y-m-d',strtotime("-1 days"));
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
@@ -72,7 +73,7 @@ class FinancialReportsGraphController extends Controller
         $Today = MoneyLogs::where('status', '=', 1)->where('created_at','like','%'.$today.'%')->sum($type);    
         $Yesterday = MoneyLogs::where('status', '=', 1)->where('created_at','like','%'.$yesterday.'%')->sum($type);
         $Week = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
-        $Month = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $Month = MoneyLogs::where('status', '=', 1)->where('created_at','LIKE','%'.$month.'%')->sum($type);
         $financial = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
         $Year = MoneyLogs::where('status', '=', 1)->whereBetween('created_at',[$thisYear, $today])->sum($type);
         

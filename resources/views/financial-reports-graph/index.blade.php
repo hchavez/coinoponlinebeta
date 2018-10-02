@@ -61,9 +61,15 @@
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 <script>   
-var base_urllink = window.location.origin;
+//var base_urllink = window.location.origin;
 //var base_url = "http://localhost/coinoponlinebeta/public/";
-var base_url = "https://www.ascentri.com/";
+//var base_url = "https://www.ascentri.com/";
+var base_url   = window.location.origin;      
+    if(base_url==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
+        var base_url = 'http://localhost/coinoponlinebeta/public/';
+    }else{
+        var base_url = 'https://www.ascentri.com/';
+    }
 var seriesOptions = [], seriesCounter = 0, names = ['coin','bill','card'];
 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
 var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
