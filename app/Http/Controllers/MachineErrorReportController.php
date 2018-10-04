@@ -69,38 +69,7 @@ class MachineErrorReportController extends Controller
             $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
         endif;
         
-        if(!empty(Input::get())):            
-            $model = Input::get('machine_model');
-            $type = Input::get('machine_type');
-            $error_msg = Input::get('error_msg');
-            $machine_site = Input::get('machine_site'); 
-            
-            if($model):
-                $machinelogs = $machinelogs->where(function($query) use ($model){                    
-                    $query->where('machine_models.machine_model', '=', $model);               
-                })->orderBy('date_created','desc');            
-            endif;
-            
-            if($type):
-                $machinelogs = $machinelogs->where(function($query) use ($type){                    
-                    $query->where('machine_types.machine_type', '=', $type);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($error_msg):
-                $machinelogs = $machinelogs->where(function($query) use ($error_msg){                    
-                    $query->where('type', '=', $error_msg);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($machine_site):
-                $machinelogs = $machinelogs->where(function($query) use ($machine_site){                    
-                    $query->where('site_name', '=', $machine_site);               
-                })->orderBy('date_created','desc');            
-            endif;            
-             
-        endif;
-        
+               
         $dateCheck = Input::get('dateRange');
         if(!empty($dateCheck)):            
             $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
@@ -179,12 +148,33 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
                 ->where('machines.status','!=','1111')    
                 ->where('errorlogs.type','!=','0')
-                ->where('errorlogs.type','!=','4')
-                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+                ->where('errorlogs.type','!=','4');    
+               
+        $dateCheck = Input::get('dateRange');         
+        $from = $to = '';        
+        
+        if($dateCheck !=''):
+            $explode = explode('-',$dateCheck);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.strtotime('-1 day', strtotime($explode_from[0])).'-'.$explode_from[1]);           
+            $to = date('Y-m-d', strtotime($explode[1]));
+        endif;
+        //echo $from.'-'.$to;
+        if(!empty($dateCheck)):            
+            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
+            })->orderBy('errorlogs.created_at','desc'); 
+        else:
+            $machinelogs = $machinelogs->where(function($query){                    
+                $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
+            }); 
+        endif;
+        
         $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-           
-        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray();  
+         
+        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
         $data = array('data' => $machinelogs);
         return $data;
     }
