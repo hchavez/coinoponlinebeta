@@ -60,20 +60,18 @@ class MachineManagementController extends Controller {
             $from = $to = '';  
             $machines = DB::table('machines')
                             ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
-                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                    , 'machines.status as statusq','machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
                                     , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
                                     , 'machine_reports.slip_volt as slip_volt', 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
                                     , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
                                     , 'machine_reports.last_visit as last_visit', 'machine_reports.last_played as last_played'
-                                    , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site'
-                                    , 'machine_status.status as mstatus')
+                                    , 'route.route as route', 'area.area as area', 'sites.state as state', 'sites.site_name as site')
                             ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                             ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                             ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                             ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
-                            ->leftJoin('machine_status', 'machines.id', '=', 'machine_status.machine_id') 
                             ->where('machines.status','<>', '1111');
                         
             $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
@@ -95,7 +93,7 @@ class MachineManagementController extends Controller {
             
             $machines = DB::table("machines")
                             ->select(DB::raw("machines.*, machines.id as machine_id, round(sum(total_money),2) as total_money, machine_models.machine_model as machine_model, machines.category as category, 
-                                machine_types.machine_type as machine_type,machines.ip_address as ip_address, round(sum(total_toys_win),2) as total_toys_win,
+                                machines.status as statusq, machine_types.machine_type as machine_type,machines.ip_address as ip_address, round(sum(total_toys_win),2) as total_toys_win,
                                 round(sum(stock_left),2) as stock_left,machine_reports.slip_volt as slip_volt, machine_reports.pkup_volt as pkup_volt,
                                 machine_reports.date_created as date_created,machine_reports.ret_volt as ret_volt,machine_reports.owed_win as owed_win,
                                 machine_reports.excess_win as excess_win,machine_reports.last_visit as last_visit,machine_reports.last_played as last_played,
@@ -136,7 +134,7 @@ class MachineManagementController extends Controller {
     {
         $machines = DB::table('machines')
                             ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model','machines.category as category'
-                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                    , 'machines.status as statusq','machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
                                     , 'machine_reports.total_money as total_money', 'machine_reports.total_toys_win as total_toys_win', 'machine_reports.stock_left as stock_left'
                                     , 'machine_reports.slip_volt as slip_volt', 'machine_reports.pkup_volt as pkup_volt','machine_reports.date_created as date_created'
                                     , 'machine_reports.ret_volt as ret_volt', 'machine_reports.owed_win as owed_win', 'machine_reports.excess_win as excess_win'
