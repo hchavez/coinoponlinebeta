@@ -111,14 +111,13 @@ class MachineErrorReportController extends Controller
         //$ttlMachines = 1 + $offline; 
         
         $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
-        $offlineLists = $this->offlineMachineLists(); 
+        $offlineLists = $this->offlineMachineLists();  
         $onlineLists = $this->onlineMachineLists();
         $totalLists = $this->totalMachineLists();
-        $online = count($onlineLists);
-        $offline = count($offlineLists);
+        $online = Machine::where('status', '1')->count();
+        $offline = Machine::where('status', '0')->count();
         $ttlMachines = $online + $offline; 
         
-        //var_dump($machinelogs); exit();
         $error_reports_api = $this->error_reports_api();
          
         if($var['permit']['readAll']):
