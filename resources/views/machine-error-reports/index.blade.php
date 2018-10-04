@@ -120,7 +120,7 @@
                               @endif
                           </div>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter" style="border-top: 1px solid #e4eaec;padding:0.5em 0;">                                
+                            <form role="form" method="GET" class="error-list-form" id="formFilter">                                
                                 <div class="col_date ky-columns ky_date">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
                                 </div>
@@ -322,8 +322,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
 .select2-container{width:100% !important;}
-
 .ladda-button{margin-top:10px;}
+.dt-buttons{top:1em !important;position: inherit !important;}
+#machineErrorReport_filter{position: absolute; top: 0; right: 0;}
 </style>
 <script>    
 $(document).ready(function() {
@@ -346,28 +347,9 @@ $(document).ready(function() {
     $('#machineErrorReport').dataTable({     
         pageLength: 20,
         paging:true,
-        ajax: url,
+        ajax: url,    
         dom: 'Bfrtip',
-        buttons: [{
-            extend: 'excelHtml5',
-            title: '',
-            filename: 'MachineErrorReport',
-            customize: function( xlsx ) {
-                var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                var lastCol = sheet.getElementsByTagName('col').length - 1;
-                var colRange = createCellPos( lastCol ) + '1';                
-                var afSerializer = new XMLSerializer();
-                var xmlString = afSerializer.serializeToString(sheet);
-                var parser = new DOMParser();
-                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
-                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
-                var filterAttr = xmlDoc.createAttribute('ref');
-                filterAttr.value = 'A1:' + colRange;
-                xlsxFilter.setAttributeNode(filterAttr);
-                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
-                $('row c', sheet).attr( 's', '51' );
-            }
-        }],
+        buttons: ['excel'],
         initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;
@@ -388,9 +370,9 @@ $(document).ready(function() {
                 } );
             } );
         },
-        deferRender:    true,  
-        scrollY: '400px',
+        deferRender:    true,       
         order: [[4,'asc']],
+        scrollY: '400px',
         scrollCollapse: true,
         columns:[{'data': 'date_created'},{'data': 'machine_model'},{'data': 'machine_type'},
                 {'data': 'comments', 
@@ -456,16 +438,18 @@ $(document).ready(function() {
             cancelLabel: 'Clear'
         }
     });
-    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+    /*$('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
+        var select = $(this), form = select.closest('form'); form.attr('action', 'error_reports_api'); form.submit();
+    });   */ 
+    
+    $('.dt-buttons').append('<button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>');
+    $('#machineErrorReport_filter').insertBefore('.dt-buttons');
+    
+    $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
     });
-    $('input[name="dateRange"]').on('cancel.daterangepicker', function(ev, picker) {
-        $(this).val('');
-        var select = $(this), form = select.closest('form'); form.attr('action', 'machine-error-reports'); form.submit();
-    });   
-    
-    
+
 });
 
 </script>

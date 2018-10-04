@@ -90,11 +90,7 @@ $(document).ready(function(){
     $('.dt-button.buttons-excel span').html('<img src="https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png" width="32px">'); 
     
     //search input in all tables
-    $('#dashboard_sort_filter input').addClass('form-control');       
-            
-    //Display machine list from json query result
-    //var base_url = 'http://localhost/coinoponlinebeta/public/';
-    //var base_url = 'https://www.ascentri.com/';
+    $('#dashboard_sort_filter input').addClass('form-control');  
     
     var origin   = window.location.origin;      
     if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
@@ -140,7 +136,7 @@ $(document).ready(function(){
                 }
             }],
         deferRender:    true,       
-        order: [[1,'desc']],
+        order: [[0,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
