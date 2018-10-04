@@ -806,8 +806,9 @@ class MachineManagementController extends Controller {
        
     public function errorapi($id){        
         $date = new DateTime('+1 day');
-        $today = $date->format('Y-m-d H:i:s');
-        //$today = date("Y-m-d H:i:s");
+        //$today = $date->format('Y-m-d H:i:s');
+        //$datetoday = strtotime('-1 day', strtotime($explode_from[0]);
+        $today = date("Y-m-d H:i:s");
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
         
         $dateRange = Input::get('dateRange');
@@ -828,12 +829,10 @@ class MachineManagementController extends Controller {
            
             $userall = Errorlogs::where('machine_id','=', $id)
                     ->whereBetween('created_at', [$from,$to])
-                    ->orderBy('created_at','desc')
                     ->get();
         else:
             $userall = Errorlogs::where('machine_id','=', $id)
                     ->whereBetween('created_at', [$days_ago,$today])
-                    ->orderBy('created_at','desc')
                     ->get();
         endif;
         
