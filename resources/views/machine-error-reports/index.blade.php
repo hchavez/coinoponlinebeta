@@ -136,9 +136,6 @@
                                         <th>Error Type</th>
                                         <th>Error Message</th>
                                         <th>Site</th>
-                                        <th>Resolve By</th>
-                                        <th>Resolve Date</th>
-                                        
                                        </tr> 
                                 </thead> 
                                 
@@ -337,7 +334,7 @@ $(document).ready(function() {
     }
     setTimeout(function(){
         $('.table select').each(function(i) {
-            var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Resolve By','Resolve Date'];
+            var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site'];
             $(this).attr('id', 'filter'+(i+1));        
             $("#filter" + (i+1)).select2({
                 placeholder: label[i]
@@ -374,7 +371,14 @@ $(document).ready(function() {
         order: [[4,'asc']],
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'date_created'},{'data': 'machine_model'},{'data': 'machine_type'},
+        columns:[{'data': 'date_created',
+                    'render': function (data, type, row) { 
+                        var str = row.date_created.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+                },
+                {'data': 'machine_model'},{'data': 'machine_type'},
                 {'data': 'comments', 
                     'render': function (data, type, row) { 
                         return row.comments +' '+ row.serial_no;
@@ -391,14 +395,7 @@ $(document).ready(function() {
                     fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                         $(nTd).html('<a href="#" data-toggle="modal" data-target="#myModal'+oData.error_id+'" style="text-decoration: none;">'+oData.error+"</a>");
                     }
-                },{'data': 'site_name'}
-                ,{'data': 'resolve_by',
-                    'render': function (data, type, row) { 
-                        if(row.resolve_by=='0'){ return 'System'; }
-                        else{ return ''; }
-                    }
-                }
-                ,{'data': 'resolve_date'}]
+                },{'data': 'site_name'}]
     });   
     
     
