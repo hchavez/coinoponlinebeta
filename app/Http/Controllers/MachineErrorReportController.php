@@ -461,7 +461,7 @@ class MachineErrorReportController extends Controller
             ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
             ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
             ->leftJoin('state', 'sites.state', '=', 'state.id')
-            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit','authorization_not_attempted', 'Machine Offline','Machine Online']);
+            ->whereIn('errorlogs.error', ['card_NOT AUTHORISED', 'card_Settlement_Failed', 'card_MachineInhibit','machine_malfunction','authorization_not_attempted', 'Machine Offline','Machine Online']);
             
         
         $dateRange = Input::get('dateRange');
