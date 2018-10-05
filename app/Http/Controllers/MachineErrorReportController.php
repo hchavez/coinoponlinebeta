@@ -147,6 +147,7 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
                 ->where('machines.status','!=','1111')    
                 ->where('errorlogs.type','!=','0')
+                ->where('errorlogs.status','!=','2')
                 ->where('errorlogs.type','!=','4');    
                
         $dateCheck = Input::get('dateRange');         
