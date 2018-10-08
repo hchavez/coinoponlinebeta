@@ -197,108 +197,42 @@ class MachineErrorReportController extends Controller
         return $permitDetails;
     }
    
-    public function history(){
+    public function history_api()
+    {
         $today = date("Y-m-d H:i:s");
-        $days_ago = date('Y-m-d', strtotime('-15 days', strtotime($today))); 
-        
-        $currerntUserRole = Auth::User()->id;
+        $days_ago = date('Y-m-d', strtotime('-1 days', strtotime($today))); 
         $machinelogs = DB::table('machines')
-            ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
-                    'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
-                    'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
-                    'machines.machine_serial_no as serial_no','machines.id as machine_id',
-                    'machines.comments as comments','errorlogs.log_id as log_id',
-                    'errorlogs.error as error','errorlogs.type as errortype','errorlogs.created_at as date_created','errorlogs.id as error_id',
-                    'users.firstname as firstname','users.lastname as lastname',
-                    'errorlogs_history.created_at as errorResolve')
-            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-            ->leftJoin('state', 'sites.state', '=', 'state.id')   
-            ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
-            ->leftJoin('users','users.id','=','errorlogs_history.user_id')  
-            ->whereBetween('errorlogs_history.created_at', [$days_ago,$today])
-            ->where('errorlogs.status','=','2');
+                ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
+                        , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
+                        , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
+                        ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
+                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date','errorlogs_history.created_at as errorResolve')
+                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                ->leftJoin('state', 'sites.state', '=', 'state.id')   
+                ->leftJoin('errorlogs_history','errorlogs_history.error_type','=','errorlogs.id')
+                ->where('errorlogs.status','=','2')   
+                ->where('machines.status','!=','1111')    
+                ->where('errorlogs.type','!=','0')
+                ->where('errorlogs.type','!=','4')
+                //->where('errorlogs.resolve_date', $today);
+                ->whereBetween('errorlogs.resolve_date', [$days_ago,$today]);  
         
-        $dateOccur = Input::get('dates');
-        $dateResolve = Input::get('dateResolve');
-        $from = $to = '';
-        $resolvefrom = $resolveto = '';
-        if($dateOccur !=''):
-            $explode = explode('-',$dateOccur);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-            $to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
-        endif;
         
-        if($dateResolve !=''):
-            $explode = explode('-',$dateResolve);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $resolvefrom = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-            $resolveto = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);
-        endif;
+        //$machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(10);
+        $machinelogs = $machinelogs->orderBy('resolve_date','desc')->get();
+        $data = array('data' => $machinelogs);
+        return $data;
         
-        if(!empty(Input::get())):
-            $model = Input::get('machine_model');
-            $type = Input::get('machine_type');
-            $error_msg = Input::get('error_msg');
-            $machine_site = Input::get('machine_site');
-            
-            if($model):
-                $machinelogs = $machinelogs->where(function($query) use ($model){                    
-                    $query->where('machine_models.machine_model', '=', $model);               
-                })->orderBy('date_created','desc');            
-            endif;
-            
-            if($type):
-                $machinelogs = $machinelogs->where(function($query) use ($type){                    
-                    $query->where('machine_types.machine_type', '=', $type);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($error_msg):
-                $machinelogs = $machinelogs->where(function($query) use ($error_msg){                    
-                    $query->where('type', '=', $error_msg);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($machine_site):
-                $machinelogs = $machinelogs->where(function($query) use ($machine_site){                    
-                    $query->where('site_name', '=', $machine_site);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($dateOccur):
-                $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                    $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-                })->orderBy('date_created','desc');            
-            endif;
-            
-            if($dateResolve):
-                $machinelogs = $machinelogs->where(function($query) use ($resolvefrom,$resolveto){                    
-                    $query->whereBetween('errorlogs_history.created_at', [$resolvefrom, $resolveto]);          
-                })->orderBy('date_created','desc');            
-            endif;
-            
-        endif;
-                
-        $machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(10);
-        $machinelogsgroup =  DB::table('errorlogs_list')
-            ->select('errorlogs_list.*') 
-            ->orderBy('created_at','desc')
-            ->get();
-                
-        $machineModel = MachineModel::orderBy('created_at', 'asc')->get();
-        $site = Site::orderBy('site_name', 'asc')->get();
-        $machineType = MachineType::orderBy('created_at', 'asc')->get();
-                
-        $filterData = array('machine_model' => Input::get('machine_model'),'machine_type' => Input::get('machine_type'),'machine_site' => Input::get('machine_site'),
-            'error_msg' => Input::get('error_msg'),'machine_site' => Input::get('machine_site'),'startdate' => $from,'enddate' => $to,'startdateresolve' => $resolvefrom,'enddateresolve' => $resolveto);
-        
-        return view('machine-error-reports/history', ['machinelogs' => $machinelogs,'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData]);
+    }
+    
+    public function history()
+    {       
+        $data = $this->history_api();                        
+          
+        return view('machine-error-reports/history', ['data'=>$data]);
         
     }
       

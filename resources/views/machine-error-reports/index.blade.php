@@ -102,7 +102,7 @@
     <div class="col-12" id="ecommerceChartView">
         <div class="card card-shadow">
             <header class="panel-heading">
-                <h3 class="panel-title">Machine Error Reports</h3>       
+                <h3 class="panel-title">Machine Error Reports</h3> 
             </header>
             
             
@@ -440,12 +440,13 @@ $(document).ready(function() {
         var select = $(this), form = select.closest('form'); form.attr('action', 'error_reports_api'); form.submit();
     });   */ 
     
-    $('.dt-buttons').append('<button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>');
+    $('.dt-buttons').append('<a href="history"><button type="button" class="btn btn-default" style="float:right;" >History</button></a><button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
     $('#machineErrorReport_filter').insertBefore('.dt-buttons');
     
     $('#clearFilter').click(function(){ 
         $('select').val($(this).data('val')).trigger('change');
     });
+    $("#select2-results-1").attr("disable");
 
 });
 

@@ -425,7 +425,10 @@ Route::get('error_reports_api', 'MachineErrorReportController@error_reports_api'
 Route::get('machine-error-reports/advam', 'MachineErrorReportController@advam');
 Route::get('machine-error-reports/advam-watchlist', 'MachineErrorReportController@advam_watchlist');
 Route::resource('machine-error-reports', 'MachineErrorReportController');
+
 Route::get('history', 'MachineErrorReportController@history');
+Route::get('history_api', 'MachineErrorReportController@history_api');
+
 Route::post('machine-error-reports/update_error_status', 'MachineErrorReportController@update_error_status');
 Route::get('errorLogsByID', 'MachineErrorReportController@errorLogsByID');
 Route::get('getErrorLogs', 'MachineErrorReportController@getErrorLogs');
