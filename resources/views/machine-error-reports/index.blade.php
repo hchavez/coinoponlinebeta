@@ -132,7 +132,7 @@
                                         <th>Date Time</th>
                                         <th>Machine Model</th>                                                
                                         <th>Machine Type</th>
-                                        <th>Name & Serial No</th>
+                                        <th>Name & Serial No</th>                                       
                                         <th>Error Type</th>
                                         <th>Error Message</th>
                                         <th>Site</th>
@@ -340,7 +340,8 @@ $(document).ready(function() {
                 placeholder: label[i]
             });        
         });  
-      }, 2000);
+      }, 3000);
+    $('#machineErrorReport').DataTable().destroy();
     $('#machineErrorReport').dataTable({     
         pageLength: 20,
         paging:true,
@@ -371,7 +372,7 @@ $(document).ready(function() {
         order: [[4,'asc']],
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'date_created',
+        columns:[{'data': 'created_at',
                     'render': function (data, type, row) { 
                         var str = row.date_created.split(" ");
                         var date = str[0].split("-")
@@ -379,11 +380,11 @@ $(document).ready(function() {
                     }
                 },
                 {'data': 'machine_model'},{'data': 'machine_type'},
-                {'data': 'comments', 
-                    'render': function (data, type, row) { 
-                        return row.comments +' '+ row.serial_no;
+                {'data': 'comments',
+                    'render': function (data, type, row) {                       
+                        return row.comments +' '+row.serial_no;                        
                     }
-                },
+                },                
                 {'data': 'errortype', 
                     'render': function (data, type, row) { 
                         if(row.errortype=='1'){ return '<span class="badge badge-danger">Needs Immediate Attention!</span>'; }

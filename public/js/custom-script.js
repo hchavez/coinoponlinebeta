@@ -21,6 +21,7 @@ $(document).ready(function(){
     });
        
     //filter table
+    $('#dashboard_sort').DataTable().destroy();
     var table = $('#dashboard_sort').DataTable({
         dom: 'Bfrtip',
         buttons: [{
@@ -109,7 +110,7 @@ $(document).ready(function(){
     var urlFilter = new URL(complete_url);
     var filter = urlFilter.searchParams.get("dateRange");
     var input = (filter!=null)? '?dateRange='+filter : '' ;
-    
+    $('#klogs').DataTable().destroy();
     $('#klogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
@@ -140,7 +141,13 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},
+        columns:[{'data': 'created_at',
+                'render': function (data, type, row) { 
+                        var str = row.created_at.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+            },
             {'data': 'type'},
             {'data': 'error'},
             {'data': 'resolve_by', 
@@ -150,6 +157,7 @@ $(document).ready(function(){
             }},
             {'data': 'resolve_date'}]
     }); 
+    $('#winlogs').DataTable().destroy();
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
@@ -180,9 +188,16 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'winResult'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
+        columns:[{'data': 'created_at',                
+                'render': function (data, type, row) { 
+                        var str = row.created_at.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+            },{'data': 'testPlay'},{'data': 'winResult'},{'data': 'totalWon'},{'data': 'playIndex'},{'data': 'owedWin'},
             {'data': 'excessWin'},{'data': 'stockLeft'},{'data': 'stockRemoved'},{'data': 'stockAdded'},{'data': 'nTimesOfPlay'},{'data': 'status'}]       
     });    
+    $('#moneyapi').DataTable().destroy();
     $('#moneyapi').dataTable({  
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
@@ -213,7 +228,13 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,        
-        columns:[{'data': 'created_at'},{
+        columns:[{'data': 'created_at',                
+                'render': function (data, type, row) { 
+                        var str = row.created_at.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+                },{
                 'data': 'coinIn', 
                 render: function ( data, type, row ) {
                 return '$ '+ Number(data).toFixed(2); }},{'data': 'ttlCoinIn',render: function ( data, type, row ) {
@@ -222,6 +243,7 @@ $(document).ready(function(){
                 {'data': 'ttlMoneyIn',render: function ( data, type, row ) {return '$ '+ Number(data).toFixed(2); }},{'data': 'credits'}]       
   
     });    
+    $('#goalsapi').DataTable().destroy();
     $('#goalsapi').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
         processing : true,
@@ -252,7 +274,13 @@ $(document).ready(function(){
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at'},{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt',render: function ( data, type, row ) {
+        columns:[{'data': 'created_at',                
+                'render': function (data, type, row) { 
+                        var str = row.created_at.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+            },{'data': 'testPlay'},{'data': 'playIndex'},{'data': 'pkPWM'},{'data': 'pkVolt',render: function ( data, type, row ) {
                 return Number(data).toFixed(2); }},{'data': 'retPWM'}, {'data': 'retVolt',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'slipPWM'},{'data': 'slipVolt'},
             {'data': 'voltDecRetPercentage', render: function ( data, type, row ) { return Number(data).toFixed(2); }},
             {'data': 'plusPickUp',render: function ( data, type, row ) { return Number(data).toFixed(2); }},{'data': 'dropCount'},{'data': 'dropPWM'},{'data': 'dropVolt', render: function ( data, type, row ) {

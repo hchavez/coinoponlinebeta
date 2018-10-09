@@ -133,7 +133,8 @@ class MachineErrorReportController extends Controller
     }
     
     public function error_reports_api()
-    {               
+    {   
+        
         $machinelogs = DB::table('machines')
                 ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
@@ -146,7 +147,7 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
                 ->where('machines.status','!=','1111')    
-                ->where('errorlogs.type','!=','0')
+                //->where('errorlogs.type','!=','0')
                 ->where('errorlogs.status','!=','2')
                 ->where('errorlogs.type','!=','4');    
                
@@ -173,8 +174,7 @@ class MachineErrorReportController extends Controller
         
         $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-         
-        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
+       $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
         $data = array('data' => $machinelogs);
         return $data;
     }
