@@ -140,7 +140,8 @@ class MachineErrorReportController extends Controller
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
                         , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
                         ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
-                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date')
+                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date'
+                        ,DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))
                 ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                 ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                 ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
@@ -206,7 +207,8 @@ class MachineErrorReportController extends Controller
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
                         , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
                         ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
-                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date','errorlogs_history.created_at as errorResolve')
+                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date','errorlogs_history.created_at as errorResolve'
+                        ,DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))
                 ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                 ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                 ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
