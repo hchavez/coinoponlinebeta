@@ -110,11 +110,7 @@ $(document).ready(function() {
                     }
                 },
                 {'data': 'machine_model'},{'data': 'machine_type'},
-                {'data': 'comments', 
-                    'render': function (data, type, row) { 
-                        return row.comments +' '+ row.serial_no;
-                    }
-                },
+                {'data': 'name_serial'},
                 {'data': 'errortype', 
                     'render': function (data, type, row) { 
                         if(row.errortype=='1'){ return '<span class="badge badge-danger">Needs Immediate Attention!</span>'; }
