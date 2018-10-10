@@ -13,5 +13,5 @@
     </section>
     @yield('action-content')
     <!-- /.content -->
-  </div>
+  </div> 
 @endsection
