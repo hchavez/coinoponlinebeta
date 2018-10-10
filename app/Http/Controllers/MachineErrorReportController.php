@@ -148,7 +148,7 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
                 ->where('machines.status','!=','1111')    
                 //->where('errorlogs.type','!=','0')
-                ->where('errorlogs.status','!=','2')
+                ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','!=','4');    
                
         $dateCheck = Input::get('dateRange');         
@@ -264,14 +264,15 @@ class MachineErrorReportController extends Controller
     }
     
     public function statusCount2($type){
+        
+        $today = date("Y-m-d");
         $errorlogs_query = DB::table('errorlogs')
-            ->select(DB::raw('machine_id, error, type, count(*)'))            
-            ->whereDate('errorlogs.created_at', '=', Carbon::today())
-            ->where('status','!=','2')
+            ->select('errorlogs.*')
+            ->where('created_at', 'like', '%'.$today.'%')
+            ->where('status','=','1')
             ->where('type',$type)
-            ->groupBy(DB::raw('machine_id, error, type'))
-            ->orderBy('type','asc')
             ->get();
+       
         $total = count($errorlogs_query);
         return $total;
     }
@@ -279,7 +280,7 @@ class MachineErrorReportController extends Controller
     public function totalError($type){         
         $statusCount = $this->statusCount($type);
         $error = $statusCount->where('type','=','1')->count(); 
-        //echo $this->statusCount2(1);
+        //echo $this->statusCount2(1);       
         return $this->statusCount2(1);
     }
     public function totalWarning($type){        
