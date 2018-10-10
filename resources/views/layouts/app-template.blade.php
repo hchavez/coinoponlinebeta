@@ -7,7 +7,8 @@
         <meta name="description" content="bootstrap admin template">
         <meta name="author" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name') }}</title>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <link rel="apple-touch-icon" href="{{ asset("/assets/images/apple-touch-icon.png") }}">
         <link rel="shortcut icon" href="{{ asset("/assets/images/favicon.ico") }}">
         <!-- Stylesheets -->
