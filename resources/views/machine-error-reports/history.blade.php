@@ -14,7 +14,11 @@
             <div class="row" ng-app="machineApp" ng-controller="machineController" style="margin:0;">   
                 <!-- Team Total Completed -->
                 <div class="col-xxl-12">
-                   <?php //print_r($data); ?>
+                    <form role="form" method="GET" class="error-list-form" id="formFilter">                                
+                        <div class="col_date ky-columns ky_date">
+                            <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
+                        </div>
+                    </form>
                     <table class="table table-hover" id="machineErrorReport">                                    
                         <thead>
                             <tr role="row">        
@@ -102,9 +106,9 @@ $(document).ready(function() {
         order: [[4,'asc']],
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'date_created',
+        columns:[{'data': 'created_at',
                     'render': function (data, type, row) { 
-                        var str = row.date_created.split(" ");
+                        var str = row.created_at.split(" ");
                         var date = str[0].split("-")
                         return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
                     }

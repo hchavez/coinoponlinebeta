@@ -564,27 +564,11 @@ class MachineManagementController extends Controller {
     
     
     public function error($id) {
-        
-        /*$url = url()->current();
-        $objectID = \AppHelper::objectId($url);
-        $var = $this->permission($objectID);                                    
-        $machine = $this->machinelogs($id);  
-        
-        if($var['permit']['readAll']):
-            return view('machines-mgmt/error', ['id'=>$id, 'machine' => $machine]);
-        else:
-            return view('profile/index', ['permit' => $var['permit'], 
-                'userDetails' => $var['userDetails'], 
-                'user_id' => $var['userDetails'][0]['id'], 
-                'userGroup' => $var['userRole'][0]['users_group']]
-            );
-        endif;*/
-        
+                
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
         $var = $this->permission($objectID); 
-        $currerntUserRole = Auth::User()->id;
-        
+        $currerntUserRole = Auth::User()->id;        
         $machine = $this->machinelogs($id); 
         
         $machinelogs = DB::table('machines')
@@ -599,8 +583,7 @@ class MachineManagementController extends Controller {
                     ->leftJoin('state', 'sites.state', '=', 'state.id')          
                     ->where('errorlogs.status','!=','2')
                     //->where('machines.status','=','1')
-                    ->where('errorlogs.machine_id' ,'=', $id);
-        
+                    ->where('errorlogs.machine_id' ,'=', $id);       
         
         $dateRange = Input::get('dateRange');        
         $from = $to = '';        
@@ -612,52 +595,20 @@ class MachineManagementController extends Controller {
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
             $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
         endif;
-        
-        if(!empty(Input::get())):            
-            $model = Input::get('machine_model');
-            $type = Input::get('machine_type');
-            $error_msg = Input::get('error_msg');
-            $machine_site = Input::get('machine_site'); 
-            
-            if($model):
-                $machinelogs = $machinelogs->where(function($query) use ($model){                    
-                    $query->where('machine_models.machine_model', '=', $model);               
-                })->orderBy('date_created','desc');            
-            endif;
-            
-            if($type):
-                $machinelogs = $machinelogs->where(function($query) use ($type){                    
-                    $query->where('machine_types.machine_type', '=', $type);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($error_msg):
-                $machinelogs = $machinelogs->where(function($query) use ($error_msg){                    
-                    $query->where('type', '=', $error_msg);               
-                })->orderBy('date_created','desc');            
-            endif; 
-            
-            if($machine_site):
-                $machinelogs = $machinelogs->where(function($query) use ($machine_site){                    
-                    $query->where('site_name', '=', $machine_site);               
-                })->orderBy('date_created','desc');            
-            endif;            
-             
-        endif;
-        
+               
         $dateCheck = Input::get('dateRange');
         $date = new DateTime();        
         $today = $date->format('Y-m-d H:i:s');
-        $newdate = strtotime ( '-1 day' , strtotime ( $today ) ) ;
+        $toDate = $date->format('Y-m-d');
+        $newdate = strtotime ( '+1 day' , strtotime ( $today ) ) ;
         
         if(!empty($dateCheck)):            
             $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
                 $query->whereBetween('errorlogs.created_at', [$from, $to]);          
             })->orderBy('errorlogs.created_at','desc'); 
         else:
-            $machinelogs = $machinelogs->where(function($query) use ($newdate, $today){                    
-                $query->whereDate('errorlogs.created_at', '=', Carbon::today());  
-                //$query->whereBetween('errorlogs.created_at', [$newdate, $today]);      
+            $machinelogs = $machinelogs->where(function($query) use ($newdate, $toDate){                    
+                $query->where('errorlogs.created_at', 'like', '%'.$toDate.'%');                        
             }); 
         endif;
         
@@ -665,8 +616,7 @@ class MachineManagementController extends Controller {
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
         $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
-        $machinelogsgroup =  DB::table('errorlogs_list')->select('errorlogs_list.*');
-        
+        $machinelogsgroup =  DB::table('errorlogs_list')->select('errorlogs_list.*');        
         if(!empty($dateCheck)):            
             $machinelogsgroup = $machinelogsgroup->where(function($query) use ($from,$to){                    
                 $query->whereBetween('errorlogs_list.created_at', [$from, $to]);          
@@ -677,8 +627,7 @@ class MachineManagementController extends Controller {
             }); 
         endif;
         
-        $machinelogsgroup =  $machinelogsgroup->orderBy('type','asc')->get();
-         
+        $machinelogsgroup =  $machinelogsgroup->orderBy('type','asc')->get();         
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
         $site = Site::orderBy('site_name', 'asc')->get();
         $machineType = MachineType::orderBy('created_at', 'desc')->get();
@@ -811,7 +760,7 @@ class MachineManagementController extends Controller {
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
         
         $dateRange = Input::get('dateRange');
-        //echo $days_ago.'-'.$today;
+        
         if($dateRange != ''):
             $from = $to = '';    
             $dateRange = Input::get('dateRange');
@@ -831,7 +780,9 @@ class MachineManagementController extends Controller {
                     ->get();
         else:
             $userall = Errorlogs::where('machine_id','=', $id)
-                    ->whereBetween('created_at', [$days_ago,$today])
+                    //->whereBetween('created_at', [$days_ago,$today])
+                    ->where('created_at','>=',$days_ago)    
+                    ->orderBy('created_at','desc')
                     ->get();
         endif;
         
