@@ -61,12 +61,17 @@
 <script>    
 $(document).ready(function() {
     
-    var origin   = window.location.origin;      
+    var origin   = window.location.origin;     
+    var urlFilter = new URL(origin);
+    var filter = urlFilter.searchParams.get("dateRange");
+    var input = (filter!=null)? '?dateRange='+filter : '' ;
+    
     if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
         var url = 'http://localhost/coinoponlinebeta/public/history_api';
     }else{
         var url = 'https://www.ascentri.com/history_api';
     }
+    
     setTimeout(function(){
         $('.table select').each(function(i) {
             var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Resolve By', 'Date Resolve'];
@@ -79,7 +84,7 @@ $(document).ready(function() {
     $('#machineErrorReport').dataTable({     
         pageLength: 20,
         paging:true,
-        ajax: url,    
+        ajax: url + input,    
         dom: 'Bfrtip',
         buttons: ['excel'],
         initComplete: function () {
@@ -102,8 +107,7 @@ $(document).ready(function() {
                 } );
             } );
         },
-        deferRender:    true,       
-        order: [[4,'asc']],
+        deferRender:    true,  
         scrollY: '400px',
         scrollCollapse: true,
         columns:[{'data': 'created_at',
@@ -150,6 +154,11 @@ $(document).ready(function() {
         locale: {
             cancelLabel: 'Clear'
         }
+    });
+    
+    $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        var select = $(this), form = select.closest('form');  form.submit();
     });
 
     $('.dt-buttons').append('<a href="machine-error-reports"><button type="button" class="btn btn-default" style="float:right;" >Error Lists</button></a><button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');

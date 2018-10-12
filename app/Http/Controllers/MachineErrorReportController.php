@@ -152,7 +152,7 @@ class MachineErrorReportController extends Controller
                 ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','!=','4');    
                
-        $dateCheck = Input::get('dateRange');         
+        echo $dateCheck = Input::get('dateRange');         
         $from = $to = '';        
         
         if($dateCheck !=''):
@@ -175,7 +175,7 @@ class MachineErrorReportController extends Controller
         
         $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-       $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
+        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
         $data = array('data' => $machinelogs);
         return $data;
     }
@@ -218,16 +218,37 @@ class MachineErrorReportController extends Controller
                 ->where('errorlogs.status','=','2')   
                 ->where('machines.status','!=','1111')    
                 ->where('errorlogs.type','!=','0')
-                ->where('errorlogs.type','!=','4')
-                //->where('errorlogs.resolve_date', $today);
-                ->whereBetween('errorlogs.resolve_date', [$days_ago,$today]);  
+                ->where('errorlogs.type','!=','4');  
         
+        $dateRange = Input::get('dateRange');
         
-        //$machinelogs = $machinelogs->orderBy('date_created','desc')->paginate(10);
+        if($dateRange != ''):
+            $from = $to = '';    
+            $dateRange = Input::get('dateRange');
+            if($dateRange !=''):
+                $explode = explode('-',$dateRange);
+                $explode_from = explode('/',$explode[0]);
+                $explode_to = explode('/',$explode[1]);
+                $dayfr = $explode_from[0];
+                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
+                $day = $explode_to[0]+1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
+                
+            endif;
+            
+           $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
+            })->orderBy('errorlogs.created_at','desc'); 
+            
+        else:
+            $machinelogs = $machinelogs->where(function($query) use ($days_ago){                    
+                $query->where('errorlogs.created_at','>=',$days_ago);          
+            })->orderBy('errorlogs.created_at','desc'); 
+        endif;
+        
         $machinelogs = $machinelogs->orderBy('resolve_date','desc')->get();
         $data = array('data' => $machinelogs);
-        return $data;
-        
+        return $data;        
     }
     
     public function history()
