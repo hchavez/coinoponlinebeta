@@ -64,7 +64,11 @@ class Handler extends ExceptionHandler {
             \Session::flash('flash_message_important', 'Sorry, your session seems to have expired. Please try again.');
             return redirect('login');
         }
-
+        
+        if ($e instanceof \Illuminate\Database\QueryException) {
+             return redirect('login');
+         }
+ 
          return parent::render($request, $e);
           // return redirect('login');
     }
