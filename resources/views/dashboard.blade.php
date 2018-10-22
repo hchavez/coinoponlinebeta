@@ -18,7 +18,7 @@
                         <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -30,7 +30,7 @@
                         <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -54,7 +54,7 @@
                         <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -66,7 +66,7 @@
                         <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -90,7 +90,7 @@
                         <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
@@ -102,7 +102,7 @@
                     <div class="row"> 
                             <div class="col-7">
                                 <div class="counter text-left blue-grey-700">
-                                    <div class="counter-label font-size-20 mt-10">Machine Naeme</div>
+                                    <div class="counter-label font-size-20 mt-10">Machine Name</div>
                                 </div>
                             </div>
                             <div class="col-5">
