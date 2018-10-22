@@ -1,6 +1,5 @@
 @extends('layouts.app-template')
 
-
 @section('content')
 
 <div class="row" >
@@ -144,7 +143,6 @@
     </div>
     <!-- End Team Total Completed -->
     <!-- End First Row -->
-
 </div>
 
 @endsection
