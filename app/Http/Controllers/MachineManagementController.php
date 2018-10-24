@@ -72,7 +72,8 @@ class MachineManagementController extends Controller {
                             ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                             ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
-                            ->where('machines.status','<>', '1111');
+                            ->whereIn('machines.status', ['1','0']);
+                            //->where('machines.status','<>', '1111');
                         
             $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
         else:  
@@ -104,7 +105,8 @@ class MachineManagementController extends Controller {
                             ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                             ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
-                            ->where('machines.status','<>', '1111')
+                            //->where('machines.status','<>', '1111')
+                            ->whereIn('machines.status', ['1','0'])
                             ->whereBetween('machine_reports.last_played', [$from, $to])
                             ->groupBy(DB::raw("machine_id,machine_model,category,machine_type,ip_address,total_toys_win,stock_left,slip_volt,pkup_volt,date_created,
                                 ret_volt,owed_win,excess_win,last_visit,last_played,route,area,state,site"));              
