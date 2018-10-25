@@ -22,16 +22,16 @@
                     <table class="table table-hover" id="machineErrorReport">                                    
                         <thead>
                             <tr role="row">        
-                                <th>Date Time</th>
-                                <th>Machine Model</th>                                                
-                                <th>Machine Type</th>
-                                <th>Name & Serial No</th>
-                                <th>Error Type</th>
-                                <th>Error Message</th>
-                                <th>Site</th>
-                                <th>Resolve By</th>
-                                <th>Date Resolve</th>
-                            </tr> 
+                                        <th>Date Time</th>
+                                        <th>Machine Model</th>                                                
+                                        <th>Machine Type</th>
+                                        <th>Name & Serial No</th>                                       
+                                        <th>Error Type</th>
+                                        <th>Error Message</th>
+                                        <th>Site</th>
+                                        <th>Resolve By</th>
+                                        <th>Date Resolve</th>
+                                       </tr> 
                         </thead> 
 
                         <tbody class="table-section" data-plugin="tableSection" >
@@ -67,11 +67,10 @@ $(document).ready(function() {
     var input = (filter!=null)? '?dateRange='+filter : '' ;
     
     if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
-        var url = 'http://localhost/coinoponlinebeta/public/history_api';
+        var url = 'http://localhost/coinoponlinebeta/public/';
     }else{
-        var url = 'https://www.ascentri.com/history_api';
+        var url = 'https://www.ascentri.com/';
     }
-    
     setTimeout(function(){
         $('.table select').each(function(i) {
             var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Resolve By', 'Date Resolve'];
@@ -79,12 +78,14 @@ $(document).ready(function() {
             $("#filter" + (i+1)).select2({
                 placeholder: label[i]
             });        
-        });  
-      }, 2000);
+        });
+
+      }, 3000);
+    $('#machineErrorReport').DataTable().destroy();
     $('#machineErrorReport').dataTable({     
         pageLength: 20,
-        paging:true,
-        ajax: url + input,    
+        paging:true, 
+        ajax: url + 'error_reports_api/' + input,    
         dom: 'Bfrtip',
         buttons: ['excel'],
         initComplete: function () {
@@ -107,46 +108,41 @@ $(document).ready(function() {
                 } );
             } );
         },
-        deferRender:    true,  
+        deferRender:    true,       
+        order: [[4,'asc']],
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': 'created_at',
+        columns:[{'data': '',
                     'render': function (data, type, row) { 
-                        var str = row.created_at.split(" ");
-                        var date = str[0].split("-")
-                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        if(dd<10) { dd = '0'+dd } 
+                        if(mm<10) { mm = '0'+mm } 
+
+                        return today = mm + '/' + dd + '/' + yyyy;
+                        //return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
                     }
                 },
                 {'data': 'machine_model'},{'data': 'machine_type'},
-                {'data': 'name_serial'},
+                {'data': 'name_serial'},                
                 {'data': 'errortype', 
                     'render': function (data, type, row) { 
                         if(row.errortype=='1'){ return '<span class="badge badge-danger">Needs Immediate Attention!</span>'; }
                         else if(row.errortype=='2'){ return '<span class="badge badge-warning">Warning!</span>'; }
                         else if(row.errortype=='3'){ return '<span class="badge badge-info">Notice!</span>'; }
-                        else{ return '<span class="badge badge-warning">Warning!</span>'; }
+                        else{ return 'Warning'; }
                     }},
-                {'data': 'error',
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        $(nTd).html(oData.error);
-                    }
-                },{'data': 'site_name'},
-                {'data': 'resolve_by',
+                {'data': 'error'}, {'data': 'site_name'},
+                {'data': 'resolve_by', 
                     'render': function (data, type, row) { 
-                        if(row.resolve_by=='0'){ return 'System'; }                      
-                        else{ return ''; }
-                    }
-                },
-                {'data': 'resolve_date',
-                    'render': function (data, type, row) { 
-                        var str = row.resolve_date.split(" ");
-                        var date = str[0].split("-")
-                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
-                    }
-                }
+                        return 'System';
+                    }}, 
+                {'data': 'resolve_date'}
             ]
-    });   
-        
+    });  
     
     //Machine error report filter
     $('input[name="dateRange"]').daterangepicker({
@@ -155,13 +151,12 @@ $(document).ready(function() {
             cancelLabel: 'Clear'
         }
     });
-    
     $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         var select = $(this), form = select.closest('form');  form.submit();
     });
-
-    $('.dt-buttons').append('<a href="machine-error-reports"><button type="button" class="btn btn-default" style="float:right;" >Error Lists</button></a><button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
+    
+    $('.dt-buttons').append('<a href="machine-error-reports"><button type="button" class="btn btn-default" style="float:right;" >Error List</button></a><button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
     $('#machineErrorReport_filter').insertBefore('.dt-buttons');
     
     $('#clearFilter').click(function(){ 

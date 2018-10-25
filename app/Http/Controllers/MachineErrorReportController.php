@@ -251,6 +251,31 @@ class MachineErrorReportController extends Controller
         return $data;        
     }
     
+    public function error_reports_api_history()
+    {     
+        $today = date("Y-m-d H:i:s");
+        $todate = date("Y-m-d");
+        $days_ago = date('Y-m-d', strtotime('-1 days', strtotime($today)));
+        $machine = DB::table('errorlogs')
+                    ->select(DB::raw("distinct machine_id, machines.comments, errorlogs.error, machine_models.machine_model as machine_model, 
+                        machine_types.machine_type as machine_type, sites.site_name as site_name, sites.street as street, sites.suburb as suburb, 
+                        errorlogs.resolve_date as resolve_date, errorlogs.resolve_by as resolve_by, state.state_code as statecode, errorlogs.type as errortype, 
+                        CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))
+                    ->leftJoin('machines', 'errorlogs.machine_id', '=', 'machines.id')
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('state', 'sites.state', '=', 'state.id')                        
+                    ->where('errorlogs.created_at','like','%'.$todate.'%')
+                    ->where('errorlogs.status','=','2')
+                    ->where('errorlogs.type','!=','4')                    
+                    ->get()->toArray();          
+        
+        $data = array('data' => $machine);
+        return $data;
+    }
+    
+    
     public function history()
     {       
         $data = $this->history_api();                        

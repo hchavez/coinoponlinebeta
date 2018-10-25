@@ -426,6 +426,7 @@ Route::get('machine-error-reports/advam', 'MachineErrorReportController@advam');
 Route::get('machine-error-reports/advam-watchlist', 'MachineErrorReportController@advam_watchlist');
 Route::resource('machine-error-reports', 'MachineErrorReportController');
 
+Route::get('error_reports_api_history', 'MachineErrorReportController@error_reports_api_history');
 Route::get('history', 'MachineErrorReportController@history');
 Route::get('history_api', 'MachineErrorReportController@history_api');
 
