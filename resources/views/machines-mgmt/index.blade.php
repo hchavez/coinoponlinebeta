@@ -106,6 +106,63 @@ $(document).ready(function(){
             cancelLabel: 'Clear'
         }
     });
+    
+    //toggle filter for machine list and report
+    $('#filterBy').on('click', function(event) {        
+        $('#filterDiv').toggle('show'); 
+    });
+    
+    //filter table
+    $('#dashboard_sort').DataTable().destroy();
+    var table = $('#dashboard_sort').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: '',
+                filename: 'Coinopsoftware',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
+            }],
+        scrollY: '450px',
+        order: [[8,'desc']],
+        paging: true,
+        autoFill: true,     
+        pageLength: 100,        
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( '#filterDiv' )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                });
+            } );
+        }
+    } ); 
+    
     $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         var select = $(this), form = select.closest('form'); form.attr('action', 'machine-management'); form.submit();
@@ -118,6 +175,7 @@ $(document).ready(function(){
     $('#clearFilter').click(function(){ 
         $('select').val($(this).data('val')).trigger('change');
     });
+    
 });
 
 </script>
