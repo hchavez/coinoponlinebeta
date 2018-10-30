@@ -112,18 +112,11 @@ $(document).ready(function() {
         order: [[4,'asc']],
         scrollY: '400px',
         scrollCollapse: true,
-        columns:[{'data': '',
+        columns:[{'data': 'created_at',
                     'render': function (data, type, row) { 
-                        var today = new Date();
-                        var dd = today.getDate();
-                        var mm = today.getMonth()+1; //January is 0!
-                        var yyyy = today.getFullYear();
-
-                        if(dd<10) { dd = '0'+dd } 
-                        if(mm<10) { mm = '0'+mm } 
-
-                        return today = mm + '/' + dd + '/' + yyyy;
-                        //return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                        var str = row.date_created.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
                     }
                 },
                 {'data': 'machine_model'},{'data': 'machine_type'},
@@ -139,8 +132,15 @@ $(document).ready(function() {
                 {'data': 'resolve_by', 
                     'render': function (data, type, row) { 
                         return 'System';
-                    }}, 
-                {'data': 'resolve_date'}
+                    }
+                }, 
+                {'data': 'resolve_date',                   
+                    'render': function (data, type, row) { 
+                        var str = row.resolve_date.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+                }
             ]
     });  
     
