@@ -227,16 +227,18 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <thead><tr><th>Serial</th><th>Site</th><th>Area</th><th>Error</th><th>Lastlog</th></tr></thead>
             <tbody>
               @foreach ($offlineList as $lists)                      
                 <tr>                            
-                    <td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <!--<td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
                     <td width="9%">{{ $lists->state }}</td>
-                    <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
-                    <td  style="width:30% !important;">{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>   
+                    <td width="25%">{{ $lists->machine_model }}</td> -->
+                    <td width="23%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
+                    <td width="20%">{{ $lists->site }}</td>      
+                    <td width="15%">{{ $lists->area }}</td>   
+                    <td width="20%">Machine Offline</td>   
+                    <td width="23=0%"> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td>   
                 </tr>                          
               @endforeach   
             </tbody>
