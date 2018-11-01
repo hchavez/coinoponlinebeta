@@ -108,6 +108,44 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-12"> 
+                        <h4 class="example-title">Machine Restriction</h4>  
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-left" data-plugin="dataTable">   
+                                <thead>
+                                    <tr>
+                                        <th>Grant</th>
+                                        <th>Machine Model</th>
+                                        <th>Machine type</th>                                                             
+                                        <th>Serial</th>                                                                  
+                                    </tr>                                    
+                                </thead>
+                                <tbody>
+                                    @foreach($machines as $key => $log)
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox-custom checkbox-primary">
+                                                <input type="checkbox" id="inputcheckboxUnchecked" name="status" value="1">
+                                                <label for="inputCheckboxUnchecked"></label>
+                                            </div>
+                                        </td>
+                                        <td>{{ $log->machine_model }}</td>
+                                        <td>{{ $log->machine_type }}</td>                                        
+                                        <td>{{ $log->serial_no }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>                
+        </div> 
+        
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12"> 
                         <h4 class="example-title">User Logs/History</h4>  
                         <div class="table-responsive">
                             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">

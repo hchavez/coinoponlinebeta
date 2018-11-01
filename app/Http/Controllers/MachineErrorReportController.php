@@ -277,7 +277,7 @@ class MachineErrorReportController extends Controller
     
     public function history()
     {       
-        $data = $this->history_api();                        
+        $data = $this->history_api();                    
           
         return view('machine-error-reports/history', ['data'=>$data]);
         

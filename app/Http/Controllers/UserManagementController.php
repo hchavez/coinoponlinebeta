@@ -9,6 +9,7 @@ use App\UsersRole;
 use App\UsersGroup;
 use Illuminate\Support\Facades\Auth;
 use Input;
+use App\Machine;
 
 class UserManagementController extends Controller
 {
@@ -42,7 +43,7 @@ class UserManagementController extends Controller
                     ->select('users.*','users.id as userID', 'users_role.*')
                     ->leftJoin('users_role', 'users.id', '=', 'users_role.user_id') 
                     ->get(); 
-           
+        
         return view('users-mgmt/index', ['users' => $users,'userRole' =>$currerntUserRole,'getUser' => $get_user]);
     }
 
@@ -119,8 +120,9 @@ class UserManagementController extends Controller
                     ->where('log_activities.user_id', $id);  
         $act = $get_user->latest('log_activities.updated_at')->get(); 
         $status = \AppHelper::getRole($id);  
-        
-        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'group'=>$usersGroup, 'currentRole'=>$usersRole, 'status' => $status]);
+        $machines = $this->get_machines();
+        //print_r($machines);
+        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'machines' => $machines, 'group'=>$usersGroup, 'currentRole'=>$usersRole, 'status' => $status]);
     }
     
     public function set_permission(Request $request)
@@ -143,6 +145,19 @@ class UserManagementController extends Controller
         if (UsersRole::where('user_id', $id)->update($input)) {
             return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
+    }
+    
+    public function get_machines()
+    {        
+        $machines = DB::table('machines')
+                    ->select('machines.*', 'machine_models.machine_model as machine_model' , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 
+                            'machines.id as machine_id' ,'machines.comments as comments', 'machines.machine_serial_no')
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->where('machines.status','=','1')
+                    ->get(); 
+           
+        return $machines;
     }
 
     /**
