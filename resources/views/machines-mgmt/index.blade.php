@@ -62,12 +62,12 @@
                                     <td> {{ $machine->category }} </td>                                    
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>
-                                    <td> {{ $machine->machine_serial_no }}</td>
+                                    <td> <a href="machine-management/{{ $machine->id }}"> {{ $machine->machine_serial_no }} </a></td>
                                     <td> {{ $machine->site }} </td>  
                                     <td> {{ $machine->state }} </td>
                                     <td>{{ $machine->route }} </td>
                                     <td> {{ $machine->area }}</td>
-                                    <td>{{ $machine->comments }} - {{ $machine->version }}</td>                                    
+                                    <td> <a href="machine-management/{{ $machine->id }}">{{ $machine->comments }} - {{ $machine->version }} </a></td>                                    
                                     <td> {{ number_format($machine->total_money ,2) }} </td>
                                     <td> {{ $machine->total_toys_win }} </td>                                   
                                     <td> {{ $machine->stock_left }} </td>
