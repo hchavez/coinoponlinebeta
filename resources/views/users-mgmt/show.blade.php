@@ -110,32 +110,38 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                     <div class="col-sm-12"> 
                         <h4 class="example-title">Machine Restriction</h4>  
                         <div class="table-responsive">
-                            <table class="table table-bordered text-left" data-plugin="dataTable">   
-                                <thead>
-                                    <tr>
-                                        <th>Grant</th>
-                                        <th>Machine Model</th>
-                                        <th>Machine type</th>                                                             
-                                        <th>Serial</th>                                                                  
-                                    </tr>                                    
-                                </thead>
-                                <tbody>
-                                    <?php //print_r($machines); ?>
-                                    @foreach($machines as $key => $log)
-                                    <tr>
-                                        <td>
-                                            <div class="checkbox-custom checkbox-primary">
-                                                <input type="checkbox" id="inputcheckboxUnchecked" name="status[]" value="{{ $log->id }}" >
-                                                <label for="inputCheckboxUnchecked"></label>
-                                            </div>
-                                        </td>
-                                        <td>{{ $log->machine_model }}</td>
-                                        <td>{{ $log->machine_type }}</td>                                        
-                                        <td>{{ $log->serial_no }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            <form method="get" action="{{ url('user-mgmt') }}/<?php echo $id; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                                <table class="table table-bordered text-left" data-plugin="dataTable">   
+                                    <thead>
+                                        <tr>
+                                            <th>Grant</th>
+                                            <th>Machine Model</th>
+                                            <th>Machine type</th>                                                             
+                                            <th>Serial</th>                                                                  
+                                        </tr>                                    
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($get_user as $m_ids): ?>
+                                            <input type="hidden" id="" value="<?php echo $m_ids['machine_ids']; ?>">
+                                        <?php endforeach; ?>  
+                                        @foreach($machines as $key => $log)                                                                                 
+                                        <tr>
+                                            <td>
+                                                <div class="checkbox-custom checkbox-primary">
+                                                    <input type="checkbox" name="status[]" value="{{ $log->id }}" id="{{ $log->id }}">
+                                                    <label for="inputCheckboxUnchecked"></label>
+                                                </div>
+                                            </td>
+                                            <td>{{ $log->machine_model }}</td>
+                                            <td>{{ $log->machine_type }}</td>                                        
+                                            <td>{{ $log->serial_no }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-block btn-primary" name="machine_restrict" style="width:15%;">Update Access</button>
+                            </form>
                         </div>
                     </div>
                     

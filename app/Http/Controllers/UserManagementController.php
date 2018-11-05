@@ -10,6 +10,7 @@ use App\UsersGroup;
 use Illuminate\Support\Facades\Auth;
 use Input;
 use App\Machine;
+use App\UserMachinePermission;
 
 class UserManagementController extends Controller
 {
@@ -113,16 +114,22 @@ class UserManagementController extends Controller
         $logs = \LogActivity::logActivityLists();  
             
         $get_user = DB::table('users')
-                    ->select('users.*', 'users.id as users_id','users.username as username'
-                            , 'log_activities.subject as subject', 'log_activities.url as url'
+                    ->select('users.*', 'users.id as users_id','users.username as username', 'log_activities.subject as subject', 'log_activities.url as url'
                             , 'log_activities.ip as ip', 'log_activities.agent as agent', 'log_activities.updated_at as updated_at')
-                    ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id')                                        
+                    ->leftJoin('log_activities', 'log_activities.user_id', '=', 'users.id')                                                          
                     ->where('log_activities.user_id', $id);  
         $act = $get_user->latest('log_activities.updated_at')->get(); 
         $status = \AppHelper::getRole($id);  
         $machines = $this->get_machines();
-        //print_r($machines);
-        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'machines' => $machines, 'group'=>$usersGroup, 'currentRole'=>$usersRole, 'status' => $status]);
+        
+        if(!empty($_GET)){
+            $data = json_encode($_GET['status']);            
+            $this->machine_permission($data,$id);
+        }else{}      
+
+        $get_user = DB::table('users_machine_permission')->where('user_id', '=', $id)->get()->toArray(); 
+
+        return view('users-mgmt/show', ['users' => $users, 'logs' => $act, 'id' => $id, 'get_user' => $get_user, 'machines' => $machines, 'group'=>$usersGroup, 'currentRole'=>$usersRole, 'status' => $status]);
     }
     
     public function set_permission(Request $request)
@@ -134,6 +141,32 @@ class UserManagementController extends Controller
         if (UsersRole::where('user_id', $id)->update($input)) {
             return back()->with('success', 'Machine Info successfully updated!')->with('myreferrer', $request->get('myreferrer'));
         }
+    }
+
+    public function machine_permission($data, $id)
+    {
+        $get_user = DB::table('users_machine_permission')->where('user_id', '=', $id)->get()->toArray(); 
+        $count = count($get_user);
+
+        if($count >= 1){
+            $input = [
+                'user_id' => $id,
+                'machine_ids' => $data           
+            ];
+
+            if (UserMachinePermission::where('user_id', $id)->update($input)) {
+                return $input;
+            }
+
+        }else{
+            $insert = UserMachinePermission::create([
+                 'user_id' => $id,
+                'machine_ids' => $data
+            ]);
+
+            return $insert; 
+        }        
+        
     }
     
     public function update_status(Request $request)
