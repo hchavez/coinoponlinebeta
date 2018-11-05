@@ -120,11 +120,12 @@ if($currentRole->user_role == '5'){ $urole = 'Service'; $color = 'dark';}
                                     </tr>                                    
                                 </thead>
                                 <tbody>
+                                    <?php //print_r($machines); ?>
                                     @foreach($machines as $key => $log)
                                     <tr>
                                         <td>
                                             <div class="checkbox-custom checkbox-primary">
-                                                <input type="checkbox" id="inputcheckboxUnchecked" name="status" value="1">
+                                                <input type="checkbox" id="inputcheckboxUnchecked" name="status[]" value="{{ $log->id }}" >
                                                 <label for="inputCheckboxUnchecked"></label>
                                             </div>
                                         </td>

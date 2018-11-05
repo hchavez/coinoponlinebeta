@@ -119,6 +119,7 @@
                                   <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                               @endif
                           </div>
+                          <a href="{{ url('history') }}" style="position: absolute;right: 11em;top: 4em;"><button type="button" class="btn btn-default" style="float:right;" >History</button></a>
                            <div class="example">   
                             <form role="form" method="GET" class="error-list-form" id="formFilter">                                
                                 <div class="col_date ky-columns ky_date">
@@ -437,7 +438,7 @@ $(document).ready(function() {
         var select = $(this), form = select.closest('form'); form.attr('action', 'error_reports_api'); form.submit();
     });   */ 
     
-    $('.dt-buttons').append('<a href="history"><button type="button" class="btn btn-default" style="float:right;" >History</button></a><button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
+    $('.dt-buttons').append('<button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
     $('#machineErrorReport_filter').insertBefore('.dt-buttons');
     
     $('#clearFilter').click(function(){ 
