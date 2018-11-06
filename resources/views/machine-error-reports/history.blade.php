@@ -85,7 +85,7 @@ $(document).ready(function() {
     $('#machineErrorReport').dataTable({     
         pageLength: 20,
         paging:true, 
-        ajax: url + 'error_reports_api/' + input,    
+        ajax: url + 'history_api/' + input,    
         dom: 'Bfrtip',
         buttons: ['excel'],
         initComplete: function () {
