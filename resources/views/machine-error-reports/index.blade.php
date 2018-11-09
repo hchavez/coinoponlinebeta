@@ -2,18 +2,21 @@
 @section('content')
 <!-- Page -->
 <meta http-equiv="refresh" content="300" >
-<div class="row" id="boxesCount">   
-    <div class="col-lg-2"><!-- Card -->        
+
+<div class="row" id="boxesCount"> 
+  <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $online }}</b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['online']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-green-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
               </div>
               <div class="counter counter-sm text-left">
                 <div class="counter-number-group"><span class="counter-icon green-600 mr-5"><i class="wb-graph-up"></i></span>
-                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".online-modal-lg" data-toggle="modal"><?php endif; ?>Machine Online<?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
+                    <span class="counter-number-related"><?php if($permit['read']): ?>
+                    <a href="" data-target=".online-modal-lg" data-toggle="modal"><?php endif; ?>Machine Online<?php if($permit['read']): ?></a><?php endif; ?></span>          
+                </div>
               </div>
             </div>
           </div>
@@ -22,7 +25,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $offline }}</b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['offline']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -38,7 +41,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b>{{ $ttlMachines }}</b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['total']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-blue-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -54,7 +57,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['notice']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['notice']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-cyan-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -69,7 +72,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['warning']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['warning']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -84,7 +87,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $total['error']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['error']; ?></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -96,8 +99,7 @@
           </div>
         </div><!-- End Card -->        
     </div>
-    
-    <!-- end boxes -->
+
     <!-- second Row -->
     <div class="col-12" id="ecommerceChartView">
         <div class="card card-shadow">
@@ -105,7 +107,7 @@
                 <h3 class="panel-title">Machine Error Reports</h3> 
             </header>
             
-            
+            <?php //print_r($data['errorlogs']); ?>
             <div class="row" ng-app="machineApp" ng-controller="machineController" style="margin:0;">   
                 <!-- Team Total Completed -->
                 <div class="col-xxl-12">
@@ -119,13 +121,13 @@
                                   <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                               @endif
                           </div>
-                          <a href="{{ url('history') }}" style="position: absolute;right: 11em;top: 4em;"><button type="button" class="btn btn-default" style="float:right;" >History</button></a>
+                          <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter">                                
+                            <!--form role="form" method="GET" class="error-list-form" id="formFilter">                                
                                 <div class="col_date ky-columns ky_date">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
                                 </div>
-                           </form>
+                           </form-->
                                
                             <table class="table table-hover" id="machineErrorReport">                                    
                                 <thead>
@@ -137,11 +139,36 @@
                                         <th>Error Type</th>
                                         <th>Error Message</th>
                                         <th>Site</th>
+                                        <th>View Errors</th>
                                        </tr> 
                                 </thead> 
-                                
+                                <?php //print_r($data['logs']);
+                                //echo count($data['logs']['errors']);
+                                //echo '-'.count($data['logs']['machines']);
+                                 ?>
                                 <tbody class="table-section" data-plugin="tableSection" >
-                                    
+                                  @foreach ($data['logs']['errors'] as $error)
+                                    @foreach ($data['logs']['machines'] as $machines)
+                                    <?php  if($error->machine_id == $machines->machine_id): ?>
+                                      <?php
+                                      if($error->type == '1'): $errortype = 'Needs immediate Attention'; $color = '#f96868';
+                                      elseif($error->type == '2'): $errortype = 'Warning'; $color = '#f2a654';
+                                      else: $errortype = 'Notice'; $color = '#57c7d4';
+                                      endif;
+                                      ?>                                      
+                                      <tr>
+                                        <td><?php echo date("d/m/Y"); ?></td>
+                                        <td><?php echo $machines->machine_model; ?></td>
+                                        <td><?php echo $machines->machine_type; ?></td>
+                                        <td><?php echo $machines->name_serial; ?></td>
+                                        <td style="color:<?php echo $color; ?>"><?php echo $errortype; ?></td>
+                                        <td><?php echo $error->error; ?></td>                                        
+                                        <td><?php echo $machines->site; ?></td>
+                                        <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>">View Errors</a></td>
+                                      </tr>
+                                    <?php endif; ?>
+                                    @endforeach
+                                  @endforeach
                                 </tbody>                              
                                 
                                 <tfoot></tfoot>
@@ -160,296 +187,145 @@
         </div>
     </div>
     <!-- End Second Row -->
-
-</div>
-
-
-@foreach ($geterrorID as $machinelog)
-<div id="myModal{{$machinelog -> error_id}}" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        Modal content
-        <form action="{{ URL::to('machine-error-reports/update_error_status') }}" method="post" id="status-update" >   
-        <meta id="token" name="token" content="{ { csrf_token() } }">     
-        {{ csrf_field() }}   
-        <input type="hidden" name="errorid" value="{{ $machinelog->error_id }} ">
-                            
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                
-                <h4 class="modal-title">Error Type: 
-                <div id="md-msg"></div>
-                
-                @if ($machinelog->errortype == "1")
-                   <span class="badge badge-danger">Needs Immediate Attention!</span> 
-                @endif
-                
-                @if ($machinelog->errortype == "2")
-                <span class="badge badge-warning">Warning!</span>
-                @endif
-                
-                @if ($machinelog->errortype == "3")
-                   <span class="badge badge-info">Notice!</span> 
-                @endif
-
-                                                        
-                
-                </h4>
-            </div>
-            <div class="modal-body">
-                <p><strong>Error Message: <?php $errorstring = str_replace(",","",$machinelog -> error); echo $errorstring;?></strong></p>
-                <p>Name and Serial No:  {{ $machinelog->comments}} - {{ $machinelog->serial_no}} </p> 
-                <p>Machine Type:  {{ $machinelog->machine_type}} </p>
-                 <p>Machine Model: {{ $machinelog->machine_model}} </p>
-                 <p>Site Address:  {{ $machinelog -> site_name}} {{ $machinelog -> street}} {{ $machinelog -> suburb}} {{ $machinelog -> statecode}} </p>
-                 <p>  <input type="checkbox" id="error-resolve" name="resolve" value="2" > Resolve</p>
-                 <input type="hidden" id="resolve-by" name="resolve_by" value="{{ $userID }}" >
-            </div>
-            <div class="modal-footer">
-                 <input class="btn btn-primary" type="submit" value="Update" />
-                 <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-            </div>
-            
-        </div>
-    </form>
+@foreach ($data['logs']['errors'] as $error)
+  @foreach ($data['logs']['machines'] as $machines)
+  <?php  if($error->machine_id == $machines->machine_id): ?>
+<!-- MODAL START HERE-->
+<div class="modal fade example-modal-lg" id="viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg machines-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Error Report</h4>
+      </div>
+      <div class="modal-body" id="tablelist">
+       <div id="loader"></div>
+      </div>
     </div>
+  </div>
 </div>
+
+<div class="modal fade example-modal-lg" id="myModal<?php echo $machines->machine_id.'_'.$error->type; ?>" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Resolve</h4>
+      </div>
+      <div class="modal-body" >
+
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+  @endforeach
 @endforeach
 
-
-<!-- Modal -->
-<div class="modal fade example-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Offline Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th>Serial</th><th>Site</th><th>Area</th><th>Error</th><th>Lastlog</th></tr></thead>
-            <tbody>
-              @foreach ($offlineList as $lists)                      
-                <tr>                            
-                    <!--<td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td width="9%">{{ $lists->state }}</td>
-                    <td width="25%">{{ $lists->machine_model }}</td> -->
-                    <td width="23%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
-                    <td width="20%">{{ $lists->site }}</td>      
-                    <td width="15%">{{ $lists->area }}</td>   
-                    <td width="20%">Machine Offline</td>   
-                    <td width="23=0%"> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td>   
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+<?php //print_r($data); ?>
+<!-- MODAL MUST END HERE -->
 </div>
-<!-- End Modal -->
-<!-- Modal -->
-<div class="modal fade online-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
-            <tbody>
-              @foreach ($onlineLists as $lists)                      
-                <tr>                            
-                    <td width="5%"><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td width="9%">{{ $lists->state }}</td>
-                    <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
-                    <td style="width:30% !important;">{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>                                   
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
-<!-- Modal -->
-<div class="modal fade total-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
-            <tbody>
-              @foreach ($totalLists as $lists)                      
-                <tr>                            
-                    <td width="5%">
-                        <?php if($lists->status =='1'){ ?>
-                        <i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
-                        <?php }else{ ?>
-                        <i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
-                        <?php } ?>
-                    </td> 
-                    <td width="9%">{{ $lists->state }}</td>
-                    <td width="25%">{{ $lists->machine_model }}</td>
-                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
-                    <td style="width:30% !important;">{{ $lists->site }}</td>      
-                    <td>{{ $lists->area }}</td>                                  
-                </tr>                          
-              @endforeach   
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
-<?php
-
-?>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<style>
-.select2-container{width:100% !important;}
-.ladda-button{margin-top:10px;}
-.dt-buttons{top:1em !important;position: inherit !important;}
-#machineErrorReport_filter{position: absolute; top: 0; right: 0;}
+<style type="text/css">
+.machines-modal{max-width:1500px;max-height: 450px;}
+.table-container {
+    height: 10em;
+}
+table#errorlistlogs {
+    display: flex;
+    flex-flow: column;
+    height: 480px;
+    width: 100%;
+}
+table#errorlistlogs thead {
+    flex: 0 0 auto;
+    width: calc(100% - 0.9em);
+}
+table#errorlistlogs tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+}
+table#errorlistlogs tbody tr {
+    width: 100%;
+}
+table#errorlistlogs thead,
+table#errorlistlogs tbody tr {
+    display: table;
+    table-layout: fixed;
+}
 </style>
-<script>    
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript">
 $(document).ready(function() {
-    
+
     var origin   = window.location.origin;      
     if(origin==='http://localhost' || origin==='::1' || origin==="127.0.0.1"){
-        var url = 'http://localhost/coinoponlinebeta/public/error_reports_api';
+        var url = 'http://localhost/coinoponlinebeta/public/';
     }else{
-        var url = 'https://www.ascentri.com/error_reports_api';
+        var url = 'https://www.ascentri.com/';
     }
-    setTimeout(function(){
-        $('.table select').each(function(i) {
-            var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site'];
-            $(this).attr('id', 'filter'+(i+1));        
-            $("#filter" + (i+1)).select2({
-                placeholder: label[i]
-            });        
-        });  
-      }, 3000);
-    $('#machineErrorReport').DataTable().destroy();
-    $('#machineErrorReport').dataTable({     
-        pageLength: 20,
-        paging:true,
-        ajax: url,    
-        dom: 'Bfrtip',
-        buttons: ['excel'],
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.header()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        },
-        deferRender:    true,       
-        order: [[4,'asc']],
-        scrollY: '400px',
-        scrollCollapse: true,
-        columns:[{'data': 'created_at',
-                    'render': function (data, type, row) { 
-                        var str = row.date_created.split(" ");
-                        var date = str[0].split("-")
-                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
-                    }
-                },
-                {'data': 'machine_model'},{'data': 'machine_type'},
-                {'data': 'name_serial'},                
-                {'data': 'errortype', 
-                    'render': function (data, type, row) { 
-                        if(row.errortype=='1'){ return '<span class="badge badge-danger">Needs Immediate Attention!</span>'; }
-                        else if(row.errortype=='2'){ return '<span class="badge badge-warning">Warning!</span>'; }
-                        else if(row.errortype=='3'){ return '<span class="badge badge-info">Notice!</span>'; }
-                        else{ return 'Warning'; }
-                    }},
-                {'data': 'error',
-                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                        $(nTd).html('<a href="#" data-toggle="modal" data-target="#myModal'+oData.error_id+'" style="text-decoration: none;">'+oData.error+"</a>");
-                    }
-                },{'data': 'site_name'}]
-    });   
-    
-    
-    //resolve error
-    $("#status-update").submit(function(e) {
-        e.preventDefault();
 
-        $('.modal-dialog').css('text-align','center');
-        $('.modal-dialog').html('<img src="https://www.ascentri.com/global/photos/loading.gif" width="60px">');            
+    $('#machineErrorReport').DataTable({
+      scrollY:        400,
+      bScrollInfinite: true,
+      bScrollCollapse: true,
+      order: [[ 4, "asc" ]],
+      paging: false
+    });
 
-        var statusval = $("input#error-resolve").val();            
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    $("a.viewerrorclass").click(function(evt){
+        var values = $(this).attr("id");
+        var idsplit = values.split("_");
+        var id = idsplit[1];
+        var type = idsplit[2];
+        console.log(id);
         $.ajax({
-                url: $(this).attr('action'),
-                type: "POST",
-                data: $(this).serialize(),
-                success: function(response){                     
-                $('.modal-dialog').html('<div class="alert dark alert-success alert-dismissible" role="alert">Resolve Successfully!</div>'); 
-                setTimeout(function() { location.reload(); }, 1000);                      
-            },
-            error: function(response){
-                $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
-            }
-        }); 
-    });
-    
-    
-    
-    //Machine error report filter
-    $('input[name="dateRange"]').daterangepicker({
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
-    /*$('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        var select = $(this), form = select.closest('form'); form.attr('action', 'error_reports_api'); form.submit();
-    });   */ 
-    
-    $('.dt-buttons').append('<button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>&nbsp;&nbsp;&nbsp;');
-    $('#machineErrorReport_filter').insertBefore('.dt-buttons');
-    
-    $('#clearFilter').click(function(){ 
-        $('select').val($(this).data('val')).trigger('change');
-    });
-    $("#select2-results-1").attr("disable");
+          url: url+'get_errorlist',
+          type: "GET",
+          data: {id: id, type: type },
+          dataType: 'json',
+          beforeSend: function(){  
+            $(values+' #loader').html('<img src="'+url+'/global/photos/pacman.gif" style="text-align:center;width:60px"> Preparing reports');
+          },
+          success: function(data){           
+            console.log(data);  
+            $('#loader').html();          
+            var html = '';
+            var total = data.length;
+            var error_id = '';
+            html += 'Total: '+total;
+            html += '<a href="#" data-toggle="modal" data-target="#myModal'+id+'_'+type+'" id="idmyModal'+id+'_'+type+'">';
+            html += '<button type="button" class="btn btn-blue" style="float:right;">Update</button></a>';
+            html += '<div class="checkbox-custom checkbox-primary" style="float:right;right: 3em;"><input type="checkbox" id="inputChecked" checked=""><label for="inputChecked">Resolve Error</label></div>'; 
+            html += '<table class="table table-hover dataTable table-striped w-full table-container" id="errorlistlogs" data-plugin="dataTable">';
+            html += '<thead><tr><th>Date</th><th>Machine Model</th><th>Machine Type</th><th>Name & Serial No</th><th>Error Message</th><th>Site</th></tr></thead><tbody>';
+            $.each(data,function(key,value){
+                  error_id += value.error_id+',';
+                  html +='<tr>';
+                  html +='<td>'+ value.date_created + '</td>';
+                  html +='<td>'+ value.machine_model + '</td>';
+                  html +='<td>'+ value.machine_type + '</td>';
+                  html +='<td>'+ value.name_serial + '</td>';
+                  html +='<td><a href="#">'+ value.error + '</a></td>';
+                  html +='<td>'+ value.site_name + '</td>';
+                  html +='</tr>';
+              });
+            html += '</tbody></table>';              
+            $(values+' #tablelist').html(html);
 
-});
+            console.log(error_id.split(','));
 
+            var et_res = '#idmyModal'+id+'_'+type;
+            $(et_res).click(function(){
+                $('#myModal'+id+'_'+type+' .modal-body').html('ID: '+id+'- TYPE:'+type);                                
+            });
+
+          }
+        });
+
+      });
+   
+} );
 </script>
 
 @endsection

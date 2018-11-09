@@ -40,103 +40,72 @@ class MachineErrorReportController extends Controller
     {
         $url = url()->current();
         $objectID = \AppHelper::objectId($url);
-        $var = $this->permission($objectID); 
-        $currerntUserRole = Auth::User()->id;
-        $machinelogs = DB::table('machines')
-                     ->select(DB::raw(' machines.*, errorlogs.created_at as date_created, errorlogs.id as error_id, sites.site_name as site_name,'
-                             . 'sites.street as street, sites.suburb as suburb, state.state_code as statecode, machine_models.machine_model as machine_model,'
-                             . 'machine_types.machine_type as machine_type, machines.machine_serial_no as serial_no, machines.id as machine_id, machines.comments as comments,'
-                             . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
-                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                    ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                    ->leftJoin('state', 'sites.state', '=', 'state.id')      
-                    ->where('machines.status','!=','1111');
-       
-        
-        $dateRange = Input::get('dateRange');        
-        $from = $to = '';        
-        
-        if($dateRange !=''):
-            $explode = explode('-',$dateRange);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
-            //$to = str_replace(' ','',$explode_to[2].'-'.$explode_to[0].'-'.$explode_to[1]);            
-           
-            //$from = date('Y-m-d', strtotime('-1 day', strtotime($explode[0])));
-            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
-        endif;
-        
-               
-        $dateCheck = Input::get('dateRange');
-        if(!empty($dateCheck)):            
-            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-            })->orderBy('errorlogs.created_at','desc'); 
-        else:
-            $machinelogs = $machinelogs->where(function($query){                    
-                $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
-            }); 
-        endif;
-        
-        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,DATE(errorlogs.created_at), errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
-                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
-                
-        $machinelogs = $machinelogs->orderBy('errorlogs.type','asc')->paginate(15);
-        $machinelogsgroup =  DB::table('errorlogs_list')
-            ->select('errorlogs_list.*')            
-            ->whereDate('errorlogs_list.created_at', '=', Carbon::today())
-            ->orderBy('type','asc')
-            ->get();
-         
-        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
-        $site = Site::orderBy('site_name', 'asc')->get();
-        $machineType = MachineType::orderBy('created_at', 'desc')->get();
-                
-        $filterData = array(            
-            'machine_model' => Input::get('machine_model'),
-            'machine_type' => Input::get('machine_type'),
-            'machine_site' => Input::get('machine_site'),
-            'error_msg' => Input::get('error_msg'),
-            'machine_site' => Input::get('machine_site'),
-            'startdate' => $from,
-            'enddate' => $to
-        );
-         
-        //$online = DB::table('machines')->where('status','=', '1')->count('status');         
-        //$offline = DB::table('machines')->where('status','=', '0')->count('status'); 
-        $wh = DB::table('machines')->where('status','=', '3')->count('status'); 
-        //$ttlMachines = 1 + $offline; 
-        
-        $totalStatus = array('error'=>$this->totalError('0'), 'warning'=>$this->totalWarning('0'), 'notice'=>$this->totalNotice('0'));
-        $offlineLists = $this->offlineMachineLists();  
-        $onlineLists = $this->onlineMachineLists();
-        $totalLists = $this->totalMachineLists();
+        $var = $this->permission($objectID);
+
         $online = Machine::where('status', '1')->count();
         $offline = Machine::where('status', '0')->count();
         $ttlMachines = $online + $offline; 
         
-        $error_reports_api = $this->error_reports_api();
-         
-        if($var['permit']['readAll']):
-            return view('machine-error-reports/index', ['geterrorID'=>$error_reports_api['data'],'machinelogs' => $machinelogs, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'filterData'=>$filterData,'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
-        else:
-            return view('profile/index', ['permit' => $var['permit'], 
-                'userDetails' => $var['userDetails'], 
-                'user_id' => $var['userDetails'][0]['id'], 
-                'userGroup' => $var['userRole'][0]['users_group']]
-            );
-        endif;
-        
+        $pass_data = array(
+            'online' => $online,
+            'offline' => $offline,
+            'total' => $ttlMachines,
+            'error' => $this->statusCount2(1),
+            'warning' => $this->statusCount2(2),
+            'notice' => $this->statusCount2(3),
+            'logs' => $this->errorlogs()     
+        );
+      
+        return view('machine-error-reports/index', [ 'data' => $pass_data, 'permit' => $var['permit'] ]);        
+    }
+
+    public function errorlogs()
+    {
+        $today = date("Y-m-d"); 
+        $data = DB::table('errorlogs')
+                    ->select(DB::raw('distinct machine_id, error, type'))
+                    ->whereDate('created_at', '=', Carbon::today())
+                    ->where('status','=','1')
+                    ->get()->toArray(); 
+
+        $mids = '';        
+        foreach($data as $logs){            
+            $mids .=$logs->machine_id.",";
+        }
+       
+        $explode = explode(',',$mids);       
+        $machines = DB::table('machines')
+                    ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
+                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
+                            'sites.site_name as site')                   
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                    ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                    ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
+                    ->whereIn('machines.status', ['1','0'])
+                    ->whereIn('machines.id', $explode)
+                    ->whereDate('machine_reports.last_played', '=', Carbon::today())
+                    ->get();
+
+        $logs = array(
+            'errors' => $data,
+            'machines' => $machines
+        );
+        return $logs;
     }
     
-    public function error_reports_api()
-    {   
+     public function get_errorlist()
+    {           
         
-        $machinelogs = DB::table('machines')
-                ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
+        $check = Input::get('id'); 
+        $machinelogs = '';
+         if($check !=''):
+            $data= $_GET['id'];
+            $type= $_GET['type'];
+            $machinelogs = DB::table('machines')
+                ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
                         , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
                         ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
@@ -147,8 +116,37 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
                 ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
-                ->where('machines.status','!=','1111')    
-                //->where('errorlogs.type','!=','0')
+                ->where('machines.status','!=','1111')  
+                ->where('errorlogs.status','=','1')
+                ->where('errorlogs.type','=', $type)
+                ->where('errorlogs.machine_id','=', $data)
+                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+            $machinelogs = $machinelogs->get()->toArray(); 
+         endif;
+        
+        //$data = array('data' => $machinelogs);
+        return $machinelogs;
+    }
+
+    public function error_reports_api()
+    {   
+        
+        $machinelogs = DB::table('machines')
+                ->select('errorlogs.created_at as date_created','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
+                        DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),'errorlogs.type as errortype','errorlogs.error as error',
+                        'sites.site_name as site_name')
+                /*->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
+                        , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
+                        , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
+                        ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
+                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date'
+                        ,DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))*/
+                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                ->leftJoin('state', 'sites.state', '=', 'state.id')      
+                ->where('machines.status','!=','1111')  
                 ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','!=','4');    
                
@@ -174,7 +172,7 @@ class MachineErrorReportController extends Controller
         endif;
         
         $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'. 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
+        $machinelogs = $machinelogs->LIMIT('100')->get()->toArray(); 
         $data = array('data' => $machinelogs);
         return $data;
     }
@@ -215,7 +213,7 @@ class MachineErrorReportController extends Controller
                 ->where('errorlogs.status','=','2')
                 ->where('errorlogs.type','!=','4');    
                
-        echo $dateCheck = Input::get('dateRange');         
+        $dateCheck = Input::get('dateRange');         
         $from = $to = '';        
         
         if($dateCheck !=''):
@@ -276,7 +274,7 @@ class MachineErrorReportController extends Controller
         
     }
       
-    public function statusCount($type){
+   /* public function statusCount($type){
 
         $statusCount = DB::table('machines')
             ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
@@ -301,56 +299,12 @@ class MachineErrorReportController extends Controller
         }
         
         return $statusCount;
-    }
+    }*/
     
-    public function statusCount2($type){
-        
-        $today = date("Y-m-d");
-        $errorlogs_query = DB::table('machines')
-                ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
-                        , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
-                        , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
-                        ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
-                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date'
-                        ,DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))
-                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                ->leftJoin('state', 'sites.state', '=', 'state.id')  
-                ->where('machines.status','!=','1111')  
-                ->where('errorlogs.status','=','1')
-                ->where('errorlogs.type','=', $type)
-                ->where('errorlogs.type','!=','4')
-                ->whereDate('errorlogs.created_at', '=', Carbon::today())
-                //->where('errorlogs.created_at', 'like', '%'.$today.'%')                
-                ->get();
-        /*$errorlogs_query = DB::table('errorlogs')
-            ->select('errorlogs.*')
-            ->where('created_at', 'like', '%'.$today.'%')
-            ->where('status','=','1')
-            ->where('type',$type)
-            ->get();*/
-       
-        $total = count($errorlogs_query);
-        return $total;
-    }
-    
-    public function totalError($type){         
-        $statusCount = $this->statusCount($type);
-        $error = $statusCount->where('type','=','1')->count(); 
-        //echo $this->statusCount2(1);       
-        return $this->statusCount2(1);
-    }
-    public function totalWarning($type){        
-        $statusCount = $this->statusCount($type);
-        $warning = $statusCount->where('type','=','2')->count(); 
-        return $this->statusCount2(2);
-    }
-    public function totalNotice($type){        
-        $statusCount = $this->statusCount($type);
-        $notice = $statusCount->where('type','=','3')->count(); 
-        return $this->statusCount2(3);
+    public function statusCount2($type){        
+        $today = date("Y-m-d");        
+        $errorlogs_query = Errorlogs::where('created_at', 'like', '%'.$today.'%')->where('status','=','1')->where('type',$type)->count();
+        return $errorlogs_query;
     }
     
     public function machinesCount(){       
