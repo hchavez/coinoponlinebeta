@@ -227,7 +227,7 @@ class MachineErrorReportController extends Controller
         if(!empty($dateCheck)):            
             $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
                 $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-            })->orderBy('errorlogs.created_at','desc'); 
+            })->orderBy('errorlogs.status','ASC'); 
         else:
             $machinelogs = $machinelogs->where(function($query){                    
                 $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
