@@ -155,6 +155,12 @@
                                       elseif($error->type == '2'): $errortype = 'Warning'; $color = '#f2a654';
                                       else: $errortype = 'Notice'; $color = '#57c7d4';
                                       endif;
+
+                                      if( strpos( $error->error, '_') !== false): $errormsg = str_replace('_','-', $error->error);
+                                      else: $errormsg = str_replace(' ','-', $error->error);
+                                      endif;
+                                      $idname = $machines->machine_id.'_'.$error->type.'_'.$errormsg;
+                                     
                                       ?>                                      
                                       <tr>
                                         <td><?php echo date("d/m/Y"); ?></td>
@@ -164,7 +170,7 @@
                                         <td style="color:<?php echo $color; ?>"><?php echo $errortype; ?></td>
                                         <td><?php echo $error->error; ?></td>                                        
                                         <td><?php echo $machines->site; ?></td>
-                                        <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>">View Errors</a></td>
+                                        <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" data-error-type="<?php echo $errormsg; ?>">View Errors</a></td>
                                       </tr>
                                     <?php endif; ?>
                                     @endforeach
@@ -278,11 +284,12 @@ $(document).ready(function() {
         var idsplit = values.split("_");
         var id = idsplit[1];
         var type = idsplit[2];
-        console.log(id);
+        var errmsg = $(this).attr("data-error-type");
+        console.log(errmsg);
         $.ajax({
           url: url+'get_errorlist',
           type: "GET",
-          data: {id: id, type: type },
+          data: {id: id, type: type, errmsg: errmsg },
           dataType: 'json',
           beforeSend: function(){  
             $(values+' #loader').html('<img src="'+url+'/global/photos/pacman.gif" style="text-align:center;width:60px"> Preparing reports');
@@ -323,7 +330,7 @@ $(document).ready(function() {
           }
         });
 
-      });
+    });
    
     var rows = document.getElementById('machineErrorReport').rows,
         len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
