@@ -5,14 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>CoinOp Online</title>
+        <title>CoinOp Online Version1</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
         <style>
-            html, body {
+            html, body { 
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;

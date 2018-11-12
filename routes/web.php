@@ -275,7 +275,6 @@ Route::get('machinegraphdata/{id}', 'MachineManagementController@machinegraphdat
 
 Route::resource('machine-reports', 'MachineReportsController');
 
-
 /**********************************************************************************/
 Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
     
