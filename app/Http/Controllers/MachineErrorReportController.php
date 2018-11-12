@@ -49,10 +49,7 @@ class MachineErrorReportController extends Controller
         $pass_data = array(
             'online' => $online,
             'offline' => $offline,
-            'total' => $ttlMachines,
-            'error' => $this->statusCount2(1),
-            'warning' => $this->statusCount2(2),
-            'notice' => $this->statusCount2(3),
+            'total' => $ttlMachines,           
             'logs' => $this->errorlogs()     
         );
       
@@ -97,7 +94,7 @@ class MachineErrorReportController extends Controller
         return $logs;
     }
     
-     public function get_errorlist()
+    public function get_errorlist()
     {           
         
         $check = Input::get('id'); 
@@ -105,6 +102,7 @@ class MachineErrorReportController extends Controller
          if($check !=''):
             $data= $_GET['id'];
             $type= $_GET['type'];
+            $errmsg= '%'.str_replace('-', ' ', $_GET['errmsg']).'%';
             $machinelogs = DB::table('machines')
                 ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
@@ -121,6 +119,7 @@ class MachineErrorReportController extends Controller
                 ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','=', $type)
                 ->where('errorlogs.machine_id','=', $data)
+                ->where('errorlogs.error','like',$errmsg)
                 ->whereDate('errorlogs.created_at', '=', Carbon::today());    
             $machinelogs = $machinelogs->get()->toArray(); 
          endif;
@@ -128,56 +127,6 @@ class MachineErrorReportController extends Controller
         //$data = array('data' => $machinelogs);
         return $machinelogs;
     }
-
-    public function error_reports_api()
-    {   
-        
-        $machinelogs = DB::table('machines')
-                ->select('errorlogs.created_at as date_created','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
-                        DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),'errorlogs.type as errortype','errorlogs.error as error',
-                        'sites.site_name as site_name')
-                /*->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
-                        , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
-                        , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
-                        ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
-                        ,'errorlogs.resolve_by as resolve_by','errorlogs.resolve_date as resolve_date'
-                        ,DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))*/
-                ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-                ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                ->leftJoin('state', 'sites.state', '=', 'state.id')      
-                ->where('machines.status','!=','1111')  
-                ->where('errorlogs.status','=','1')
-                ->where('errorlogs.type','!=','4');    
-               
-        $dateCheck = Input::get('dateRange');         
-        $from = $to = '';        
-        
-        if($dateCheck !=''):
-            $explode = explode('-',$dateCheck);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.strtotime('-1 day', strtotime($explode_from[0])).'-'.$explode_from[1]);           
-            $to = date('Y-m-d', strtotime($explode[1]));
-        endif;
-        //echo $from.'-'.$to;
-        if(!empty($dateCheck)):            
-            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-            })->orderBy('errorlogs.created_at','desc'); 
-        else:
-            $machinelogs = $machinelogs->where(function($query){                    
-                $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
-            }); 
-        endif;
-        
-        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'. 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-        $machinelogs = $machinelogs->LIMIT('100')->get()->toArray(); 
-        $data = array('data' => $machinelogs);
-        return $data;
-    }
-    
     
     public function permission($id)
     {                
