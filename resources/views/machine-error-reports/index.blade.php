@@ -57,7 +57,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['notice']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b id="total_notice"></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-cyan-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -72,7 +72,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['warning']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b id="total_warning"></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-orange-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -87,7 +87,7 @@
     <div class="col-lg-2"><!-- Card -->        
         <div class="card card-block p-30">
           <div class="counter counter-md text-left">            
-            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b><?php echo $data['error']; ?></b></h1></div>
+            <div class="counter-number-group mb-10 text-center"><h1 class="counter-number"><b id="total_error"></b></h1></div>
             <div class="counter-label">
               <div class="progress progress-xs mb-10">
                 <div class="progress-bar progress-bar-info bg-red-600" aria-valuenow="70.3" aria-valuemin="0" aria-valuemax="100" style="width: 100%" role="progressbar"></div>
@@ -325,6 +325,30 @@ $(document).ready(function() {
 
       });
    
+    var rows = document.getElementById('machineErrorReport').rows,
+        len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
+
+    for (i = 0; i < len; i++) {
+        cell = rows[i].cells[cellNum];
+        if (cell.innerHTML === 'Needs immediate Attention') {
+            errorcount++;
+        }
+        if (cell.innerHTML === 'Notice') {
+            noticecount++;
+        }
+        if (cell.innerHTML === 'Warning') {
+            warningcount++;
+        }
+        else if(i === (len - 1)) {
+            cell.innerHTML = errorcount;
+            cell.innerHTML = noticecount;
+            cell.innerHTML = warningcount;
+        }
+    }   
+    $('#total_error').html(errorcount);
+    $('#total_notice').html(noticecount);
+    $('#total_warning').html(warningcount);
+
 } );
 </script>
 

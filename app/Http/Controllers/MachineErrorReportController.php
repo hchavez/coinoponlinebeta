@@ -49,10 +49,7 @@ class MachineErrorReportController extends Controller
         $pass_data = array(
             'online' => $online,
             'offline' => $offline,
-            'total' => $ttlMachines,
-            'error' => $this->statusCount2(1),
-            'warning' => $this->statusCount2(2),
-            'notice' => $this->statusCount2(3),
+            'total' => $ttlMachines,           
             'logs' => $this->errorlogs()     
         );
       
