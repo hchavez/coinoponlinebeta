@@ -65,7 +65,8 @@ class MachineErrorReportController extends Controller
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type'))
                     ->whereDate('created_at', '=', Carbon::today())
-                    ->where('status','=','1')
+                    //->where('status','=','1')
+                    ->where('type','=','1')
                     ->get()->toArray(); 
 
         $mids = '';        
@@ -273,6 +274,51 @@ class MachineErrorReportController extends Controller
         return view('machine-error-reports/history', ['data'=>$data]);
         
     }
+
+    public function statusCount($type){
+
+        $statusCount = DB::table('machines')
+            ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
+                    'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
+                    'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
+                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
+                    'machines.comments as comments','errorlogs.log_id as log_id',
+                    'errorlogs.error as error','errorlogs.type as errortype',
+                    'errorlogs.created_at as date_created','errorlogs.id as error_id')
+            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+            ->leftJoin('state', 'sites.state', '=', 'state.id');
+
+        if($type=='1'){ 
+            $statusCount = $statusCount->where('errorlogs.status','=','2'); 
+        }
+        else{ 
+            $statusCount = $statusCount->where('errorlogs.status','!=','2'); 
+            $statusCount = $statusCount->whereDate('errorlogs.created_at', '=', Carbon::today());
+        }
+        
+        return $statusCount;
+    }
+
+     public function totalError($type){         
+        $statusCount = $this->statusCount($type);
+        $error = $statusCount->where('type','=','1')->count(); 
+        //echo $this->statusCount2(1);       
+        return $this->statusCount2(1);
+    }
+    public function totalWarning($type){        
+        $statusCount = $this->statusCount($type);
+        $warning = $statusCount->where('type','=','2')->count(); 
+        return $this->statusCount2(2);
+    }
+    public function totalNotice($type){        
+        $statusCount = $this->statusCount($type);
+        $notice = $statusCount->where('type','=','3')->count(); 
+        return $this->statusCount2(3);
+    }
+
       
    /* public function statusCount($type){
 
