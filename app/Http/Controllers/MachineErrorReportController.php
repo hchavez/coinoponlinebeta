@@ -143,11 +143,64 @@ class MachineErrorReportController extends Controller
         $permitDetails = array('userDetails' => $userDetails, 'userRole' => $userRole, 'permit' => $permit);        
         return $permitDetails;
     }
-   
-    public function history_api()
+        
+    public function history()
+    {       
+        
+        $pass_data = array(         
+            'logs' => $this->errorlogs_history()     
+        );
+      
+        return view('machine-error-reports/history', [ 'data' => $pass_data ]);   
+    }
+
+    public function errorlogs_history()
     {
-        $machinelogs = DB::table('machines')
-                ->select('machines.*', 'errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
+        $today = date("Y-m-d"); 
+        $data = DB::table('errorlogs')
+                    ->select(DB::raw('distinct machine_id, error, type, resolve_by'))
+                    ->whereDate('created_at', '=', Carbon::today())
+                    ->where('status','=','2')
+                    ->get()->toArray(); 
+
+        $mids = '';        
+        foreach($data as $logs){            
+            $mids .=$logs->machine_id.",";
+        }
+       
+        $explode = explode(',',$mids);       
+        $machines = DB::table('machines')
+                    ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
+                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
+                            'sites.site_name as site')                   
+                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                    ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
+                    ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                    ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
+                    ->whereIn('machines.status', ['1','0'])
+                    ->whereIn('machines.id', $explode)
+                    ->whereDate('machine_reports.last_played', '=', Carbon::today())
+                    ->get();
+
+        $logs = array(
+            'errors' => $data,
+            'machines' => $machines
+        );
+        return $logs;
+    }
+    public function get_errorlist_history()
+    {           
+        
+        $check = Input::get('id'); 
+        $machinelogs = '';
+         if($check !=''):
+            $data= $_GET['id'];
+            $type= $_GET['type'];
+            $errmsg= '%'.str_replace('-', ' ', $_GET['errmsg']).'%';
+            $machinelogs = DB::table('machines')
+                ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
                         , 'machine_types.machine_type as machine_type', 'machines.machine_serial_no as serial_no', 'machines.id as machine_id'
                         ,'machines.comments as comments', 'errorlogs.log_id as log_id', 'errorlogs.error as error', 'errorlogs.type as errortype', 'errorlogs.id as error_id'
@@ -160,95 +213,16 @@ class MachineErrorReportController extends Controller
                 ->leftJoin('state', 'sites.state', '=', 'state.id')      
                 ->where('machines.status','!=','1111')  
                 ->where('errorlogs.status','=','2')
-                ->where('errorlogs.type','!=','4');    
-               
-        $dateCheck = Input::get('dateRange');         
-        $from = $to = '';        
+                ->where('errorlogs.type','=', $type)
+                ->where('errorlogs.machine_id','=', $data)
+                ->where('errorlogs.error','like',$errmsg)
+                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+            $machinelogs = $machinelogs->get()->toArray(); 
+         endif;
         
-        if($dateCheck !=''):
-            $explode = explode('-',$dateCheck);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.strtotime('-1 day', strtotime($explode_from[0])).'-'.$explode_from[1]);           
-            $to = date('Y-m-d', strtotime($explode[1]));
-        endif;
-        
-        if(!empty($dateCheck)):            
-            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-            })->orderBy('errorlogs.status','ASC'); 
-        else:
-            $machinelogs = $machinelogs->where(function($query){                    
-                $query->whereDate('errorlogs.created_at', '=', Carbon::today());          
-            }); 
-        endif;
-        
-        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id, sites.site_name, sites.street, sites.suburb, state.state_code, machine_models.machine_model,'
-                            . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id,errorlogs.resolve_by, errorlogs.resolve_date'));        
-        $machinelogs = $machinelogs->LIMIT('2000')->get()->toArray(); 
-        $data = array('data' => $machinelogs);
-        return $data;
+        //$data = array('data' => $machinelogs);
+        return $machinelogs;
     }
-    
-    public function error_reports_api_history()
-    {     
-        $today = date("Y-m-d H:i:s");
-        $todate = date("Y-m-d");
-        $days_ago = date('Y-m-d', strtotime('-1 days', strtotime($today)));
-        $machine = DB::table('errorlogs')
-                    ->select(DB::raw("distinct machine_id, machines.comments, errorlogs.error, machine_models.machine_model as machine_model, 
-                        machine_types.machine_type as machine_type, sites.site_name as site_name, sites.street as street, sites.suburb as suburb, 
-                        errorlogs.resolve_date as resolve_date, errorlogs.resolve_by as resolve_by, state.state_code as statecode, errorlogs.type as errortype, 
-                        CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"))
-                    ->leftJoin('machines', 'errorlogs.machine_id', '=', 'machines.id')
-                    ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                    ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                    ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                    ->leftJoin('state', 'sites.state', '=', 'state.id')                        
-                    ->where('errorlogs.created_at','like','%'.$todate.'%')
-                    ->where('errorlogs.status','=','2')
-                    ->where('errorlogs.type','!=','4')                    
-                    ->get()->toArray();          
-        
-        $data = array('data' => $machine);
-        return $data;
-    }
-    
-    
-    public function history()
-    {       
-        $data = $this->history_api();                    
-          
-        return view('machine-error-reports/history', ['data'=>$data]);
-        
-    }
-      
-   /* public function statusCount($type){
-
-        $statusCount = DB::table('machines')
-            ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
-                    'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
-                    'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
-                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
-                    'machines.comments as comments','errorlogs.log_id as log_id',
-                    'errorlogs.error as error','errorlogs.type as errortype',
-                    'errorlogs.created_at as date_created','errorlogs.id as error_id')
-            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
-            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-            ->leftJoin('state', 'sites.state', '=', 'state.id');
-
-        if($type=='1'){ 
-            $statusCount = $statusCount->where('errorlogs.status','=','2'); 
-        }
-        else{ 
-            $statusCount = $statusCount->where('errorlogs.status','!=','2'); 
-            $statusCount = $statusCount->whereDate('errorlogs.created_at', '=', Carbon::today());
-        }
-        
-        return $statusCount;
-    }*/
     
     public function statusCount2($type){        
         $today = date("Y-m-d");        
