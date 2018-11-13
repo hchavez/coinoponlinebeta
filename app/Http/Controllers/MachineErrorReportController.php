@@ -50,7 +50,10 @@ class MachineErrorReportController extends Controller
             'online' => $online,
             'offline' => $offline,
             'total' => $ttlMachines,           
-            'logs' => $this->errorlogs()     
+            'logs' => $this->errorlogs(),
+            'totalOnline' => $this->onlineMachineLists(),
+            'totalOffline' => $this->offlineMachineLists(),
+            'totalMachine' => $this->totalMachineLists()    
         );
       
         return view('machine-error-reports/index', [ 'data' => $pass_data, 'permit' => $var['permit'] ]);        
@@ -267,38 +270,7 @@ class MachineErrorReportController extends Controller
         return $machineLists;
     }
     
-    function offlineMachineLists(){
-        //$machineList = $this->machinesOnlyLists();
-
-        $machineLists = DB::table('machines')
-                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
-                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'route.route as route', 'area.area as area', 'sites.state as state'
-                                , 'machine_status.updated_at as lastlog', 'sites.site_name as site')
-                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
-                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
-                        ->leftJoin('machine_status', 'machines.id', '=', 'machine_status.machine_id')
-                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
-                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
-                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
-                        ->where('machines.status','0')->orderBy('machines.updated_at','desc')->get(); 
-
-        //$lists = $machineList->where('machines.status','=','0')->orderBy('updated_at','desc')->get(); 
-        return $machineLists;
-    }
-    function onlineMachineLists(){
-        $machineList = $this->machinesOnlyLists();
-        $online = $machineList->where('machines.status','=','1')->orderBy('updated_at','desc')->get(); 
-        return $online;
-    }
-    function totalMachineLists(){
-        $machineList = $this->machinesOnlyLists();
-        $online = $machineList->where('machines.status','=','1')
-               // ->where('machine_reports.last_played','!=','null')
-                ->orWhere('machines.status','=','0')                
-                ->orderBy('updated_at','desc')->get(); 
-        return $online;
-    }
+   
     /**
      * This will update status once machine is fixed.
      *
@@ -539,7 +511,86 @@ class MachineErrorReportController extends Controller
 
             return view('machine-error-reports/advam', ['machines' => $machines, 'data'=>$data, 'start' => $from,'end' => $to, 'permit' => $var['permit'], 'machinelogsgroup' => $machinelogsgroup ,'model'=>$machineModel,'machine_type'=>$machineType, 'site'=>$site , 'online'=>$online, 'offline'=>$offline,'wh'=>$wh, 'total'=>$totalStatus, 'ttlMachines'=>$ttlMachines, 'offlineList'=>$offlineLists, 'onlineLists' => $onlineLists, 'totalLists'=>$totalLists, 'userID'=>$currerntUserRole]);
 
-    }    
+    }
+    
+ 
+
+    function offlineMachineLists(){
+        //$machineList = $this->machinesOnlyLists();
+
+        $machineLists = DB::table('machines')
+                        ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
+                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
+                                , 'route.route as route', 'area.area as area', 'sites.state as state'
+                                , 'machine_status.updated_at as lastlog', 'sites.site_name as site')
+                        ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+                        ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+                        ->leftJoin('machine_status', 'machines.id', '=', 'machine_status.machine_id')
+                        ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+                        ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('area', 'sites.area_id', '=', 'area.id')
+                        ->where('machines.status','0')->orderBy('machines.updated_at','desc')->get(); 
+
+        //$lists = $machineList->where('machines.status','=','0')->orderBy('updated_at','desc')->get(); 
+        return $machineLists;
+    }
+    function onlineMachineLists(){
+        $machineList = $this->machinesOnlyLists();
+        $online = $machineList->where('machines.status','=','1')->orderBy('updated_at','desc')->get(); 
+        return $online;
+    }
+    function totalMachineLists(){
+        $machineList = $this->machinesOnlyLists();
+        $online = $machineList->where('machines.status','=','1')
+               // ->where('machine_reports.last_played','!=','null')
+                ->orWhere('machines.status','=','0')                
+                ->orderBy('updated_at','desc')->get(); 
+        return $online;
+    }
+
+    public function totalError($type){         
+        $statusCount = $this->statusCount($type);
+        $error = $statusCount->where('type','=','1')->count(); 
+        //echo $this->statusCount2(1);       
+        return $this->statusCount2(1);
+    }
+    public function totalWarning($type){        
+        $statusCount = $this->statusCount($type);
+        $warning = $statusCount->where('type','=','2')->count(); 
+        return $this->statusCount2(2);
+    }
+    public function totalNotice($type){        
+        $statusCount = $this->statusCount($type);
+        $notice = $statusCount->where('type','=','3')->count(); 
+        return $this->statusCount2(3);
+    }
+
+    public function statusCount($type){
+
+        $statusCount = DB::table('machines')
+            ->select('machines.*','errorlogs.id as error_id','sites.site_name as site_name',
+                    'sites.street as street','sites.suburb as suburb','state.state_code as statecode',
+                    'machine_models.machine_model as machine_model','machine_types.machine_type as machine_type',
+                     'machines.machine_serial_no as serial_no','machines.id as machine_id',
+                    'machines.comments as comments','errorlogs.log_id as log_id',
+                    'errorlogs.error as error','errorlogs.type as errortype',
+                    'errorlogs.created_at as date_created','errorlogs.id as error_id')
+            ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
+            ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
+            ->leftJoin('errorlogs', 'machines.id', '=', 'errorlogs.machine_id')
+            ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
+            ->leftJoin('state', 'sites.state', '=', 'state.id');
+
+        if($type=='1'){ 
+            $statusCount = $statusCount->where('errorlogs.status','=','2'); 
+        }
+        else{ 
+            $statusCount = $statusCount->where('errorlogs.status','!=','2'); 
+            $statusCount = $statusCount->whereDate('errorlogs.created_at', '=', Carbon::today());
+        }
+        
+        return $statusCount;
+    }
     
     /**
      * Show the form for creating a new resource.

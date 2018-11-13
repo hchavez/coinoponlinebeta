@@ -32,7 +32,7 @@
               </div>
               <div class="counter counter-sm text-left">
                 <div class="counter-number-group"><span class="counter-icon red-600 mr-5"><i class="wb-graph-down"></i></span>
-                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".example-modal-lg" data-toggle="modal"><?php endif; ?>Machine Offline <?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
+                    <span class="counter-number-related"><?php if($permit['read']): ?><a href="" data-target=".example-modal-lg-off" data-toggle="modal"><?php endif; ?>Machine Offline <?php if($permit['read']): ?></a><?php endif; ?></span>          </div>
               </div>
             </div>
           </div>
@@ -228,6 +228,95 @@
   @endforeach
 @endforeach
 
+<div class="modal fade online-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <tbody>
+              @foreach ($data['totalOnline'] as $lists)                      
+                <tr>                            
+                    <td width="5%"><i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
+                    <td style="width:30% !important;">{{ $lists->site }}</td>      
+                    <td>{{ $lists->area }}</td>                                   
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade example-modal-lg-off" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Offline Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th>Serial</th><th>Site</th><th>Area</th><th>Error</th><th>Lastlog</th></tr></thead>
+            <tbody>
+              @foreach ($data['totalOffline'] as $lists)                      
+                <tr>                            
+                    <!--<td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td> -->
+                    <td width="23%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
+                    <td width="20%">{{ $lists->site }}</td>      
+                    <td width="15%">{{ $lists->area }}</td>   
+                    <td width="20%">Machine Offline</td>   
+                    <td width="23=0%"> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td>   
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade total-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="exampleOptionalLarge">Online Machine</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead><tr><th></th><th>State</th><th>Model</th><th>Serial</th><th>Site</th><th>Area</th></tr></thead>
+            <tbody>
+              @foreach ($data['totalMachine'] as $lists)                      
+                <tr>                            
+                    <td width="5%">
+                        <?php if($lists->status =='1'){ ?>
+                        <i class="icon wb-check-circle ml-10 green-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
+                        <?php }else{ ?>
+                        <i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i>
+                        <?php } ?>
+                    </td> 
+                    <td width="9%">{{ $lists->state }}</td>
+                    <td width="25%">{{ $lists->machine_model }}</td>
+                    <td width="20%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
+                    <td style="width:30% !important;">{{ $lists->site }}</td>      
+                    <td>{{ $lists->area }}</td>                                  
+                </tr>                          
+              @endforeach   
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
 <?php //print_r($data); ?>
 <!-- MODAL MUST END HERE -->
 </div>
