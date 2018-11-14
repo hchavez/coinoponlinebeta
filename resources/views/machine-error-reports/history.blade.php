@@ -33,7 +33,7 @@
                                 </div>
                            </form-->
                                
-                            <table class="table table-hover" id="machineErrorReport">                                    
+                            <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>
                                     <tr role="row">        
                                         <th>Date Time</th>
@@ -139,6 +139,7 @@
 <!-- MODAL MUST END HERE -->
 </div>
 <style type="text/css">
+.select2-container{width:100% !important;}
 .machines-modal{max-width:1500px;max-height: 450px;}
 .table-container {
     height: 10em;
@@ -178,12 +179,44 @@ $(document).ready(function() {
         var url = 'https://www.ascentri.com/';
     }
 
+    setTimeout(function(){
+      $('.table_label select').each(function(i) {
+          var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Resolve By','View'];
+          $(this).attr('id', 'filter'+(i+1));        
+          $("#filter" + (i+1)).select2({
+              placeholder: label[i]
+          });        
+      }); 
+    }, 3000);
+
     $('#machineErrorReport').DataTable({
       scrollY:        400,
       bScrollInfinite: true,
       bScrollCollapse: true,
       order: [[ 4, "asc" ]],
-      paging: false
+      paging: false,
+      dom: 'Bfrtip',
+      buttons: ['excel'],
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.header()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
     });
 
     $("a.viewerrorclass").click(function(evt){
