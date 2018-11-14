@@ -66,7 +66,6 @@ class MachineErrorReportController extends Controller
                     ->select(DB::raw('distinct machine_id, error, type'))
                     ->whereDate('created_at', '=', Carbon::today())
                     ->where('status','=','1')
-                    ->where('type','=','1')
                     ->get()->toArray(); 
 
         $mids = '';        
