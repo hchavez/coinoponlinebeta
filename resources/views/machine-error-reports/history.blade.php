@@ -141,9 +141,9 @@
 <style type="text/css">
 .select2-container{width:100% !important;}
 .machines-modal{max-width:1500px;max-height: 450px;}
-.table-container {
-    height: 10em;
-}
+.ladda-button{margin-top:10px;}
+.dt-buttons{top:1em !important;position: inherit !important;}
+.table-container {height: 10em;}
 table#errorlistlogs {
     display: flex;
     flex-flow: column;
