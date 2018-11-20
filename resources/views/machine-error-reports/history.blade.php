@@ -274,7 +274,7 @@ $(document).ready(function() {
 
     });
    
-    var rows = document.getElementById('machineErrorReport').rows,
+   /* var rows = document.getElementById('machineErrorReport').rows,
         len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
 
     for (i = 0; i < len; i++) {
@@ -296,7 +296,7 @@ $(document).ready(function() {
     }   
     $('#total_error').html(errorcount);
     $('#total_notice').html(noticecount);
-    $('#total_warning').html(warningcount);
+    $('#total_warning').html(warningcount);*/
 
 } );
 </script>

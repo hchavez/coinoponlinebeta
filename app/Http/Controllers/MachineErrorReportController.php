@@ -159,10 +159,13 @@ class MachineErrorReportController extends Controller
 
     public function errorlogs_history()
     {
-        $today = date("Y-m-d"); 
+        $today = date("Y-m-d");        
+        $newdate = strtotime ( '-1 day' , strtotime ( $today ) ) ;
+        $newdate = date ( 'Y-m-d' , $newdate );
+
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by'))
-                    ->whereDate('created_at', '=', Carbon::today())
+                    ->whereDate('created_at', '=', $newdate)
                     ->where('status','=','2')
                     ->get()->toArray(); 
 

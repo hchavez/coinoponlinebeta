@@ -139,13 +139,15 @@
                                         <th>Error Type</th>
                                         <th>Error Message</th>
                                         <th>Site</th>
-                                        <th>View Errors</th>
+                                        <th>View</th>
                                        </tr> 
                                 </thead> 
-                                <?php //print_r($data['logs']);
-                                //echo count($data['logs']['errors']);
-                                //echo '-'.count($data['logs']['machines']);
-                                 ?>
+                                <?php 
+                                /*use App\Http\Controllers\MachineErrorReportController;
+                                $array = array('id'=>'107','type'=>'1','errmsg'=>'Mornington Central');
+                                $res = counter($array);
+                                print_r($res);*/
+                                ?>
                                 <tbody class="table-section" data-plugin="tableSection" >
                                   @foreach ($data['logs']['errors'] as $error)
                                     @foreach ($data['logs']['machines'] as $machines)
@@ -219,7 +221,7 @@
         <h4 class="modal-title" id="exampleOptionalLarge">Resolve</h4>
       </div>
       <div class="modal-body" >
-
+        
       </div>
     </div>
   </div>
@@ -421,7 +423,7 @@ $(document).ready(function() {
             var html = '';
             var total = data.length;
             var error_id = '';
-            html += 'Total: '+total;
+            html += '<p><strong>Total: '+total+'</strong></p>';
             html += '<a href="#" data-toggle="modal" data-target="#myModal'+id+'_'+type+'" id="idmyModal'+id+'_'+type+'">';
             html += '<button type="button" class="btn btn-blue" style="float:right;">Update</button></a>';
             html += '<div class="checkbox-custom checkbox-primary" style="float:right;right: 3em;"><input type="checkbox" id="inputChecked" checked=""><label for="inputChecked">Resolve Error</label></div>'; 
