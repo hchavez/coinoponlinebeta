@@ -129,6 +129,24 @@ class MachineErrorReportController extends Controller
         //$data = array('data' => $machinelogs);
         return $machinelogs;
     }
+
+    public function counter()
+    {       
+        
+
+        $data= $_GET['id'];
+        $type= $_GET['type'];
+        $errmsg= '%'.str_replace('-', ' ', $_GET['errmsg']).'%';
+        $machinelogs = DB::table('errorlogs')
+                    ->select(DB::raw('machine_id'))
+                    ->whereDate('created_at', '=', Carbon::today())
+                    ->where('status','=','1')
+                    ->where('machine_id','=',$data) 
+                    ->where('error', '=', '%'.$errmsg.'%')
+                    ->count(); 
+       
+        return $machinelogs;
+    }
     
     public function permission($id)
     {                

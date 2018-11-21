@@ -121,13 +121,15 @@
                                   <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                               @endif
                           </div>
-                          <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
+                          
                            <div class="example">   
-                            <!--form role="form" method="GET" class="error-list-form" id="formFilter">                                
+                            <form role="form" method="GET" class="error-list-form" id="formFilter">                                
                                 <div class="col_date ky-columns ky_date">
-                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="">     
                                 </div>
-                           </form-->
+                            </form>
+                            <br>
+                            <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
                                
                             <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>
@@ -139,14 +141,13 @@
                                         <th>Error Type</th>
                                         <th>Error Message</th>
                                         <th>Site</th>
+                                        <th>Count</th>
                                         <th>View</th>
                                        </tr> 
                                 </thead> 
                                 <?php 
-                                /*use App\Http\Controllers\MachineErrorReportController;
-                                $array = array('id'=>'107','type'=>'1','errmsg'=>'Mornington Central');
-                                $res = counter($array);
-                                print_r($res);*/
+                                //$homepage = file_get_contents('http://localhost/coinoponlinebeta/public/get_errorlist?id=101&type=1&errmsg=card-LostInternet');
+                                //print_r($homepage);
                                 ?>
                                 <tbody class="table-section" data-plugin="tableSection" >
                                   @foreach ($data['logs']['errors'] as $error)
@@ -161,8 +162,7 @@
                                       if( strpos( $error->error, '_') !== false): $errormsg = str_replace('_','-', $error->error);
                                       else: $errormsg = str_replace(' ','-', $error->error);
                                       endif;
-                                      $idname = $machines->machine_id.'_'.$error->type.'_'.$errormsg;
-                                     
+                                      $idname = $machines->machine_id.'_'.$error->type.'_'.$errormsg;                                     
                                       ?>                                      
                                       <tr>
                                         <td><?php echo date("d/m/Y"); ?></td>
@@ -172,6 +172,7 @@
                                         <td style="color:<?php echo $color; ?>"><?php echo $errortype; ?></td>
                                         <td><?php echo $error->error; ?></td>                                        
                                         <td><?php echo $machines->site; ?></td>
+                                        <td class="clickedVal" id="<?php echo $idname; ?>"></td>
                                         <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" data-error-type="<?php echo $errormsg; ?>">View Errors</a></td>
                                       </tr>
                                     <?php endif; ?>
@@ -353,6 +354,8 @@ table#errorlistlogs tbody tr {
 }
 </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -365,13 +368,14 @@ $(document).ready(function() {
      
     setTimeout(function(){
       $('.table_label select').each(function(i) {
-          var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','View'];
+          var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Count','View'];
           $(this).attr('id', 'filter'+(i+1));        
           $("#filter" + (i+1)).select2({
               placeholder: label[i]
           });        
       }); 
     }, 3000);
+
     $('#machineErrorReport').DataTable({
       scrollY:        400,
       bScrollInfinite: true,
@@ -400,7 +404,7 @@ $(document).ready(function() {
                 } );
             } );
         }
-    });
+    });   
 
     $("a.viewerrorclass").click(function(evt){
         var values = $(this).attr("id");
@@ -447,7 +451,8 @@ $(document).ready(function() {
 
             var et_res = '#idmyModal'+id+'_'+type;
             $(et_res).click(function(){
-                $('#myModal'+id+'_'+type+' .modal-body').html('ID: '+id+'- TYPE:'+type);                                
+                $('#myModal'+id+'_'+type+' .modal-body').html('ID: '+id+'- TYPE:'+type);    
+                                                  
             });
 
           }
@@ -480,7 +485,38 @@ $(document).ready(function() {
     $('#total_warning').html(warningcount);
 
 
+    /*$('#machineErrorReport td.clickedVal').html('<img src="'+url+'/global/photos/load.gif">');
+    setTimeout(function(){
+      $('#machineErrorReport td.clickedVal').each(function() {
+          var values = $(this).attr('id');  
+          var idsplit = values.split("_");
+          var id = idsplit[0];
+          var type = idsplit[1];
+          var errmsg = idsplit[2];
+          //console.log(values); 
+          $.ajax({
+                url: url+'counter',
+                type: "GET",
+                data: {id: id, type: type, errmsg: errmsg },
+                success: function(data){   
+                var total = data.length;                  
+                $('#machineErrorReport td#'+values).html(data);                                    
+            },error: function(response){
+                $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
+            }
+        }); 
+      });
+    }, 10000);*/
+
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+
 });
+
 
 </script>
 
