@@ -123,9 +123,9 @@
                           </div>
                           
                            <div class="example">   
-                            <form role="form" method="GET" class="error-list-form" id="formFilter">                                
-                                <div class="col_date ky-columns ky_date">
-                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="">     
+                            <form  method="GET" class="error-list-form" id="formFilter">                                
+                                <div class="col_date ky-columns ky_date" style="width:15%;">
+                                    <input type="text" name="dateRange" id="dateRanger" class="form-control pull-left" placeholder="Search date range" >     
                                 </div>
                             </form>
                             <br>
@@ -148,8 +148,9 @@
                                 <?php 
                                 //$homepage = file_get_contents('http://localhost/coinoponlinebeta/public/get_errorlist?id=101&type=1&errmsg=card-LostInternet');
                                 //print_r($homepage);
+                                //print_r($data);
                                 ?>
-                                <tbody class="table-section" data-plugin="tableSection" >
+                                 <tbody class="table-section" data-plugin="tableSection" >
                                   @foreach ($data['logs']['errors'] as $error)
                                     @foreach ($data['logs']['machines'] as $machines)
                                     <?php  if($error->machine_id == $machines->machine_id): ?>
@@ -165,7 +166,7 @@
                                       $idname = $machines->machine_id.'_'.$error->type.'_'.$errormsg;                                     
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo date("d/m/Y"); ?></td>
+                                        <td><?php echo (!empty($_GET))? $data['fdate'] : date("d/m/Y"); ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
                                         <td><?php echo $machines->name_serial; ?></td>
@@ -178,7 +179,7 @@
                                     <?php endif; ?>
                                     @endforeach
                                   @endforeach
-                                </tbody>                              
+                                </tbody>                             
                                 
                                 <tfoot></tfoot>
                             </table>
@@ -460,6 +461,17 @@ $(document).ready(function() {
 
     });
    
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: true,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on("change",function(){
+        var selected = $(this).val();       
+        $( "#formFilter" ).submit();
+    });
+   
     var rows = document.getElementById('machineErrorReport').rows,
         len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
 
@@ -508,12 +520,7 @@ $(document).ready(function() {
       });
     }, 10000);*/
 
-    $('input[name="dateRange"]').daterangepicker({
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
+    
 
 });
 

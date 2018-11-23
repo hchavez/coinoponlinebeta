@@ -46,35 +46,64 @@ class MachineErrorReportController extends Controller
         $offline = Machine::where('status', '0')->count();
         $ttlMachines = $online + $offline; 
         
+        $today = date("Y-m-d");
+        $from = $to = $fdate = '';
+        if(!empty($_GET['dateRange'])){
+            //echo $_GET['dateRange'];
+            $filter = Input::get('dateRange');
+            $split = explode(' - ', $filter);        
+            $splitFrm = explode('/',$split[0]);
+            $splitTo = explode('/',$split[1]);
+            $fromdata = $splitFrm[2].'-'.$splitFrm[0].'-'.$splitFrm[1];
+            $todata = $splitTo[2].'-'.$splitTo[0].'-'.$splitTo[1];
+
+            $from = (!empty($fromdata))? $fromdata : $today;
+            $to = (!empty($todata))? $todata : $today;
+            $logs = $this->errorlogs($from, $to);
+            //print_r($logs);
+            $fdate = $from;
+        }else{
+            $logs = $this->errorlogs($from, $to);
+            $fdate = $today;
+        }
+
+       // $logs = $this->errorlogs($from, $to);
+        //print_r($logs);
         $pass_data = array(
             'online' => $online,
             'offline' => $offline,
             'total' => $ttlMachines,           
-            'logs' => $this->errorlogs(),
+            'logs' => $logs,
             'totalOnline' => $this->onlineMachineLists(),
             'totalOffline' => $this->offlineMachineLists(),
-            'totalMachine' => $this->totalMachineLists()    
+            'totalMachine' => $this->totalMachineLists(),
+            'fdate' => $fdate     
         );
       
         return view('machine-error-reports/index', [ 'data' => $pass_data, 'permit' => $var['permit'] ]);        
     }
 
-    public function errorlogs()
+    public function errorlogs($from, $to)
     {
-        $today = date("Y-m-d"); 
+        //$from = '2018-11-22';
+        //$to = Input::get('to');
+
+        $today = date("Y-m-d");         
+        $from = ($from != '')? $from : $today;
+
         $data = DB::table('errorlogs')
-                    ->select(DB::raw('distinct machine_id, error, type'))
-                    ->whereDate('created_at', '=', Carbon::today())
+                    ->select(DB::raw('distinct machine_id, error, type')) 
+                    ->where('created_at','like', '%'.$from.'%')                   
                     ->where('status','=','1')
-                    ->get()->toArray(); 
+                    ->get()->toArray();      
 
         $mids = '';        
         foreach($data as $logs){            
             $mids .=$logs->machine_id.",";
         }
        
-        $explode = explode(',',$mids);       
-        $machines = DB::table('machines')
+        $explode = explode(',',$mids);  
+         $machines = DB::table('machines')
                     ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
                             DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
                             'sites.site_name as site')                   
@@ -86,8 +115,8 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                     ->whereIn('machines.status', ['1','0'])
                     ->whereIn('machines.id', $explode)
-                    ->whereDate('machine_reports.last_played', '=', Carbon::today())
-                    ->get();
+                    ->where('machine_reports.last_played','like', '%'.$from.'%')
+                    ->limit(100)->get();   
 
         $logs = array(
             'errors' => $data,

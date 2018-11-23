@@ -420,6 +420,7 @@ Route::get('logActivity', 'ActivityController@logActivity');
 Route::resource('messages', 'MessagesController');
 Route::get('messages/log', 'MessagesController@log');
 
+Route::get('errorlogs', 'MachineErrorReportController@errorlogs');
 Route::get('counter', 'MachineErrorReportController@counter');
 Route::get('get_errorlist_history', 'MachineErrorReportController@get_errorlist_history');
 Route::get('get_errorlist', 'MachineErrorReportController@get_errorlist');
