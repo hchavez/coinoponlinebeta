@@ -206,23 +206,42 @@ class MachineErrorReportController extends Controller
 
     public function errorlogs_history()
     {
-        $today = date("Y-m-d");        
-        $newdate = strtotime ( '-1 day' , strtotime ( $today ) ) ;
-        $newdate = date ( 'Y-m-d' , $newdate );
 
+        $today = date("Y-m-d");    
+        //$date = "1998-08-14";
+        $newdate = strtotime ( '-3 day' , strtotime ( $today ) ) ;
+        $newdate = date ( 'Y-m-j' , $newdate );  
+        $from = $to = $fdate = '';
+        if(!empty($_GET['dateRange'])){
+            //echo $_GET['dateRange'];
+            $filter = Input::get('dateRange');
+            $split = explode(' - ', $filter);        
+            $splitFrm = explode('/',$split[0]);
+            $splitTo = explode('/',$split[1]);
+            $fromdata = $splitFrm[2].'-'.$splitFrm[0].'-'.$splitFrm[1];
+            $todata = $splitTo[2].'-'.$splitTo[0].'-'.$splitTo[1];
+
+            $from = (!empty($fromdata))? $fromdata : $newdate;
+            $to = (!empty($todata))? $todata : $newdate;            
+            $fdate = $from;
+        }else{            
+            $fdate = $newdate;
+        }   
+
+        $from = ($from != '')? $from : $newdate;
         $data = DB::table('errorlogs')
-                    ->select(DB::raw('distinct machine_id, error, type, resolve_by'))
-                    ->whereDate('created_at', '=', $newdate)
+                    ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
+                    ->whereDate('created_at','>=', $from)                   
                     ->where('status','=','2')
-                    ->get()->toArray(); 
+                    ->get()->toArray();      
 
         $mids = '';        
         foreach($data as $logs){            
             $mids .=$logs->machine_id.",";
         }
        
-        $explode = explode(',',$mids);       
-        $machines = DB::table('machines')
+        $explode = explode(',',$mids);  
+         $machines = DB::table('machines')
                     ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
                             DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
                             'sites.site_name as site')                   
@@ -234,14 +253,15 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                     ->whereIn('machines.status', ['1','0'])
                     ->whereIn('machines.id', $explode)
-                    ->whereDate('machine_reports.last_played', '=', Carbon::today())
-                    ->get();
+                    ->whereDate('machine_reports.last_played','>=', $from)
+                    ->limit(100)->get();   
 
         $logs = array(
             'errors' => $data,
             'machines' => $machines
         );
         return $logs;
+       
     }
     public function get_errorlist_history()
     {           

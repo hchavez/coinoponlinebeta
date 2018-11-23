@@ -25,13 +25,16 @@
                                   <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
                               @endif
                           </div>
-                          <a href="{{ url('machine-error-reports') }}"><button type="button" class="btn btn-default" style="float:left;" >Errorlogs</button></a>
+                          
                            <div class="example">   
-                            <!--form role="form" method="GET" class="error-list-form" id="formFilter">                                
-                                <div class="col_date ky-columns ky_date">
-                                    <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Search date range" autocomplete="off">     
+                            <form  method="GET" class="error-list-form" id="formFilter">                                
+                                <div class="col_date ky-columns ky_date" style="width:15%;">
+                                    <input type="text" name="dateRange" id="dateRanger" class="form-control pull-left" placeholder="Search date range" >     
                                 </div>
-                           </form-->
+                            </form>
+                            <br>
+                            <a href="{{ url('machine-error-reports') }}"><button type="button" class="btn btn-default" style="float:left;" >Errorlogs</button></a>
+                              
                                
                             <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>
@@ -169,6 +172,8 @@ table#errorlistlogs tbody tr {
 }
 </style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -272,6 +277,17 @@ $(document).ready(function() {
           }
         });
 
+    });
+
+    $('input[name="dateRange"]').daterangepicker({
+        autoUpdateInput: true,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="dateRange"]').on("change",function(){
+        var selected = $(this).val();       
+        $( "#formFilter" ).submit();
     });
    
    /* var rows = document.getElementById('machineErrorReport').rows,
