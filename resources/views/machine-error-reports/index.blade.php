@@ -123,11 +123,11 @@
                           </div>
                           
                            <div class="example">   
-                            <form  method="GET" class="error-list-form" id="formFilter">                                
+                            <!--form  method="GET" class="error-list-form" id="formFilter">                                
                                 <div class="col_date ky-columns ky_date" style="width:15%;">
                                     <input type="text" name="dateRange" id="dateRanger" class="form-control pull-left" placeholder="Search date range" >     
                                 </div>
-                            </form>
+                            </form-->
                             <br>
                             <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
                                

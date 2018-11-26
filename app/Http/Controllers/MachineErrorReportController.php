@@ -95,7 +95,8 @@ class MachineErrorReportController extends Controller
                     ->select(DB::raw('distinct machine_id, error, type')) 
                     ->where('created_at','like', '%'.$from.'%')    
                     ->where('status','=','1')
-                    ->where('type','!=','4')
+                    //->where('type','!=','4')
+                    ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
 
         $mids = '';        
@@ -210,7 +211,7 @@ class MachineErrorReportController extends Controller
 
         $today = date("Y-m-d");    
         //$date = "1998-08-14";
-        $newdate = strtotime ( '-3 day' , strtotime ( $today ) ) ;
+        $newdate = strtotime ( '-10 day' , strtotime ( $today ) ) ;
         $newdate = date ( 'Y-m-j' , $newdate );  
         $from = $to = $fdate = '';
         if(!empty($_GET['dateRange'])){
@@ -234,7 +235,7 @@ class MachineErrorReportController extends Controller
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
                     ->whereDate('created_at','>=', $from)                   
                     ->where('status','=','2')
-                    ->where('type','!=','4')
+                    ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
 
         $mids = '';        
