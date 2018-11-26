@@ -93,8 +93,9 @@ class MachineErrorReportController extends Controller
 
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type')) 
-                    ->where('created_at','like', '%'.$from.'%')                   
+                    ->where('created_at','like', '%'.$from.'%')    
                     ->where('status','=','1')
+                    ->where('type','!=','4')
                     ->get()->toArray();      
 
         $mids = '';        
@@ -233,6 +234,7 @@ class MachineErrorReportController extends Controller
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
                     ->whereDate('created_at','>=', $from)                   
                     ->where('status','=','2')
+                    ->where('type','!=','4')
                     ->get()->toArray();      
 
         $mids = '';        
