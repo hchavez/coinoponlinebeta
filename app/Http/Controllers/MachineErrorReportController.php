@@ -117,7 +117,7 @@ class MachineErrorReportController extends Controller
                     ->whereIn('machines.status', ['1','0'])
                     ->whereIn('machines.id', $explode)
                     ->where('machine_reports.last_played','like', '%'.$from.'%')
-                    ->limit(100)->get();   
+                    ->get();   
 
         $logs = array(
             'errors' => $data,
@@ -211,7 +211,7 @@ class MachineErrorReportController extends Controller
 
         $today = date("Y-m-d");    
         //$date = "1998-08-14";
-        $newdate = strtotime ( '-10 day' , strtotime ( $today ) ) ;
+        $newdate = strtotime ( '-5 day' , strtotime ( $today ) ) ;
         $newdate = date ( 'Y-m-j' , $newdate );  
         $from = $to = $fdate = '';
         if(!empty($_GET['dateRange'])){
@@ -229,13 +229,13 @@ class MachineErrorReportController extends Controller
         }else{            
             $fdate = $newdate;
         }   
-
+        $fdate;
         $from = ($from != '')? $from : $newdate;
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
-                    ->whereDate('created_at','>=', $from)                   
+                    ->where('created_at','>=', $from)                   
                     ->where('status','=','2')
-                    ->whereIn('type',['1','2','3'])
+                    ->where('type','!=','4')
                     ->get()->toArray();      
 
         $mids = '';        
@@ -244,19 +244,19 @@ class MachineErrorReportController extends Controller
         }
        
         $explode = explode(',',$mids);  
-         $machines = DB::table('machines')
+        $machines = DB::table('machines')
                     ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
-                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
-                            'sites.site_name as site')                   
+                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"), 'sites.site_name as site', 'machines.updated_at as updated_at')           
                     ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                     ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                     ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                     ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
-                    ->whereIn('machines.status', ['1','0'])
+                    //->whereIn('machines.status', ['1','0'])
+                    ->where('machines.status', '=', '1')
                     ->whereIn('machines.id', $explode)
-                    ->whereDate('machine_reports.last_played','>=', $from)
+                    ->where('machine_reports.last_played','>=', $from)                   
                     ->limit(100)->get();   
 
         $logs = array(

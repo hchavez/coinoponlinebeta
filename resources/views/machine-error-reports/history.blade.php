@@ -72,7 +72,7 @@
                                       $resolve_by = ($error->resolve_by == '0')? 'System' : '';
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo date("d/m/Y"); ?></td>
+                                        <td><?php echo $machines->updated_at; ?><?php //echo date("d/m/Y"); ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
                                         <td><?php echo $machines->name_serial; ?></td>
@@ -198,7 +198,7 @@ $(document).ready(function() {
       scrollY:        400,
       bScrollInfinite: true,
       bScrollCollapse: true,
-      order: [[ 4, "asc" ]],
+      order: [[ 0, "desc" ]],
       paging: false,
       dom: 'Bfrtip',
       buttons: ['excel'],
