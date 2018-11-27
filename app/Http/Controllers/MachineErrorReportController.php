@@ -135,7 +135,7 @@ class MachineErrorReportController extends Controller
          if($check !=''):
             $data= $_GET['id'];
             $type= $_GET['type'];
-            $errmsg= '%'.str_replace('-', ' ', $_GET['errmsg']).'%';
+            $errmsg= '%'.str_replace('-', '_', $_GET['errmsg']).'%';
             $machinelogs = DB::table('machines')
                 ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
@@ -274,7 +274,7 @@ class MachineErrorReportController extends Controller
          if($check !=''):
             $data= $_GET['id'];
             $type= $_GET['type'];
-            $errmsg= '%'.str_replace('-', ' ', $_GET['errmsg']).'%';
+            $errmsg= '%'.str_replace('-', '_', $_GET['errmsg']).'%';
             $machinelogs = DB::table('machines')
                 ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
