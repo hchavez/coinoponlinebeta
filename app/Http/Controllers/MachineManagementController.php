@@ -779,14 +779,12 @@ class MachineManagementController extends Controller {
            
             $userall = Errorlogs::where('machine_id','=', $id)
                     ->where('status','=','1')
-                    ->whereIn('type',['1','2','3'])
                     ->whereBetween('created_at', [$from,$to])
                     ->get();
         else:
             $userall = Errorlogs::where('machine_id','=', $id)
                     //->whereBetween('created_at', [$days_ago,$today])
                     ->where('status','=','1')
-                    ->whereIn('type',['1','2','3'])
                     ->where('created_at','>=',$days_ago)    
                     ->orderBy('created_at','desc')
                     ->get();
