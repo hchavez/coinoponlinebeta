@@ -151,7 +151,7 @@ class MachineErrorReportController extends Controller
                 ->where('machines.status','!=','1111')  
                 ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','=', $type)
-                //->where('errorlogs.machine_id','=', $data)
+                ->where('errorlogs.machine_id','=', $data)
                 ->where('errorlogs.error','like',$errmsg)
                 ->where('errorlogs.created_at', 'like', '%'.$today.'%');    
             $machinelogs = $machinelogs->get()->toArray(); 
