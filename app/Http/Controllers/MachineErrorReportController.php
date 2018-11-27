@@ -95,7 +95,6 @@ class MachineErrorReportController extends Controller
                     ->select(DB::raw('distinct machine_id, error, type')) 
                     ->where('created_at','like', '%'.$from.'%')    
                     ->where('status','=','1')
-                    //->where('type','!=','4')
                     ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
 
@@ -131,6 +130,7 @@ class MachineErrorReportController extends Controller
     {           
         
         $check = Input::get('id'); 
+        $today = date("Y-m-d"); 
         $machinelogs = '';
          if($check !=''):
             $data= $_GET['id'];
@@ -151,9 +151,9 @@ class MachineErrorReportController extends Controller
                 ->where('machines.status','!=','1111')  
                 ->where('errorlogs.status','=','1')
                 ->where('errorlogs.type','=', $type)
-                ->where('errorlogs.machine_id','=', $data)
+                //->where('errorlogs.machine_id','=', $data)
                 ->where('errorlogs.error','like',$errmsg)
-                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+                ->where('errorlogs.created_at', 'like', '%'.$today.'%');    
             $machinelogs = $machinelogs->get()->toArray(); 
          endif;
         

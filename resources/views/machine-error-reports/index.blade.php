@@ -130,7 +130,7 @@
                             </form-->
                             <br>
                             <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
-                               
+                            <button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>
                             <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>
                                     <tr role="row">        
@@ -140,21 +140,16 @@
                                         <th>Name & Serial No</th>                                       
                                         <th>Error Type</th>
                                         <th>Error Message</th>
-                                        <th>Site</th>
-                                        <th>Count</th>
+                                        <th>Site</th>                                        
                                         <th>View</th>
                                        </tr> 
                                 </thead> 
-                                <?php 
-                                //$homepage = file_get_contents('http://localhost/coinoponlinebeta/public/get_errorlist?id=101&type=1&errmsg=card-LostInternet');
-                                //print_r($homepage);
-                                //print_r($data);
-                                ?>
                                  <tbody class="table-section" data-plugin="tableSection" >
                                   @foreach ($data['logs']['errors'] as $error)
                                     @foreach ($data['logs']['machines'] as $machines)
                                     <?php  if($error->machine_id == $machines->machine_id): ?>
                                       <?php
+                                      //echo '<br>'.$error->machine_id.'-'.$machines->machine_id;
                                       if($error->type == '1'): $errortype = 'Needs immediate Attention'; $color = '#f96868';
                                       elseif($error->type == '2'): $errortype = 'Warning'; $color = '#f2a654';
                                       else: $errortype = 'Notice'; $color = '#57c7d4';
@@ -166,14 +161,13 @@
                                       $idname = $machines->machine_id.'_'.$error->type.'_'.$errormsg;                                     
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo (!empty($_GET))? $data['fdate'] : date("d/m/Y"); ?></td>
+                                        <td><?php echo date("d/m/Y"); ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
-                                        <td><?php echo $machines->name_serial; ?></td>
+                                        <td class="linkMachine" style="color:#62a8ea;cursor: pointer;" data-href="{{ url('machine-management/error/') }}/<?php echo $machines->machine_id; ?>" data-target="_blank"><?php echo $machines->name_serial; ?></td>
                                         <td style="color:<?php echo $color; ?>"><?php echo $errortype; ?></td>
                                         <td><?php echo $error->error; ?></td>                                        
-                                        <td><?php echo $machines->site; ?></td>
-                                        <td class="clickedVal" id="<?php echo $idname; ?>"></td>
+                                        <td><?php echo $machines->site; ?></td>                                       
                                         <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" data-error-type="<?php echo $errormsg; ?>">View Errors</a></td>
                                       </tr>
                                     <?php endif; ?>
@@ -369,7 +363,7 @@ $(document).ready(function() {
      
     setTimeout(function(){
       $('.table_label select').each(function(i) {
-          var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','Count','View'];
+          var label = ['Date Time', 'Machine Model', 'Machine Type', 'Name & Serial No', 'Error Type', 'Error Message', 'Site','View'];
           $(this).attr('id', 'filter'+(i+1));        
           $("#filter" + (i+1)).select2({
               placeholder: label[i]
@@ -413,7 +407,7 @@ $(document).ready(function() {
         var id = idsplit[1];
         var type = idsplit[2];
         var errmsg = $(this).attr("data-error-type");
-        console.log(errmsg);
+        console.log(values);
         $.ajax({
           url: url+'get_errorlist',
           type: "GET",
@@ -459,18 +453,8 @@ $(document).ready(function() {
           }
         });
 
-    });
-   
-    $('input[name="dateRange"]').daterangepicker({
-        autoUpdateInput: true,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
-    $('input[name="dateRange"]').on("change",function(){
-        var selected = $(this).val();       
-        $( "#formFilter" ).submit();
-    });
+    });  
+
    
     var rows = document.getElementById('machineErrorReport').rows,
         len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
@@ -494,33 +478,20 @@ $(document).ready(function() {
     }   
     $('#total_error').html(errorcount);
     $('#total_notice').html(noticecount);
-    $('#total_warning').html(warningcount);
+    $('#total_warning').html(warningcount);    
 
+    $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
+    });
 
-    /*$('#machineErrorReport td.clickedVal').html('<img src="'+url+'/global/photos/load.gif">');
-    setTimeout(function(){
-      $('#machineErrorReport td.clickedVal').each(function() {
-          var values = $(this).attr('id');  
-          var idsplit = values.split("_");
-          var id = idsplit[0];
-          var type = idsplit[1];
-          var errmsg = idsplit[2];
-          //console.log(values); 
-          $.ajax({
-                url: url+'counter',
-                type: "GET",
-                data: {id: id, type: type, errmsg: errmsg },
-                success: function(data){   
-                var total = data.length;                  
-                $('#machineErrorReport td#'+values).html(data);                                    
-            },error: function(response){
-                $('.modal-dialog').html('<div class="alert dark alert-danger alert-dismissible" role="alert">Error!</div>');
-            }
-        }); 
+    $('.linkMachine').each(function(){
+      var $th = $(this);
+      $th.on('click', function(){
+          window.open($th.attr('data-href'), $th.attr('data-target'));
       });
-    }, 10000);*/
+    });
 
-    
+
 
 });
 

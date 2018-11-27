@@ -34,7 +34,7 @@
                             </form>
                             <br>
                             <a href="{{ url('machine-error-reports') }}"><button type="button" class="btn btn-default" style="float:left;" >Errorlogs</button></a>
-                              
+                            <button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>
                                
                             <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>
@@ -290,29 +290,9 @@ $(document).ready(function() {
         $( "#formFilter" ).submit();
     });
    
-   /* var rows = document.getElementById('machineErrorReport').rows,
-        len = rows.length, i, cellNum = 4,  errorcount = 0, noticecount = 0, warningcount = 0, cell;
-
-    for (i = 0; i < len; i++) {
-        cell = rows[i].cells[cellNum];
-        if (cell.innerHTML === 'Needs immediate Attention') {
-            errorcount++;
-        }
-        if (cell.innerHTML === 'Notice') {
-            noticecount++;
-        }
-        if (cell.innerHTML === 'Warning') {
-            warningcount++;
-        }
-        else if(i === (len - 1)) {
-            cell.innerHTML = errorcount;
-            cell.innerHTML = noticecount;
-            cell.innerHTML = warningcount;
-        }
-    }   
-    $('#total_error').html(errorcount);
-    $('#total_notice').html(noticecount);
-    $('#total_warning').html(warningcount);*/
+   $('#clearFilter').click(function(){ 
+        $('select').val($(this).data('val')).trigger('change');
+    });
 
 } );
 </script>
