@@ -198,21 +198,7 @@ class MachineErrorReportController extends Controller
         
     public function history()
     {       
-        
-        $pass_data = array(         
-            'logs' => $this->errorlogs_history()     
-        );
-      
-        return view('machine-error-reports/history', [ 'data' => $pass_data ]);   
-    }
-
-    public function errorlogs_history()
-    {
-
-        $today = date("Y-m-d");    
-        //$date = "1998-08-14";
-        $newdate = strtotime ( '-5 day' , strtotime ( $today ) ) ;
-        $newdate = date ( 'Y-m-j' , $newdate );  
+        $today = date("Y-m-d");
         $from = $to = $fdate = '';
         if(!empty($_GET['dateRange'])){
             //echo $_GET['dateRange'];
@@ -223,19 +209,33 @@ class MachineErrorReportController extends Controller
             $fromdata = $splitFrm[2].'-'.$splitFrm[0].'-'.$splitFrm[1];
             $todata = $splitTo[2].'-'.$splitTo[0].'-'.$splitTo[1];
 
-            $from = (!empty($fromdata))? $fromdata : $newdate;
-            $to = (!empty($todata))? $todata : $newdate;            
+            $from = (!empty($fromdata))? $fromdata : $today;
+            $to = (!empty($todata))? $todata : $today;
+            $logs = $this->errorlogs_history($from, $to);
+            //print_r($logs);
             $fdate = $from;
-        }else{            
-            $fdate = $newdate;
-        }   
-        $fdate;
-        $from = ($from != '')? $from : $newdate;
+        }else{
+            $logs = $this->errorlogs_history($from, $to);
+            $fdate = $today;
+        }
+
+        $pass_data = array(         
+            'logs' => $logs     
+        );
+      
+        return view('machine-error-reports/history', [ 'data' => $pass_data ]);   
+    }
+
+    public function errorlogs_history($from, $to)
+    {
+        $today = date("Y-m-d");         
+        $from = ($from != '')? $from : $today;
+
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
-                    ->where('created_at','>=', $from)                   
+                    ->where('created_at','<=', '%2018-12-01%')    
                     ->where('status','=','2')
-                    ->where('type','!=','4')
+                    ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
 
         $mids = '';        
@@ -246,18 +246,17 @@ class MachineErrorReportController extends Controller
         $explode = explode(',',$mids);  
         $machines = DB::table('machines')
                     ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
-                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"), 'sites.site_name as site', 'machines.updated_at as updated_at')           
+                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"), 'sites.site_name as site', 'machines.updated_at as updated_at')             
                     ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                     ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                     ->leftJoin('machine_reports', 'machines.id', '=', 'machine_reports.machine_id')
                     ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                     ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
-                    //->whereIn('machines.status', ['1','0'])
-                    ->where('machines.status', '=', '1')
+                    ->whereIn('machines.status', ['1','0'])
                     ->whereIn('machines.id', $explode)
-                    ->where('machine_reports.last_played','>=', $from)                   
-                    ->limit(100)->get();   
+                    ->where('machine_reports.last_played','<=', '%2018-12-01%')
+                    ->get();   
 
         $logs = array(
             'errors' => $data,

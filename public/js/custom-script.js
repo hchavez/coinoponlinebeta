@@ -63,11 +63,11 @@ $(document).ready(function(){
                     $('row c', sheet).attr( 's', '51' );
                 }
             }],
-        deferRender:    true,       
-        order: [[0,'desc']],
+        deferRender:    true,  
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
+        order: [[0,'desc']],
         columns:[{'data': 'created_at',
                 'render': function (data, type, row) { 
                         var str = row.created_at.split(" ");
