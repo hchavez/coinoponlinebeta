@@ -69,7 +69,7 @@
                                       $resolve_by = ($error->resolve_by == '0')? 'System' : '';
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo $machines->updated_at; ?><?php //echo date("d/m/Y"); ?></td>
+                                        <td><?php echo ($data['fdate']=='')? date("d/m/Y") : $data['fdate']; ?><?php //echo $machines->updated_at; ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
                                         <td><?php echo $machines->name_serial; ?></td>
@@ -227,11 +227,18 @@ $(document).ready(function() {
         var id = idsplit[1];
         var type = idsplit[2];
         var errmsg = $(this).attr("data-error-type");
+
+        var urlParams = new URLSearchParams(location.search);
+        var filterDate = urlParams.get('dateRange');
+        var filterSplit = filterDate.split(" - ");
+        var filterFrom = filterSplit[0].split("/");
+        var fromDate = filterFrom[2]+'-'+filterFrom[0]+'-'+filterFrom[1];
+        
         console.log(errmsg);
         $.ajax({
           url: url+'get_errorlist_history',
           type: "GET",
-          data: {id: id, type: type, errmsg: errmsg },
+          data: {id: id, type: type, errmsg: errmsg, fromDate: fromDate  },
           dataType: 'json',
           beforeSend: function(){  
             $(values+' #loader').html('<img src="'+url+'/global/photos/pacman.gif" style="text-align:center;width:60px"> Preparing reports');

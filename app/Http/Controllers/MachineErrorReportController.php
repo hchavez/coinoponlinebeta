@@ -220,7 +220,8 @@ class MachineErrorReportController extends Controller
         }
 
         $pass_data = array(         
-            'logs' => $logs     
+            'logs' => $logs,
+            'fdate' => $fdate     
         );
         //print_r($logs);
         return view('machine-error-reports/history', [ 'data' => $pass_data ]);   
@@ -229,7 +230,7 @@ class MachineErrorReportController extends Controller
     public function errorlogs_history($from, $to)
     {
         $today = date("Y-m-d");         
-        $from = ($from != '')? $from : $today;
+        $from = ($from != '')? $from : $today;       
 
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
@@ -274,6 +275,11 @@ class MachineErrorReportController extends Controller
             $data= $_GET['id'];
             $type= $_GET['type'];
             $errmsg= '%'.str_replace('-', '_', $_GET['errmsg']).'%';
+
+            $today = date("Y-m-d");   
+            $fromDate = $_GET['fromDate'];
+            $date = ($_GET['fromDate']=='')? $today : $fromDate;
+
             $machinelogs = DB::table('machines')
                 ->select('errorlogs.created_at as date_created', 'errorlogs.id as error_id','sites.site_name as site_name'
                         , 'sites.street as street', 'sites.suburb as suburb', 'state.state_code as statecode', 'machine_models.machine_model as machine_model'
@@ -291,7 +297,7 @@ class MachineErrorReportController extends Controller
                 ->where('errorlogs.type','=', $type)
                 ->where('errorlogs.machine_id','=', $data)
                 ->where('errorlogs.error','like',$errmsg)
-                ->whereDate('errorlogs.created_at', '=', Carbon::today());    
+                ->whereDate('errorlogs.created_at', 'like', '%'.$date.'%');    
             $machinelogs = $machinelogs->get()->toArray(); 
          endif;
         
