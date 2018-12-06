@@ -49,11 +49,8 @@
                                         <th>Resolve By</th>
                                         <th>View Errors</th>
                                        </tr> 
-                                </thead> 
-                                <?php //print_r($data['logs']);
-                                //echo count($data['logs']['errors']);
-                                //echo '-'.count($data['logs']['machines']);
-                                 ?>
+                                </thead>                                
+                                <?php //print_r($data['logs']['machines']); ?>
                                 <tbody class="table-section" data-plugin="tableSection" >
                                   @foreach ($data['logs']['errors'] as $error)
                                     @foreach ($data['logs']['machines'] as $machines)
