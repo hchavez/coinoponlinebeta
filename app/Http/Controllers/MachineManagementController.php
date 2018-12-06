@@ -778,16 +778,24 @@ class MachineManagementController extends Controller {
             endif;
            
             $userall = Errorlogs::where('machine_id','=', $id)
-                    ->where('status','=','1')
+                    //->where('status','=','1')
                     ->whereBetween('created_at', [$from,$to])
-                    ->get();
+                    ->orderBy('created_at','desc')->get();
         else:
             $userall = Errorlogs::where('machine_id','=', $id)
                     //->whereBetween('created_at', [$days_ago,$today])
+                    //->where('status','=','1')
+                    ->where('created_at','>=',$days_ago)    
+                    ->orderBy('created_at','DESC')
+                    ->get();
+            /*$userall = DB::table('errorlogs')                
+                    ->select(DB::raw('errorlogs.*'))                
                     ->where('status','=','1')
                     ->where('created_at','>=',$days_ago)    
-                    ->orderBy('created_at','desc')
-                    ->get();
+                    ->orderBy('created_at','DESC')
+                    ->get();*/
+            
+           
         endif;
         
         return new UserCollection($userall);
