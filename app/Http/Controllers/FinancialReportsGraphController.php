@@ -83,7 +83,8 @@ class FinancialReportsGraphController extends Controller
     
     public function queryLogs($type){
         $fromDate = date("Y-m-d H:i:s",strtotime("-3 month"));
-        $today = date("Y-m-d H:i:s");            
+        $today = date("Y-m-d H:i:s",strtotime("+1 day"));
+        //$today = date("Y-m-d H:i:s");            
         $queryAll = DB::table('moneylogs')
                      ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum('.$type.') as '.$type.' '))
                      ->whereBetween('created_at',[$fromDate,$today])->where('status', '=', 1)
@@ -158,7 +159,8 @@ class FinancialReportsGraphController extends Controller
      */
     public function byCategory($type,$cat){
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));
-        $today = date("Y-m-d H:i:s");
+        $today = date("Y-m-d H:i:s",strtotime("+1 day"));
+        //$today = date("Y-m-d H:i:s");     
         $category = DB::table('moneylogs')
                      ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
                      ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
