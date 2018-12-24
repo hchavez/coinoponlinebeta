@@ -69,7 +69,7 @@
                                       $resolve_by = ($error->resolve_by == '0')? 'System' : '';
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo ($data['fdate']=='')? date("d/m/Y") : $data['fdate']; ?><?php //echo $machines->updated_at; ?></td>
+                                        <td><?php echo ($data['fdate']=='')? $machines->updated_at : $data['fdate']; ?><?php //echo $machines->updated_at; ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
                                         <td><?php echo $machines->name_serial; ?></td>

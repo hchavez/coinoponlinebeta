@@ -228,14 +228,15 @@ class MachineErrorReportController extends Controller
     }
 
     public function errorlogs_history($from, $to)
-    {
-        $today = date("Y-m-d");         
-        $from = ($from != '')? $from : $today;       
+    {             
+        $today = date("Y-m-d",strtotime("-30 day"));                 
+        $from = ($from != '')? $from : $today;
 
         $data = DB::table('errorlogs')
                     ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
-                    ->where('created_at','like', '%'.$from.'%')    
-                    ->where('status','=','2')
+                    ->where('created_at','>', '%'.$from.'%')    
+                    //->where('status','=','1')
+                    ->where('resolve_by','=','0')
                     ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
 
@@ -245,9 +246,10 @@ class MachineErrorReportController extends Controller
         }
        
         $explode = explode(',',$mids);  
-         $machines = DB::table('machines')
+        $machines = DB::table('machines')
                     ->select( 'machines.id as machine_id','machine_models.machine_model as machine_model', 'machine_types.machine_type as machine_type',
-                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"), 'sites.site_name as site', 'machines.updated_at as updated_at')  
+                            DB::raw("CONCAT(machines.comments,' ',machines.machine_serial_no) as name_serial"),
+                            'sites.site_name as site', 'machines.updated_at as updated_at')                   
                     ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                     ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                     ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
@@ -257,8 +259,8 @@ class MachineErrorReportController extends Controller
                     ->whereIn('machines.status', ['1','0'])
                     ->whereIn('machines.id', $explode)
                     ->where('machine_reports.last_played','like', '%'.$from.'%')
-                    ->get();  
-        //print_r($machines);
+                    ->limit(100)->get();   
+
         $logs = array(
             'errors' => $data,
             'machines' => $machines
