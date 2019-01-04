@@ -587,7 +587,8 @@ class MachineManagementController extends Controller {
                     //->where('machines.status','=','1')
                     ->where('errorlogs.machine_id' ,'=', $id);       
         
-        $dateRange = Input::get('dateRange');        
+        $dateRange = Input::get('dateRange');     
+        //echo $dateRange; exit();
         $from = $to = '';        
         
         if($dateRange !=''):
@@ -596,8 +597,9 @@ class MachineManagementController extends Controller {
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
             $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
+            //echo $from; exit();
         endif;
-               
+        
         $dateCheck = Input::get('dateRange');
         $date = new DateTime();        
         $today = $date->format('Y-m-d H:i:s');
@@ -618,7 +620,9 @@ class MachineManagementController extends Controller {
                             . 'machine_types.machine_type, machines.machine_serial_no, machines.id, machines.comments, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
         $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
+        
         $machinelogsgroup =  DB::table('errorlogs_list')->select('errorlogs_list.*');        
+        
         if(!empty($dateCheck)):            
             $machinelogsgroup = $machinelogsgroup->where(function($query) use ($from,$to){                    
                 $query->whereBetween('errorlogs_list.created_at', [$from, $to]);          
@@ -1428,4 +1432,3 @@ class MachineManagementController extends Controller {
     
     
 }
-
