@@ -77,7 +77,7 @@
                                         <td><?php echo $error->error; ?></td>                                        
                                         <td><?php echo $machines->site; ?></td>
                                         <td><?php echo $resolve_by; ?></td>
-                                        <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" data-error-type="<?php echo $errormsg; ?>">View Details</a></td>
+                                        <td><a href="#" data-toggle="modal" class="viewerrorclass" data-target="#viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" id="viewerror_<?php echo $machines->machine_id.'_'.$error->type; ?>" data-error-type="<?php echo $errormsg; ?>">View Details</a></td>
                                       </tr>
                                     <?php endif; ?>
                                     @endforeach
