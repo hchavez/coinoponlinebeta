@@ -240,10 +240,8 @@ class MachineErrorReportController extends Controller
         }
         
         $data = DB::table('errorlogs')
-                    ->select(DB::raw('distinct machine_id, error, type, resolve_by')) 
-                    //->where('created_at','like', '%'.$today.'%')
-                    ->whereBetween('created_at',array($from,$to))
-                    //->where('status','=','1')
+                    ->select(DB::raw('distinct machine_id, error, type, resolve_by','created_at'))                     
+                    ->whereBetween('created_at',array($from,$to))                    
                     ->where('resolve_by','=','0')
                     ->whereIn('type',['1','2','3'])
                     ->get()->toArray();      
@@ -265,8 +263,7 @@ class MachineErrorReportController extends Controller
                     ->leftJoin('route', 'sites.route_id', '=', 'route.id')
                     ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                     ->whereIn('machines.status', ['1','0'])
-                    ->whereIn('machines.id', $explode)
-                    //->where('machine_reports.last_played','like', '%'.$today.'%')
+                    ->whereIn('machines.id', $explode)                   
                     ->where('machine_reports.last_played','like', '%'.$today.'%')
                     ->limit(100)->get();   
 

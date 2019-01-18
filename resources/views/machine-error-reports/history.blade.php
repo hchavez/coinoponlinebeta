@@ -69,7 +69,7 @@
                                       $resolve_by = ($error->resolve_by == '0')? 'System' : '';
                                       ?>                                      
                                       <tr>
-                                        <td><?php echo ($data['fdate']=='')? $machines->updated_at : $data['fdate']; ?><?php //echo $machines->updated_at; ?></td>
+                                        <td><?php echo ($data['fdate']=='')? $machines->updated_at : $data['fdate']; ?><?php //echo $error->created_at; ?></td>
                                         <td><?php echo $machines->machine_model; ?></td>
                                         <td><?php echo $machines->machine_type; ?></td>
                                         <td><?php echo $machines->name_serial; ?></td>
@@ -229,10 +229,21 @@ $(document).ready(function() {
         var errmsg = $(this).attr("data-error-type");
 
         var urlParams = new URLSearchParams(location.search);
-        var filterDate = urlParams.get('dateRange');
-        var filterSplit = filterDate.split(" - ");
-        var filterFrom = filterSplit[0].split("/");
-        var fromDate = filterFrom[2]+'-'+filterFrom[0]+'-'+filterFrom[1];
+        if(urlParams !=''){
+          var filterDate = urlParams.get('dateRange');
+        }else{
+          var currentDate = new Date()
+          var day = currentDate.getDate()
+          var month = currentDate.getMonth() + 1
+          var year = currentDate.getFullYear()
+          //document.write("<b>" + Year + "-" + month + "-" + day + "</b>")
+          var today = year + "-" + month + "-" + day;
+          var from = year + "-" + month + "-" + day - 10;
+          var filterDate = from+'-'+today;
+        }
+          var filterSplit = filterDate.split(" - ");
+          var filterFrom = filterSplit[0].split("/");
+          var fromDate = filterFrom[2]+'-'+filterFrom[0]+'-'+filterFrom[1];
         
         console.log(errmsg);
         $.ajax({
