@@ -19,6 +19,8 @@ use App\GoalsLogs;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
+Route::get('error-history', 'MachineErrorReportController@error_history');
+Route::get('allerrorsapi', 'MachineErrorReportController@allerrorsapi');
 
 Route::get('/', function () {
     return redirect('financial-reports-graph');

@@ -37,6 +37,7 @@ $(document).ready(function(){
     var urlFilter = new URL(complete_url);
     var filter = urlFilter.searchParams.get("dateRange");
     var input = (filter!=null)? '?dateRange='+filter : '' ;
+    
     $('#klogs').DataTable().destroy();
     $('#klogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
@@ -83,7 +84,54 @@ $(document).ready(function(){
                 else { return ''; }
             }},
             {'data': 'resolve_date'}]
-    }); 
+    });
+    $('#historylogs').DataTable().destroy();
+    $('#historylogs').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        processing : true,
+        ajax: base_url+'allerrorsapi/'+input,    
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: '',
+                filename: 'errorlogs',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
+            }],
+        deferRender:    true,  
+        pageLength: 25,
+        scrollY: '400px',
+        scrollCollapse: true,
+        order: [[0,'desc']],
+        columns:[{'data': 'created_at',
+                'render': function (data, type, row) { 
+                        var str = row.created_at.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+            },
+            {'data': 'type'},
+            {'data': 'error'},
+            {'data': 'resolve_by', 
+            'render': function (data, type, row) { 
+                if ( row.resolve_by == '0'){ return 'System';} 
+                else { return ''; }
+            }},
+            {'data': 'resolve_date'}]
+    });
     $('#winlogs').DataTable().destroy();
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
@@ -110,11 +158,11 @@ $(document).ready(function(){
                     $('row c', sheet).attr( 's', '51' );
                 }
             }],
-        deferRender:    true, 
-        order: [[3,'desc']],
+         deferRender:    true,  
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
+        order: [[0,'desc']],
         columns:[{'data': 'created_at',                
                 'render': function (data, type, row) { 
                         var str = row.created_at.split(" ");
@@ -216,6 +264,7 @@ $(document).ready(function(){
     });
     
     //excel button append
+    $('#historylogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#klogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#winlogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#moneyapi_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 

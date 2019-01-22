@@ -11,6 +11,6 @@ class Errorlogs extends Model
     
     public function machine()
     {
-        //return $this->belongsTo(Machine::class)->orderBy('machine_id','desc');
+        return $this->belongsTo(Machine::class);
     }
 }

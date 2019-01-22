@@ -88,7 +88,8 @@
                             <a href="{{ url('machine-management/win') }}/{{ $id }}">
                                 <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
                             </a>
-                            <table id="winlogs" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                        
+                            <table id="winlogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info">     
                                 <thead>
                                     <tr role="row">                                       
                                         <th style="width:15% !important;" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>                                       
@@ -125,6 +126,13 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{{ asset("/js/export-table.js") }}"></script>
+<style>
+.dt-button.buttons-excel{margin: 1em 2em 0 0;}
+.dt-buttons{position:static !important;}
+.ladda-button, .dt-buttons{display:inline-block;vertical-align: top;}
+.ladda-button{margin-top:10px;}
+</style>
 <script>
 $(document).ready(function(){
     $('input[name="dateRange"]').daterangepicker({
@@ -135,9 +143,10 @@ $(document).ready(function(){
     });
     $('input[name="dateRange"]').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-        var select = $(this), form = select.closest('form'); form.attr('action', '?win'); form.submit();
+        //var select = $(this), form = select.closest('form'); form.attr('action', '?win'); form.submit();
+          var select = $(this), form = select.closest('form');  form.submit();
     });
 });
 </script>
 @endsection
-
+ 
