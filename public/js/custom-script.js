@@ -158,11 +158,11 @@ $(document).ready(function(){
                     $('row c', sheet).attr( 's', '51' );
                 }
             }],
-         deferRender:    true,  
+        deferRender:    true, 
+        order: [[3,'desc']],
         pageLength: 25,
         scrollY: '400px',
         scrollCollapse: true,
-        order: [[0,'desc']],
         columns:[{'data': 'created_at',                
                 'render': function (data, type, row) { 
                         var str = row.created_at.split(" ");
