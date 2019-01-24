@@ -768,33 +768,24 @@ class MachineErrorReportController extends Controller
                 
             endif;
             
-            
-           
             $userall = Errorlogs::where('type','!=','4')
-                    //->where('status','=','1')
                     ->whereBetween('created_at', [$from,$to])
                     ->orderBy('created_at','desc')->get();
         else:
-            $userall = Errorlogs::where('type','!=','4')
-                    //->whereBetween('created_at', [$days_ago,$today])
-                    //->where('status','=','1')
+            $userall = Errorlogs::with('machine')->where('type','!=','4')
                     ->where('created_at','>=',$days_ago)    
                     ->orderBy('created_at','DESC')
                     ->get(); 
-        
         endif;
         
+         foreach($userall as $data){            
+                echo $data.",<br>";
+                echo "this is the serial no".$data->machine->machine_serial_no."<br>";
+            }
         
-//        $allerrorlogs = DB::table('errorlogs')
-//                     ->select(DB::raw('errorlogs.*, errorlogs.created_at as date_created, errorlogs.id as error_id,'
-//                             . 'machines.machine_serial_no as serial_no, machines.id as machine_id,'
-//                             . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
-//                    ->leftJoin('machines', 'errorlogs.machine_id','=','machines.id')          
-//                    ->where('errorlogs.type','!=','4'); 
-//        
-        var_dump($userall); exit();
+        exit();
             
-//        return new UserCollection($userall);
+        //return new UserCollection($userall);
        
     }
     

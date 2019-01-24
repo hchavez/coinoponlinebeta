@@ -115,16 +115,7 @@
                             </div>
                         </div>
                         <!-- End Second Row -->
-                            <!--table id="klogs" style="width:100%" class="display table table-bordered table-hover dataTable" >                            
-                                <thead>
-                                    <tr role="row">                                      
-                                        <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Date Time Log</th>
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Type</th>
-                                        <th width="25%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Error Log</th>                                        
-                                        <th width="5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >Instances</th>
-                                    </tr>
-                                </thead>
-                            </table-->                            
+                                             
                                    
                         </div></div>
 

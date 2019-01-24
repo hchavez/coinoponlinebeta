@@ -734,7 +734,7 @@
                     <div class="panel-heading">
                         
                         <h3 class="panel-title"> 
-                            <?php if($permit['editAll']): ?><a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon wb-edit" aria-hidden="true"></i> <?php endif; ?> </a>Product Definations</h3> 
+                            <?php if($permit['editAll']): ?><a href="{{ route('product-definitions.edit', ['id' => $product_def->machine_id]) }}" > <i class="icon wb-edit" aria-hidden="true"></i> <?php endif; ?> </a>Product Definitions</h3> 
                     </div>
                     <div class="panel-body">
                         <p>          
