@@ -128,8 +128,21 @@
                                     <input type="text" name="dateRange" id="dateRanger" class="form-control pull-left" placeholder="Search date range" >     
                                 </div>
                             </form-->
-                            <br>
-                            <a href="{{ url('history') }}"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
+                             <?php
+                    $frm_m = date('m');
+                    $frm_d = date('d', strtotime('-3 days'));
+                    $frm_y = date('Y');
+                    
+                    $to_m = date('m');
+                    $to_d = date('d', strtotime('+1 day'));
+                    $to_y = date('Y');
+                    $t="%2F";
+                    //$query = "?dateRange=01%2F03%2F2019+-+01%2F04%2F2019";
+                    $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."".$t."+-+".$to_m."".$t."".$to_d."".$t."".$to_y."".$t;
+                    //echo $query;
+                    ?> 
+                           
+                            <a href="{{ url('error-history') }}<?php echo $query; ?>"><button type="button" class="btn btn-default" style="float:left;" >History</button></a>
                             <button type="button" id="clearFilter" class="btn btn-danger" value="0" style="vertical-align: bottom;float:right;">Clear Filter</button>
                             <table class="table table-hover table_label" id="machineErrorReport">                                    
                                 <thead>

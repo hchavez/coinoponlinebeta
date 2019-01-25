@@ -768,24 +768,22 @@ class MachineErrorReportController extends Controller
                 
             endif;
             
-            $userall = Errorlogs::where('type','!=','4')
+            $userall = Errorlogs::with('machine')->whereNotIn('type',['4','0'])
                     ->whereBetween('created_at', [$from,$to])
                     ->orderBy('created_at','desc')->get();
         else:
-            $userall = Errorlogs::with('machine')->where('type','!=','4')
+            $userall = Errorlogs::with('machine')->whereNotIn('type',['4','0'])
                     ->where('created_at','>=',$days_ago)    
                     ->orderBy('created_at','DESC')
                     ->get(); 
         endif;
-        
-         foreach($userall as $data){            
-                echo $data.",<br>";
-                echo "this is the serial no".$data->machine->machine_serial_no."<br>";
-            }
-        
-        exit();
-            
-        //return new UserCollection($userall);
+//        
+//         foreach($userall as $data){            
+//                echo "<pre>".$data.",</pre>";
+//                echo "this is the serial no".$data->machine->machine_serial_no."<br>";
+//            }
+//          
+        return new UserCollection($userall);
        
     }
     

@@ -25,5 +25,9 @@ class Machine extends Model {
     public function goalslogs() {
         return $this->hasMany(Goalslogs::class);
     }
+    
+    public function site() {
+        return $this->hasOne(Site::class);
+    }
 
 }

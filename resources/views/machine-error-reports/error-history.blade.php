@@ -41,9 +41,7 @@
                                         <div class="col-md-6">                        
                                             <div id="filter_display">   
                                                 <div class="bootstrap-tagsinput">
-                                                        <?php if($filterData['startdate'] !=''): ?>
-                                                            <span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
-                                                        <?php endif; ?>
+                                                        
                                                         <?php if($filterData['machine_model'] !=''): ?>
                                                             <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        
                                                         <?php endif; ?>
@@ -93,6 +91,8 @@
                                                     <thead>
                                                         <tr role="row">                                                
                                                             <th>Date Time</th>
+                                                             <th>Machine</th> 
+                                                              <th>Serial No</th> 
                                                             <th>Error Type</th>                                        
                                                             <th>Error Message</th>                                        
                                                             <th>Resolve By</th>

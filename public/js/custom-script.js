@@ -123,6 +123,8 @@ $(document).ready(function(){
                         return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
                     }
             },
+            {'data': 'machine.comments'},
+            {'data': 'machine.machine_serial_no'},
             {'data': 'type'},
             {'data': 'error'},
             {'data': 'resolve_by', 
@@ -132,6 +134,7 @@ $(document).ready(function(){
             }},
             {'data': 'resolve_date'}]
     });
+  
     $('#winlogs').DataTable().destroy();
     $('#winlogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },

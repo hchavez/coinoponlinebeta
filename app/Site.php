@@ -20,4 +20,8 @@ class Site extends Model
     * @var array
     */
     protected $guarded = [];
+    
+    public function machine() {
+        return $this->belongsTo(Machine::class);
+    }
 }
