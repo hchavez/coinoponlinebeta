@@ -838,7 +838,7 @@ class MachineErrorReportController extends Controller
             endif;
             
             
-              $machinenotap = MachineReports::select( 'machine_reports.*',
+              $machinenotap = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
                     DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
                       DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
                       DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
@@ -860,6 +860,7 @@ class MachineErrorReportController extends Controller
         endif;
          
         
+
     
        return new UserCollection($machinenotap);
        

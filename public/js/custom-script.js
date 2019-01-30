@@ -115,7 +115,7 @@ $(document).ready(function(){
         pageLength: 35,
         scrollY: '500px',
         scrollCollapse: true,
-        order: [[0,'desc']],
+        order: [[0,'created_at']],
         columns:[{'data': 'created_at',
                  className: 'dt-body-left',
                 'render': function (data, type, row) { 
@@ -126,9 +126,9 @@ $(document).ready(function(){
             },
             {'data': 'machine.comments'},
             {'data': 'machine.machine_serial_no'},
-            {'data': 'machine.site',className: 'dt-body-left'},
+            {'data': 'machine.site'},
             {'data': 'type'},
-            {'data': 'error',className: 'dt-body-left'},
+            {'data': 'error'},
             {'data': 'resolve_by', 
             'render': function (data, type, row) { 
                 if ( row.resolve_by == '0'){ return 'System';} 
@@ -170,7 +170,7 @@ $(document).ready(function(){
         scrollY: '500px',
         scrollCollapse: true,
         order: [[0,'last_played']], 
-        columns:[{'data': 'last_played'},
+        columns:[{'data': 'date_played'},
         {'data': 'machine'},
         {'data': 'machine_serial'},
         {'data': 'site'}]

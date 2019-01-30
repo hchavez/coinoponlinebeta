@@ -11,7 +11,9 @@
           
 
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-            
+             <header class="panel-heading">
+                                    <h3 class="panel-title">Machine Error History Reports</h3> 
+                                </header>
                     <div class="row">
                         <?php //echo $getID; ?>
                         <div class="col-md-6">                            
@@ -28,7 +30,7 @@
                            
                           </div-->
                         </div>                        
-                        <br><br>
+                      
                         
                         <div class="col-sm-12">
                             
@@ -89,7 +91,7 @@
 
                                                 <table id="historylogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
-                                                        <tr role="row"align="left">                                                
+                                                        <tr role="row">                                                
                                                             <th>Date Time</th>
                                                             <th>Machine</th> 
                                                             <th>Serial No</th> 

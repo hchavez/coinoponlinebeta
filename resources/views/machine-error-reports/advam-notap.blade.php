@@ -11,9 +11,13 @@
           
 
                 <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
-            
+             <header class="panel-heading">
+                                    <h3 class="panel-title">Machine Advam with No-Taps Report</h3> 
+                                </header>
                     <div class="row">
-                        <?php //echo $getID; ?>
+                         
+                                
+                       
                         <div class="col-md-6">                            
                             <form role="form" method="GET" action="{{ url('advam-notap') }}" class="error-list-form" id="formSearch" autocomplete="off">
                                 <div class="ky-columns" style="width:40%;" >     
@@ -29,13 +33,14 @@
                           </div-->
                         </div>                        
                         <br><br>
-                        
+                     
                         <div class="col-sm-12">
                             
                             <!-- second Row -->
                         <div class="col-12" id="ecommerceChartView">
                             <div class="card card-shadow">
-
+                              
+                                
                                  <form role="form" method="GET" action="{{ route('machine-management.index') }}">
                                     <div class="row">           
                                         <div class="col-md-6">                        
@@ -90,7 +95,7 @@
                                                 <table id="advamnotapslogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
                                                         <tr role="row">                                                
-                                                            <th>Date Time</th>
+                                                            <th>Date</th>
                                                             <th>Machine</th>
                                                             <th>Serial</th>
                                                             <th>Site</th>
