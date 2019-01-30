@@ -389,6 +389,11 @@
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">
+                                                <a  class="animsition-link"  href="{{ url('error-history') }}<?php echo $query; ?>">
+                                                    <span class="site-menu-title">History Error Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="site-menu-item">
                                                 <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo $query; ?>">
                                                     <span class="site-menu-title">Advam No-Taps</span>
                                                 </a>
@@ -398,11 +403,11 @@
                                                     <span class="site-menu-title">Advam Watchlists</span>
                                                 </a>
                                             </li>
-                                            <li class="site-menu-item">
+<!--                                            <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('financial-reports-graph') }}">
                                                     <span class="site-menu-title">Financial Reports</span>
                                                 </a>
-                                            </li>
+                                            </li>-->
                                         </ul>
                                     </div>
                                 </div>
