@@ -19,8 +19,12 @@ use App\GoalsLogs;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\UserCollection;
 
+Route::get('advam-notap', 'MachineErrorReportController@advam_notap');
+Route::get('advamnotap', 'MachineErrorReportController@advamnotap');
 Route::get('error-history', 'MachineErrorReportController@error_history');
 Route::get('allerrorsapi', 'MachineErrorReportController@allerrorsapi');
+
+
 
 Route::get('/', function () {
     return redirect('financial-reports-graph');

@@ -17,6 +17,7 @@ use App\GoalsLogs;
 use App\WinLogs;
 use App\MoneyLogs;
 use App\MachineType;
+use App\MachineReports;
 use App\MachineModel;
 use App\Site;
 use App\ErrorlogsHistory;
@@ -679,17 +680,17 @@ class MachineErrorReportController extends Controller
     }
     
     
-     public function error_history() {   
+     public function error_history() {  
         
-        $machinelogs = DB::table('errorlogs')
-                     ->select(DB::raw('errorlogs.*, errorlogs.created_at as date_created, errorlogs.id as error_id,'
-                             . 'machines.machine_serial_no as serial_no, machines.id as machine_id,'
-                             . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
-                    ->leftJoin('machines', 'errorlogs.machine_id','=','machines.id')          
-                    ->where('errorlogs.type','!=','4');     
-        
+//        $machinelogs = DB::table('errorlogs')
+//                     ->select(DB::raw('errorlogs.*, errorlogs.created_at as date_created, errorlogs.id as error_id,'
+//                             . 'machines.machine_serial_no as serial_no, machines.id as machine_id,'
+//                             . 'errorlogs.log_id as log_id, errorlogs.error as error, errorlogs.type as errortype, errorlogs.id as error_id'))
+//                    ->leftJoin('machines', 'errorlogs.machine_id','=','machines.id')          
+//                    ->where('errorlogs.type','!=','4');     
+//        
         $dateRange = Input::get('dateRange');     
-       
+      
         $from = $to = '';        
         
         if($dateRange !=''):
@@ -698,29 +699,28 @@ class MachineErrorReportController extends Controller
             $explode_to = explode('/',$explode[1]);
             $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
             $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
-            //echo $from; exit();
         endif;
-        
-        $dateCheck = Input::get('dateRange');
-        $date = new DateTime();        
-        $today = $date->format('Y-m-d H:i:s');
-        $toDate = $date->format('Y-m-d');
-        $newdate = strtotime ( '+1 day' , strtotime ( $today ) ) ;
-        
-        if(!empty($dateCheck)):            
-            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
-                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
-            })->orderBy('errorlogs.created_at','desc'); 
-        else:
-            $machinelogs = $machinelogs->where(function($query) use ($newdate, $toDate){                    
-                $query->where('errorlogs.created_at', 'like', '%'.$toDate.'%');                        
-            }); 
-        endif;
-        
-        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id,'
-                            . 'machines.machine_serial_no, machines.id, errorlogs.error, errorlogs.type, errorlogs.id'));        
+//        
+//        $dateCheck = Input::get('dateRange');
+//        $date = new DateTime();        
+//        $today = $date->format('Y-m-d H:i:s');
+//        $toDate = $date->format('Y-m-d');
+//        $newdate = strtotime ( '+1 day' , strtotime ( $today ) ) ;
+//        
+//        if(!empty($dateCheck)):            
+//            $machinelogs = $machinelogs->where(function($query) use ($from,$to){                    
+//                $query->whereBetween('errorlogs.created_at', [$from, $to]);          
+//            })->orderBy('errorlogs.created_at','desc'); 
+//        else:
+//            $machinelogs = $machinelogs->where(function($query) use ($newdate, $toDate){                    
+//                $query->where('errorlogs.created_at', 'like', '%'.$toDate.'%');                        
+//            }); 
+//        endif;
+//        
+//        $machinelogs = $machinelogs->groupBy(DB::raw('errorlogs.log_id,errorlogs.created_at, errorlogs.id,'
+//                            . 'machines.machine_serial_no, machines.id, errorlogs.error, errorlogs.type, errorlogs.id'));        
                 
-        $machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
+        //$machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->paginate(15);
         //$machinelogs = $machinelogs->orderBy('errorlogs.created_at','desc')->toSql();
                 
         $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
@@ -738,15 +738,13 @@ class MachineErrorReportController extends Controller
         );         
         
         $wh = DB::table('machines')->where('status','=', '3')->count('status');         
-       
-
       
         return view('machine-error-reports/error-history', ['filterData'=>$filterData,'wh'=>$wh]);
  
     }
     
         
-    public function allerrorsapi(){        
+    public function allerrorsapi(){ 
         $date = new DateTime('+1 day');        
         $thedate = date("Y-m-d H:i:s");
         $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
@@ -777,13 +775,93 @@ class MachineErrorReportController extends Controller
                     ->orderBy('created_at','DESC')
                     ->get(); 
         endif;
-//        
-//         foreach($userall as $data){            
-//                echo "<pre>".$data.",</pre>";
-//                echo "this is the serial no".$data->machine->machine_serial_no."<br>";
-//            }
-//          
+
         return new UserCollection($userall);
+       
+    }
+    
+    public function advam_notap() {   
+        
+          $dateRange = Input::get('dateRange');     
+      
+        $from = $to = '';        
+        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
+            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
+        endif;
+                
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+        $machineType = MachineType::orderBy('created_at', 'desc')->get();
+                
+        $filterData = array(            
+            'machine_model' => Input::get('machine_model'),
+            'machine_type' => Input::get('machine_type'),
+            'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),
+            'machine_site' => Input::get('machine_site'),
+            'startdate' => $from,
+            'enddate' => $to
+        );         
+        
+        $wh = DB::table('machines')->where('status','=', '3')->count('status');        
+      
+        return view('machine-error-reports/advam-notap', ['filterData'=>$filterData,'wh'=>$wh]);
+    
+    }
+    
+    public function advamnotap(){
+       
+        $date = new DateTime('+1 day');        
+        $thedate = date("Y-m-d H:i:s");
+        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
+        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
+        
+        $dateRange = Input::get('dateRange');
+        
+        if($dateRange != ''):
+            $from = $to = '';    
+            $dateRange = Input::get('dateRange');
+            if($dateRange !=''):
+                $explode = explode('-',$dateRange);
+                $explode_from = explode('/',$explode[0]);
+                $explode_to = explode('/',$explode[1]);
+                $dayfr = $explode_from[0];
+                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
+                $day = $explode_to[0]+1;
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
+                
+            endif;
+            
+            
+              $machinenotap = MachineReports::select( 'machine_reports.*',
+                    DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+                      DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
+                      DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
+                    ->where('total_money','0')
+                    ->whereBetween('last_played', [$from,$to])
+                    ->orderBy('last_played','desc')->get();
+              
+         
+        else:
+        
+
+          $machinenotap = MachineReports::select( 'machine_reports.*',
+                    DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+                      DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
+                      DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
+                    ->where('total_money','0')
+                     ->where('last_played','>=',$days_ago)
+                    ->orderBy('last_played','desc')->get();
+        endif;
+         
+        
+    
+       return new UserCollection($machinenotap);
        
     }
     

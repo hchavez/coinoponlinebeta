@@ -360,7 +360,19 @@
                             <span class="site-menu-title">Reports</span>
                         </a>
                     </li-->
+                             <?php
+                    $frm_m = date('m');
+                    $frm_d = date('d', strtotime('-3 days'));
+                    $frm_y = date('Y');
                     
+                    $to_m = date('m');
+                    $to_d = date('d', strtotime('+1 day'));
+                    $to_y = date('Y');
+                    $t="%2F";
+                    //$query = "?dateRange=01%2F03%2F2019+-+01%2F04%2F2019";
+                    $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."".$t."+-+".$to_m."".$t."".$to_d."".$t."".$to_y."".$t;
+                    //echo $query;
+                    ?> 
                     <li class="dropdown site-menu-item has-sub">
                         <a data-toggle="dropdown" href="javascript:void(0)" data-dropdown-toggle="false">
                             <i class="site-menu-icon wb-file" aria-hidden="true"></i>
@@ -374,6 +386,11 @@
                                              <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('machine-error-reports') }}">
                                                     <span class="site-menu-title">Machine Error Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="site-menu-item">
+                                                <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo $query; ?>">
+                                                    <span class="site-menu-title">Advam No-Taps</span>
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">

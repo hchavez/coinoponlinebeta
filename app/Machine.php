@@ -29,5 +29,9 @@ class Machine extends Model {
     public function site() {
         return $this->hasOne(Site::class);
     }
+    
+    public function machinereports() {
+        return $this->hasMany(MachineReports::class);
+    }
 
 }

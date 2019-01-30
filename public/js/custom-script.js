@@ -40,7 +40,7 @@ $(document).ready(function(){
     
     $('#klogs').DataTable().destroy();
     $('#klogs').dataTable({
-        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
         processing : true,
         ajax: base_url+'errorapi/'+currentID+input,    
         dom: 'Bfrtip',
@@ -87,14 +87,14 @@ $(document).ready(function(){
     });
     $('#historylogs').DataTable().destroy();
     $('#historylogs').dataTable({
-        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
         processing : true,
         ajax: base_url+'allerrorsapi/'+input,    
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excelHtml5',
                 title: '',
-                filename: 'errorlogs',
+                filename: 'errorhistory',
                 customize: function( xlsx ) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var lastCol = sheet.getElementsByTagName('col').length - 1;
@@ -112,11 +112,12 @@ $(document).ready(function(){
                 }
             }],
         deferRender:    true,  
-        pageLength: 25,
-        scrollY: '400px',
+        pageLength: 35,
+        scrollY: '500px',
         scrollCollapse: true,
         order: [[0,'desc']],
         columns:[{'data': 'created_at',
+                 className: 'dt-body-left',
                 'render': function (data, type, row) { 
                         var str = row.created_at.split(" ");
                         var date = str[0].split("-")
@@ -125,8 +126,9 @@ $(document).ready(function(){
             },
             {'data': 'machine.comments'},
             {'data': 'machine.machine_serial_no'},
+            {'data': 'machine.site',className: 'dt-body-left'},
             {'data': 'type'},
-            {'data': 'error'},
+            {'data': 'error',className: 'dt-body-left'},
             {'data': 'resolve_by', 
             'render': function (data, type, row) { 
                 if ( row.resolve_by == '0'){ return 'System';} 
@@ -134,10 +136,50 @@ $(document).ready(function(){
             }},
             {'data': 'resolve_date'}]
     });
+    
+    
+    $('#advamnotapslogs').DataTable().destroy();
+    $('#advamnotapslogs').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
+        processing : true,
+        ajax: base_url+'advamnotap/'+input,    
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: '',
+                filename: 'advamnotaps',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
+            }],
+        
+        deferRender:  true,  
+        pageLength: 35,
+        scrollY: '500px',
+        scrollCollapse: true,
+        order: [[0,'last_played']], 
+        columns:[{'data': 'last_played'},
+        {'data': 'machine'},
+        {'data': 'machine_serial'},
+        {'data': 'site'}]
+    });
+       
   
     $('#winlogs').DataTable().destroy();
     $('#winlogs').dataTable({
-        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
         processing : true,
         ajax: base_url+'winapi/'+currentID+input,    
         dom: 'Bfrtip',
@@ -177,7 +219,7 @@ $(document).ready(function(){
     });    
     $('#moneyapi').DataTable().destroy();
     $('#moneyapi').dataTable({  
-        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
         processing : true,
         ajax: base_url+'moneyapi/'+currentID+input,
         dom: 'Bfrtip',
@@ -223,7 +265,7 @@ $(document).ready(function(){
     });    
     $('#goalsapi').DataTable().destroy();
     $('#goalsapi').dataTable({
-        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/pacman.gif' width='32px;'>" },
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
         processing : true,
         ajax: base_url+'goalsapi/'+currentID+input,    
         dom: 'Bfrtip',
@@ -267,6 +309,8 @@ $(document).ready(function(){
     });
     
     //excel button append
+  
+     $('#advamnotapslogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#historylogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#klogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#winlogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 

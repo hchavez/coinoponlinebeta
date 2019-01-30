@@ -15,7 +15,7 @@
                     <div class="row">
                         <?php //echo $getID; ?>
                         <div class="col-md-6">                            
-                            <form role="form" method="GET" action="{{ url('error-history') }}" class="error-list-form" id="formSearch" autocomplete="off">
+                            <form role="form" method="GET" action="{{ url('advam-notap') }}" class="error-list-form" id="formSearch" autocomplete="off">
                                 <div class="ky-columns" style="width:40%;" >     
                                     <input type="text" name="dateRange" id="dateRange" class="form-control pull-left" placeholder="Filter by Date">     
                                 </div>                            
@@ -36,7 +36,7 @@
                         <div class="col-12" id="ecommerceChartView">
                             <div class="card card-shadow">
 
-                                <form role="form" method="GET" action="{{ route('machine-management.index') }}">
+                                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
                                     <div class="row">           
                                         <div class="col-md-6">                        
                                             <div id="filter_display">   
@@ -66,7 +66,7 @@
                     <!--                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                                                 <span class="ladda-label">Export</span>                            
                                             </button>-->                                            
-                                            <a href="{{ url('machine-error-reports/error-history') }}">
+                                            <a href="{{ url('machine-error-reports/advam-notap') }}">
                                                 <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
                                             </a>
                                         </div>
@@ -87,17 +87,13 @@
                                               </div>
                                                <div class="example">                               
 
-                                                <table id="historylogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
+                                                <table id="advamnotapslogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
-                                                        <tr role="row"align="left">                                                
+                                                        <tr role="row">                                                
                                                             <th>Date Time</th>
-                                                            <th>Machine</th> 
-                                                            <th>Serial No</th> 
-                                                             <th>Site</th> 
-                                                            <th>Error Type</th>                                        
-                                                            <th>Error Message</th>                                        
-                                                            <th>Resolve By</th>
-                                                            <th>Resolve Date</th>
+                                                            <th>Machine</th>
+                                                            <th>Serial</th>
+                                                            <th>Site</th>
                                                         </tr> 
                                                     </thead>                                                     
                                                     <tbody class="table-section" data-plugin="tableSection" >                                                        
