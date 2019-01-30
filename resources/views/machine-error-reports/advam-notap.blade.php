@@ -71,9 +71,9 @@
                     <!--                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
                                                 <span class="ladda-label">Export</span>                            
                                             </button>-->                                            
-                                            <a href="{{ url('machine-error-reports/advam-notap') }}">
+<!--                                            <a href="{{ url('machine-error-reports/advam-notap') }}">
                                                 <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
-                                            </a>
+                                            </a>-->
                                         </div>
                                     </div>
                                 </form>
