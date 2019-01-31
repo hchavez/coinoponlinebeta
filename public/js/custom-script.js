@@ -173,7 +173,7 @@ $(document).ready(function(){
         columns:[{'data': 'date_played'},
         {'data': 'machine'},
         {'data': 'machine_serial'},
-        {'data': 'site'}]
+        {'data': 'site'},{'data': 'machine_malfunction'},{'data': 'machine_offline'},{'data': 'internet_lost'},{'data': 'start_of_internet_lost'}]
     });
        
   

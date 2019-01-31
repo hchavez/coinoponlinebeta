@@ -99,6 +99,10 @@
                                                             <th>Machine</th>
                                                             <th>Serial</th>
                                                             <th>Site</th>
+                                                            <th>Machine Malfunction</th>
+                                                            <th>Machine Offline</th>
+                                                            <th>Internet Lost</th>
+                                                            <th>Start of Internet Lost</th>
                                                         </tr> 
                                                     </thead>                                                     
                                                     <tbody class="table-section" data-plugin="tableSection" >                                                        
