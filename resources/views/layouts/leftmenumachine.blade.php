@@ -13,13 +13,19 @@
 
                     <h5 class="page-aside-title">Machine Logs </h5>
                     <?php
-                    $frm_m = date('m');
-                    $frm_d = date('d', strtotime('-3 days'));
-                    $frm_y = date('Y');
                     
-                    $to_m = date('m');
-                    $to_d = date('d', strtotime('+1 day'));
-                    $to_y = date('Y');
+                    $basedatefrom = date('Y-m-d H:i:s', strtotime(now()));
+                    $basedateto = date('Y-m-d H:i:s', strtotime(now() . ' +1 day'));
+                    //echo $basedatefrom."--".$basedateto;
+                    
+                    $frm_m = date('m', strtotime($basedatefrom));
+                    $frm_d = date('d', strtotime($basedatefrom));
+                    $frm_y = date('Y', strtotime($basedatefrom));
+                    // echo $frm_m."--".$frm_d."--".$frm_y;
+                     
+                    $to_m = date('m', strtotime($basedateto));
+                    $to_d = date('d', strtotime($basedateto));
+                    $to_y = date('Y', strtotime($basedateto));
                     $t="%2F";
                     //$query = "?dateRange=01%2F03%2F2019+-+01%2F04%2F2019";
                     $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."".$t."+-+".$to_m."".$t."".$to_d."".$t."".$to_y."".$t;

@@ -108,7 +108,7 @@
                                             <div id="filter_display">   
                                                 <div class="bootstrap-tagsinput">
                                                         <?php if($filterData['startdate'] !=''): ?>
-                                                            <span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>                                        
+                                                            <!--<span class="tag badge badge-default">{{ $filterData['startdate'] }} - {{ $filterData['enddate'] }}</span>-->                                        
                                                         <?php endif; ?>
                                                         <?php if($filterData['machine_model'] !=''): ?>
                                                             <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        

@@ -768,11 +768,11 @@ class MachineErrorReportController extends Controller
             
             $userall = Errorlogs::with('machine')->whereNotIn('type',['4','0'])
                     ->whereBetween('created_at', [$from,$to])
-                    ->orderBy('created_at','desc')->get();
+                    ->orderBy('created_at','asc')->get();
         else:
             $userall = Errorlogs::with('machine')->whereNotIn('type',['4','0'])
                     ->where('created_at','>=',$days_ago)    
-                    ->orderBy('created_at','DESC')
+                    ->orderBy('created_at','asc')
                     ->get(); 
         endif;
 
