@@ -823,6 +823,9 @@ class MachineErrorReportController extends Controller
         
         $dateRange = Input::get('dateRange');
         $from = $to = '';   
+        
+     
+        
         if($dateRange):
              
 //                $explode = explode('-',$dateRange);

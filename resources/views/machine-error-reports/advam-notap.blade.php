@@ -31,8 +31,7 @@
                             <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
                            
                           </div-->
-                        </div>                        
-                        <br><br>
+                        </div> 
                      
                         <div class="col-sm-12">
                             
@@ -40,56 +39,20 @@
                         <div class="col-12" id="ecommerceChartView">
                             <div class="card card-shadow">
                               
-                                
-                                 <form role="form" method="GET" action="{{ route('machine-management.index') }}">
-                                    <div class="row">           
-                                        <div class="col-md-6">                        
-                                            <div id="filter_display">   
-                                                <div class="bootstrap-tagsinput">
-                                                        
-                                                        <?php if($filterData['machine_model'] !=''): ?>
-                                                            <span class="tag badge badge-default">{{ $filterData['machine_model'] }}</span>                                        
-                                                        <?php endif; ?>
-                                                        <?php if($filterData['machine_type'] !=''): ?>
-                                                            <span class="tag badge badge-default">{{ $filterData['machine_type'] }}</span>                                        
-                                                        <?php endif; ?>    
-                                                        <?php if($filterData['error_msg'] !=''): 
-                                                            if($filterData['error_msg']=='1'){ $error = 'Needs Immediate Attention'; }
-                                                            if($filterData['error_msg']=='2'){ $error = 'Warning'; }
-                                                            if($filterData['error_msg']=='3'){ $error = 'Notice'; }  ?>
-                                                            <span class="tag badge badge-default"><?php echo $error; ?></span>
-                                                        <?php endif; ?>     
-                                                        <?php if($filterData['machine_site'] !=''): ?>
-                                                            <span class="tag badge badge-default">{{ $filterData['machine_site'] }}</span>
-                                                        <?php endif; ?> 
 
-                                                </div>                            
-                                            </div>
-                                        </div>                   
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3 text-right" style="padding-right:3em;"> 
-                    <!--                        <button type="button"  id="export" class="btn btn-default ladda-button" data-style="slide-right" data-plugin="ladda">
-                                                <span class="ladda-label">Export</span>                            
-                                            </button>-->                                            
-<!--                                            <a href="{{ url('machine-error-reports/advam-notap') }}">
-                                                <button type="button" id="clearFilter" class="btn btn-danger"  value="0" style="vertical-align: bottom;">Clear Filter</button>
-                                            </a>-->
-                                        </div>
-                                    </div>
-                                </form>
+                             
                                 <div class="row" ng-app="machineApp" ng-controller="machineController">   
                                     <!-- Team Total Completed -->
                                     <div class="col-xxl-12">
                                         <div id="teamCompletedWidget" class="card card-shadow example-responsive">                       
 
                                             <!-- Example Table section -->
-                                            <div class="example-wrap" style="margin-bottom:0;">
+                                            <div class="example-wrap">
                                               <!-- <h4 class="example-title">Machine LIVE Error Status</h4> -->
-                                              <div id="success_msg">
-                                                  @if(session()->has('message'))
-                                                      <div class="alert dark alert-success alert-dismissible" role="alert">{{ session()->get('message') }}</div>
-                                                  @endif
-                                              </div>
+                                            
+                                               <div class="alert dark alert-dismissible" role="alert">Filter By: <?php echo $_GET['dateRange']; ?></div>
+                                              
+                                      
                                                <div class="example">                               
 
                                                 <table id="advamnotapslogs" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
