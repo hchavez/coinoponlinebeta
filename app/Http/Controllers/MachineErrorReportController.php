@@ -822,46 +822,45 @@ class MachineErrorReportController extends Controller
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
         
         $dateRange = Input::get('dateRange');
-        
-        if($dateRange != ''):
-            $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-            if($dateRange !=''):
+        $from = $to = '';   
+        if($dateRange):
+             
+//                $explode = explode('-',$dateRange);
+//                $explode_from = explode('/',$explode[0]);
+//                $explode_to = explode('/',$explode[1]);
+//                $dayfr = $explode_from[0];
+//                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
+//                $day = $explode_to[0];
+//                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
+            
                 $explode = explode('-',$dateRange);
-                $explode_from = explode('/',$explode[0]);
-                $explode_to = explode('/',$explode[1]);
-                $dayfr = $explode_from[0];
-                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
-                $day = $explode_to[0]+1;
-                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
-                
-            endif;
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
+            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
             
-            
-              $machinenotap = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
-                    DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+      
+                    $machinenotap = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
+                      DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
                       DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
                       DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
-                    ->where('total_money','0')
-                    ->whereBetween('last_played', [$from,$to])
-                    ->orderBy('last_played','desc')->get();
+                        ->where('total_money','=','0')
+                        ->where('category','=','cardreader') 
+                        ->whereBetween('last_played', [$from,$to])
+                        ->orderBy('last_played','desc')->get();
               
-         
         else:
-        
 
-          $machinenotap = MachineReports::select( 'machine_reports.*',
-                    DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+                    $machinenotap = MachineReports::select( 'machine_reports.*',
+                      DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
                       DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
                       DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
-                    ->where('total_money','0')
-                     ->where('last_played','>=',$days_ago)
-                    ->orderBy('last_played','desc')->get();
+                        ->where('total_money','0')
+                        ->where('last_played','>=',$days_ago)
+                        ->orderBy('last_played','desc')->get();
         endif;
-         
         
 
-    
        return new UserCollection($machinenotap);
        
     }

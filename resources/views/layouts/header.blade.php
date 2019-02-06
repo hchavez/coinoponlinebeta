@@ -376,7 +376,7 @@
                     $to_y = date('Y', strtotime($basedateto));
                     $t="%2F";
                     //$query = "?dateRange=01%2F03%2F2019+-+01%2F04%2F2019";
-                    $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."".$t."+-+".$to_m."".$t."".$to_d."".$t."".$to_y."".$t;
+                    $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."+-+".$to_m."".$t."".$to_d."".$t."".$to_y;
                     //echo $query;
                     ?>  
                     <li class="dropdown site-menu-item has-sub">
