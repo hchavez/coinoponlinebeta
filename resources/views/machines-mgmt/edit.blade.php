@@ -14,20 +14,22 @@
                 <h3 class="panel-title">Update Machine Information</h3>
             </div>
             <div class="panel-body">
-                <div class="row row-lg">
+                 <form class="form-horizontal fv-form fv-form-bootstrap4" role="form" method="POST" action="{{ route('machine-management.update', ['id' => $machine->machine_id]) }}">
 
-                    <div class="col-lg-6">
-                        <!-- Example Basic Constraints -->
-                        <?php if (Session::has('success')): ?>
+                 <?php if (Session::has('success')): ?>
                             <div class="alert alert-success">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 <?php echo Session::get('success', ''); ?>
                             </div>
                         <?php endif; ?>
+                <div class="row row-lg">
+
+                    <div class="col-lg-6">
+                        <!-- Example Basic Constraints -->
+                       
                         <div class="example-wrap m-md-0">
                             <h4 class="example-title"></h4>
                             <div class="example">                                
-                                <form class="form-horizontal fv-form fv-form-bootstrap4" role="form" method="POST" action="{{ route('machine-management.update', ['id' => $machine->machine_id]) }}">
 
                                     <input type="hidden" name="_method" value="PATCH">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -189,16 +191,7 @@
                                     </div>
 
                                 
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <center> <button type="submit" class="btn btn-primary">
-                                                    Update Machine Info
-                                                </button>
-                                            </center>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                   
                             </div>
                         </div>
                         <!-- End Example Basic Constraints -->
@@ -208,12 +201,95 @@
                         <div class="example-wrap">
                             <h4 class="example-title"></h4>
                             <div class="example">
+                                    
+                                   <div class="form-group row{{ $errors->has('carrier') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Carrier</label>
+                                        <div class="col-md-9">
+                                            <input id="carrier" type="text" class="form-control" name="carrier" value="{{ $machine->carrier }}" >
 
+                                            @if ($errors->has('carrier'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('carrier') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group row{{ $errors->has('franchisee') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Franchisee</label>
+                                        <div class="col-md-9">
+                                            <input id="franchisee" type="text" class="form-control" name="franchisee" value="{{ $machine->franchisee }}" >
+
+                                            @if ($errors->has('area'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('franchisee') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                
+                                     <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Route</label>
+                                        <div class="col-md-9">
+                                         
+
+                                           @if ($machine->route)
+                                                <input id="route" type="text" class="form-control" name="route" value="{{ $machine->route }}" >
+                                           @else
+                                             <input id="route" type="text" class="form-control" name="route" value="{{ $machine->m_route }}" >
+                                           @endif
+                                        </div>
+                                    </div>
+                                
+                                     <div class="form-group row">
+                                        <label class="col-md-3 form-control-label">Area</label>
+                                        <div class="col-md-9">
+
+                                             @if ($machine->area)
+                                                <input id="route" type="text" class="form-control" name="route" value="{{ $machine->area }}" >
+                                           @else
+                                             <input id="route" type="text" class="form-control" name="route" value="{{ $machine->m_area }}" >
+                                           @endif
+                                        </div>
+                                    </div>
+                                
+                                 <div class="form-group row{{ $errors->has('sitegroup') ? ' has-error' : '' }}">
+                                        <label class="col-md-3 form-control-label">Site Group</label>
+                                        <div class="col-md-9">
+                                            <input id="sitegroup" type="text" class="form-control" name="sitegroup" value="{{ $machine->sitegroup }}" >
+
+                                            @if ($errors->has('sitegroup'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('sitegroup') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                
+                                
+                                     
+
+
+
+
+
+
+                                
                             </div>
                         </div>
                         <!-- End Example Type -->
                     </div>
                 </div>
+                      <div class="form-group">
+                                        <div class="col-md-12">
+                                            <center> <button type="submit" class="btn btn-primary">
+                                                    Update Machine Info
+                                                </button>
+                                            </center>
+                                        </div>
+                                    </div>
+
+                                </form>
             </div>
         </div>
 

@@ -59,6 +59,66 @@
                                 </div>
                             </div>
                             
+                            
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Route: </label>
+                                    <div class="col-md-9">
+                                        <input id="route" type="text" class="form-control" name="route" value="{{ old('route') }}">
+
+                                        @if ($errors->has('route'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('route') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Area: </label>
+                                    <div class="col-md-9">
+                                        <input id="area" type="text" class="form-control" name="area" value="{{ old('area') }}">
+
+                                        @if ($errors->has('area'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('area') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Carrier: </label>
+                                    <div class="col-md-9">
+                                        <input id="carrier" type="text" class="form-control" name="carrier" value="{{ old('carrier') }}">
+
+                                        @if ($errors->has('carrier'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('carrier') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Franchisee: </label>
+                                    <div class="col-md-9">
+                                        <input id="franchisee" type="text" class="form-control" name="franchisee" value="{{ old('franchisee') }}">
+
+                                        @if ($errors->has('franchisee'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('franchisee') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                            
                             
                              <div class="form-group">
@@ -121,20 +181,7 @@
                                 </div>
                             </div>
 
-<!--                            <div class="form-group">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label">IP Address: </label>
-                                    <div class="col-md-9">
-                                        <input id="ipaddress" type="text" class="form-control" name="ipaddress" value="{{ old('ipaddress') }}">
 
-                                        @if ($errors->has('ipaddress'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('ipaddress') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>-->
                             
                             <div class="form-group">
                                 <div class="form-group row">

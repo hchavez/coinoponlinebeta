@@ -246,7 +246,7 @@
 @endforeach
 
 <div class="modal fade online-modal-lg" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -273,26 +273,56 @@
   </div>
 </div>
 <div class="modal fade example-modal-lg-off" aria-hidden="true" aria-labelledby="exampleOptionalLarge" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog  modal-xl">
+    <div class="modal-content" >
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <h4 class="modal-title" id="exampleOptionalLarge">Offline Machine</h4>
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th>Serial</th><th>Site</th><th>Area</th><th>Error</th><th>Lastlog</th></tr></thead>
+            <thead><tr><th>State</th><th>Franchisee</th><th>SiteGroup</th><th>Carrier</th><th>Deployment Status</th><th>Machine Model</th><th>Serial</th><th>Site</th><th>Area</th><th>Problem</th><th>Problem Start Time</th><th>Problem Fixed Time</th><th>Downtime</th></tr></thead>
             <tbody>
               @foreach ($data['totalOffline'] as $lists)                      
                 <tr>                            
-                    <!--<td width="5%"><i class="icon wb-minus-circle ml-10 red-600" aria-hidden="true" data-toggle="tooltip" data-original-title="help" data-container="body" title=""></i></td> 
-                    <td width="9%">{{ $lists->state }}</td>
-                    <td width="25%">{{ $lists->machine_model }}</td> -->
-                    <td width="23%"><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
-                    <td width="20%">{{ $lists->site }}</td>      
-                    <td width="15%">{{ $lists->area }}</td>   
-                    <td width="20%">Machine Offline</td>   
-                    <td width="23=0%"> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td>   
+                     
+                    <td>{{ $lists->state }}</td>
+                    <td>{{ $lists->franchisee }}</td>
+                    <th>{{ $lists->sitegroup}}</th>
+                     <th>{{ $lists->carrier }}</th>
+                    
+                   
+                     <th> 
+                            @if ($lists->status == '0')
+                                <?php echo 'On Site'; ?>
+                          @endif
+                           @if ($lists->status == '2')
+                                <?php echo 'Warehouse'; ?>
+                          @endif
+                         
+                     </th>
+
+                    <td>{{ $lists->machine_model }}</td> 
+                    <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
+                    <td>
+                        @if ($lists->site)
+                                {{ $lists->site }}
+                          @else
+                            {{ $lists->m_site }}
+                          @endif
+                    </td>      
+                   <td>
+                        @if ($lists->area)
+                                {{ $lists->area }}
+                          @else
+                            {{ $lists->m_area }}
+                          @endif
+                    </td> 
+                    <td>Machine Offline</td>   
+                    <td> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td> 
+                     <td> </td> 
+                    <td></td>
+                    
                 </tr>                          
               @endforeach   
             </tbody>
@@ -338,8 +368,28 @@
 <!-- MODAL MUST END HERE -->
 </div>
 <style type="text/css">
+    
+    @media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px;
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width: 100%;
+  }
+}
 .select2-container{width:100% !important;}
-.machines-modal{max-width:1500px;max-height: 450px;}
+.machines-modal{max-width:1500px !important;max-height: 450px;}
 .ladda-button{margin-top:10px;}
 .dt-buttons{top:1em !important;position: inherit !important;}
 .table-container {height: 10em;}

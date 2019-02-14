@@ -221,6 +221,10 @@ class MachineManagementController extends Controller {
             'version' => $request['version'],
             'teamviewer' => $request['teamviewer'],
             'activation_date' => $request['activation_date'],
+            'route' => $request['route'],
+            'area' => $request['area'],
+            'carrier' => $request['carrier'],
+            'franchisee' => $request['franchisee'],
             'status' => '3' //1 = online 0 = offline 2 = warehouse 1111 = dummy status
         ]);
 
@@ -901,6 +905,7 @@ class MachineManagementController extends Controller {
                         ->select('machines.*', 'machines.id as machine_id', 'machines.machine_serial_no as serial_no'
                                 , 'machine_models.machine_model as machine_model'
                                 , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address', 'sites.id as site_id'
+                                , 'machines.route as m_route', 'machines.area as m_area'
                                 , 'machines.comments as machine_comments', 'route.route as route', 'area.area as area', 'sites.state as state'
                                 , 'sites.site_name as site', 'themes.theme as theme')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
@@ -980,6 +985,11 @@ class MachineManagementController extends Controller {
             'version' => $request['version'],
             'status' => $request['status'],
             'teamviewer' => $request['teamviewer'],
+            'route' => $request['route'],
+            'area' => $request['area'],
+            'carrier' => $request['carrier'],
+            'franchisee' => $request['franchisee'],
+            'sitegroup' => $request['sitegroup'],
             'activation_date' => $request['activation_date'],
         ];
 

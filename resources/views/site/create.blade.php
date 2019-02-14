@@ -17,14 +17,14 @@
                             <form class="form-horizontal" role="form" method="POST" action="{{ route('site.store') }}">
                                 {{ csrf_field() }}
 
-                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                <div class="form-group{{ $errors->has('site_name') ? ' has-error' : '' }}">
 
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                        <input id="site_name" type="text" class="form-control" name="site_name" value="{{ old('site_name') }}" required autofocus>
 
-                                        @if ($errors->has('title'))
+                                        @if ($errors->has('site_name'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('site_name') }}</strong>
                                         </span>
                                         @endif
                                     </div>

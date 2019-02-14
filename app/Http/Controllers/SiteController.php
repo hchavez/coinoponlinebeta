@@ -93,11 +93,11 @@ class SiteController extends Controller
      */
     public function store(Request $request)
     {
-        State::findOrFail($request['state_id']);
+     
         $this->validateInput($request);
-         site::create([
-            'name' => $request['name'],
-            'state_id' => $request['state_id']
+         Site::create([
+            'site_name' => $request['site_name'],
+            'state' => $request['state']
         ]);
 
         return redirect()->intended('system-management/site');

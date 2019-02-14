@@ -607,14 +607,15 @@ class MachineErrorReportController extends Controller
 
         $machineLists = DB::table('machines')
                         ->select('machines.*', 'machines.id as machine_id', 'machine_models.machine_model as machine_model'
-                                    , 'machine_types.machine_type as machine_type', 'machines.ip_address as ip_address'
-                                , 'route.route as route', 'area.area as area', 'sites.state as state'
+                                , 'machine_types.machine_type as machine_type', 'machines.status as status', 'machines.carrier as carrier', 'machines.franchisee as franchisee'
+                                , 'machines.area as m_area', 'machines.sitegroup as m_sitegroup','machines.route as m_route', 'route.route as route', 'area.area as area', 'sites.state as state', 'site_groups.site_group_name as sitegroup'
                                 , 'machine_status.updated_at as lastlog', 'sites.site_name as site')
                         ->leftJoin('machine_models', 'machines.machine_model_id', '=', 'machine_models.id')
                         ->leftJoin('machine_types', 'machines.machine_type_id', '=', 'machine_types.id')
                         ->leftJoin('machine_status', 'machines.id', '=', 'machine_status.machine_id')
                         ->leftJoin('sites', 'machines.site_id', '=', 'sites.id')
                         ->leftJoin('route', 'sites.route_id', '=', 'route.id')
+                        ->leftJoin('site_groups', 'sites.group_id', '=', 'site_groups.id')
                         ->leftJoin('area', 'sites.area_id', '=', 'area.id')
                         ->where('machines.status','0')->orderBy('machines.updated_at','desc')->get(); 
 
