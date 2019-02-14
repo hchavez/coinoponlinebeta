@@ -246,9 +246,9 @@
                                         <div class="col-md-9">
 
                                              @if ($machine->area)
-                                                <input id="route" type="text" class="form-control" name="route" value="{{ $machine->area }}" >
+                                                <input id="area" type="text" class="form-control" name="area" value="{{ $machine->area }}" >
                                            @else
-                                             <input id="route" type="text" class="form-control" name="route" value="{{ $machine->m_area }}" >
+                                             <input id="area" type="text" class="form-control" name="area" value="{{ $machine->m_area }}" >
                                            @endif
                                         </div>
                                     </div>
