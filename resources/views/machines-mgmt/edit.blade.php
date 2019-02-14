@@ -233,10 +233,10 @@
                                         <div class="col-md-9">
                                          
 
-                                           @if ($machine->route)
-                                                <input id="route" type="text" class="form-control" name="route" value="{{ $machine->route }}" >
+                                           @if ($machine->m_route)
+                                                <input id="route" type="text" class="form-control" name="route" value="{{ $machine->m_route }}" >
                                            @else
-                                             <input id="route" type="text" class="form-control" name="route" value="{{ $machine->m_route }}" >
+                                             <input id="route" type="text" class="form-control" name="route" value="{{ $machine->route }}" >
                                            @endif
                                         </div>
                                     </div>
@@ -245,10 +245,10 @@
                                         <label class="col-md-3 form-control-label">Area</label>
                                         <div class="col-md-9">
 
-                                             @if ($machine->area)
-                                                <input id="area" type="text" class="form-control" name="area" value="{{ $machine->area }}" >
+                                             @if ($machine->m_area)
+                                                <input id="area" type="text" class="form-control" name="area" value="{{ $machine->m_area }}" >
                                            @else
-                                             <input id="area" type="text" class="form-control" name="area" value="{{ $machine->m_area }}" >
+                                             <input id="area" type="text" class="form-control" name="area" value="{{ $machine->area }}" >
                                            @endif
                                         </div>
                                     </div>
