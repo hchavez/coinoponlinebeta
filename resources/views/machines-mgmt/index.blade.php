@@ -65,8 +65,20 @@
                                     <td> <a href="machine-management/{{ $machine->id }}"> {{ $machine->machine_serial_no }} </a></td>
                                     <td> {{ $machine->site }} </td>  
                                     <td> {{ $machine->state }} </td>
-                                    <td>{{ $machine->route }} </td>
-                                    <td> {{ $machine->area }}</td>
+                                    <td>
+                                      @if ($machine->m_route)
+                                            {{ $machine->m_route }}
+                                      @else
+                                        {{ $machine->route }}
+                                      @endif
+                                    </td>
+                                    <td> 
+                                      @if ($machine->m_area)
+                                            {{ $machine->m_area }}
+                                      @else
+                                        {{ $machine->area }}
+                                      @endif
+                                    </td>
                                     <td> <a href="machine-management/{{ $machine->id }}">{{ $machine->comments }} - {{ $machine->version }} </a></td>                                    
                                     <td> {{ number_format($machine->total_money ,2) }} </td>
                                     <td> {{ $machine->total_toys_win }} </td>                                   

@@ -305,17 +305,17 @@
                     <td>{{ $lists->machine_model }}</td> 
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
                     <td>
-                        @if ($lists->site)
-                                {{ $lists->site }}
+                        @if ($lists->m_site)
+                                {{ $lists->m_site }}
                           @else
-                            {{ $lists->m_site }}
+                            {{ $lists->site }}
                           @endif
                     </td>      
                    <td>
-                        @if ($lists->area)
-                                {{ $lists->area }}
+                        @if ($lists->m_area)
+                                {{ $lists->m_area }}
                           @else
-                            {{ $lists->m_area }}
+                            {{ $lists->area }}
                           @endif
                     </td> 
                     <td>Machine Offline</td>   
