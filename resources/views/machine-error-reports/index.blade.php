@@ -305,8 +305,8 @@
                     <td>{{ $lists->machine_model }}</td> 
                     <td><a href="machine-management/show/{{ $lists->id }}">{{ $lists->comments }} - {{ $lists->machine_serial_no }}</a></td>
                     <td>
-                        @if ($lists->m_site)
-                                {{ $lists->m_site }}
+                        @if ($lists->site)
+                                {{ $lists->site }}
                           @else
                             {{ $lists->site }}
                           @endif
