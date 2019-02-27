@@ -281,7 +281,7 @@
       </div>
       <div class="modal-body">
         <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead><tr><th>State</th><th>Franchisee</th><th>SiteGroup</th><th>Carrier</th><th>Deployment Status</th><th>Machine Model</th><th>Serial</th><th>Site</th><th>Area</th><th>Problem</th><th>Problem Start Time</th><th>Problem Fixed Time</th><th>Downtime</th></tr></thead>
+            <thead><tr><th>State</th><th>Franchisee</th><th>SiteGroup</th><th>Carrier</th><th>Deployment Status</th><th>Machine Model</th><th>Serial</th><th>Site</th><th>Area</th><th>Problem</th><th>Problem Start Time</th></tr></thead>
             <tbody>
               @foreach ($data['totalOffline'] as $lists)                      
                 <tr>                            
@@ -320,8 +320,7 @@
                     </td> 
                     <td>Machine Offline</td>   
                     <td> {{ date('d/m/Y h:i A', strtotime($lists->lastlog )) }} </td> 
-                     <td> </td> 
-                    <td></td>
+        
                     
                 </tr>                          
               @endforeach   

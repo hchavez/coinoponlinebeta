@@ -75,51 +75,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label">Area: </label>
-                                    <div class="col-md-9">
-                                        <input id="area" type="text" class="form-control" name="area" value="{{ old('area') }}">
-
-                                        @if ($errors->has('area'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('area') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label">Carrier: </label>
-                                    <div class="col-md-9">
-                                        <input id="carrier" type="text" class="form-control" name="carrier" value="{{ old('carrier') }}">
-
-                                        @if ($errors->has('carrier'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('carrier') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label">Franchisee: </label>
-                                    <div class="col-md-9">
-                                        <input id="franchisee" type="text" class="form-control" name="franchisee" value="{{ old('franchisee') }}">
-
-                                        @if ($errors->has('franchisee'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('franchisee') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                           
+                            
                             
                              <div class="form-group">
                                 <div class="form-group row">
@@ -197,7 +153,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--
                              <div class="form-group{{ $errors->has('activation_date') ? ' has-error' : '' }}">
                                 <div class="form-group row">
                                     <label for="activation_date" class="col-md-3 form-control-label">Activation Date: </label>
@@ -216,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            -->
 
                         </div>
                         <!-- End Example Horizontal Form -->
@@ -234,7 +190,7 @@
                                     <label for="serial_no" class="col-md-3 form-control-label">Serial No: </label>
 
                                     <div class="col-md-9">
-                                        <input id="serial_no" type="text" class="form-control" name="serial_no" value="{{ old('serial_no') }}" required>
+                                        <input id="serial_no" type="text" class="form-control" name="serial_no" value="{{ old('serial_no') }}" >
 
                                         @if ($errors->has('serial_no'))
                                         <span class="help-block">
@@ -250,7 +206,7 @@
                                     <label for="version" class="col-md-3 form-control-label">Version: </label>
 
                                     <div class="col-md-9">
-                                        <input id="version" type="text" class="form-control" name="version" value="{{ old('version') }}" required>
+                                        <input id="version" type="text" class="form-control" name="version" value="{{ old('version') }}" >
 
                                         @if ($errors->has('version'))
                                         <span class="help-block">
@@ -260,6 +216,52 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Area: </label>
+                                    <div class="col-md-9">
+                                        <input id="area" type="text" class="form-control" name="area" value="{{ old('area') }}">
+
+                                        @if ($errors->has('area'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('area') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Carrier: </label>
+                                    <div class="col-md-9">
+                                        <input id="carrier" type="text" class="form-control" name="carrier" value="{{ old('carrier') }}">
+
+                                        @if ($errors->has('carrier'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('carrier') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-md-3 form-control-label">Franchisee: </label>
+                                    <div class="col-md-9">
+                                        <input id="franchisee" type="text" class="form-control" name="franchisee" value="{{ old('franchisee') }}">
+
+                                        @if ($errors->has('franchisee'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('franchisee') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                           
                             
                             
                             <div class="form-group{{ $errors->has('purchase_amount') ? ' has-error' : '' }}">
@@ -307,7 +309,7 @@
                                 </div>
                             </div>
 
-
+                            <!-- 
                             <div class="form-group{{ $errors->has('sold_amount') ? ' has-error' : '' }}">
                                 <div class="form-group row">
                                     <label for="sold_amount" class="col-md-3 form-control-label">Sold Amount: </label>
@@ -344,7 +346,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                               -->
 
                         </div>
 
