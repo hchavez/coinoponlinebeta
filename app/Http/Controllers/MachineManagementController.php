@@ -76,7 +76,7 @@ class MachineManagementController extends Controller {
                             ->whereIn('machines.status', ['1','0']);
                             //->where('machines.status','<>', '1111');
                         
-            $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
+            $machines = $machines->whereDate('machine_reports.date_created', '=', Carbon::today()->toDateString());
         else:  
             $dateRange = Input::get('dateRange');
             $today = date('m/d/Y');
@@ -108,7 +108,7 @@ class MachineManagementController extends Controller {
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                             //->where('machines.status','<>', '1111')
                             ->whereIn('machines.status', ['1','0'])
-                            ->whereBetween('machine_reports.last_played', [$from, $to])
+                            ->whereBetween('machine_reports.date_created', [$from, $to])
                             ->groupBy(DB::raw("machine_id,machine_model,category,machine_type,ip_address,total_toys_win,stock_left,slip_volt,pkup_volt,date_created,
                                 ret_volt,owed_win,excess_win,last_visit,last_played,route,area,state,site"));              
            
@@ -151,7 +151,7 @@ class MachineManagementController extends Controller {
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id')    
                             ->where('machines.status','<>', '1111');
                         
-        $machines = $machines->whereDate('machine_reports.last_played', '=', Carbon::today()->toDateString());
+        $machines = $machines->whereDate('machine_reports.date_created', '=', Carbon::today()->toDateString());
         $machines = $machines->orderBy('machines.status','desc')->get()->toArray(); 
         $data = array('data' => $machines);
         return $data;
