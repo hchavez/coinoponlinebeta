@@ -816,62 +816,81 @@ class MachineErrorReportController extends Controller
     }
     
     public function advamnotap(){
-       
-        $date = new DateTime('+1 day');        
-        $thedate = date("Y-m-d H:i:s");
-        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        $from = $to = '';   
-        
      
-        
-        if($dateRange):
-             
-//                $explode = explode('-',$dateRange);
-//                $explode_from = explode('/',$explode[0]);
-//                $explode_to = explode('/',$explode[1]);
-//                $dayfr = $explode_from[0];
-//                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
-//                $day = $explode_to[0];
-//                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
-            
-                $explode = explode('-',$dateRange);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
-            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
-            
-      
-                    $machinenotap = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
-                      DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
-                      DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
-                      DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
-                        ->where('total_money','=','0')
-                        ->where('category','=','cardreader') 
-                        ->whereBetween('last_played', [$from,$to])
-                        ->orderBy('last_played','desc')->get();
-              
-        else:
+        $thedate = date("Y-m-d");
+        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
+        $days = '-'.Input::get('days').' days';
+        $days_ago = date('Y-m-d', strtotime($days, strtotime($today)));  
 
-                    $machinenotap = MachineReports::select( 'machine_reports.*',
+        $days = Input::get('days'); 
+        
+                      $machinenotap = MachineReports::select('machine_id',
+                      DB::raw("count(machine_id) as count"),
                       DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
                       DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
                       DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
                         ->where('total_money','0')
-                        ->where('last_played','>=',$days_ago)
-                        ->orderBy('last_played','desc')->get();
-        endif;
-        
-
-       return new UserCollection($machinenotap);
+                        ->whereIn('category',['cardreader','george system and cardreader'])
+                        ->where('date_created','>=',$days_ago)
+                        ->groupBy('machine_id')->get();
+                      
        
+        $notaps = array();        
+        foreach($machinenotap as $data){
+            if($data['count'] == Input::get('days')){
+                array_push($notaps,$data);
+            }
+        }
+       
+        return $notaps;
+
+        
     }
     
+     public function advam_notapdetail() {   
+        
+          $days = Input::get('days');     
+          $machine_id = Input::get('machine_id');    
+      
+   
+        $machineModel = MachineModel::orderBy('created_at', 'desc')->get();
+        $site = Site::orderBy('site_name', 'asc')->get();
+        $machineType = MachineType::orderBy('created_at', 'desc')->get();
+                
+        $filterData = array(            
+            'machine_model' => Input::get('machine_model'),
+            'machine_type' => Input::get('machine_type'),
+            'machine_site' => Input::get('machine_site'),
+            'error_msg' => Input::get('error_msg'),
+            'machine_site' => Input::get('machine_site'),
+        );         
+      
+        return view('machine-error-reports/advam-notapdetail', ['filterData'=>$filterData]);
     
+    }
     
-    
+    public function notapmachinedetail()
+    {
+        $machine_id = Input::get('machine_id'); 
+        
+         $thedate = date("Y-m-d");
+        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
+        $days = '-'.Input::get('days').' days';
+        $days_ago = date('Y-m-d', strtotime($days, strtotime($today)));  
+        
+        $machinenotapdetail = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
+                 DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+                 DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
+                 DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
+                        ->where('total_money','=','0')->where('machine_id',$machine_id)
+                        ->whereIn('category',['cardreader','george system and cardreader'])
+                        ->where('date_created','>=',$days_ago)
+                        ->orderBy('date_created','desc')->get(); 
+        
+        //var_dump($machinenotapdetail);
+        return new UserCollection($machinenotapdetail);
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

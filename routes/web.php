@@ -21,6 +21,8 @@ use App\Http\Resources\UserCollection;
 
 Route::get('advam-notap', 'MachineErrorReportController@advam_notap');
 Route::get('advamnotap', 'MachineErrorReportController@advamnotap');
+Route::get('advam-notapdetail', 'MachineErrorReportController@advam_notapdetail');
+Route::get('notapmachinedetail', 'MachineErrorReportController@notapmachinedetail');
 Route::get('error-history', 'MachineErrorReportController@error_history');
 Route::get('allerrorsapi', 'MachineErrorReportController@allerrorsapi');
 

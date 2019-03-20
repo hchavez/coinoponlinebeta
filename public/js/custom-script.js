@@ -38,6 +38,10 @@ $(document).ready(function(){
     var filter = urlFilter.searchParams.get("dateRange");
     var input = (filter!=null)? '?dateRange='+filter : '' ;
     
+    
+    var filterdays = urlFilter.searchParams.get("days");
+    var days= (filter!=null)? '?days='+filterdays : '' ;
+    
     $('#klogs').DataTable().destroy();
     $('#klogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
@@ -129,20 +133,15 @@ $(document).ready(function(){
             {'data': 'machine.site'},
             {'data': 'type'},
             {'data': 'error'},
-            {'data': 'resolve_by', 
-            'render': function (data, type, row) { 
-                if ( row.resolve_by == '0'){ return 'System';} 
-                else { return ''; }
-            }},
+            {'data': 'resolve_by'},
             {'data': 'resolve_date'}]
     });
-    
     
     $('#advamnotapslogs').DataTable().destroy();
     $('#advamnotapslogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
-        processing : true,
-        ajax: base_url+'advamnotap/'+input,    
+        processing : true,   
+        //ajax: base_url+'advamnotap/'+days,  
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excelHtml5',
@@ -164,16 +163,18 @@ $(document).ready(function(){
                     $('row c', sheet).attr( 's', '51' );
                 }
             }],
-        
-        deferRender:  true,  
         pageLength: 35,
         scrollY: '500px',
         scrollCollapse: true,
-        order: [[0,'last_played']], 
-        columns:[{'data': 'date_played'},
-        {'data': 'machine'},
-        {'data': 'machine_serial'},
-        {'data': 'site'},{'data': 'machine_malfunction'},{'data': 'machine_offline'},{'data': 'internet_lost'},{'data': 'start_of_internet_lost'}]
+        ajax: {
+            url: base_url+'advamnotap/'+days,
+            //"dataSrc": ""
+        },
+        columns: [
+            { "data": "machine_id" },
+            { "data": "machine"},
+            { "data": "machine_serial"},
+            { "data": "site"}]
     });
        
   

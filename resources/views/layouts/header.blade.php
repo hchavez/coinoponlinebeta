@@ -377,6 +377,7 @@
                     $t="%2F";
                     //$query = "?dateRange=01%2F03%2F2019+-+01%2F04%2F2019";
                     $query = "?dateRange=".$frm_m."".$t."".$frm_d."".$t."".$frm_y."+-+".$to_m."".$t."".$to_d."".$t."".$to_y;
+                     $days = "?days=7";
                     //echo $query;
                     ?>  
                     <li class="dropdown site-menu-item has-sub">
@@ -400,7 +401,7 @@
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">
-                                                <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo $query; ?>">
+                                                <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo $days; ?>">
                                                     <span class="site-menu-title">Advam No-Taps</span>
                                                 </a>
                                             </li>

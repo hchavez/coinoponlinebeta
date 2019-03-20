@@ -15,7 +15,13 @@
                                     <h3 class="panel-title">Machine Advam with No-Taps Report</h3> 
                                 </header>
                     <div class="row">
-                
+                         
+                                
+                       
+                        <div class="col-md-6">                            
+                          
+                     
+                        </div> 
                      
                         <div class="col-sm-12">
                             
@@ -34,36 +40,23 @@
                                             <div class="example-wrap">
                                               <!-- <h4 class="example-title">Machine LIVE Error Status</h4> -->
                                             
-                                               <div class="alert dark alert-dismissible" role="alert">  
-                                                   No of Days No Tap:
-                                               <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=1"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '1') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?> ">1</button>
-                                                </a> <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=2"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '2') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">2</button>
-                                                </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=3"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '3') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">3</button>
-                                                </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=4"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '3') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">4</button>
-                                                </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=5"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '5') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">5</button>
-                                                </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=6"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '6') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">6</button>
-                                                </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=7"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '7') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">7</button>
-                                                </a>
-                                                   
-                                               </div>
+                                               <div class="alert dark alert-dismissible" role="alert"> <!-- Filter By: --> <?php //echo $_GET['dateRange']; ?></div>
                                               
                                       
                                                <div class="example">                               
 
-                                                <table id="notapindays" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
+                                                <table id="advam-notapdetail" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
                                                         <tr role="row"> 
+                                                           
                                                             <th>ID</th>
                                                             <th>Machine</th>
                                                             <th>Serial</th>
                                                             <th>Site</th>
+                                                            <th>Machine Malfunction</th>
+                                                            <th>Machine Offline</th>
+                                                            <th>Internet Lost</th>
+                                                            <th>Start of Internet Lost</th>
                                                         </tr> 
                                                     </thead>                                                     
                                                     <tbody class="table-section" data-plugin="tableSection" >                                                        
@@ -99,17 +92,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script src="{{ asset("/js/export-table.js") }}"></script>
-
-
 <style>
 .dt-button.buttons-excel{margin: 1em 2em 0 0;}
 .dt-buttons{position:static !important;}
 .ladda-button, .dt-buttons{display:inline-block;vertical-align: top;}
 .ladda-button{margin-top:10px;}
 </style>
-
-
-
 <script>    
     
 $(document).ready(function() {
@@ -138,12 +126,14 @@ $(document).ready(function() {
     }
     
     var days = getUrlParameter('days');
-
-     $('#notapindays').DataTable().destroy();
-    $('#notapindays').DataTable( {
+     var machine_id = getUrlParameter('machine_id');
+    
+    
+    $('#advam-notapdetail').DataTable().destroy();
+    $('#advam-notapdetail').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
-        processing : true,   
-        //ajax: base_url+'advamnotap/'+days,  
+        processing : true,
+        ajax: base_url+'notapmachinedetail?machine_id='+machine_id+'&days='+days+'',  
         dom: 'Bfrtip',
         buttons: [{
                 extend: 'excelHtml5',
@@ -165,20 +155,18 @@ $(document).ready(function() {
                     $('row c', sheet).attr( 's', '51' );
                 }
             }],
-        "ajax": {
-            "url": base_url+'advamnotap?days='+days,
-            "dataSrc": ""
-        },
-        "columns": [
-              { "data": "machine_id" },
-            { "data": "machine",
-        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a target='_blank' href='advam-notapdetail?machine_id="+oData.machine_id+"&days="+days+"'>"+oData.machine+"</a>");
-        }},
-            { "data": "machine_serial"},
-            { "data": "site"}
-        ]
-    } );
+        
+        deferRender:  true,  
+        pageLength: 35,
+        scrollY: '500px',
+        scrollCollapse: true,
+        order: [[0,'date_played']], 
+        columns:[{'data': 'date_played'},
+        {'data': 'machine'},
+        {'data': 'machine_serial'},
+        {'data': 'site'},{'data': 'machine_malfunction'},{'data': 'machine_offline'},{'data': 'internet_lost'},{'data': 'start_of_internet_lost'}]
+    });
+    
 
 
 
@@ -193,25 +181,9 @@ $(document).ready(function() {
         $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
         var select = $(this), form = select.closest('form');  form.submit();
     });
- var export_icon = 'https://raw.githubusercontent.com/hchavez/coinoponlinebeta/master/public/assets/images/excel.png';
-      $('#notapindays button').html('<img src="'+export_icon+'" width="32px">'); 
-      
+
+       
 });
-
-
-function createCellPos( n ){
-    var ordA = 'A'.charCodeAt(0);
-    var ordZ = 'Z'.charCodeAt(0);
-    var len = ordZ - ordA + 1;
-    var s = "";
- 
-    while( n >= 0 ) {
-        s = String.fromCharCode(n % len + ordA) + s;
-        n = Math.floor(n / len) - 1;
-    }
- 
-    return s;
-}
 
 </script>
 @endsection
