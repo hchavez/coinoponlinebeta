@@ -821,7 +821,7 @@ class MachineErrorReportController extends Controller
         $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
         $days = '-'.Input::get('days').' days';
         $days_ago = date('Y-m-d', strtotime($days, strtotime($today)));  
-
+       
         $days = Input::get('days'); 
         
                       $machinenotap = MachineReports::select('machine_id',
@@ -831,13 +831,14 @@ class MachineErrorReportController extends Controller
                       DB::raw('(select last_tapped from machines where id = machine_reports.machine_id) as last_tapped'),
                       DB::raw('(select last_online from machines where id = machine_reports.machine_id) as last_online'),
                       DB::raw('(select site from machines where id = machine_reports.machine_id) as site'),
-                      //DB::raw('(select error from errorlogs left join machines on machines.id = errorlogs.machine_id where errorlogs.error = "machine_online_confirmation" ORDER BY machines.id DESC LIMIT 1) as last_online'),
                       DB::raw('(select machine_model from machine_models left join machines on machines.machine_model_id = machine_models.id where machines.id = machine_reports.machine_id) as machine_model'))
-                        ->where('total_money','0')
+                        ->where('total_money','=','0')
                         ->whereIn('category',['cardreader','george system and cardreader'])
-                        ->where('date_created','>=',$days_ago)
+                        //->where('date_created','>',$days_ago)
+                        ->whereBetween('date_created', [$days_ago,$today])
                         ->groupBy('machine_id')->get();
-                      
+         
+     
         $notaps = array();        
         foreach($machinenotap as $data){
             if($data['count'] == Input::get('days')){

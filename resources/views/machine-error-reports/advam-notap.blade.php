@@ -180,20 +180,9 @@ $(document).ready(function() {
         }},
             { "data": "machine_serial"},
             { "data": "site"},
-            { "data": "last_tapped",                
-                'render': function (data, type, row) { 
-                        var str = row.last_tapped.split(" ");
-                        var date = str[0].split("-")
-                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
-                    }
+            { "data": "last_tapped"
                 },
-            { "data": "last_online",                
-                'render': function (data, type, row) { 
-                        var str = row.last_online.split(" ");
-                        var date = str[0].split("-")
-                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
-                    }
-                }
+            { "data": "last_online"}
         ]
     } );
 
