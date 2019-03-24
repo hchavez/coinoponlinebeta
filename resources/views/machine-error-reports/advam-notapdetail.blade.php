@@ -49,7 +49,7 @@
                                                     <thead>
                                                         <tr role="row"> 
                                                            
-                                                            <th>ID</th>
+                                                            <th>Date</th>
                                                             <th>Machine</th>
                                                             <th>Serial</th>
                                                             <th>Site</th>

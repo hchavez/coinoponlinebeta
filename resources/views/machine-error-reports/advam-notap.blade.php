@@ -43,7 +43,7 @@
                                                 </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=3"; ?>">
                                                     <button type="button" class="btn <?php if ($_GET['days'] == '3') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">3</button>
                                                 </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=4"; ?>">
-                                                    <button type="button" class="btn <?php if ($_GET['days'] == '3') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">4</button>
+                                                    <button type="button" class="btn <?php if ($_GET['days'] == '4') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">4</button>
                                                 </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=5"; ?>">
                                                     <button type="button" class="btn <?php if ($_GET['days'] == '5') {echo 'btn btn-danger'; } else {echo 'btn btn-info';} ?>">5</button>
                                                 </a><a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo "?days=6"; ?>">
@@ -60,10 +60,13 @@
                                                 <table id="notapindays" class="display table table-hover dataTable table-bordered w-full dtr-inline table-responsive" role="grid" aria-describedby="example2_info"">                                    
                                                     <thead>
                                                         <tr role="row"> 
-                                                            <th>ID</th>
+                                                            <th>Model</th>
                                                             <th>Machine</th>
                                                             <th>Serial</th>
                                                             <th>Site</th>
+                                                           <th>Last Tapped</th>
+                                                            <th>Last Seen Online</th>
+                                                            
                                                         </tr> 
                                                     </thead>                                                     
                                                     <tbody class="table-section" data-plugin="tableSection" >                                                        
@@ -170,13 +173,27 @@ $(document).ready(function() {
             "dataSrc": ""
         },
         "columns": [
-              { "data": "machine_id" },
+              { "data": "machine_model" },
             { "data": "machine",
         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
             $(nTd).html("<a target='_blank' href='advam-notapdetail?machine_id="+oData.machine_id+"&days="+days+"'>"+oData.machine+"</a>");
         }},
             { "data": "machine_serial"},
-            { "data": "site"}
+            { "data": "site"},
+            { "data": "last_tapped",                
+                'render': function (data, type, row) { 
+                        var str = row.last_tapped.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+                },
+            { "data": "last_online",                
+                'render': function (data, type, row) { 
+                        var str = row.last_online.split(" ");
+                        var date = str[0].split("-")
+                        return date[2]+'/'+date[1]+'/'+date[0]+' '+str[1];                        
+                    }
+                }
         ]
     } );
 
