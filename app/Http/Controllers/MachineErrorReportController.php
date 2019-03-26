@@ -830,7 +830,8 @@ class MachineErrorReportController extends Controller
                       DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
                       DB::raw('(select last_tapped from machines where id = machine_reports.machine_id) as last_tapped'),
                       DB::raw('(select last_online from machines where id = machine_reports.machine_id) as last_online'),
-                      DB::raw('(select site from machines where id = machine_reports.machine_id) as site'),
+                      //DB::raw('(select site from machines where id = machine_reports.machine_id) as site'),
+                      DB::raw('(select site_name from sites left join machines on machines.site_id = sites.id where machines.id = machine_reports.machine_id) as site'),
                       DB::raw('(select machine_model from machine_models left join machines on machines.machine_model_id = machine_models.id where machines.id = machine_reports.machine_id) as machine_model'))
                         ->where('total_money','=','0')
                         ->whereIn('category',['cardreader','george system and cardreader'])
@@ -885,7 +886,7 @@ class MachineErrorReportController extends Controller
         $machinenotapdetail = MachineReports::select( 'machine_reports.*', DB::raw("DATE_FORMAT(machine_reports.last_played, '%d/%m/%Y') as date_played"),
                  DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
                  DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
-                 DB::raw('(select site from machines where id = machine_reports.machine_id) as site'))
+                 DB::raw('(select site_name from sites left join machines on machines.site_id = sites.id where machines.id = machine_reports.machine_id) as site'))
                         ->where('total_money','=','0')->where('machine_id',$machine_id)
                         ->whereIn('category',['cardreader','george system and cardreader'])
                         ->where('date_created','>=',$days_ago)
