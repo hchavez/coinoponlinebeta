@@ -111,6 +111,7 @@
   <script src="{{ asset("/global/js/Plugin/switchery.js") }}"></script>
   <script src="{{ asset("/global/js/Plugin/bootstrap-datepicker.js") }}"></script>
   
+  
   <!--CustomStyle-->
   <link rel="stylesheet" href="{{ asset("/global/css/custom.css") }}">
   <script>

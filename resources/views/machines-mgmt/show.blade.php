@@ -491,7 +491,7 @@
 
                                                 yAxis: [{
                                                         min: -20,
-                                                     max: 40,
+                                                     max: 55,
                                                      tickInterval: 5,
                                                     labels: {
                                                         align: 'right',

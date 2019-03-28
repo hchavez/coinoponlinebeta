@@ -554,12 +554,12 @@ class MachineManagementController extends Controller {
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-        $Today = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);    
-        $Yesterday = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->where('created_at','like','%'.$yesterday.'%')->sum($type);
-        $Week = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
-        $Month = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$fromDate, $today])->sum($type);
-        $financial = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
-        $Year = MoneyLogs::where('status', '=', 1)->where('machine_id', $id)->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        $Today = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);    
+        $Yesterday = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->where('created_at','like','%'.$yesterday.'%')->sum($type);
+        $Week = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Month = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $financial = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
+        $Year = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$thisYear, $today])->sum($type);
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
         return $total;

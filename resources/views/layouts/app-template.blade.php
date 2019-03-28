@@ -159,6 +159,10 @@ Breakpoints();
         <script src="{{ asset("/global/js/Plugin/peity.js") }}"></script>
         <script src="{{ asset("/assets/examples/js/charts/peity.js") }}"></script>
         <script src="{{ asset("/assets/examples/js/advanced/bootbox-sweetalert.js") }}"></script>
+        
+            <script src="{{ asset("/global/js/Plugin/responsive-tabs.js") }}"></script>
+  <script src="{{ asset("/global/js/Plugin/closeable-tabs.js") }}"></script>
+  <script src="{{ asset("/global/js/Plugin/tabs.js") }}"></script>
 
         <!--AngularJS-->
         <script src="{{asset('js/table2excel.js')}}"></script>

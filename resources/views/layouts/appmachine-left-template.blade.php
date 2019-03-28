@@ -146,6 +146,7 @@ Breakpoints();
         <script src="{{asset('js/custom-script.js')}}"></script>
         
         <script src="{{ asset("/assets/js/select2.js") }}"></script>
+        
 
         <script>
             (function (document, window, $) {
