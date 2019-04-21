@@ -89,13 +89,13 @@ class MachineReportsController extends Controller {
       
         $from = $to = '';        
         
-        if($dateRange !=''):
-            $explode = explode('-',$dateRange);
-            $explode_from = explode('/',$explode[0]);
-            $explode_to = explode('/',$explode[1]);
-            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
-            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
-        endif;
+       $explode = explode('-',$dateRange);
+                $explode_from = explode('/',$explode[0]);
+                $explode_to = explode('/',$explode[1]);
+                $dayfr = $explode_from[0];
+                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
+                $day = $explode_to[0];
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
      
         
         return view('machine-reports/incometap-perstate');
@@ -103,26 +103,21 @@ class MachineReportsController extends Controller {
     
     public function incomeTapPerStateapi()
     {
-        $date = new DateTime('+1 day');        
-        $thedate = date("d-m-Y H:i:s");
-        $today = date('d-m-Y', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('d-m-Y', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        
        
             $from = $to = '';    
-            
-                $explode = explode('-',$dateRange);
+            $dateRange = Input::get('dateRange'); 
+         $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $dayfr = $explode_from[0];
-                $from = str_replace(' ','',$explode_from[1].'-'.$dayfr.'-'.$explode_from[2]);
-                $day = $explode_to[0]+1;
-                $to = str_replace(' ','',$explode_to[1].'-'.$day.'-'.$explode_to[2]);
+                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
+                $day = $explode_to[0];
+                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
                 
+     
             
-             $userall = \App\IncomeTapReport::select('state as state','total_income as total_income','dbtype as dbtype','date_created as date')
+             $userall = \App\IncomeTapReport::select('state as state','total_income as total_income','dbtype as dbtype',DB::raw('DATE_FORMAT(date_created, "%d/%m/%Y") as date'))
+                    ->where('state','!=','')
                     ->whereBetween('date_created', [$from,$to])
                     ->orderBy('date_created','desc')
                     ->get();

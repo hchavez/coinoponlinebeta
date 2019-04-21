@@ -147,6 +147,7 @@ $(document).ready(function(){
         buttons: [{
                 extend: 'excelHtml5',
                 title: '',
+                
                 filename: 'income-tap-per-state',
                 customize: function( xlsx ) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
