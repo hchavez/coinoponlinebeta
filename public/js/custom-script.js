@@ -137,6 +137,45 @@ $(document).ready(function(){
             {'data': 'resolve_date'}]
     });
     
+    
+    $('#incometap').DataTable().destroy();
+    $('#incometap').dataTable({
+        oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
+        processing : true,
+        ajax: base_url+'incomeTapPerStateapi/'+input,    
+        dom: 'Bfrtip',
+        buttons: [{
+                extend: 'excelHtml5',
+                title: '',
+                filename: 'income-tap-per-state',
+                customize: function( xlsx ) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos( lastCol ) + '1';                
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                    $('row c', sheet).attr( 's', '51' );
+                }
+            }],
+        deferRender:    true,  
+        pageLength: 35,
+        scrollY: '500px',
+        scrollCollapse: true,
+        //order: [[0,'date_created']],
+        columns:[{'data': "state"},
+            {'data': "total_income",render: function ( data, type, row ) {return '$ '+ Number(data).toFixed(2); }},
+            {'data': "date"},
+            {'data': "dbtype"}]
+            
+    });
+    
     $('#advamnotapslogs').DataTable().destroy();
     $('#advamnotapslogs').dataTable({
         oLanguage: { sProcessing: "<img src='"+base_url+"global/photos/loading.gif' width='32px;'>" },
@@ -310,8 +349,8 @@ $(document).ready(function(){
     });
     
     //excel button append
-  
-     $('#advamnotapslogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
+    $('#incometap_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
+    $('#advamnotapslogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#historylogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#klogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 
     $('#winlogs_wrapper button').html('<img src="'+export_icon+'" width="32px">'); 

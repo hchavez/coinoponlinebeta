@@ -25,6 +25,8 @@ Route::get('advam-notapdetail', 'MachineErrorReportController@advam_notapdetail'
 Route::get('notapmachinedetail', 'MachineErrorReportController@notapmachinedetail');
 Route::get('error-history', 'MachineErrorReportController@error_history');
 Route::get('allerrorsapi', 'MachineErrorReportController@allerrorsapi');
+Route::get('incometap-perstate', 'MachineReportsController@incomeTapPerState');
+Route::get('incomeTapPerStateapi', 'MachineReportsController@incomeTapPerStateapi');
 
 
 
@@ -281,7 +283,7 @@ Route::get('owedwin/{id}', 'MachineManagementController@owedwin');
 Route::get('excesswin/{id}', 'MachineManagementController@excesswin');
 Route::get('machinegraphdata/{id}', 'MachineManagementController@machinegraphdata');
 
-Route::resource('machine-reports', 'MachineReportsController');
+//Route::resource('machine-reports', 'MachineReportsController');
 
 /**********************************************************************************/
 Route::post('dashboard/update_error_status', 'DashboardController@update_error_status');
@@ -465,6 +467,7 @@ Route::get('card', 'FinancialReportsGraphController@card');
 Route::get('total', 'FinancialReportsGraphController@total');
 
 Route::resource('machine-reports', 'MachineReportsController');
+Route::resource('machine-reports/incometap-perstate', 'MachineReportsController@incometap_per_state');
 
 Route::resource('group-permission', 'GroupPermissionController');
 Route::get('/add', 'GroupPermissionController@add');

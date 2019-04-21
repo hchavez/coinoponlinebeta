@@ -546,21 +546,21 @@ class MachineManagementController extends Controller {
             );
         endif;
     }  
-    
+     
      public function getTotal($type,$id){
         $fromDate = date("Y-m-d H:i:s",strtotime("-1 month"));        
         $today = date("Y-m-d");
         $yesterday = date('Y-m-d',strtotime("-1 days"));
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
-        
-        $Today = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);    
-        $Yesterday = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->where('created_at','like','%'.$yesterday.'%')->sum($type);
-        $Week = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
-        $Month = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$fromDate, $today])->sum($type);
-        $financial = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
-        $Year = MoneyLogs::where('status', '=', '1')->where('machine_id', $id)->whereBetween('created_at',[$thisYear, $today])->sum($type);
-        
+        $Today=0;$Yesterday=0;$Week=0;$Month=0;$financial=0;$Year=0;
+        $Today = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);    
+        $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->where('created_at','like','%'.$yesterday.'%')->sum($type);
+        $Week = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Month = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->whereBetween('created_at',[$fromDate, $today])->sum($type);
+        $financial = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
+        $Year = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        $total=0;
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
         return $total;
     } 
@@ -765,9 +765,6 @@ class MachineManagementController extends Controller {
         $thedate = date("Y-m-d H:i:s");
         $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
         $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        
 
             $from = $to = '';    
             $dateRange = Input::get('dateRange');
@@ -782,7 +779,7 @@ class MachineManagementController extends Controller {
                 
      
            
-            $userall = Errorlogs::where('machine_id','=', $id)
+            $userall = Errorlogs::where('machine_id',$id)
                     //->where('status','=','1')
                     ->whereBetween('created_at', [$from,$to])
                     ->orderBy('created_at','desc')->get();

@@ -755,8 +755,7 @@ class MachineErrorReportController extends Controller
         
         if($dateRange != ''):
             $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-            if($dateRange !=''):
+            
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
@@ -765,7 +764,6 @@ class MachineErrorReportController extends Controller
                 $day = $explode_to[0]+1;
                 $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
                 
-            endif;
             
             $userall = Errorlogs::with('machine')->whereNotIn('type',['4','0'])
                     ->whereBetween('created_at', [$from,$to])
@@ -891,8 +889,7 @@ class MachineErrorReportController extends Controller
                         ->whereIn('category',['cardreader','george system and cardreader'])
                         ->where('date_created','>=',$days_ago)
                         ->orderBy('date_created','desc')->get(); 
-        
-        //var_dump($machinenotapdetail);
+
         return new UserCollection($machinenotapdetail);
         
     }

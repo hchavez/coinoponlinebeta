@@ -290,11 +290,7 @@
                                                     <span class="site-menu-title">Machines List</span>
                                                 </a>
                                             </li>
-                                            <li class="site-menu-item">
-                                                <a class="animsition-link" href="{{ url('machines-mgmt/reports') }}">
-                                                    <span class="site-menu-title">Machines Reports</span>
-                                                </a>
-                                            </li>
+                                      
                                          
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="{{ url('machine-management/create') }}">
@@ -403,6 +399,11 @@
                                             <li class="site-menu-item">
                                                 <a  class="animsition-link"  href="{{ url('advam-notap') }}<?php echo $days; ?>">
                                                     <span class="site-menu-title">Advam No-Taps</span>
+                                                </a>
+                                            </li>
+                                             <li class="site-menu-item">
+                                                <a  class="animsition-link"  href="{{ url('incometap-perstate') }}<?php echo $query; ?>">
+                                                    <span class="site-menu-title">Income Tap Per State</span>
                                                 </a>
                                             </li>
                                             <li class="site-menu-item">

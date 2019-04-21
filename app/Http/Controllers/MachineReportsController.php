@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use URL;
 use Input;
 use DateTime;
+use App\Http\Resources\UserCollection;
 
 class MachineReportsController extends Controller {
 
@@ -46,7 +47,7 @@ class MachineReportsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() 
-    {      
+    {
         $data = Input::all();         
         $startnewformat = date("Y-m-d", strtotime(Input::get('startdate')) );     
         $endnewformat = date("Y-m-d", strtotime(Input::get('enddate')) );     
@@ -81,6 +82,53 @@ class MachineReportsController extends Controller {
          
         return view('machines-mgmt/reports', ['start' => Input::get('startdate'),'end' => Input::get('enddate'), 'machines' => $machines]);
         
+    }
+    
+    public function incomeTapPerState()
+    {   $dateRange = Input::get('dateRange');     
+      
+        $from = $to = '';        
+        
+        if($dateRange !=''):
+            $explode = explode('-',$dateRange);
+            $explode_from = explode('/',$explode[0]);
+            $explode_to = explode('/',$explode[1]);
+            $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);          
+            $to = date('Y-m-d', strtotime('+1 day', strtotime($explode[1])));
+        endif;
+     
+        
+        return view('machine-reports/incometap-perstate');
+    }
+    
+    public function incomeTapPerStateapi()
+    {
+        $date = new DateTime('+1 day');        
+        $thedate = date("d-m-Y H:i:s");
+        $today = date('d-m-Y', strtotime('+1 days', strtotime($thedate))); 
+        $days_ago = date('d-m-Y', strtotime('-5 days', strtotime($today)));  
+        
+        $dateRange = Input::get('dateRange');
+        
+       
+            $from = $to = '';    
+            
+                $explode = explode('-',$dateRange);
+                $explode_from = explode('/',$explode[0]);
+                $explode_to = explode('/',$explode[1]);
+                $dayfr = $explode_from[0];
+                $from = str_replace(' ','',$explode_from[1].'-'.$dayfr.'-'.$explode_from[2]);
+                $day = $explode_to[0]+1;
+                $to = str_replace(' ','',$explode_to[1].'-'.$day.'-'.$explode_to[2]);
+                
+            
+             $userall = \App\IncomeTapReport::select('state as state','total_income as total_income','dbtype as dbtype','date_created as date')
+                    ->whereBetween('date_created', [$from,$to])
+                    ->orderBy('date_created','desc')
+                    ->get();
+        
+ 
+        return new UserCollection($userall);
     }
 
  
