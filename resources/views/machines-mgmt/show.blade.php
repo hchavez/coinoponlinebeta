@@ -34,7 +34,12 @@
                             </div>
                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-sm-12 control-label">Category: {{ $machine->category }} </label>
+                                    <label class="col-sm-12 control-label">Category:<?php if($machine->category == "cardreader") {
+                                           echo "Tap & Play"; }     
+                                       if($machine->category == "george system and cardreader") { 
+                                           echo "Combo"; } 
+                                       if($machine->category == "george system") { 
+                                           echo "george system"; } ?>s </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -430,8 +435,10 @@
                                             var base_url = "https://www.ascentri.com/";
                                         }
                                         
-                                  
+                                
                                     $.getJSON(base_url + name + '/' + id,  function (data) {
+                                        
+                                           
                                             
                                             var winresult = [], asowedWin = [], asexcessWin  = [],
                                                 voltage = [], slipVolt= [], pkVolt = [], dropVolt = [],
@@ -486,7 +493,10 @@
                                                             dataGrouping: {
                                                             enabled: false,
                                                             
-                                                            }
+                                                            },
+                                                             animation: {
+                                                            duration: 5000
+                                                          }
                                                         }
                                                     },
         

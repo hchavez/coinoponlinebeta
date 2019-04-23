@@ -59,7 +59,14 @@
                             @foreach ($machines as $machine)                            
                             <tr <?php echo ($permit['readAll'])? 'class="clickable-row"' : ''; ?> role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}"  <?php if($machine->status == '0') { ?> style="background-color: #FF6666; color:  #fff;" <?php } ?>>
                                 <?php $status = ($machine->statusq=='1')? 'Online' : 'Offline'; ?>
-                                    <td> {{ $machine->category }} </td>                                    
+                                 <td>
+                                 <?php if($machine->category == "cardreader") {
+                                           echo "Tap & Play"; }     
+                                       if($machine->category == "george system and cardreader") { 
+                                           echo "Combo"; } 
+                                       if($machine->category == "george system") { 
+                                           echo "george system"; } ?> </td>   
+                                                                   
                                     <!--td>{{ $machine->machine_type }}</td-->
                                     <td>{{ $machine->machine_model }}</td>
                                     <td> <a href="machine-management/{{ $machine->id }}"> {{ $machine->machine_serial_no }} </a></td>
