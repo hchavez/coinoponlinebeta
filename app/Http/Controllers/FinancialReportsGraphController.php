@@ -70,13 +70,13 @@ class FinancialReportsGraphController extends Controller
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-        $Today = MoneyLogs::where('status', '=', '1')->where('created_at','like','%'.$today.'%')->sum($type);    
+        $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);    
 
-        $Yesterday = MoneyLogs::where('status', '=', '1')->where('created_at','like','%'.$yesterday.'%')->sum($type);
-        $Week = MoneyLogs::where('status', '=', '1')->whereBetween('created_at',[$weekFrom, $today])->sum($type);
-        $Month = MoneyLogs::where('status', '=', '1')->where('created_at','LIKE','%'.$month.'%')->sum($type);
-        $financial = MoneyLogs::where('status', '=', '1')->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
-        $Year = MoneyLogs::where('status', '=', '1')->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$yesterday.'%')->sum($type);
+        $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Month = MoneyLogs::whereIn('status',['1','2'])->where('created_at','LIKE','%'.$month.'%')->sum($type);
+        $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
+        $Year = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$thisYear, $today])->sum($type);
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
         return $total;
@@ -88,7 +88,7 @@ class FinancialReportsGraphController extends Controller
         //$today = date("Y-m-d H:i:s");            
         $queryAll = DB::table('moneylogs')
                      ->select(DB::raw('DATE(created_at) as created_at, machine_id, sum('.$type.') as '.$type.' '))
-                     ->whereBetween('created_at',[$fromDate,$today])->where('status', '=', '1')
+                     ->whereBetween('created_at',[$fromDate,$today])->whereIn('status',['1','2'])
                      ->groupBy(DB::raw('DATE(created_at), machine_id'))->get();        
         return $queryAll;         
     }
@@ -166,7 +166,7 @@ class FinancialReportsGraphController extends Controller
                      ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
                      ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
                      ->where('machines.category','=',$cat)
-                     ->whereBetween('moneylogs.created_at',[$fromDate,$today])->where('moneylogs.status', '=', '1')
+                     ->whereBetween('moneylogs.created_at',[$fromDate,$today])->whereIn('moneylogs.status',['1','2'])
                      ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
         return $category;
     }
