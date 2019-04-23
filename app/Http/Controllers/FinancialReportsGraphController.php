@@ -99,7 +99,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($georgieCoin as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                    
                 $coin = ($value->coinIn == '')? '0' : $value->coinIn;
-                $financialGraph[] = "[". $asdate .",". round($coin,2) ."]";    
+                $financialGraph[] = "[". $asdate .",".  number_format((float)$coin, 2, '.', '') ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{

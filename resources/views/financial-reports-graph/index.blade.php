@@ -70,7 +70,7 @@ var base_url   = window.location.origin;
     }else{
         var base_url = 'https://www.ascentri.com/';
     }
-var seriesOptions = [], seriesCounter = 0, names = ['coin','bill','card'];
+    var seriesOptions = [], seriesCounter = 0, names = ['coin','bill','card'];
 var georgeSeriesOptions = [], georgeSeriesCounter = 0, georgeNnames = ['georgeCoin','georgeBill','georgeCard'];
 var cardSeriesOptions = [], cardSeriesCounter = 0, cardNnames = ['cardReader_Coin','cardReader_Bill','cardReader_Swipe'];
 
@@ -99,13 +99,14 @@ function createChart() {
                 }
             }
         },
-        tooltip: {              
+        
+        tooltip: {   
             formatter: function() {                                
                 var addmonth = 1;
                 var millis = new Date(this.x);
                 var month = new Array(12);
                     month[0] = "01";
-                    month[1] = "022";
+                    month[1] = "02";
                     month[2] = "03";
                     month[3] = "04";
                     month[4] = "05";
@@ -118,24 +119,28 @@ function createChart() {
                     month[11] = "12";
 
                     var n = month[millis.getUTCMonth()];
-  
-                var theDate = millis.getUTCDate() +'-'+ n +'-'+ millis.getUTCFullYear();
+                var tooltip = null;
+                var theDate = millis.getUTCDate() +'/'+ n +'/'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
                 $.each(this.points,function(i,point){
-                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                    
+                    tooltip+= point.series.name+': $ '+ Math.round(point.y * 100) / 100 +'<br/>'
                 });
-                tooltip+='<b>Total: '+this.points[0].total;
+                tooltip+='<b>Total: $ '+this.points[0].total;
         
                 return tooltip;
-            }  
+               
+            }
+            
            
         },
         series: seriesOptions
     });
 }
-                                    
+
 $.each(names, function (i, name) {
-    $.getJSON(base_url +  name , function (data) {        
+ 
+    $.getJSON(base_url +  name , function (data) {     
         seriesOptions[i] = { type: 'column', name: name, data: data };       
         seriesCounter += 1;
         
@@ -169,18 +174,19 @@ function georgeCreateChart() {
                 }
             }
         },
-        tooltip: {            
+        tooltip: {     
             formatter: function() {                         
                 var millis = new Date(this.x);
-                var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
+                var theDate = millis.getUTCDate() +'/'+ millis.getUTCMonth() +'/'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
                 $.each(this.points,function(i,point){
-                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                    tooltip+= point.series.name+': $ '+point.y+'<br/>'
                 });
-                tooltip+='<b>Total: '+this.points[0].total;
+                tooltip+='<b>Total: $ '+this.points[0].total;
         
                 return tooltip;
-            }  
+            }
+
         },
         series: georgeSeriesOptions
     });
@@ -221,18 +227,21 @@ function cardCreateChart() {
                 }
             }
         },
-        tooltip: {            
+        tooltip: {     
+            valueDecimals: 2,
+            valuePrefix: '$',
             formatter: function() {                             
                 var millis = new Date(this.x);
-                var theDate = millis.getUTCDate() +'-'+ millis.getUTCMonth() +'-'+ millis.getUTCFullYear();
+                var theDate = millis.getUTCDate() +'/'+ millis.getUTCMonth() +'/'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
                 $.each(this.points,function(i,point){
-                    tooltip+= point.series.name+': '+point.y+'<br/>'
+                    tooltip+= point.series.name+': $ '+point.y+'<br/>'
                 });
-                tooltip+='<b>Total: '+this.points[0].total;
+                tooltip+='<b>Total: $ '+this.points[0].total;
         
                 return tooltip;
-            } 
+            }
+            
         },
         series: cardSeriesOptions
     });
