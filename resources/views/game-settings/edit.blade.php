@@ -110,7 +110,7 @@
                                     <label for="xTime" class="col-md-4 control-label">PrevE win</label>
 
                                     <div class="col-md-6">
-                                        <input id="prevEwin" type="text" class="form-control" disabled="disabled" name="prevEwin" value="{{ $machine->prevEwin }}" required autofocus>
+                                        <input id="prevEwin" type="text" class="form-control" name="prevEwin" value="{{ $machine->prevEwin }}" required autofocus>
 
                                         @if ($errors->has('prevEwin'))
                                         <span class="help-block">
@@ -124,7 +124,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Win Gap</label>
 
                                     <div class="col-md-6">
-                                        <input id="winGap" type="text" class="form-control" disabled="disabled" name="winGap" value="{{ $machine->winGap }}" required autofocus>
+                                        <input id="winGap" type="text" class="form-control" name="winGap" value="{{ $machine->winGap }}" required autofocus>
 
                                         @if ($errors->has('winGap'))
                                         <span class="help-block">
@@ -137,7 +137,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Prev Win Index</label>
 
                                     <div class="col-md-6">
-                                        <input id="prevWinIndex" type="text" class="form-control" disabled="disabled" name="prevWinIndex" value="{{ $machine->prevWinIndex }}" required autofocus>
+                                        <input id="prevWinIndex" type="text" class="form-control" name="prevWinIndex" value="{{ $machine->prevWinIndex }}" required autofocus>
 
                                         @if ($errors->has('prevWinIndex'))
                                         <span class="help-block">
@@ -151,7 +151,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Number Of Plays Stay Voltage</label>
 
                                     <div class="col-md-6">
-                                        <input id="numberOfPlaysStayVoltage" type="text" disabled="disabled" class="form-control" name="numberOfPlaysStayVoltage" value="{{ $machine->numberOfPlaysStayVoltage }}" required autofocus>
+                                        <input id="numberOfPlaysStayVoltage" type="text" class="form-control" name="numberOfPlaysStayVoltage" value="{{ $machine->numberOfPlaysStayVoltage }}" required autofocus>
 
                                         @if ($errors->has('numberOfPlaysStayVoltage'))
                                         <span class="help-block">

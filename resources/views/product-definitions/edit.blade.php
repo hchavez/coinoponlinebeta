@@ -111,7 +111,7 @@
                                     <label for="xTime" class="col-md-4 control-label">Plays per win</label>
 
                                     <div class="col-md-6">
-                                        <input id="numberOfPlays" type="text" class="form-control" name="numberOfPlays" disabled="disabled" value="{{ $machine->numberOfPlays }}"  autofocus>
+                                        <input id="numberOfPlays" type="text" class="form-control" name="numberOfPlays" value="{{ $machine->numberOfPlays }}"  autofocus>
 
                                         @if ($errors->has('numberOfPlays'))
                                         <span class="help-block">
