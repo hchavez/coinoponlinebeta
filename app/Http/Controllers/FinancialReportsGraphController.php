@@ -71,7 +71,6 @@ class FinancialReportsGraphController extends Controller
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
         $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);    
-
         $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$yesterday.'%')->sum($type);
         $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
         $Month = MoneyLogs::whereIn('status',['1','2'])->where('created_at','LIKE','%'.$month.'%')->sum($type);
@@ -170,6 +169,8 @@ class FinancialReportsGraphController extends Controller
                      ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
         return $category;
     }
+    
+        
     
     public function georgeCoin(){
         $georgieCoin = $this->byCategory('coinIn','george system');

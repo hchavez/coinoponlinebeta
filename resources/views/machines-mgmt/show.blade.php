@@ -105,17 +105,17 @@
                                         <table class="table table-bordered">
                                           <thead><tr><th></th><th>Coin</th><th>Note</th><th>Card</th><th>Total</th></tr></thead>
                                           <tbody>
-                                            <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td>{{ $card['today'] }}</td>
+                                            <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td><?php echo round($card['today'],2);  ?> </td>
                                                 <td><?php $numbertotaltoday = $coin['today'] + $bill['today'] + $card['today']; echo number_format($numbertotaltoday, 2, '.', '');?></td></tr>
-                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td>{{ $card['yesterday'] }}</td>
+                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td> <?php echo round($card['yersterday'],2);  ?> </td>
                                                 <td><?php $numbertotalysterday = $coin['yesterday'] + $bill['yesterday'] + $card['yesterday']; echo number_format($numbertotalysterday, 2, '.', '');?></td></tr>
-                                            <tr><td>This week</td><td><?php echo round( $coin['thisWeek'],2);  ?></td><td>{{ $bill['thisWeek'] }}</td><td>{{ $card['thisWeek'] }}</td>
+                                            <tr><td>This week</td><td><?php echo round( $coin['thisWeek'],2);  ?></td><td>{{ $bill['thisWeek'] }}</td><td> <?php echo round($card['thisWeek'],2);  ?></td>
                                                 <td><?php $numbertotalweek = $coin['thisWeek'] + $bill['thisWeek'] + $card['thisWeek']; echo number_format($numbertotalweek, 2, '.', '');?></td></tr>
-                                            <tr><td>This Month</td><td><?php echo round( $coin['thisMonth'],2);  ?></td><td>{{ $bill['thisMonth'] }}</td><td>{{ $card['thisMonth'] }}</td>
+                                            <tr><td>This Month</td><td><?php echo round( $coin['thisMonth'],2);  ?></td><td>{{ $bill['thisMonth'] }}</td><td> <?php echo round($card['thisMonth'],2);  ?> </td>
                                                 <td><?php $numbertotalmonth = $coin['thisMonth'] + $bill['thisMonth'] + $card['thisMonth']; echo number_format($numbertotalmonth, 2, '.', '');?></td></tr>
-                                            <tr><td>This Financial Year</td><td><?php echo round( $coin['thisFinancial'],2);  ?></td><td>{{ $bill['thisFinancial'] }}</td><td>{{ $card['thisFinancial'] }}</td>
+                                            <tr><td>This Financial Year</td><td><?php echo round( $coin['thisFinancial'],2);  ?></td><td>{{ $bill['thisFinancial'] }}</td><td><?php echo round($card['thisFinancial'],2);  ?> </td>
                                                 <td><?php $numbertotalfyear = $coin['thisFinancial'] + $bill['thisFinancial'] + $card['thisFinancial']; echo number_format($numbertotalfyear, 2, '.', '');?></td></tr>
-                                            <tr><td>This Calendar Year</td><td><?php echo round( $coin['thisYear'],2);  ?></td><td>{{ $bill['thisYear'] }}</td><td>{{ $card['thisYear'] }}</td>
+                                            <tr><td>This Calendar Year</td><td><?php echo round( $coin['thisYear'],2);  ?></td><td>{{ $bill['thisYear'] }}</td><td><?php echo round($card['thisYear'],2);  ?> </td>
                                                 <td><?php $numbertotalyear = $coin['thisYear'] + $bill['thisYear'] + $card['thisYear']; echo number_format($numbertotalyear, 2, '.', '');?></td></tr>                        
                                           </tbody>
                                         </table>

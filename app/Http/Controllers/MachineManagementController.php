@@ -761,36 +761,25 @@ class MachineManagementController extends Controller {
     }
        
     public function errorapi($id){        
-        $date = new DateTime('+1 day');        
-        $thedate = date("Y-m-d H:i:s");
-        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-
             $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-    
+                $dateRange = Input::get('dateRange'); 
+                
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
-                $dayfr = $explode_from[0];
-                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
-                $day = $explode_to[0]+1;
+                $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
+                $day = $explode_to[0] + 1;
                 $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
                 
-     
-           
-            $userall = Errorlogs::where('machine_id',$id)
-                    //->where('status','=','1')
+                if($explode_from[0] == $explode_to[0]){
+                     $userall = Errorlogs::where('machine_id',$id)
+                    ->whereDate('created_at', $from)
+                    ->orderBy('created_at','desc')->get();
+                }else{
+                     $userall = Errorlogs::where('machine_id',$id)
                     ->whereBetween('created_at', [$from,$to])
                     ->orderBy('created_at','desc')->get();
-      
-//            $userall = DB::table('errorlogs')                
-//                    ->select(DB::raw('errorlogs.*'))                
-//                    ->where('status','=','1')
-//                    ->where('created_at','>=',$days_ago)    
-//                    ->orderBy('created_at','DESC')
-//                    ->get();
-            
+                }
         
         return new UserCollection($userall);
      
@@ -799,30 +788,26 @@ class MachineManagementController extends Controller {
     public function moneyapi($id){
 
         
-             $date = new DateTime('+1 day');        
-        $thedate = date("Y-m-d H:i:s");
-        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        
-
-            $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-            
+        $from = $to = '';    
+                $dateRange = Input::get('dateRange'); 
+                
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
                 $day = $explode_to[0] + 1;
                 $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
-         
-            
-            $userall = MoneyLogs::where('machine_id','=', $id)
+                
+                if($explode_from[0] == $explode_to[0]){
+                     $userall = MoneyLogs::where('machine_id',$id)
+                    ->whereDate('created_at', $from)
+                    ->orderBy('created_at','desc')->get();
+                }else{
+                     $userall = MoneyLogs::where('machine_id',$id)
                     ->whereBetween('created_at', [$from,$to])
-                    ->orderBy('created_at','desc')
-                    ->get();
-    
+                    ->orderBy('created_at','desc')->get();
+                }
+     
         
         return new UserCollection($userall);
 
@@ -830,60 +815,54 @@ class MachineManagementController extends Controller {
     
     public function winapi($id){
   
-          $date = new DateTime('+1 day');        
-        $thedate = date("Y-m-d H:i:s");
-        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        
-            $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-
+        $from = $to = '';    
+                $dateRange = Input::get('dateRange'); 
+                
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
                 $day = $explode_to[0] + 1;
                 $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
-
-            
-            $userall = WinLogs::where('machine_id','=', $id)
+                
+                if($explode_from[0] == $explode_to[0]){
+                     $userall = WinLogs::where('machine_id',$id)
+                    ->whereDate('created_at', $from)
+                    ->orderBy('created_at','desc')->get();
+                }else{
+                     $userall = WinLogs::where('machine_id',$id)
                     ->whereBetween('created_at', [$from,$to])
                     ->orderBy('created_at','desc')->get();
+                }
         
         return new UserCollection($userall);
       
     }
     
     public function goalsapi($id){
-             $date = new DateTime('+1 day');        
-        $thedate = date("Y-m-d H:i:s");
-        $today = date('Y-m-d', strtotime('+1 days', strtotime($thedate))); 
-        $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));  
-        
-        $dateRange = Input::get('dateRange');
-        
-
-            $from = $to = '';    
-            $dateRange = Input::get('dateRange');
-        
+       $from = $to = '';    
+                $dateRange = Input::get('dateRange'); 
+                
                 $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
-                $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);              
+                $from = str_replace(' ','',$explode_from[2].'-'.$explode_from[0].'-'.$explode_from[1]);
                 $day = $explode_to[0] + 1;
                 $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
-            
-            
-            $userall = GoalsLogs::where('machine_id','=', $id)
+                
+                if($explode_from[0] == $explode_to[0]){
+                     $userall = GoalsLogs::where('machine_id',$id)
+                    ->whereDate('created_at', $from)
+                    ->orderBy('created_at','desc')->get();
+                }else{
+                     $userall = GoalsLogs::where('machine_id',$id)
                     ->whereBetween('created_at', [$from,$to])
-                    ->orderBy('created_at','desc')
-                    ->get();
-   
+                    ->orderBy('created_at','desc')->get();
+                }
+            
         
         return new UserCollection($userall);
-        //return $userall;
+     
     }
     /**
      * Show the form for editing the specified resource.
@@ -1249,6 +1228,7 @@ class MachineManagementController extends Controller {
                      ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' '))
                      ->where('moneylogs.machine_id', $id)->where('moneylogs.'.$type,'>=', $type)
                      ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
+        
     
         return $queryMachine;
     }
@@ -1414,5 +1394,6 @@ class MachineManagementController extends Controller {
         return "[". $financialGraphDate . "]";  
     }
     
+
       
 }
