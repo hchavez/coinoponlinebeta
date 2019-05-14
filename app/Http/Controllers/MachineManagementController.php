@@ -1215,11 +1215,7 @@ class MachineManagementController extends Controller {
         
         return response()->json($game);
         
-//            if( $game->save() ){
-//                return response()->json(array('data'=>$game, 'status'=>'success', 'msg'=>'Success!.'), 200);
-//            }else{
-//                return response()->json(array('status'=>'error', 'msg'=>'Error!'), 500);
-//            }
+
     }
      
     public function queryLogs($type,$id){

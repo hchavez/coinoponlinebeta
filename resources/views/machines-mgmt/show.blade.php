@@ -107,7 +107,7 @@
                                           <tbody>
                                             <tr><td>Today</td><td><?php echo round($coin['today'],2);  ?></td><td>{{ $bill['today'] }}</td><td><?php echo round($card['today'],2);  ?> </td>
                                                 <td><?php $numbertotaltoday = $coin['today'] + $bill['today'] + $card['today']; echo number_format($numbertotaltoday, 2, '.', '');?></td></tr>
-                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td> <?php echo round($card['yersterday'],2);  ?> </td>
+                                            <tr><td>Yesterday</td><td><?php echo round( $coin['yesterday'],2);  ?></td><td>{{ $bill['yesterday'] }}</td><td> <?php echo round($card['yesterday'],2);  ?> </td>
                                                 <td><?php $numbertotalysterday = $coin['yesterday'] + $bill['yesterday'] + $card['yesterday']; echo number_format($numbertotalysterday, 2, '.', '');?></td></tr>
                                             <tr><td>This week</td><td><?php echo round( $coin['thisWeek'],2);  ?></td><td>{{ $bill['thisWeek'] }}</td><td> <?php echo round($card['thisWeek'],2);  ?></td>
                                                 <td><?php $numbertotalweek = $coin['thisWeek'] + $bill['thisWeek'] + $card['thisWeek']; echo number_format($numbertotalweek, 2, '.', '');?></td></tr>
