@@ -85,17 +85,7 @@ class MachineReportsController extends Controller {
     }
     
     public function incomeTapPerState()
-    {   $dateRange = Input::get('dateRange');     
-      
-        $from = $to = '';        
-        
-       $explode = explode('-',$dateRange);
-                $explode_from = explode('/',$explode[0]);
-                $explode_to = explode('/',$explode[1]);
-                $dayfr = $explode_from[0];
-                $from = str_replace(' ','',$explode_from[2].'-'.$dayfr.'-'.$explode_from[1]);
-                $day = $explode_to[0];
-                $to = str_replace(' ','',$explode_to[2].'-'.$day.'-'.$explode_to[1]);
+    {   
      
         
         return view('machine-reports/incometap-perstate');
@@ -106,7 +96,7 @@ class MachineReportsController extends Controller {
        
             $from = $to = '';    
             $dateRange = Input::get('dateRange'); 
-         $explode = explode('-',$dateRange);
+            $explode = explode('-',$dateRange);
                 $explode_from = explode('/',$explode[0]);
                 $explode_to = explode('/',$explode[1]);
                 $dayfr = $explode_from[0];
