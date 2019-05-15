@@ -72,12 +72,13 @@ class FinancialReportsGraphController extends Controller
         
         $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);    
         $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$yesterday.'%')->sum($type);
-        $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
+        $Week = MoneyLogs::whereIn('status',['1','2'])->whereDate('created_at','>=', $weekFrom)->whereDate('created_at','<=', $today)->sum($type);
         $Month = MoneyLogs::whereIn('status',['1','2'])->where('created_at','LIKE','%'.$month.'%')->sum($type);
-        $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',['2018-01-01', '2018-07-01'])->sum($type);
-        $Year = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$thisYear, $today])->sum($type);
+        $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',['2019-01-01', '2019-07-01'])->sum($type);
+        $Year = MoneyLogs::whereIn('status',['1','2'])->whereDate('created_at','>=', $thisYear)->whereDate('created_at','<=', $today)->sum($type);
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
+       
         return $total;
     }   
     
