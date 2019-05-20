@@ -70,12 +70,24 @@ class FinancialReportsGraphController extends Controller
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-        $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);    
+          if(date("m") >= 06) {
+               $d = date("Y-m-d", strtotime("+1 years"));
+               $finto = date("Y-m-d");
+               $finfrom = date("Y-m-d", strtotime($d));
+            } else {
+              $d = date("Y-m-d", strtotime("-1 years"));
+              $finto = date("Y-m-d");
+               $finfrom = date("Y-m-d", strtotime($d));
+            }
+            
+            
+             $Today = 0; $Yesterday = 0; $Week = 0; $Month = 0; $financial = 0; $Year =0;
+        $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);   
         $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$yesterday.'%')->sum($type);
-        $Week = MoneyLogs::whereIn('status',['1','2'])->whereDate('created_at','>=', $weekFrom)->whereDate('created_at','<=', $today)->sum($type);
+        $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
         $Month = MoneyLogs::whereIn('status',['1','2'])->where('created_at','LIKE','%'.$month.'%')->sum($type);
-        $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',['2019-01-01', '2019-07-01'])->sum($type);
-        $Year = MoneyLogs::whereIn('status',['1','2'])->whereDate('created_at','>=', $thisYear)->whereDate('created_at','<=', $today)->sum($type);
+        $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$finfrom,$finto])->sum($type);
+        $Year = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$thisYear, $today])->sum($type);
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
        
