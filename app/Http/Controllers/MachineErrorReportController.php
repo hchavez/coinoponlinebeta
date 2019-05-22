@@ -821,7 +821,7 @@ class MachineErrorReportController extends Controller
         $days_ago = date('Y-m-d', strtotime($days, strtotime($today)));  
        
         $days = Input::get('days'); 
-        
+    
                       $machinenotap = MachineReports::select('machine_id',
                       DB::raw("count(machine_id) as count"),
                       DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
@@ -833,18 +833,21 @@ class MachineErrorReportController extends Controller
                       DB::raw('(select machine_model from machine_models left join machines on machines.machine_model_id = machine_models.id where machines.id = machine_reports.machine_id) as machine_model'))
                         ->where('total_money','=','0')
                         ->whereIn('category',['cardreader','george system and cardreader'])
-                        //->where('date_created','>',$days_ago)
-                        ->whereBetween('date_created', [$days_ago,$today])
+                        ->where('date_created','>',$days_ago)
                         ->groupBy('machine_id')->get();
-         
-     
+                      
+
+       
+                      
+                      
         $notaps = array();        
         foreach($machinenotap as $data){
-            if($data['count'] == Input::get('days')){
+            if($data['count'] == $days){
                 array_push($notaps,$data);
-            }
+            }else{}
         }
-       
+        
+      
         return $notaps;
 
         
