@@ -178,7 +178,7 @@ $(document).ready(function() {
         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
             $(nTd).html("<a target='_blank' href='advam-notapdetail?machine_id="+oData.machine_id+"&days="+days+"'>"+oData.machine+"</a>");
         }},
-            { "data": "machine_serial",
+            { "data": "machine_serial_no",
         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
             $(nTd).html("<a target='_blank' href='machine-management/show/"+oData.machine_id+"'>"+oData.machine+"</a>");
         }},

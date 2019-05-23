@@ -822,35 +822,38 @@ class MachineErrorReportController extends Controller
        
         $days = Input::get('days'); 
     
-                      $machinenotap = MachineReports::select('machine_id',
-                      DB::raw("count(machine_id) as count"),
-                      DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
-                      DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
-                      DB::raw('(select last_tapped from machines where id = machine_reports.machine_id) as last_tapped'),
-                      DB::raw('(select last_online from machines where id = machine_reports.machine_id) as last_online'),
-                      //DB::raw('(select site from machines where id = machine_reports.machine_id) as site'),
-                      DB::raw('(select site_name from sites left join machines on machines.site_id = sites.id where machines.id = machine_reports.machine_id) as site'),
-                      DB::raw('(select machine_model from machine_models left join machines on machines.machine_model_id = machine_models.id where machines.id = machine_reports.machine_id) as machine_model'))
-                        ->where('total_money','=','0')
-                        ->whereIn('category',['cardreader','george system and cardreader'])
-                        ->where('date_created','>',$days_ago)
-                        ->groupBy('machine_id')->get();
+//                      $machinenotap = MachineReports::select('machine_id',
+//                      DB::raw("count(machine_id) as count"),
+//                      DB::raw('(select machine_serial_no from machines where id = machine_reports.machine_id) as machine_serial'),
+//                      DB::raw('(select comments from machines where id = machine_reports.machine_id) as machine'),
+//                      DB::raw('(select last_tapped from machines where id = machine_reports.machine_id) as last_tapped'),
+//                      DB::raw('(select last_online from machines where id = machine_reports.machine_id) as last_online'),
+//                      //DB::raw('(select site from machines where id = machine_reports.machine_id) as site'),
+//                      DB::raw('(select site_name from sites left join machines on machines.site_id = sites.id where machines.id = machine_reports.machine_id) as site'),
+//                      DB::raw('(select machine_model from machine_models left join machines on machines.machine_model_id = machine_models.id where machines.id = machine_reports.machine_id) as machine_model'))
+//                        ->where('total_money','=','0')
+//                        ->whereIn('category',['cardreader','george system and cardreader'])
+//                        ->where('date_created','>',$days_ago)
+//                        ->groupBy('machine_id')->toSql();
                       
-
-       
-                      
+                        $machinenotap = Machine::select('id','machine_description','site', 'comments as machine', 'last_online',
+                      DB::raw('(SELECT max(date_created) FROM machine_reports where machine_id=machines.id and (total_money<>0)) 
+AS last_tapped'),'machine_serial_no',  
+                      DB::raw('(select machine_model from machine_models  where machines.machine_model_id = machine_models.id) as machine_model'),
+                      DB::raw('datediff(date(now()), (SELECT date(max(date_created)) FROM machine_reports where machine_id=machines.id and (total_money<>0))) 
+as MachineReports_NoTapDays'))
+                        ->orderBy('machine_serial_no')->get();
+                    
                       
         $notaps = array();        
         foreach($machinenotap as $data){
-            if($data['count'] == $days){
+            if($data['MachineReports_NoTapDays'] == $days){
                 array_push($notaps,$data);
-            }else{}
+            }
         }
-        
       
         return $notaps;
 
-        
     }
     
      public function advam_notapdetail() {   
