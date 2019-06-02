@@ -57,7 +57,7 @@
                             </thead>
                             <tbody>
                             @foreach ($machines as $machine)                            
-                            <tr <?php echo ($permit['readAll'])? 'class="clickable-row"' : ''; ?> role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}"  <?php if($machine->status == '0') { ?> style="background-color: #FF6666; color:  #fff;" <?php } ?>>
+                            <tr <?php echo ($permit['readAll'])? 'class="clickable-row"' : ''; ?> role="row" data-href="{{ route('machine-management.show', ['id' => $machine->machine_id]) }}"  <?php if($machine->status == '0') { ?> style="background-color: #ef656544;" <?php } ?>>
                                 <?php $status = ($machine->statusq=='1')? 'Online' : 'Offline'; ?>
                                  <td>
                                  <?php if($machine->category == "cardreader") {

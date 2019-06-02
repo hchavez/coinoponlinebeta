@@ -821,6 +821,7 @@ class MachineErrorReportController extends Controller
         $days_ago = date('Y-m-d', strtotime($days, strtotime($today)));  
        
         $days = Input::get('days'); 
+       
     
 //                      $machinenotap = MachineReports::select('machine_id',
 //                      DB::raw("count(machine_id) as count"),
@@ -847,7 +848,7 @@ as MachineReports_NoTapDays'))
                       
         $notaps = array();        
         foreach($machinenotap as $data){
-            if($data['MachineReports_NoTapDays'] == $days){
+            if($data['MachineReports_NoTapDays'] >= $days){
                 array_push($notaps,$data);
             }
         }
