@@ -70,16 +70,18 @@ class FinancialReportsGraphController extends Controller
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-          if(date("m") >= 06) {
-               $d = date("Y-m-d", strtotime("+1 years"));
+          if(date("m") > 06) {
+               $d = date("Y-m-d", strtotime("+ 1 year"));
                $finto = date("Y-m-d");
                $finfrom = date("Y-m-d", strtotime($d));
+               //$finfrom = date('Y-m-d',strtotime(date('Y-06-01')));
             } else {
               $d = date("Y-m-d", strtotime("-1 years"));
               $finto = date("Y-m-d");
                $finfrom = date("Y-m-d", strtotime($d));
             }
             
+   
             
              $Today = 0; $Yesterday = 0; $Week = 0; $Month = 0; $financial = 0; $Year =0;
         $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);   
@@ -87,10 +89,11 @@ class FinancialReportsGraphController extends Controller
         $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
         $Month = MoneyLogs::whereIn('status',['1','2'])->where('created_at','LIKE','%'.$month.'%')->sum($type);
         $financial = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$finfrom,$finto])->sum($type);
+        
         $Year = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$thisYear, $today])->sum($type);
         
         $total = array('today'=>$Today,'yesterday'=>$Yesterday,'thisWeek'=>$Week,'thisMonth'=>$Month,'thisFinancial'=>$financial,'thisYear'=>$Year);
-       
+    
         return $total;
     }   
     
