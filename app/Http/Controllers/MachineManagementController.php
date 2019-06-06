@@ -58,6 +58,9 @@ class MachineManagementController extends Controller {
         $data = Input::all();     
          $from = $to = null; 
          $machines = null;
+         
+         //echo Carbon::today()->toDateString(); exit();
+         
          if(empty($data)):  
            
             $machines = DB::table('machines')
@@ -77,7 +80,7 @@ class MachineManagementController extends Controller {
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                             ->whereIn('machines.status', ['1','0']);
                         
-            $machines = $machines->whereDate('machine_reports.date_created', '=', Carbon::today()->toDateString());
+            $machines = $machines->whereDate('machine_reports.date_created', '>=', Carbon::today()->toDateString());
              $machines = $machines->orderBy('machines.status','desc')->get()->toArray();  
             
         else:  
@@ -579,7 +582,7 @@ class MachineManagementController extends Controller {
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-          if(date("m") >= 06) {
+          if(date("m") > 06) {
                $d = date("Y-m-d", strtotime("+1 years"));
                $finto = date("Y-m-d");
                $finfrom = date("Y-m-d", strtotime($d));

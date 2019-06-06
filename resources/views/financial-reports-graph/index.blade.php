@@ -5,7 +5,18 @@
     <header class="panel-heading">
         <h3 class="panel-title">Financial Reports</h3>
     </header>
-    <?php //print_r($machinelogs); ?> 
+      <?php   date_default_timezone_set (date_default_timezone_get());
+       $dt = strtotime (now());
+       
+     
+         $start = date ('N', $dt) == 1 ? date ('Y-m-d', $dt) : date ('Y-m-d', strtotime ('last monday', $dt));
+         $end = date('N', $dt) == 7 ? date ('Y-m-d', $dt) : date ('Y-m-d', strtotime ('next sunday', $dt));
+  
+         //echo $start."".$end;
+         
+            
+     ?> 
+   
     <div class="panel-body">
         <div id="exampleTableSearch_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4"> 
             <div class="row">
@@ -213,7 +224,7 @@ function georgeCreateChart() {
                 var theDate = millis.getUTCDate() +'/'+ millis.getUTCMonth() +'/'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
                 $.each(this.points,function(i,point){
-                    tooltip+= point.series.name+': $ '+point.y+'<br/>'
+                    tooltip+= point.series.name+': $ '+Math.round(point.y * 100) / 100 +'<br/>'
                 });
                 tooltip+='<b>Total: $ '+this.points[0].total;
         
@@ -261,14 +272,14 @@ function cardCreateChart() {
             }
         },
         tooltip: {     
-            valueDecimals: 2,
+            //valueDecimals: 2,
             valuePrefix: '$',
             formatter: function() {                             
                 var millis = new Date(this.x);
                 var theDate = millis.getUTCDate() +'/'+ millis.getUTCMonth() +'/'+ millis.getUTCFullYear();
                 var tooltip='<b>Date: '+theDate+'<b><br/>';
                 $.each(this.points,function(i,point){
-                    tooltip+= point.series.name+': $ '+point.y+'<br/>'
+                    tooltip+= point.series.name+': $ '+Math.round(point.y * 100) / 100 +'<br/>'
                 });
                 tooltip+='<b>Total: $ '+this.points[0].total;
         

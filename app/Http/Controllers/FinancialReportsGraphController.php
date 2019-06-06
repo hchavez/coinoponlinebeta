@@ -72,18 +72,19 @@ class FinancialReportsGraphController extends Controller
         
           if(date("m") > 06) {
                $d = date("Y-m-d", strtotime("+ 1 year"));
-               $finto = date("Y-m-d");
-               $finfrom = date("Y-m-d", strtotime($d));
+               $finfrom = date("Y-07-01");
+               $finto = date("Y-06-30", strtotime($d));
                //$finfrom = date('Y-m-d',strtotime(date('Y-06-01')));
             } else {
               $d = date("Y-m-d", strtotime("-1 years"));
-              $finto = date("Y-m-d");
-               $finfrom = date("Y-m-d", strtotime($d));
+              $finto = date("Y-06-30");
+               $finfrom = date("Y-07-01", strtotime($d));
             }
             
-   
-            
-             $Today = 0; $Yesterday = 0; $Week = 0; $Month = 0; $financial = 0; $Year =0;
+         
+
+      
+        $Today = 0; $Yesterday = 0; $Week = 0; $Month = 0; $financial = 0; $Year =0;
         $Today = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$today.'%')->sum($type);   
         $Yesterday = MoneyLogs::whereIn('status',['1','2'])->where('created_at','like','%'.$yesterday.'%')->sum($type);
         $Week = MoneyLogs::whereIn('status',['1','2'])->whereBetween('created_at',[$weekFrom, $today])->sum($type);
@@ -144,7 +145,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($swipe as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $swipeIn = ($value->swipeIn == '')? '0' : $value->swipeIn;                     
-                $financialGraph[] = "[". $asdate .",". round($swipeIn,2) ."]";  
+                $financialGraph[] = "[". $asdate .",".  number_format((float)$swipeIn, 2, '.', '') ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -159,7 +160,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($swipe as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;
                 $ttlMoneyIn = ($value->ttlMoneyIn == '')? '0' : $value->ttlMoneyIn;                     
-                $financialGraph[] = "[". $asdate .",". round($ttlMoneyIn,2) ."]";  
+                  $financialGraph[] = "[". $asdate .",".  number_format((float)$ttlMoneyIn, 2, '.', '') ."]";    
             }
             $financialGraphDate = join($financialGraph, ',');
         }else{
@@ -178,12 +179,15 @@ class FinancialReportsGraphController extends Controller
         $today = date("Y-m-d H:i:s",strtotime("+1 day"));
         //$today = date("Y-m-d H:i:s");     
         $category = DB::table('moneylogs')
-                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, sum('.$type.') as '.$type.' ','machines.id as machineID'))
+                     ->select(DB::raw('DATE(moneylogs.created_at) as created_at, machine_id, round(sum('.$type.'),2) as '.$type.' ','machines.id as machineID'))
                      ->leftJoin('machines', 'machines.id', '=', 'moneylogs.machine_id')
                      ->where('machines.category','=',$cat)
                      ->whereBetween('moneylogs.created_at',[$fromDate,$today])->whereIn('moneylogs.status',['1','2'])
                      ->groupBy(DB::raw('DATE(moneylogs.created_at), machine_id'))->get();      
+        
         return $category;
+        
+      
     }
     
         
@@ -237,8 +241,9 @@ class FinancialReportsGraphController extends Controller
         if ($coinCard->count() > 0) {
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                
-                $coin = ($value->coinIn == '')? '0' : $value->coinIn; 
-                $financialGraph[] = "[". $asdate .",". round($coin,2) ."]";    
+                $coin = ($value->coinIn == '')? '0' : $value->coinIn;  
+                $financialGraph[] = "[". $asdate .",".  number_format((float)$coin, 2, '.', '') ."]";    
+                
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
         }else{
@@ -252,21 +257,7 @@ class FinancialReportsGraphController extends Controller
             foreach ($coinCard as $value) { 
                 $asdate = strtotime($value->created_at) * 1000;                        
                 $bill = ($value->billIn == '')? '0' : $value->billIn;
-                $financialGraph[] = "[". $asdate .",". round($bill,2) ."]";    
-            }
-            $graphdataWinResultwithDate = join($financialGraph, ',');
-        }else{
-             $graphdataWinResultwithDate = null;
-        }         
-        return "[". $graphdataWinResultwithDate . "]";  
-    }
-    public function cardReader_Swipe(){        
-        $coinCard = $this->byCategory('swipeIn','cardreader');
-        if ($coinCard->count() > 0) {
-            foreach ($coinCard as $value) { 
-                $asdate = strtotime($value->created_at) * 1000;                                
-                $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;
-                $financialGraph[] = "[". $asdate .",". round($swipe,2) ."]";    
+                $financialGraph[] = "[". $asdate .",".  number_format((float)$bill, 2, '.', '') ."]";    
             }
             $graphdataWinResultwithDate = join($financialGraph, ',');
         }else{
@@ -275,6 +266,24 @@ class FinancialReportsGraphController extends Controller
         return "[". $graphdataWinResultwithDate . "]";  
     }
     
+    public function cardReader_Swipe(){        
+        $coinCard = $this->byCategory('swipeIn','cardreader');
+       
+        if ($coinCard->count() > 0) {
+            foreach ($coinCard as $value) { 
+                $asdate = strtotime($value->created_at) * 1000;                                
+                $swipe = ($value->swipeIn == '')? '0' : $value->swipeIn;  
+                $financialGraph[] = "[". $asdate .",".  number_format((float)$swipe, 2, '.', '') ."]";  
+            }
+            $graphdataWinResultwithDate = join($financialGraph, ',');
+        }else{
+             $graphdataWinResultwithDate = null;
+        }         
+        return "[". $graphdataWinResultwithDate . "]";  
+    }
+
+            
+            
     public function create()
     {
         //
