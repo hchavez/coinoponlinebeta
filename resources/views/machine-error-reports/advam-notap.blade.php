@@ -176,11 +176,11 @@ $(document).ready(function() {
               { "data": "machine_model" },
             { "data": "machine",
         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a target='_blank' href='advam-notapdetail?machine_id="+oData.machine_id+"&days="+days+"'>"+oData.machine+"</a>");
+            $(nTd).html("<a target='_blank' href='advam-notapdetail?machine_id="+oData.machineId+"&days="+days+"'>"+oData.machine+"</a>");
         }},
             { "data": "machine_serial_no",
         "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a target='_blank' href='machine-management/show/"+oData.machine_id+"'>"+oData.machine+"</a>");
+            $(nTd).html("<a target='_blank' href='machine-management/show/"+oData.machineId+"'>"+oData.machine+"</a>");
         }},
             { "data": "site"},
             { "data": "last_tapped"
