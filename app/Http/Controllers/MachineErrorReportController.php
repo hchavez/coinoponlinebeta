@@ -837,10 +837,11 @@ class MachineErrorReportController extends Controller
 //                        ->where('date_created','>',$days_ago)
 //                        ->groupBy('machine_id')->toSql();
                       
-                        $machinenotap = Machine::select('id','machine_description','site', 'comments as machine', 'last_online',
+                        $machinenotap = Machine::select('id','machine_description', 'comments as machine', 'last_online',
                       DB::raw('(SELECT max(date_created) FROM machine_reports where machine_id=machines.id and (total_money<>0)) 
 AS last_tapped'),'machine_serial_no',  
                       DB::raw('(select machine_model from machine_models  where machines.machine_model_id = machine_models.id) as machine_model'),
+                      DB::raw('(select site_name from sites where machines.site_id = sites.id) as site'),
                       DB::raw('datediff(date(now()), (SELECT date(max(date_created)) FROM machine_reports where machine_id=machines.id and (total_money<>0))) 
 as MachineReports_NoTapDays'))
                         ->orderBy('machine_serial_no')->get();

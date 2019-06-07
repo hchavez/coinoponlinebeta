@@ -582,15 +582,17 @@ class MachineManagementController extends Controller {
         $weekFrom = date('Y-m-d',strtotime("-7 days"));
         $thisYear = date('Y-m-d',strtotime(date('Y-01-01')));
         
-          if(date("m") > 06) {
-               $d = date("Y-m-d", strtotime("+1 years"));
-               $finto = date("Y-m-d");
-               $finfrom = date("Y-m-d", strtotime($d));
+       if(date("m") > 06) {
+               $d = date("Y-m-d", strtotime("+ 1 year"));
+               $finfrom = date("Y-07-01");
+               $finto = date("Y-06-30", strtotime($d));
+               //$finfrom = date('Y-m-d',strtotime(date('Y-06-01')));
             } else {
               $d = date("Y-m-d", strtotime("-1 years"));
-              $finto = date("Y-m-d");
-               $finfrom = date("Y-m-d", strtotime($d));
+              $finto = date("Y-06-30");
+               $finfrom = date("Y-07-01", strtotime($d));
             }
+            
       
          
         $Today = MoneyLogs::whereIn('status',['1','2'])->where('machine_id', $id)->where('created_at','like','%'.$today.'%')->sum($type);   
@@ -826,7 +828,8 @@ class MachineManagementController extends Controller {
                 $userall = Errorlogs::where('machine_id',$id)
                         ->whereDate('created_at','>=', $from)
                         ->whereDate('created_at','<=', $to)
-                    ->orderBy('created_at','desc')->get();
+                         ->latest('created_at')->get();
+                    //->orderBy('created_at','desc')->get();
   
                 return new UserCollection($userall);
      
