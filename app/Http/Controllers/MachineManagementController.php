@@ -80,7 +80,7 @@ class MachineManagementController extends Controller {
                             ->leftJoin('area', 'sites.area_id', '=', 'area.id') 
                             ->whereIn('machines.status', ['1','0']);
                         
-            $machines = $machines->whereDate('machine_reports.date_created', '>=', Carbon::today()->toDateString());
+            $machines = $machines->whereDate('machine_reports.date_created', '=', Carbon::today()->toDateString());
              $machines = $machines->orderBy('machines.status','desc')->get()->toArray();  
             
         else:  
@@ -828,8 +828,7 @@ class MachineManagementController extends Controller {
                 $userall = Errorlogs::where('machine_id',$id)
                         ->whereDate('created_at','>=', $from)
                         ->whereDate('created_at','<=', $to)
-                         ->latest('created_at')->get();
-                    //->orderBy('created_at','desc')->get();
+                    ->orderBy('created_at','desc')->get();
   
                 return new UserCollection($userall);
      

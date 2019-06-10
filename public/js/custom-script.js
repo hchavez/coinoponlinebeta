@@ -72,7 +72,7 @@ $(document).ready(function(){
         pageLength: 45,
         scrollY: '400px',
         scrollCollapse: true,
-        order: [[0,'desc']],
+        //order: [[0,'desc']],
         columns:[{'data': 'created_at',
                 'render': function (data, type, row) { 
                         var str = row.created_at.split(" ");
