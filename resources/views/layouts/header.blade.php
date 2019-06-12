@@ -274,7 +274,9 @@
                       
                     </li>
                     
-                       <?php
+                    <?php
+                    
+                    date_default_timezone_set('Australia/Melbourne'); // CDT
                     
                     $basedatefrom = date('Y-m-d H:i:s', strtotime(now()));
                     $basedateto = date('Y-m-d H:i:s', strtotime(now()));
